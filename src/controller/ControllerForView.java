@@ -5,7 +5,10 @@
  */
 package controller;
 
+import dao.OrderTable;
 import dao.ProductTable;
+import dao.ReceiptTable;
+import dao.SupplierTable;
 import dao.Table;
 import entity.Entity;
 import java.util.HashMap;
@@ -31,28 +34,31 @@ public class ControllerForView implements IControllerForView{
     
     public ControllerForView(){
         tableMap.put("product", new ProductTable());
+        tableMap.put("receipt", new ReceiptTable());
+        tableMap.put("order", new OrderTable());
+        tableMap.put("supplier", new SupplierTable());
+
     }
 
     @Override
     public void save(Entity e){ 
         Table entityTable = this.tableMap.get(e.getTableName());
         entityTable.save(e);
+        //return 1;
     }
 
 
     @Override
     public void update(Entity e) {
+        Table entityTable = this.tableMap.get(e.getTableName());
+        entityTable.update(e);
     }
 
 
     @Override
-    public void remove(Entity e) {
-    }
-
-
-    @Override
-    public Entity getById(String tableName, int id) {
-        return null;
+    public void delete(Entity e) {
+        Table entityTable = this.tableMap.get(e.getTableName());
+        entityTable.delete(e);
     }
     
 }

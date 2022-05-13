@@ -24,4 +24,6 @@ public interface Table<T> {
     void update(T t);
     
     void delete(T t);
+    
+    List<T> getFrom(Object searchParam);
 }
