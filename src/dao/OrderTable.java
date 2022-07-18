@@ -11,8 +11,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 /**
  *
@@ -24,37 +26,47 @@ public class OrderTable implements Table<Order>{
     ArrayList<Order> ordersList = new ArrayList<Order>();
 
     @Override
-    public List<Order> getAll() {
-        return ordersList;
-    }
+    public ArrayList<Order> getAll() {
+        ArrayList <Order> resList = new ArrayList<Order>();
+        String sql = "SELECT * FROM order";
+        try {
+            Statement stm = conn.createStatement();
+            ResultSet resultSet = stm.executeQuery(sql);
 
-    @Override
-    public void save(Order o) {
-        
-        
-        if(ordersList.indexOf(o)<0){
-            
-            String sql= "INSERT INTO order (number, date, product_barcode, qty, state) VALUES (?,?,?,?,?)";
-            try {
-                PreparedStatement ps = conn.prepareStatement(sql);
-                ps.setInt(1, o.getNumber());
-                ps.setDate(2, o.getDate());
-                ps.setInt(3, o.getProduct());
-                ps.setInt(4, o.getQty());
-                ps.setInt(5, o.getState());
-                
-                ps.execute();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
+            while (resultSet.next()) {
+                Order o = new Order( resultSet.getInt("number"), resultSet.getDate("date").toLocalDate(), resultSet.getInt("product_barcode"), resultSet.getInt("qty"), resultSet.getInt("state"));
+                resList.add(o);
             }
-
-            ordersList.add(o); 
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
         }
+        this.ordersList = resList;
+        return resList;
     }
 
     @Override
-    public void update(Order o) {
-        
+    public boolean save(Order o) {
+        boolean res = false;
+        String sql= "INSERT INTO order (number, date, product_barcode, qty, state) VALUES (?,?,?,?,?)";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, o.getNumber());
+            ps.setDate(2, o.getDate());
+            ps.setInt(3, o.getProduct());
+            ps.setInt(4, o.getQty());
+            ps.setInt(5, o.getState());
+
+            ps.execute();
+            res = true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }  
+        return res;
+    }
+
+    @Override
+    public boolean update(Order o) {
+        boolean res = false;
         String sql= "UPDATE order SET date=?, product_barcode=?, qty=?, state=? WHERE number=?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -64,31 +76,34 @@ public class OrderTable implements Table<Order>{
                 ps.setInt(4, o.getState());
                 ps.setInt(5, o.getNumber());
             ps.execute();
+            res = true;
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        return res;
     }
 
     @Override
-    public void delete(Order o) {
-        
+    public boolean delete(Order o) {
+        boolean res = false;
         String sql= "DELETE FROM order WHERE number = ?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, o.getNumber());
+            res = true;
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         
         this.ordersList.remove(o);
+        return res;
     }
 
     @Override
-    public List<Order> getFrom(Object searchParam) {
+    public ArrayList<Order> getFrom(Object searchParam, String paramName) {
         //ricerca per numero
-        
-        List<Order> resList = new ArrayList<Order>();
-        if(searchParam.getClass().getName().replace("java.lang.", "").equals("Integer")){
+        ArrayList<Order> resList = new ArrayList<Order>();
+        if(searchParam instanceof Integer && paramName.equals("number")){
             String sql = "SELECT * FROM order WHERE number =?";
             try {
                 PreparedStatement ps = conn.prepareStatement(sql);
@@ -105,6 +120,16 @@ public class OrderTable implements Table<Order>{
         }
         
         return resList;
+    }
+
+    @Override
+    public Order constructEntityFromMap(HashMap<String, Object> map) {
+        int number = (int) map.get("number");
+        LocalDate date = (LocalDate) map.get("date");
+        int productBarcode = (int) map.get("productBarcode");
+        int qty = (int) map.get("qty");
+        int state = (int) map.get("state");
+        return new Order(number, date, productBarcode, qty, state);
     }
     
 }

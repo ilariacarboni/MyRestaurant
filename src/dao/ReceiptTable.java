@@ -12,8 +12,10 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 /**
  *
@@ -26,13 +28,27 @@ public class ReceiptTable implements Table<Receipt>{
     
     
     @Override
-    public List<Receipt> getAll() {
-        return this.receiptsList;
+    public ArrayList<Receipt> getAll() {
+        ArrayList <Receipt> resList = new ArrayList<Receipt>();
+        String sql = "SELECT * FROM receipt";
+        try {
+            Statement stm = conn.createStatement();
+            ResultSet resultSet = stm.executeQuery(sql);
+
+            while (resultSet.next()) {
+                Receipt r = new Receipt(resultSet.getInt("number"), resultSet.getDate("date").toLocalDate(), resultSet.getDouble("total"));
+                resList.add(r);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
+        this.receiptsList = resList;
+        return resList;
     }
 
     @Override
-    public void save(Receipt r) {
-        
+    public boolean save(Receipt r) {
+        boolean res = false;
         if(receiptsList.indexOf(r)<0){
             
             String sql= "INSERT INTO receipt (number, date, total) VALUES (?,?,?)";
@@ -42,17 +58,19 @@ public class ReceiptTable implements Table<Receipt>{
                 ps.setDate(2, r.getDate());
                 ps.setDouble(3, r.getTotal());
                 ps.execute();
+                res = true;
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
 
             receiptsList.add(r); 
         }
+        return res;
     }
 
     @Override
-    public void update(Receipt r) {
-        
+    public boolean update(Receipt r) {
+        boolean res = false;
         String sql= "UPDATE receipt SET date = ?, total=? WHERE number=?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -60,32 +78,36 @@ public class ReceiptTable implements Table<Receipt>{
                 ps.setDouble(2, r.getTotal());
                 ps.setInt(3, r.getNumber());
             ps.execute();
+            res = true;
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-
+        return res;
     }
 
     @Override
-    public void delete(Receipt r) {
+    public boolean delete(Receipt r) {
+        boolean res = false;
         String sql= "DELETE FROM receipt WHERE number = ?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, r.getNumber());
             ps.execute();
+            res = true;
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         
         this.receiptsList.remove(r);
+        return res;
     }
 
     
-    public List<Receipt> getFrom(Object searchParam) {
+    public ArrayList<Receipt> getFrom(Object searchParam, String paramName) {
         //ricerca dello scontrino per data o numero
         //numero
-        List<Receipt> resList = new ArrayList<Receipt>();
-        if(searchParam.getClass().getName().replace("java.lang.", "").equals("Integer")){
+        ArrayList<Receipt> resList = new ArrayList<Receipt>();
+        if(searchParam instanceof Integer && paramName.equals("number")){
             String sql = "SELECT * FROM receipt WHERE number =?";
             try {
                 PreparedStatement ps = conn.prepareStatement(sql);
@@ -99,7 +121,7 @@ public class ReceiptTable implements Table<Receipt>{
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
-        }else if(searchParam.getClass().getName().replace("java.sql.", "").equals("Date")){
+        }else if(searchParam instanceof Date && paramName.equals("date")){
             System.out.println("class Date");
             //uso Date perchè posso fare il cast da Object a Date
             String sql = "SELECT * FROM receipt WHERE date =?";
@@ -118,6 +140,14 @@ public class ReceiptTable implements Table<Receipt>{
         }
         
         return resList;
+    }
+
+    @Override
+    public Receipt constructEntityFromMap(HashMap<String, Object> map) {
+        int number = (int) map.get("number");
+        LocalDate date = (LocalDate) map.get("date");
+        double total = (double) map.get("total");
+        return new Receipt(number, date, total);
     }
     
 }

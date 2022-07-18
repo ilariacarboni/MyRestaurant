@@ -75,7 +75,7 @@ public class DashboardController implements Initializable {
     }
     
     private void select(Button btn){
-        btn.setStyle("-fx-background-color: #eef2e6;");
+        btn.setStyle("-fx-background-color: #eef2e6;"); 
         for(Node node : btn.getChildrenUnmodifiable()){
             if(node.getId() != null && node.getId().contains("Rect")){
                 node.setStyle("-fx-fill: #211f1f;");
@@ -108,7 +108,7 @@ public class DashboardController implements Initializable {
     private void storeBtnClicked(ActionEvent event) throws IOException {
         select(storeBtn);
         resetAllExcept(storeBtn);
-        borderPane.setRight(FXMLLoader.load(getClass().getResource("/view/addProductPane.fxml")));
+        borderPane.setCenter(FXMLLoader.load(getClass().getResource("/view/categoryPane.fxml")));
     }
 
     @FXML
@@ -121,6 +121,10 @@ public class DashboardController implements Initializable {
     private void ordersBtnClicked(ActionEvent event) {
         select(ordersBtn);
         resetAllExcept(ordersBtn);
+    }
+    
+    public void setCenterPane(Node node){
+        borderPane.setCenter(node);
     }
     
 }

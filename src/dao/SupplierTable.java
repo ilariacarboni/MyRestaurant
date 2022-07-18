@@ -11,8 +11,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 /**
  *
@@ -25,12 +26,27 @@ public class SupplierTable implements Table<Supplier>{
     
     
     @Override
-    public List<Supplier> getAll() {
-        return this.suppliersList;
+    public ArrayList<Supplier> getAll() {
+        ArrayList<Supplier> resList = new ArrayList<Supplier>();
+        String sql = "SELECT * FROM supplier";
+        try {
+            Statement stm = conn.createStatement();
+            ResultSet resultSet = stm.executeQuery(sql);
+            
+            while (resultSet.next()) {
+                Supplier s = new Supplier(resultSet.getString("name"), resultSet.getString("site"));
+                resList.add(s);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
+        suppliersList = resList;
+        return resList;
     }
 
     @Override
-    public void save(Supplier s) {
+    public boolean save(Supplier s) {
+        boolean res = false;
         if(suppliersList.indexOf(s)<0){
             
             String sql= "INSERT INTO supplier (name, site) VALUES (?,?)";
@@ -39,47 +55,53 @@ public class SupplierTable implements Table<Supplier>{
                 ps.setString(1, s.getName());
                 ps.setString(2, s.getSite());
                 ps.execute();
+                res = true;
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
 
             suppliersList.add(s);
         }
+        return res;
     }
 
     @Override
-    public void update(Supplier s){
-        
+    public boolean update(Supplier s){
+        boolean res = false;
         String sql= "UPDATE supplier SET site = ? WHERE name=?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
                 ps.setString(1, s.getSite());
                 ps.setString(2, s.getName());
             ps.execute();
+            res = true;
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
+        return res;
     }
 
     @Override
-    public void delete(Supplier s) {
+    public boolean delete(Supplier s) {
+        boolean res = false;
         String sql= "DELETE FROM supplier WHERE name = ?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, s.getName());
+            res = true;
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         
         this.suppliersList.remove(s);
+        return res;
     }
 
     @Override
-    public List<Supplier> getFrom(Object searchParam) {
+    public ArrayList<Supplier> getFrom(Object searchParam, String paramName) {
         //ricerca per nome 
-        List<Supplier> resList = new ArrayList<Supplier>();
-        if(searchParam.getClass().getName().replace("java.lang.", "").equals("String")){
+        ArrayList<Supplier> resList = new ArrayList<Supplier>();
+        if(searchParam instanceof String && paramName.equals("name")){
             String sql = "SELECT * FROM supplier WHERE name =?";
             try {
                 PreparedStatement ps = conn.prepareStatement(sql);
@@ -96,6 +118,13 @@ public class SupplierTable implements Table<Supplier>{
         }
         
         return resList;
+    }
+
+    @Override
+    public Supplier constructEntityFromMap(HashMap<String, Object> map) {
+        String name = (String) map.get("name");
+        String site = (String) map.get("site");
+        return new Supplier(name, site);
     }
     
 }

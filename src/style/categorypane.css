@@ -1,0 +1,14 @@
+.categoryButton{
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-background-color:  #ebe7e7;
+    -fx-border-color:  #808080;
+    -fx-stroke-width: 5;
+}
+
+.centralPane{
+     -fx-border-width: 0 2px 0 0;
+    -fx-border-color: #808080;
+    -fx-border-style: solid;
+}
+

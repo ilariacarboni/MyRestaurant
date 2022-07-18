@@ -1,0 +1,15 @@
+.button{
+    -fx-background-radius: 10;
+    -fx-background-color: #c2c6c8;
+    -fx-font-size: 16;
+}
+
+.rectangle{
+    -fx-arc-height: 15;
+    -fx-arc-width: 15;
+    -fx-fill:#6e6c6c;
+}
+
+#menuContainer{
+    -fx-background-color: #c2c6c8;
+}
