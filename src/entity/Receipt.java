@@ -7,6 +7,7 @@ package entity;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.HashMap;
 
 /**
  *
@@ -39,6 +40,15 @@ public class Receipt implements Entity{
     @Override
     public String getTableName() {
         return "receipt";
+    }
+
+    @Override
+    public HashMap<String, Object> map() {
+        HashMap<String, Object> res = new HashMap<String, Object>();
+        res.put("number", this.number);
+        res.put("date", this.date);
+        res.put("total", this.total);
+        return res; 
     }
     
 }

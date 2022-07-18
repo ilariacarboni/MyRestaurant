@@ -22,7 +22,7 @@ public class dbConnection {
         if(conn==null){
             try {
                 Class.forName("org.sqlite.JDBC");
-                String url = "jdbc:sqlite:Test.db";
+                String url = "jdbc:sqlite:RestaurantDB.db";
                 return DriverManager.getConnection(url);
             } catch (Exception e) {
                 e.printStackTrace();
