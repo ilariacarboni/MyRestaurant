@@ -1,0 +1,11 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.productButton{
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-background-color:  #ebe7e7;
+    -fx-border-color:  #808080;
+    -fx-stroke-width: 5;
+}
