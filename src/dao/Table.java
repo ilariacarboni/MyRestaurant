@@ -5,7 +5,8 @@
  */
 package dao;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -14,14 +15,18 @@ import java.util.List;
  */
 public interface Table<T> {
     
-    List<T> getAll();
+    ArrayList<T> getAll();
     
     //se servisse di restituire un oggetto nella lista
     //T get(int id);
     
-    void save(T t);
+    boolean save(T entity);
     
-    void update(T t);
+    boolean update(T entity);
     
-    void delete(T t);
+    boolean delete(T entity);
+    
+    ArrayList<T> getFrom(Object searchParam, String paramName);
+    
+    T constructEntityFromMap(HashMap<String,Object> map);
 }
