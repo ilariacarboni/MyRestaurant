@@ -1,22 +1,29 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package controller;
 
 /**
  *
- * @author Natalia
+ * @author milar
  */
 public final class CommunicationController {
     
     private static final CommunicationController commController = new CommunicationController();
-    private CategoryPaneController categoryPaneController = null;
+    
+    private UtilitiesPaneController utilitiesPaneController = null;
     private ProductsPaneController productsPaneController = null;
-    
-    private CommunicationController(){
+    private CategoryPaneController categoryPaneController = null;
+    private MenuPaneController menuPaneController = null;
+
+    private CommunicationController() {
     }
-    
+
     public static CommunicationController getInstance(){
-        return commController;
+    return commController;
     }
-    
+
     public void setCategoryPaneController(CategoryPaneController catController){
         if(this.categoryPaneController == null){
             this.categoryPaneController = catController;
@@ -36,4 +43,13 @@ public final class CommunicationController {
     public ProductsPaneController getProductsPaneController(){
         return this.productsPaneController;
     }
+    
+    public UtilitiesPaneController getUtilitiesPaneController(){
+        return this.utilitiesPaneController;
+    }
+    
+    public MenuPaneController getMenuPaneController(){
+        return this.menuPaneController;
+    }
 }
+
