@@ -27,7 +27,7 @@ import javafx.scene.control.TextField;
  *
  */
 
-public class AddMenuDishController implements Initializable {
+public class AddMenuDishController extends BaseView implements Initializable {
     
     @FXML
     private Label categoriaLbl;

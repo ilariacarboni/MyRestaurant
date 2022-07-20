@@ -26,7 +26,7 @@ import javafx.scene.control.TextField;
  *
  * @author milar
  */
-public class AddEmployeeController implements Initializable {
+public class AddEmployeeController extends BaseView implements  Initializable {
 
     /**
      * Initializes the controller class.

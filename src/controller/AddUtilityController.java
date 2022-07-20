@@ -26,7 +26,7 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author milar
  */
-public class AddUtilityController implements Initializable {
+public class AddUtilityController  extends BaseView implements Initializable {
     
     @FXML
     private Label categoriaLbl;

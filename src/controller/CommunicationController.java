@@ -44,8 +44,21 @@ public final class CommunicationController {
         return this.productsPaneController;
     }
     
+    public void setUtilitiesPaneController(CategoryPaneController catController){
+        if(this.utilitiesPaneController == null){
+            this.utilitiesPaneController = utilitiesPaneController;
+        }
+    }
+    
     public UtilitiesPaneController getUtilitiesPaneController(){
         return this.utilitiesPaneController;
+    }
+    
+    
+    public void setMenuPaneController(CategoryPaneController catController){
+        if(this.menuPaneController == null){
+            this.menuPaneController = menuPaneController;
+        }
     }
     
     public MenuPaneController getMenuPaneController(){
