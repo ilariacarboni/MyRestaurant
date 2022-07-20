@@ -20,6 +20,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 
 /**
  * FXML Controller class
@@ -28,40 +29,40 @@ import javafx.scene.layout.FlowPane;
  */
 public class CategoryPaneController extends BaseView implements Initializable {
 
-
+    final int GRIDPANE_COLUMNS_NUMBER = 3;
+    
     @FXML
     private BorderPane storeMainPane;
     @FXML
-    private FlowPane categoryContainer;
+    private GridPane categoryContainer;
     @FXML
     private Button addCategoryButton;
+    
+    private Node productsPane = null;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         commController.setCategoryPaneController(this);
         
         ArrayList<HashMap<String,Object>> categories =  this.controllerForView.getAll("category");
-        for(HashMap<String,Object> category: categories){
-            try {
+        categories.forEach((category) -> {
+            try{
                 this.addCategory((String) category.get("name"));
-            } catch (IOException ex) {
+            }catch (IOException ex){
                 Logger.getLogger(CategoryPaneController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
+        });
     }    
-
-    private void testCategorySelected(ActionEvent event) throws IOException {
-        BorderPane dashboardBorderPane = (BorderPane) storeMainPane.getParent();
-        dashboardBorderPane.setCenter(FXMLLoader.load(getClass().getResource("/view/testCategoryProducts.fxml")));
-    }
     
     public void addCategory(String label) throws IOException{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/category.fxml"));
         Node category = loader.load();
         CategoryController categoryContr = loader.getController();
         categoryContr.setCategoryName(label);
-        categoryContainer.getChildren().add(category);
-        
+        int index = categoryContainer.getChildren().size();
+        int columnIndex = index%this.GRIDPANE_COLUMNS_NUMBER;
+        int rowIndex = (int) Math.floor(index/this.GRIDPANE_COLUMNS_NUMBER);
+        categoryContainer.add(category, columnIndex, rowIndex);
     }
 
     @FXML
@@ -71,12 +72,14 @@ public class CategoryPaneController extends BaseView implements Initializable {
     }
     
     public void showProductsForCategory(String category) throws IOException{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/productsPane.fxml"));
-        Node productsPane = loader.load();
-        ProductsPaneController productsPaneContr = loader.getController();
+        if(this.productsPane == null){
+            this.productsPane = FXMLLoader.load(getClass().getResource("/view/productsPane.fxml"));
+        }
+        ProductsPaneController productsPaneContr = commController.getProductsPaneController();
         productsPaneContr.loadProductsByCategory(category);
         BorderPane dashboardBorderPane = (BorderPane) storeMainPane.getParent();
         dashboardBorderPane.setCenter(productsPane);
+        dashboardBorderPane.setRight(null);
     }
     
 }
