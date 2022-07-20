@@ -12,11 +12,12 @@ public final class CommunicationController {
     
     private static final CommunicationController commController = new CommunicationController();
     
-    private UtilitiesPaneController utilitiesPaneController = null;
     private ProductsPaneController productsPaneController = null;
     private CategoryPaneController categoryPaneController = null;
     private MenuPaneController menuPaneController = null;
-
+    private EmployeesListController employeesListController = null;
+    private UtilitiesPaneController utilitiesPaneController = null;
+    
     private CommunicationController() {
     }
 
@@ -44,7 +45,7 @@ public final class CommunicationController {
         return this.productsPaneController;
     }
     
-    public void setUtilitiesPaneController(CategoryPaneController catController){
+    public void setUtilitiesPaneController(UtilitiesPaneController utilitiesPaneController){
         if(this.utilitiesPaneController == null){
             this.utilitiesPaneController = utilitiesPaneController;
         }
@@ -55,7 +56,7 @@ public final class CommunicationController {
     }
     
     
-    public void setMenuPaneController(CategoryPaneController catController){
+    public void setMenuPaneController(MenuPaneController menuPaneController){
         if(this.menuPaneController == null){
             this.menuPaneController = menuPaneController;
         }
@@ -63,6 +64,16 @@ public final class CommunicationController {
     
     public MenuPaneController getMenuPaneController(){
         return this.menuPaneController;
+    }
+    
+    public void setEmployeePaneController(EmployeesListController employeesListController){
+        if(this.employeesListController == null){
+            this.employeesListController = employeesListController;
+        }
+    }
+    
+    public EmployeesListController getEmployeePaneController(){
+        return this.employeesListController;
     }
 }
 

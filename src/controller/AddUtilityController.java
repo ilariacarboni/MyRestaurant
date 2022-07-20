@@ -16,7 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -61,7 +61,7 @@ public class AddUtilityController  extends BaseView implements Initializable {
     private CommunicationController commController = CommunicationController.getInstance();
 
     @FXML
-    private ComboBox<String> utenzeChoiceBox;
+    private ChoiceBox<String> utenzeChoiceBox;
     private String[] tipo_utenza = {"Energia elettrica", "Acqua", "Gas"};
    
 
@@ -99,7 +99,7 @@ public class AddUtilityController  extends BaseView implements Initializable {
                     a.setContentText("Il piatto è stato inserito correttamente!");
                     a.show();
                     resetTextFields();
-                };
+                }
         }
 
     }
@@ -133,12 +133,12 @@ public class AddUtilityController  extends BaseView implements Initializable {
         });
         
         utenzeChoiceBox.getItems().addAll(tipo_utenza);
-        utenzeChoiceBox.setOnAction(this::getTipoUtenza);
+        utenzeChoiceBox.setOnAction(this::getUtilityType);
 
       
     }    
     
-        private void getTipoUtenza(ActionEvent event) {
+        private void getUtilityType(ActionEvent event) {
         String tipologia_utenza = utenzeChoiceBox.getValue(); //return?
     }
         

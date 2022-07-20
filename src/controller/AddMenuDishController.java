@@ -78,7 +78,7 @@ public class AddMenuDishController extends BaseView implements Initializable {
         });
         
         categorieChoicebox.getItems().addAll(categorie);
-        categorieChoicebox.setOnAction(this::getCategoriaScelta);
+        categorieChoicebox.setOnAction(this::getSelectedCategory);
 
         
     }    
@@ -118,7 +118,7 @@ public class AddMenuDishController extends BaseView implements Initializable {
         
     }
 
-    private void getCategoriaScelta(ActionEvent event) {
+    private void getSelectedCategory(ActionEvent event) {
         String category = categorieChoicebox.getValue();
     }
 

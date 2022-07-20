@@ -95,13 +95,16 @@ public class DashboardController implements Initializable {
     private void menuBtnClicked(ActionEvent event) throws IOException {
         select(menuBtn);
         resetAllExcept(menuBtn);
-        borderPane.setRight(FXMLLoader.load(getClass().getResource("/view/pane2.fxml")));
+        borderPane.setCenter(FXMLLoader.load(getClass().getResource("/view/MenuPanel.fxml")));
+        borderPane.setRight(FXMLLoader.load(getClass().getResource("/view/AddMenuDish.fxml")));
     }
 
     @FXML
-    private void employeesBtnClicked(ActionEvent event) {
+    private void employeesBtnClicked(ActionEvent event) throws IOException {
         select(employeesBtn);
         resetAllExcept(employeesBtn);
+        borderPane.setRight(FXMLLoader.load(getClass().getResource("/view/AddEmployee.fxml")));
+        borderPane.setCenter(FXMLLoader.load(getClass().getResource("/view/EmployeesList.fxml")));
     }
 
     @FXML
@@ -109,12 +112,14 @@ public class DashboardController implements Initializable {
         select(storeBtn);
         resetAllExcept(storeBtn);
         borderPane.setCenter(FXMLLoader.load(getClass().getResource("/view/categoryPane.fxml")));
+        
     }
 
     @FXML
-    private void billsBtnClicked(ActionEvent event) {
+    private void billsBtnClicked(ActionEvent event) throws IOException {
         select(billsBtn);
         resetAllExcept(billsBtn);
+        borderPane.setCenter(FXMLLoader.load(getClass().getResource("/view/UtilitiesPanel.fxml")));
     }
 
     @FXML

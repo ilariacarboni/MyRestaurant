@@ -17,7 +17,7 @@ import javafx.scene.layout.GridPane;
  *
  * @author milar
  */
-public class MenuPaneController implements Initializable{
+public class MenuPaneController extends BaseView implements Initializable{
     
      @FXML
     private Button antipastiBtn;
@@ -48,7 +48,7 @@ public class MenuPaneController implements Initializable{
     
 @Override
 public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        commController.setMenuPaneController(this);
     }
 
     

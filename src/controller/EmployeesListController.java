@@ -18,7 +18,7 @@ import javafx.scene.layout.GridPane;
  *
  * @author milar
  */
-public class EmployeesListController implements Initializable {
+public class EmployeesListController extends BaseView implements Initializable {
     
     @FXML
     private Button dipendente1Btn;
@@ -38,7 +38,7 @@ public class EmployeesListController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        commController.setEmployeePaneController(this);
     }    
     
 }

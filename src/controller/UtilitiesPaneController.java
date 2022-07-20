@@ -24,7 +24,7 @@ import javafx.scene.layout.Pane;
  *
  * @author milar
  */
-public class UtilitiesPaneController extends DashboardController implements Initializable  {
+public class UtilitiesPaneController extends BaseView implements Initializable  {
 
     
     @FXML
@@ -57,7 +57,7 @@ public class UtilitiesPaneController extends DashboardController implements Init
     @FXML
     private TextField searchBar;
     
-    private CommunicationController commController = CommunicationController.getInstance();
+    
     
 
  
@@ -92,7 +92,8 @@ public class UtilitiesPaneController extends DashboardController implements Init
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //TODO
-    }    
+        commController.setUtilitiesPaneController(this);
+       
+    } 
     
 }
