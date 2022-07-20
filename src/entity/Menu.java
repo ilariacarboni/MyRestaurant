@@ -4,6 +4,8 @@
  */
 package entity;
 
+import java.util.HashMap;
+
 /**
  *
  * @author milar
@@ -37,6 +39,15 @@ public class Menu implements Entity{
     @Override
     public String getTableName() {
         return "menu";
+    }
+    
+        @Override
+    public HashMap<String, Object> map() {
+        HashMap<String, Object> res = new HashMap<String, Object>();
+        res.put("nameDish", this.nameDish);
+        res.put("price", this.price);
+        res.put("category", this.category);
+        return res;
     }
     
 }

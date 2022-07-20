@@ -6,11 +6,16 @@
 package controller;
 
 import dao.CategoryTable;
+import dao.EmployeeTable;
+import dao.MenuTable;
+import dao.UtilityTable;
 import dao.OrderTable;
 import dao.ProductTable;
 import dao.ReceiptTable;
 import dao.SupplierTable;
+
 import dao.Table;
+import dao.UtilityTable;
 import entity.Entity;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +23,7 @@ import java.util.Map;
 
 /**
  *
- * @author Natalia
+ * 
  */
 public class ControllerForView implements IControllerForView{
     
@@ -38,6 +43,9 @@ public class ControllerForView implements IControllerForView{
         tableMap.put("order", new OrderTable());
         tableMap.put("supplier", new SupplierTable());
         tableMap.put("category", new CategoryTable());
+        tableMap.put("employee", new CategoryTable());
+        tableMap.put("menu", new CategoryTable());
+        tableMap.put("utility", new CategoryTable());
     }
 
     @Override
@@ -88,4 +96,5 @@ public class ControllerForView implements IControllerForView{
         }
         return res;
     }
+ 
 }

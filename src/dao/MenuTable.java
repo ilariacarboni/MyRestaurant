@@ -14,34 +14,43 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
 public class MenuTable implements Table<Menu>{
     
     Connection conn = dbConnection.enstablishConnection();
-    ArrayList<Menu> menues = new ArrayList<Menu>();
+    ArrayList<Menu> menuList = new ArrayList<Menu>();
 
     @Override
-    public List<Menu> getAll() {
-        /*
-        String sql= "SELECT * FROM Menu ";
+    public ArrayList<Menu> getAll() {
+        
+        ArrayList<Menu> resList = new ArrayList<Menu>();
+        String sql = "SELECT * FROM menu";
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.execute();
-            } catch (SQLException ex) {
-                
-             ex.printStackTrace();
-            }*/
-        return menues;
+            Statement stm = conn.createStatement();
+            ResultSet resultSet = stm.executeQuery(sql);
+            
+            while (resultSet.next()) {
+                Menu m= new Menu(resultSet.getString("nameDish"),resultSet.getInt("price"), resultSet.getString("category"));
+                resList.add(m);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
+        menuList = resList;
+        return menuList;
     }
 
     @Override
-    public void save(Menu m) {
+    public boolean save(Menu m) {
         //lo inserisce nella lista e nel db
         //se il dipendente è nella lista significa che è stato già inserito nel db
-        if(menues.indexOf(m)<0){
+        boolean res = false;
+        if(menuList.indexOf(m)<0){
             
             String sql= "INSERT INTO Menu (nameDish, price, category) VALUES (?,?,?)";
             try {
@@ -50,21 +59,24 @@ public class MenuTable implements Table<Menu>{
                 ps.setInt(2, m.getPrice());
                 ps.setString(3, m.getCategory());
                 ps.execute();
+                
+                res = true;
             } catch (SQLException ex) {
                 
                 ex.printStackTrace();
             }
 
-            menues.add(m); 
+            menuList.add(m); 
         }
-        
+        return res;
     }
 
     @Override
-     public void update (Menu m) {
+     public boolean update (Menu m) {
         //lo inserisce nella lista e nel db
         //se il dipendente è nella lista significa che è stato già inserito nel db
-        if(menues.indexOf(m)>0){
+        boolean res = false;
+        if(menuList.indexOf(m)>0){
             
             String sql= "UPDATE Menu SET nameDish=? , price=? , category=? WHERE nameDish=?";
             try {
@@ -73,39 +85,50 @@ public class MenuTable implements Table<Menu>{
                 ps.setInt(2, m.getPrice());
                 ps.setString(3, m.getCategory());
                 ps.execute();
+                
+                res = true;
             } catch (SQLException ex) {
                 
                 ex.printStackTrace();
             }
-        }   
+            
+        }  
+        return res;
     }
 
  
-    public void delete(Menu m) {
-       
-	if(menues.indexOf(m)>0){
+    public boolean delete(Menu m) {
+        
+        boolean res = false;
+        
+	if(menuList.indexOf(m)>0){
             
             String sql= "DELETE FROM Menu WHERE nameDish = ?";
             try {
                 PreparedStatement ps = conn.prepareStatement(sql);
                 ps.setString(1, m.getNameDish());
-                ps.execute();
+                res = true;
             } catch (SQLException ex) {
                 
                 ex.printStackTrace();
             }
         }
+        this.menuList.remove(m);
+        return res;
     }
     
-    public List<Menu> search (Object catch_input) { 
+    
+    @Override
+     public ArrayList<Menu> getFrom(Object searchParam, String paramName)  { 
         
-        List<Menu> resList = new ArrayList<Menu>();
-        if(catch_input instanceof String){   //passso un oggetto di ricerca textinput
-         
-        String sql= "SELECT * FROM Menu WHERE nameDish =? ";
+        ArrayList<Menu> resList = new ArrayList<Menu>();
+        
+        if(searchParam instanceof String){   //passso un oggetto di ricerca textinput
+           if(paramName.equals("nameDish")){
+            String sql= "SELECT * FROM Menu WHERE nameDish =? ";
         try {
                 PreparedStatement ps = conn.prepareStatement(sql); 
-                ps.setString(1, (String) catch_input);
+                ps.setString(1, (String) searchParam);
                 ps.execute();
                 ResultSet resultSet = ps.executeQuery();
                 
@@ -118,22 +141,24 @@ public class MenuTable implements Table<Menu>{
         
                 ex.printStackTrace();
             }   
-        } 
+        }
+        }
         
-        else if (catch_input instanceof Integer) {
+        else if (searchParam instanceof Integer) {
+            if(paramName.equals("price")){
             
-        String sql=  "SELECT * FROM Utility WHERE price=? "; 
+        String sql=  "SELECT * FROM Menu WHERE price=? "; 
        
         
             try {
                 PreparedStatement ps = conn.prepareStatement(sql); 
-                ps.setInt(1, (int) catch_input);
+                ps.setInt(1, (int) searchParam);
                
                 ps.execute();
                 ResultSet resultSet = ps.executeQuery();
                 
                 while (resultSet.next()) {
-                    Menu m = new Menu(resultSet.getString("nameDish"),resultSet.getInt("price"));
+                    Menu m = new Menu(resultSet.getString("nameDish"),resultSet.getInt("price"),resultSet.getString("category"));
                     resList.add(m);
                 }
             }
@@ -142,5 +167,19 @@ public class MenuTable implements Table<Menu>{
                 ex.printStackTrace();
             }  
         }
-    
+   
+    }
+    return resList;
+}
+   
+    public Menu constructEntityFromMap(HashMap<String, Object> map) {
+        
+        String nameDish =(String) map.get("nameDish");
+        int price =(int) map.get("price");
+        String category =(String) map.get("category");
+        return new Menu(nameDish, price, category);
+    }
+
+
+
 }

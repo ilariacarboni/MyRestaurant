@@ -10,6 +10,7 @@ package entity;
  */
 import java.sql.Date; 
 import java.time.LocalDate;
+import java.util.HashMap;
 
 public class Employee implements Entity{
     
@@ -62,6 +63,19 @@ public class Employee implements Entity{
     @Override
     public String getTableName() {
         return "employee";
+    }
+    
+    @Override
+    public HashMap<String, Object> map() {
+        HashMap<String, Object> res = new HashMap<String, Object>();
+        res.put("codice_fiscale", this.codice_fiscale);
+        res.put("name", this.name);
+        res.put("surname", this.surname);
+        res.put("role", this.role);
+        res.put("begin_date", this.begin_date);
+        res.put("end_date", this.end_date);
+        res.put("wage", this.wage);
+        return res;
     }
     
 }

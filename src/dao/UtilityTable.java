@@ -11,36 +11,46 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
 public class UtilityTable implements Table<Utility>{
     
     Connection conn = dbConnection.enstablishConnection();
-    ArrayList<Utility> utilities = new ArrayList<Utility>();
+    ArrayList<Utility> utilitiesList = new ArrayList<Utility>();
   
 
     @Override
-    public List<Utility> getAll() {
-       /* String sql= "SELECT * FROM Utility (numberId, total, type, date)";
-            try {
-                PreparedStatement ps = conn.prepareStatement(sql);
-                ps.execute();
-            } catch (SQLException ex) {
-                
-                ex.printStackTrace();
-            }*/
+    public ArrayList<Utility> getAll() {
         
-       return utilities;
+            ArrayList<Utility> resList = new ArrayList<Utility>();
+            String sql = "SELECT * FROM utility";
+            try {
+                Statement stm = conn.createStatement();
+                ResultSet resultSet = stm.executeQuery(sql);
+
+                while (resultSet.next()) {
+                    Utility u= new Utility(resultSet.getInt("numberId"),resultSet.getInt("total"), resultSet.getString("type"),resultSet.getDate("date").toLocalDate());
+                    resList.add(u);
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex.toString());
+            }
+            utilitiesList = resList;
+            return utilitiesList;
     }
 
     @Override
-    public void save(Utility u) {
+    public boolean save(Utility u) {
         //lo inserisce nella lista e nel db
         //se il dipendente è nella lista significa che è stato già inserito nel db
-        if(utilities.indexOf(u)<0){
+        
+        boolean res = false;
+        if(utilitiesList.indexOf(u)<0){
             
             String sql= "INSERT INTO Utility (numberId, total, type, date) VALUES (?,?,?,?)";
             try {
@@ -50,68 +60,79 @@ public class UtilityTable implements Table<Utility>{
                 ps.setString(3, u.getType());
                 ps.setDate(4, u.getDate());
                 ps.execute();
+                
+                res = true;
             } catch (SQLException ex) {
                 
                 ex.printStackTrace();
             }
 
-            utilities.add(u); 
+            utilitiesList.add(u); 
         }
-        
+        return res;
     }
 
     @Override
-    public void update (Utility u) {
+    public boolean update (Utility u) {
         //t deve essere un istanza di Product con lo stesso identificativo 
         //dell'istanza che si vuole modificare
-         if(utilities.indexOf(u)>0){ //seleziono istanza corretta
+        boolean res = false;
+         if(utilitiesList.indexOf(u)>0){ //seleziono istanza corretta
             
             String sql= "UPDATE Utility  SET numberId = ?, total = ? , type =? , date = ? WHERE numberId = ?";
             try {
-                 PreparedStatement ps = conn.prepareStatement(sql);
+                PreparedStatement ps = conn.prepareStatement(sql);
                 ps.setInt(1, u.getNumberId());
                 ps.setInt(2, u.getTotal());
                 ps.setString(3, u.getType());
 		ps.setInt(4, u.getNumberId());
                 ps.setDate(5, u.getDate());
                 ps.execute();
+                
+                res = true;
             } catch (SQLException ex) {
                 
                 ex.printStackTrace();
             }
 
-         }   
+         }  
+         return res;
     }
   
 
     @Override
-    public void delete(Utility u) {
-       
-	if(utilities.indexOf(u)>0){
+    public boolean delete(Utility u) {
+        
+        boolean res = false;
+	if(utilitiesList.indexOf(u)>0){
             
             String sql= "DELETE FROM Utility WHERE numberId = ?";
             try {
                 PreparedStatement ps = conn.prepareStatement(sql);
                 ps.setInt(1, u.getNumberId());
-                ps.execute();
+                //ps.execute();
+                
+                res = true;
 
             } catch (SQLException ex) {
                 
                 ex.printStackTrace();
             }
         }
+        this.utilitiesList.remove(u);
+        return res;
     }
     
     
-    public List<Utility> search (Object catch_input) { 
+    public ArrayList<Utility> getFrom (Object searchParam, String paramName) { 
         
-        List<Utility> resList = new ArrayList<Utility>();
-        if(catch_input instanceof String){   //passso un oggetto di ricerca textinput
+        ArrayList<Utility> resList = new ArrayList<Utility>();
+        if(searchParam instanceof String){   //passso un oggetto di ricerca textinput
          
         String sql= "SELECT * FROM Utility WHERE type =? ORDER BY date";
         try {
                 PreparedStatement ps = conn.prepareStatement(sql); 
-                ps.setString(1, (String) catch_input);
+                ps.setString(1, (String) searchParam);
                 ps.execute();
                 ResultSet resultSet = ps.executeQuery();
                 
@@ -126,15 +147,15 @@ public class UtilityTable implements Table<Utility>{
             }   
         } 
         
-        else if (catch_input instanceof Integer) {
+        else if (searchParam instanceof Integer) {
             
         String sql=  "SELECT * FROM Utility WHERE numberId=? OR total = ? ORDER BY date"; 
        
         
             try {
                 PreparedStatement ps = conn.prepareStatement(sql); 
-                ps.setInt(1, (int) catch_input);
-                ps.setInt(2, (int) catch_input);
+                ps.setInt(1, (int) searchParam);
+                ps.setInt(2, (int) searchParam);
                 ps.execute();
                 ResultSet resultSet = ps.executeQuery();
                 
@@ -149,14 +170,14 @@ public class UtilityTable implements Table<Utility>{
             }  
         }
             
-        else if (catch_input instanceof LocalDate) {
+        else if (searchParam instanceof LocalDate) {
             
         String sql=  "SELECT * FROM Utility WHERE date =? ORDER BY date"; 
        
         
             try {
                 PreparedStatement ps = conn.prepareStatement(sql); 
-                ps.setDate(1, (Date) catch_input);
+                ps.setDate(1, (Date) searchParam);
                 ps.execute();
                 ResultSet resultSet = ps.executeQuery();
                 
@@ -170,10 +191,18 @@ public class UtilityTable implements Table<Utility>{
                 ex.printStackTrace();
             }
         }     
+         return resList;
+    }
+    
+    @Override
+    public Utility constructEntityFromMap(HashMap<String, Object> map) {
+        int numberId =(int) map.get("numberId");
+        int total =(int) map.get("total");
+        String type =(String) map.get("type");
+        LocalDate date =(LocalDate) map.get("date");
+        
+        return new Utility(numberId, total, type, date);
     }
     
 }
 
-
-
-//"SELECT * FROM Utility WHERE numberId= ? OR total = ? OR  type =? OR date = ? ORDER BY numberID";

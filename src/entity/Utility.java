@@ -6,6 +6,7 @@ package entity;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.HashMap;
 
 public class Utility implements Entity{
     
@@ -41,6 +42,16 @@ public class Utility implements Entity{
     @Override
     public String getTableName() {
         return "utility";
+    }
+    
+        @Override
+    public HashMap<String, Object> map() {
+        HashMap<String, Object> res = new HashMap<String, Object>();
+        res.put("numberId", this.numberId);
+        res.put("total", this.total);
+        res.put("type", this.type);
+        res.put("date", this.date);
+        return res;
     }
     
 }

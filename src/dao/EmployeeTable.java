@@ -11,10 +11,14 @@ package dao;
 import database.dbConnection;
 import entity.Employee;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -22,26 +26,31 @@ import java.util.List;
 public class EmployeeTable implements Table<Employee>{
     
     Connection conn = dbConnection.enstablishConnection();
-    ArrayList<Employee> employees = new ArrayList<Employee>();
+    ArrayList<Employee> employeesList = new ArrayList<Employee>();
 
     @Override
-    public List<Employee> getAll() {
-        /*String sql= "SELECT * FROM Employee ";
+    public ArrayList<Employee> getAll() {
+        ArrayList <Employee> resList = new ArrayList<Employee>();
+        String sql = "SELECT * FROM employee";
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.execute();
-            } catch (SQLException ex) {
-                
-             ex.printStackTrace();
-            }*/
-        return employees;
+            Statement stm = conn.createStatement();
+            ResultSet resultSet = stm.executeQuery(sql);
+
+            while (resultSet.next()) {
+                Employee em = new Employee( resultSet.getString("codice_fiscale"),resultSet.getString("name"),resultSet.getString("surname"),resultSet.getString("role"),resultSet.getDate("begin_date").toLocalDate(),resultSet.getDate("end_date").toLocalDate(),resultSet.getInt("wage"));
+                resList.add(em);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
+        this.employeesList = resList;
+        return resList;
     }
 
     @Override
-    public void save(Employee em) {
-        //lo inserisce nella lista e nel db
-        //se il dipendente è nella lista significa che è stato già inserito nel db
-        if(employees.indexOf(em)<0){
+    public boolean save(Employee em) {
+        boolean res = false;
+        if(employeesList.indexOf(em)<0){
             
             String sql= "INSERT INTO Employee (codice_fiscale, name, surname, role, begin_date, end_date, wage) VALUES (?,?,?,?,?,?,?)";
             try {
@@ -54,26 +63,29 @@ public class EmployeeTable implements Table<Employee>{
 		ps.setDate(6, em.getEndDate());
                 ps.setInt(7, em.getWage()); 
                 ps.execute();
+                
+                res = true;
             } catch (SQLException ex) {
                 
                 ex.printStackTrace();
             }
 
-            employees.add(em); 
+            employeesList.add(em); 
         }
-        
+        return res;
         
     }
 
     @Override
-    public void update(Employee em) {
+    public boolean update(Employee em) {
         //t deve essere un istanza di Product con lo stesso identificativo 
         //dell'istanza che si vuole modificare
-         if(employees.indexOf(em)>0){
+        boolean res = false;
+        if(employeesList.indexOf(em)>0){
 		
-		String sql= "UPDATE Employee  SET codice_fiscale=?, name=?, surname=?, role=?, begin_date=?, end_date=?, wage=? WHERE codice_fiscale = ?";
-           	 try {
-                 PreparedStatement ps = conn.prepareStatement(sql);
+	String sql= "UPDATE Employee  SET codice_fiscale=?, name=?, surname=?, role=?, begin_date=?, end_date=?, wage=? WHERE codice_fiscale = ?";
+           	try {
+                PreparedStatement ps = conn.prepareStatement(sql);
                 ps.setString(1, em.getCodiceF());
                 ps.setString(2, em.getName());
                 ps.setString(3, em.getSurname());
@@ -82,6 +94,8 @@ public class EmployeeTable implements Table<Employee>{
 		ps.setDate(6, em.getEndDate());
                 ps.setInt(7, em.getWage());
                 ps.execute();
+                
+                res = true;
             }
             
            catch (SQLException ex) {
@@ -89,41 +103,45 @@ public class EmployeeTable implements Table<Employee>{
                 ex.printStackTrace();
             }
          }
+        return res;
     }
 
  
-    public void delete (Employee em) {
-       
-	if(employees.indexOf(em)>0){
+    public boolean delete (Employee em) {
+        boolean res = false;
+        
+	if(employeesList.indexOf(em)>0){
             
             String sql= "DELETE FROM Employee WHERE codiceF = ?";
             try {
                 PreparedStatement ps = conn.prepareStatement(sql);
                 ps.setString(1, em.getCodiceF());
-                ps.execute();
-
+                //ps.execute();
+                res = true;
             } catch (SQLException ex) {
                 
                 ex.printStackTrace();
             }
 
     }
+        this.employeesList.remove(em);
+        return res;
     
   }
     
     
-   public List<Employee> search(Object catch_input) {
+   public ArrayList<Employee> getFrom(Object searchParam, String paramName) {
         //ricerca per nome
-        List<Employee> resList = new ArrayList<Employee>();
-        if(catch_input instanceof String){
-            
+        ArrayList<Employee> resList = new ArrayList<Employee>();
+        if(searchParam instanceof String){
+            if(paramName.equals("name")||paramName.equals("surname")||paramName.equals("role")){
             String sql = "SELECT * FROM Employee WHERE codice_fiscale=? OR  name=? OR  surname =? OR  role=? ORDER BY name";
             try {
                 PreparedStatement ps = conn.prepareStatement(sql);
-                ps.setString(1, (String) catch_input);
-                 ps.setString(2, (String) catch_input);
-                 ps.setString(3, (String) catch_input);
-                 ps.setString(4, (String) catch_input);
+                ps.setString(1, (String) searchParam);
+                 ps.setString(2, (String) searchParam);
+                 ps.setString(3, (String) searchParam);
+                 ps.setString(4, (String) searchParam);
                 ResultSet resultSet = ps.executeQuery();
                 
                 while (resultSet.next()) {
@@ -134,7 +152,22 @@ public class EmployeeTable implements Table<Employee>{
                 System.out.println(ex.toString());
             }
         }
-        
+   }
         return resList;
+ }
+  
+   @Override
+    public Employee constructEntityFromMap(HashMap<String, Object> map) {
+        String codice_fiscale =(String) map.get("codice_fiscale");
+        String name =(String) map.get("name");
+        String surname =(String) map.get("surname");
+        String role =(String) map.get("role");
+        LocalDate begin_date =(LocalDate) map.get("begin_date");
+        LocalDate end_date =(LocalDate) map.get("end_date");
+        int wage =(int) map.get("wage");
+      
+        return new Employee(codice_fiscale, name, surname, role, begin_date, end_date,wage);
     }
 }
+
+
