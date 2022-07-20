@@ -107,7 +107,7 @@ public class AddUtilityController  extends BaseView implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        nfatturaTxt.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+       /* nfatturaTxt.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             if (!newValue.matches("\\d*")) {
                 nfatturaTxt.setText(newValue.replaceAll("[^\\d]", ""));
             }
@@ -124,7 +124,7 @@ public class AddUtilityController  extends BaseView implements Initializable {
             if (!newValue.matches("\\d*")) {
                 datautenzaTxt.setText(newValue.replaceAll("[^\\d]", ""));
             }
-        });
+        });*/
         
         utenzeChoiceBox.valueProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             if (!newValue.matches("\\d*")) {

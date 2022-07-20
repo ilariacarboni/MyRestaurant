@@ -58,7 +58,7 @@ public class AddMenuDishController extends BaseView implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        nomeTxt.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+       /* nomeTxt.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             if (!newValue.matches("\\d*")) {
                 nomeTxt.setText(newValue.replaceAll("[^\\d]", ""));
             }
@@ -69,7 +69,7 @@ public class AddMenuDishController extends BaseView implements Initializable {
             if (!newValue.matches("\\d*")) {
                 prezzoTxt.setText(newValue.replaceAll("[^\\d]", ""));
             }
-        });
+        });*/
         
         categorieChoicebox.valueProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             if (!newValue.matches("\\d*")) {
@@ -87,7 +87,7 @@ public class AddMenuDishController extends BaseView implements Initializable {
     private void addMenuDishBtnClicked(ActionEvent event) {
         
         //controllo che siano stati inseriti tutti i campi
-        if(nomeTxt.getText().isEmpty() || prezzoTxt.getText().isEmpty() || categorieChoicebox.getValue().isEmpty() ){
+       if(nomeTxt.getText().isEmpty() || prezzoTxt.getText().isEmpty() || categorieChoicebox.getValue().isEmpty() ){
             
             System.out.println("campo vuoto");
             
