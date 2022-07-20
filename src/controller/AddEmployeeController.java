@@ -83,7 +83,7 @@ public class AddEmployeeController extends BaseView implements  Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        nomeEmpTxt.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+       /* nomeEmpTxt.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             if (!newValue.matches("\\d*")) {
                 nomeEmpTxt.setText(newValue.replaceAll("[^\\d]", ""));
             }
@@ -127,7 +127,7 @@ public class AddEmployeeController extends BaseView implements  Initializable {
             if (!newValue.matches("\\d*")) {
                 finecontrattoEmpTxt.setText(newValue.replaceAll("[^\\d]", ""));
             }
-        });
+        });*/
         
     }  
      @FXML
