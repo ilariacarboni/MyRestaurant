@@ -24,9 +24,7 @@ import java.util.HashMap;
 public class ReceiptTable implements Table<Receipt>{
 
     Connection conn = dbConnection.enstablishConnection();
-    ArrayList<Receipt> receiptsList = new ArrayList<Receipt>();
-    
-    
+
     @Override
     public ArrayList<Receipt> getAll() {
         ArrayList <Receipt> resList = new ArrayList<Receipt>();
@@ -42,29 +40,25 @@ public class ReceiptTable implements Table<Receipt>{
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
-        this.receiptsList = resList;
         return resList;
     }
 
     @Override
     public boolean save(Receipt r) {
         boolean res = false;
-        if(receiptsList.indexOf(r)<0){
             
-            String sql= "INSERT INTO receipt (number, date, total) VALUES (?,?,?)";
-            try {
-                PreparedStatement ps = conn.prepareStatement(sql);
-                ps.setInt(1, r.getNumber());
-                ps.setDate(2, r.getDate());
-                ps.setDouble(3, r.getTotal());
-                ps.execute();
-                res = true;
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-
-            receiptsList.add(r); 
+        String sql= "INSERT INTO receipt (number, date, total) VALUES (?,?,?)";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, r.getNumber());
+            ps.setDate(2, r.getDate());
+            ps.setDouble(3, r.getTotal());
+            ps.execute();
+            res = true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
+
         return res;
     }
 
@@ -97,8 +91,7 @@ public class ReceiptTable implements Table<Receipt>{
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
-        this.receiptsList.remove(r);
+
         return res;
     }
 

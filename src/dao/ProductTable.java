@@ -22,7 +22,6 @@ import java.util.HashMap;
 public class ProductTable implements Table<Product>{
     
     Connection conn = dbConnection.enstablishConnection();
-    ArrayList<Product> productsList = new ArrayList<Product>();
 
     @Override
     public ArrayList<Product> getAll() {
@@ -39,7 +38,6 @@ public class ProductTable implements Table<Product>{
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
-        productsList = resList;
         return resList;
     }
 
@@ -48,25 +46,22 @@ public class ProductTable implements Table<Product>{
         //lo inserisce nella lista e nel db
         //se il Product è nella lista significa che è stato già inserito nel db
         boolean res = false;
-        if(productsList.indexOf(p)<0){
-            
-            String sql= "INSERT INTO product (barcode, name, qty, price, supplier, category) VALUES (?,?,?,?,?,?)";
-            try {
-                PreparedStatement ps = conn.prepareStatement(sql);
-                ps.setInt(1, p.getId());
-                ps.setString(2, p.getName());
-                ps.setInt(3, p.getQty());
-                ps.setDouble(4, p.getPrice());
-                ps.setString(5, p.getSupplier());
-                ps.setString(6, p.getCategory());
-                ps.execute();
-                res = true;
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-
-            productsList.add(p); 
+   
+        String sql= "INSERT INTO product (barcode, name, qty, price, supplier, category) VALUES (?,?,?,?,?,?)";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, p.getId());
+            ps.setString(2, p.getName());
+            ps.setInt(3, p.getQty());
+            ps.setDouble(4, p.getPrice());
+            ps.setString(5, p.getSupplier());
+            ps.setString(6, p.getCategory());
+            ps.execute();
+            res = true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
+
         return res;
     }
 
@@ -105,7 +100,6 @@ public class ProductTable implements Table<Product>{
             ex.printStackTrace();
         }
         
-        this.productsList.remove(p);
         return res;
     }
 
