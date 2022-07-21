@@ -17,13 +17,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 
 public class MenuTable implements Table<Menu>{
     
     Connection conn = dbConnection.enstablishConnection();
-    ArrayList<Menu> menuList = new ArrayList<Menu>();
 
     @Override
     public ArrayList<Menu> getAll() {
@@ -41,8 +39,7 @@ public class MenuTable implements Table<Menu>{
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
-        menuList = resList;
-        return menuList;
+        return resList;
     }
 
     @Override
@@ -50,24 +47,21 @@ public class MenuTable implements Table<Menu>{
         //lo inserisce nella lista e nel db
         //se il dipendente è nella lista significa che è stato già inserito nel db
         boolean res = false;
-        if(menuList.indexOf(m)<0){
-            
-            String sql= "INSERT INTO Menu (nameDish, price, category) VALUES (?,?,?)";
-            try {
-                PreparedStatement ps = conn.prepareStatement(sql);
-                ps.setString(1, m.getNameDish());
-                ps.setInt(2, m.getPrice());
-                ps.setString(3, m.getCategory());
-                ps.execute();
-                
-                res = true;
-            } catch (SQLException ex) {
-                
-                ex.printStackTrace();
-            }
+ 
+        String sql= "INSERT INTO Menu (nameDish, price, category) VALUES (?,?,?)";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, m.getNameDish());
+            ps.setInt(2, (int)m.getPrice());
+            ps.setString(3, m.getCategory());
+            ps.execute();
 
-            menuList.add(m); 
+            res = true;
+        } catch (SQLException ex) {
+
+            ex.printStackTrace();
         }
+
         return res;
     }
 
@@ -75,24 +69,20 @@ public class MenuTable implements Table<Menu>{
      public boolean update (Menu m) {
         //lo inserisce nella lista e nel db
         //se il dipendente è nella lista significa che è stato già inserito nel db
-        boolean res = false;
-        if(menuList.indexOf(m)>0){
-            
-            String sql= "UPDATE Menu SET nameDish=? , price=? , category=? WHERE nameDish=?";
-            try {
-                PreparedStatement ps = conn.prepareStatement(sql);
-                ps.setString(1, m.getNameDish());
-                ps.setInt(2, m.getPrice());
-                ps.setString(3, m.getCategory());
-                ps.execute();
-                
-                res = true;
-            } catch (SQLException ex) {
-                
-                ex.printStackTrace();
-            }
-            
-        }  
+        boolean res = false;      
+        String sql= "UPDATE Menu SET nameDish=? , price=? , category=? WHERE nameDish=?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, m.getNameDish());
+            ps.setInt(2, (int)m.getPrice());
+            ps.setString(3, m.getCategory());
+            ps.execute();
+
+            res = true;
+        } catch (SQLException ex) {
+
+            ex.printStackTrace();
+        } 
         return res;
     }
 
@@ -100,20 +90,17 @@ public class MenuTable implements Table<Menu>{
     public boolean delete(Menu m) {
         
         boolean res = false;
-        
-	if(menuList.indexOf(m)>0){
             
-            String sql= "DELETE FROM Menu WHERE nameDish = ?";
-            try {
-                PreparedStatement ps = conn.prepareStatement(sql);
-                ps.setString(1, m.getNameDish());
-                res = true;
-            } catch (SQLException ex) {
-                
-                ex.printStackTrace();
-            }
+        String sql= "DELETE FROM Menu WHERE nameDish = ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, m.getNameDish());
+            res = true;
+        } catch (SQLException ex) {
+
+            ex.printStackTrace();
         }
-        this.menuList.remove(m);
+
         return res;
     }
     

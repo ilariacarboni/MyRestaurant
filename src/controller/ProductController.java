@@ -39,6 +39,10 @@ public class ProductController extends BaseView implements Initializable {
         this.productInfo=productInfo;
         this.product.setText((String)productInfo.get("name"));
     }
+    
+    public HashMap<String, Object> getProductInfo(){
+        return productInfo;
+    }
 
     @FXML
     private void productSelected(ActionEvent event) throws IOException {

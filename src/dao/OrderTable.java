@@ -23,7 +23,6 @@ import java.util.HashMap;
 public class OrderTable implements Table<Order>{
     
     Connection conn = dbConnection.enstablishConnection();
-    ArrayList<Order> ordersList = new ArrayList<Order>();
 
     @Override
     public ArrayList<Order> getAll() {
@@ -40,7 +39,6 @@ public class OrderTable implements Table<Order>{
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
-        this.ordersList = resList;
         return resList;
     }
 
@@ -94,8 +92,6 @@ public class OrderTable implements Table<Order>{
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
-        this.ordersList.remove(o);
         return res;
     }
 

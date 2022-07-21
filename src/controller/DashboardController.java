@@ -22,7 +22,6 @@ import javafx.scene.shape.Rectangle;
  */
 public class DashboardController implements Initializable {
 
-
     @FXML
     private Button dashboardBtn;
     @FXML
@@ -52,6 +51,7 @@ public class DashboardController implements Initializable {
     @FXML
     private BorderPane borderPane;
 
+    private Node categoryPane = null;
 
     /**
      * Initializes the controller class.
@@ -88,7 +88,6 @@ public class DashboardController implements Initializable {
     private void dashboardBtnClicked(ActionEvent event) throws IOException {
         select(dashboardBtn);
         resetAllExcept(dashboardBtn);
-        borderPane.setRight(FXMLLoader.load(getClass().getResource("/view/pane1.fxml")));
     }
 
     @FXML
@@ -97,6 +96,7 @@ public class DashboardController implements Initializable {
         resetAllExcept(menuBtn);
         borderPane.setCenter(FXMLLoader.load(getClass().getResource("/view/MenuPanel.fxml")));
         borderPane.setRight(FXMLLoader.load(getClass().getResource("/view/AddMenuDish.fxml")));
+
     }
 
     @FXML
@@ -111,8 +111,12 @@ public class DashboardController implements Initializable {
     private void storeBtnClicked(ActionEvent event) throws IOException {
         select(storeBtn);
         resetAllExcept(storeBtn);
-        borderPane.setCenter(FXMLLoader.load(getClass().getResource("/view/categoryPane.fxml")));
-        
+
+        if(this.categoryPane == null){
+            this.categoryPane = FXMLLoader.load(getClass().getResource("/view/categoryPane.fxml"));
+        }
+        borderPane.setCenter(this.categoryPane);
+        borderPane.setRight(null);
     }
 
     @FXML

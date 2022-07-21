@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
@@ -44,10 +46,27 @@ public class ProductsPaneController extends BaseView implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         commController.setProductPaneController(this);
+        
+        searchBar.textProperty().addListener((observable, oldValue, newValue) ->{
+            ObservableList<Node> products = productsContainer.getChildren();
+            for(Node product : products){
+                Button productBtn = (Button)product;
+                String productName = productBtn.getText();
+                if(!productName.contains(newValue)){
+                    product.setVisible(false);
+                    product.setManaged(false);
+                }else{
+                    product.setVisible(true);
+                    product.setManaged(true);
+                }
+            }
+            
+        });
     }
 
     public void loadProductsByCategory(String category){
         this.categoryLabel.setText(category);
+        productsContainer.getChildren().clear();
         ArrayList<HashMap<String, Object>> products = controllerForView.getFrom(category, "category", "product");
         for(int i = 0; i<products.size(); i++){
             HashMap<String, Object> product = products.get(i);
@@ -79,5 +98,7 @@ public class ProductsPaneController extends BaseView implements Initializable {
         BorderPane dashboardBorderPane = (BorderPane) mainContainer.getParent();
         dashboardBorderPane.setRight(FXMLLoader.load(getClass().getResource("/view/addProductPane.fxml")));
     }
+
+
     
 }

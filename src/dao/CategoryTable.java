@@ -18,7 +18,6 @@ import java.util.HashMap;
 public class CategoryTable implements Table<Category>{
 
     Connection conn = dbConnection.enstablishConnection();
-    ArrayList<Category> categoryList = new ArrayList<Category>();
     
     @Override
     public ArrayList<Category> getAll() {
@@ -35,7 +34,6 @@ public class CategoryTable implements Table<Category>{
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
-        this.categoryList = resList;
         return resList;
     }
 

@@ -22,9 +22,7 @@ import java.util.HashMap;
 public class SupplierTable implements Table<Supplier>{
 
     Connection conn = dbConnection.enstablishConnection();
-    ArrayList<Supplier> suppliersList = new ArrayList<Supplier>();
-    
-    
+
     @Override
     public ArrayList<Supplier> getAll() {
         ArrayList<Supplier> resList = new ArrayList<Supplier>();
@@ -40,27 +38,21 @@ public class SupplierTable implements Table<Supplier>{
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
-        suppliersList = resList;
         return resList;
     }
 
     @Override
     public boolean save(Supplier s) {
         boolean res = false;
-        if(suppliersList.indexOf(s)<0){
-            
-            String sql= "INSERT INTO supplier (name, site) VALUES (?,?)";
-            try {
-                PreparedStatement ps = conn.prepareStatement(sql);
-                ps.setString(1, s.getName());
-                ps.setString(2, s.getSite());
-                ps.execute();
-                res = true;
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-
-            suppliersList.add(s);
+        String sql= "INSERT INTO supplier (name, site) VALUES (?,?)";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, s.getName());
+            ps.setString(2, s.getSite());
+            ps.execute();
+            res = true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
         return res;
     }
@@ -92,8 +84,6 @@ public class SupplierTable implements Table<Supplier>{
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
-        this.suppliersList.remove(s);
         return res;
     }
 
