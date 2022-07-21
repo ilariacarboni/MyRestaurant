@@ -43,9 +43,9 @@ public class ControllerForView implements IControllerForView{
         tableMap.put("order", new OrderTable());
         tableMap.put("supplier", new SupplierTable());
         tableMap.put("category", new CategoryTable());
-        tableMap.put("employee", new CategoryTable());
-        tableMap.put("menu", new CategoryTable());
-        tableMap.put("utility", new CategoryTable());
+        tableMap.put("employee", new EmployeeTable());
+        tableMap.put("menu", new MenuTable());
+        tableMap.put("utility", new UtilityTable());
     }
 
     @Override

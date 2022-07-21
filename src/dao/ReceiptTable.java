@@ -131,7 +131,6 @@ public class ReceiptTable implements Table<Receipt>{
             ex.printStackTrace();
             }
         }
-        
         return resList;
     }
 

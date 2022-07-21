@@ -52,7 +52,7 @@ public class MenuTable implements Table<Menu>{
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, m.getNameDish());
-            ps.setInt(2, m.getPrice());
+            ps.setInt(2, (int)m.getPrice());
             ps.setString(3, m.getCategory());
             ps.execute();
 
@@ -74,7 +74,7 @@ public class MenuTable implements Table<Menu>{
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, m.getNameDish());
-            ps.setInt(2, m.getPrice());
+            ps.setInt(2, (int)m.getPrice());
             ps.setString(3, m.getCategory());
             ps.execute();
 

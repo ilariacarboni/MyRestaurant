@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package dao;
 
 import database.dbConnection;
@@ -56,7 +53,7 @@ public class UtilityTable implements Table<Utility>{
             try {
                 PreparedStatement ps = conn.prepareStatement(sql);
                 ps.setInt(1, u.getNumberId());
-                ps.setInt(2, u.getTotal());
+                ps.setInt(2, (int)u.getTotal());
                 ps.setString(3, u.getType());
                 ps.setDate(4, u.getDate());
                 ps.execute();
@@ -83,7 +80,7 @@ public class UtilityTable implements Table<Utility>{
             try {
                 PreparedStatement ps = conn.prepareStatement(sql);
                 ps.setInt(1, u.getNumberId());
-                ps.setInt(2, u.getTotal());
+                ps.setInt(2, (int)u.getTotal());
                 ps.setString(3, u.getType());
 		ps.setInt(4, u.getNumberId());
                 ps.setDate(5, u.getDate());
