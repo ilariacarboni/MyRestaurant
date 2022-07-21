@@ -128,8 +128,8 @@ public class DashboardController implements Initializable {
         resetAllExcept(ordersBtn);
     }
     
-    public void setCenterPane(Node node){
+    /*public void setCenterPane(Node node){
         borderPane.setCenter(node);
-    }
+    }*/
     
 }

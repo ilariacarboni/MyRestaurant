@@ -22,7 +22,7 @@ public final class CommunicationController {
     }
 
     public static CommunicationController getInstance(){
-    return commController;
+        return commController;
     }
 
     public void setCategoryPaneController(CategoryPaneController catController){

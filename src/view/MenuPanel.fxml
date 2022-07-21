@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuPaneController">
+<AnchorPane id="AnchorPane" fx:id="anchorPaneMenu" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenuPaneController">
    <children>
       <Label fx:id="titoloLbl" layoutX="38.0" layoutY="24.0" text="Menu" />
       <GridPane fx:id="menuGridPane" layoutX="38.0" layoutY="57.0" prefHeight="293.0" prefWidth="323.0">
@@ -22,7 +22,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="antipastiBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="158.0" text="Antipasti" />
+            <Button fx:id="antipastiBtn" mnemonicParsing="false" onAction="#antipastiBtnClicked" prefHeight="50.0" prefWidth="158.0" text="Antipasti" />
             <Button fx:id="primiBtn" mnemonicParsing="false" prefHeight="53.0" prefWidth="161.0" text="Primi" GridPane.columnIndex="1" />
             <Button fx:id="secondiBtn" mnemonicParsing="false" prefHeight="58.0" prefWidth="160.0" text="Secondi" GridPane.rowIndex="1" />
             <Button fx:id="contorniBtn" mnemonicParsing="false" prefHeight="54.0" prefWidth="181.0" text="Contorni" GridPane.columnIndex="1" GridPane.rowIndex="1" />
