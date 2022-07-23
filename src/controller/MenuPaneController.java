@@ -4,13 +4,19 @@
  */
 package controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
 /**
@@ -19,7 +25,10 @@ import javafx.scene.layout.GridPane;
  */
 public class MenuPaneController extends BaseView implements Initializable{
     
-     @FXML
+    @FXML
+    private AnchorPane anchorPaneMenu;
+    
+    @FXML
     private Button antipastiBtn;
 
     @FXML
@@ -46,8 +55,16 @@ public class MenuPaneController extends BaseView implements Initializable{
     @FXML
     private Label titoloLbl;
     
-@Override
-public void initialize(URL url, ResourceBundle rb) {
+     @FXML
+    void antipastiBtnClicked(ActionEvent event) throws IOException {
+        
+        BorderPane borderPane = (BorderPane) anchorPaneMenu.getParent();
+        borderPane.setCenter(FXMLLoader.load(getClass().getResource("/view/menuList.fxml"))); 
+    }
+    
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
         commController.setMenuPaneController(this);
     }
 

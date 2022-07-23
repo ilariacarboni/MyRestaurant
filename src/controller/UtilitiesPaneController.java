@@ -68,21 +68,11 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
     @FXML
     void insertUtilityBtnClicked(ActionEvent event) throws IOException {
         
-       //rightPane = FXMLLoader.load(getClass().getResource("/Test/AddUtility.fxml"));
-       
-       
-       //rightPane.getChildren().setAll(addUtilities);
-        /*FXMLLoader loader = new FXMLLoader(getClass().getResource("/Test/AddUtility.fxml"));
-        AnchorPane anchorpaneAddUtility = loader.load();
-        BorderPane borderPane = (BorderPane) insertutilityBtn.getScene().getRoot();
-        borderPane.setRight(anchorpaneAddUtility);*/
-        
+     
       BorderPane borderPane = (BorderPane) anchorPaneUtenze.getParent();
       borderPane.setRight(FXMLLoader.load(getClass().getResource("/view/AddUtility.fxml"))); 
       
         
- 
-      
 
     }
     
