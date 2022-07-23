@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
@@ -20,8 +21,10 @@ import javafx.scene.shape.Rectangle;
  *
  * @author Natalia
  */
-public class DashboardController implements Initializable {
+public class DashboardController extends BaseView implements Initializable {
 
+
+    final String BTN_SELECTED_STYLE_CLASS = "menuButton-selected";
     @FXML
     private Button dashboardBtn;
     @FXML
@@ -58,29 +61,20 @@ public class DashboardController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        dashboardBtn.fire();
     } 
 
     private void resetAllExcept(Button btn){
         for(Node node: buttonContainer.getChildren() ){
-            if(node.getId() != btn.getId()){
-                node.setStyle("-fx-background-color: #c2c6c8;");
-                for(Node btnChild : ((Parent)node).getChildrenUnmodifiable()){
-                    if(btnChild.getId() != null && btnChild.getId().contains("Rect")){
-                        btnChild.setStyle("-fx-fill: #6e6c6c;");
-                    }
-                }
+            if(node.getId() != btn.getId() && node.getStyleClass().contains(this.BTN_SELECTED_STYLE_CLASS)){
+                node.getStyleClass().remove(this.BTN_SELECTED_STYLE_CLASS);
             }
         }
         
     }
     
     private void select(Button btn){
-        btn.setStyle("-fx-background-color: #eef2e6;"); 
-        for(Node node : btn.getChildrenUnmodifiable()){
-            if(node.getId() != null && node.getId().contains("Rect")){
-                node.setStyle("-fx-fill: #211f1f;");
-            }
-        }
+        btn.getStyleClass().add(this.BTN_SELECTED_STYLE_CLASS);
     }
     
 
@@ -116,6 +110,8 @@ public class DashboardController implements Initializable {
             this.categoryPane = FXMLLoader.load(getClass().getResource("/view/categoryPane.fxml"));
         }
         borderPane.setCenter(this.categoryPane);
+        CategoryPaneController categoryPaneController = commController.getCategoryPaneController();
+        categoryPaneController.animate();
         borderPane.setRight(null);
     }
 
@@ -132,8 +128,21 @@ public class DashboardController implements Initializable {
         resetAllExcept(ordersBtn);
     }
     
-    /*public void setCenterPane(Node node){
+    public void setCenterPane(Node node){
         borderPane.setCenter(node);
-    }*/
-    
+    }
+
+    public void menuBtnHovered(MouseEvent mouseEvent) {
+        Node btn = (Node)mouseEvent.getSource();
+        if(!btn.getStyleClass().contains(this.BTN_SELECTED_STYLE_CLASS)){
+            btn.getStyleClass().add("menuButton-hover");
+        }
+    }
+
+    public void menuBtnNotHovered(MouseEvent mouseEvent) {
+        Node btn = (Node)mouseEvent.getSource();
+        if(btn.getStyleClass().contains("menuButton-hover")){
+            btn.getStyleClass().remove("menuButton-hover");
+        }
+    }
 }

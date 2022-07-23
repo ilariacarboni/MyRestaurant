@@ -28,7 +28,7 @@ public class CategoryTable implements Table<Category>{
             ResultSet resultSet = stm.executeQuery(sql);
 
             while (resultSet.next()) {
-                Category c = new Category( resultSet.getString("name"));
+                Category c = new Category( resultSet.getString("name"),resultSet.getString("img"));
                 resList.add(c);
             }
         } catch (SQLException ex) {
@@ -40,10 +40,11 @@ public class CategoryTable implements Table<Category>{
     @Override
     public boolean save(Category c){
         boolean res = false;
-        String sql= "INSERT INTO category (name) VALUES (?)";
+        String sql= "INSERT INTO category (name,img) VALUES (?,?)";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, c.getName());
+            ps.setString(2, c.getImg());
             ps.execute();
             res = true;
         } catch (SQLException ex) {
@@ -55,10 +56,11 @@ public class CategoryTable implements Table<Category>{
     @Override
     public boolean update(Category c) {
         boolean res = false;
-        String sql= "UPDATE category SET name = ? WHERE name=?";
+        String sql= "UPDATE category SET name = ?,img=? WHERE name=?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, c.getName());
+            ps.setString(2, c.getImg());
             ps.execute();
             res = true;
         } catch (SQLException ex) {
@@ -93,7 +95,7 @@ public class CategoryTable implements Table<Category>{
                 ResultSet resultSet = ps.executeQuery();
                 
                 while(resultSet.next()){
-                    Category c = new Category(resultSet.getString("name"));
+                    Category c = new Category(resultSet.getString("name"),resultSet.getString("img"));
                     resList.add(c);
                 }
             } catch (Exception e) {
@@ -106,7 +108,8 @@ public class CategoryTable implements Table<Category>{
     @Override
     public Category constructEntityFromMap(HashMap<String, Object> map) {
         String name = (String) map.get("name");
-        return new Category(name);
+        String img = (String) map.get("img");
+        return new Category(name,img);
     }
     
 }
