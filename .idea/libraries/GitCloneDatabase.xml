@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="GitCloneDatabase">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/GitCloneDatabase.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
