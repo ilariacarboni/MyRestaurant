@@ -9,13 +9,17 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<<<<<<< HEAD:src/view/scene/menuItem.fxml
 <AnchorPane fx:id="dishAnchorPane" onMousePressed="#click" stylesheets="@../values/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.menuItemController">
+=======
+<AnchorPane fx:id="dishAnchorPane" onMousePressed="#click" stylesheets="@../style/menu.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.menuItemController">
+>>>>>>> 75c338deaea6b1b1500fb9430a85d86a0134f511:src/view/menuItem.fxml
    <children>
       <VBox alignment="TOP_CENTER" layoutX="63.0" layoutY="8.0" prefHeight="215.0" prefWidth="225.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox prefHeight="51.0" prefWidth="185.0">
                <children>
-                  <Label fx:id="nameLabel" prefHeight="49.0" prefWidth="137.0" text="Fettuccine">
+                  <Label fx:id="itemNameLbl" prefHeight="49.0" prefWidth="137.0" text="Fettuccine">
                      <font>
                         <Font name="Cambria" size="24.0" />
                      </font>
@@ -25,7 +29,7 @@
                   <Insets left="20.0" top="20.0" />
                </VBox.margin>
             </HBox>
-            <Label fx:id="priceLable" prefHeight="34.0" prefWidth="186.0" text="€0.99">
+            <Label fx:id="itemPriceLbl" prefHeight="34.0" prefWidth="186.0" text="€10">
                <font>
                   <Font name="Cambria Bold" size="18.0" />
                </font>
@@ -35,7 +39,7 @@
       </VBox>
    </children>
    <styleClass>
-      <String fx:value="fruit-item" />
+      <String fx:value="menuDish-item" />
       <String fx:value="shadow" />
    </styleClass>
 </AnchorPane>
