@@ -5,18 +5,17 @@
  */
 package controller;
 
-import dao.CategoryTable;
-import dao.EmployeeTable;
-import dao.MenuTable;
-import dao.UtilityTable;
-import dao.OrderTable;
-import dao.ProductTable;
-import dao.ReceiptTable;
-import dao.SupplierTable;
+import model.dao.CategoryTable;
+import model.dao.EmployeeTable;
+import model.dao.MenuTable;
+import model.dao.UtilityTable;
+import model.dao.OrderTable;
+import model.dao.ProductTable;
+import model.dao.ReceiptTable;
+import model.dao.SupplierTable;
 
-import dao.Table;
-import dao.UtilityTable;
-import entity.Entity;
+import model.dao.Table;
+import model.entity.Entity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +24,7 @@ import java.util.Map;
  *
  * 
  */
-public class ControllerForView implements IControllerForView{
+public class ControllerForView implements IControllerForView {
     
     private Map<String, Table> tableMap = new HashMap<>();
     private static ControllerForView instance = null;
