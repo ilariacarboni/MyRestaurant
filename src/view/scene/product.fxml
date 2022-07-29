@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+
+
+<Button fx:id="product" onAction="#productSelected" prefHeight="200.0" prefWidth="340.0" styleClass="productButton" stylesheets="@../style/product.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.ProductController" />

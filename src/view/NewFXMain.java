@@ -21,11 +21,11 @@ public class NewFXMain extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         //Parent root = FXMLLoader.load(getClass().getResource("CreateProduct.fxml"));
-        Parent root = FXMLLoader.load(getClass().getResource("dashboard.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/scene/dashboard.fxml"));
         
         Scene scene = new Scene(root);
         //scene.getStylesheets().add(getClass().getResource("/style/createProduct.css").toExternalForm());
-        scene.getStylesheets().add(getClass().getResource("/style/dashboard.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/view/style/dashboard.css").toExternalForm());
 
         //primaryStage.setTitle("Add Product");
         primaryStage.setScene(scene);

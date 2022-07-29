@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" fx:id="anchorpaneAddUtility" minWidth="-Infinity" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.AddUtilityController">
+   <children>
+      <TextField fx:id="nfatturaTxt" layoutX="102.0" layoutY="62.0" />
+      <TextField fx:id="datautenzaTxt" layoutX="101.0" layoutY="111.0" />
+      <TextField fx:id="importoutenzaTxt" layoutX="102.0" layoutY="159.0" />
+      <Label fx:id="nfatturaLbl" layoutX="23.0" layoutY="66.0" text="N.Fattura" />
+      <Label fx:id="dataLbl" layoutX="23.0" layoutY="115.0" text="Data" />
+      <Label fx:id="importoLbl" layoutX="23.0" layoutY="163.0" text="Importo" />
+      <Label fx:id="categoriaLbl" layoutX="23.0" layoutY="206.0" text="Categoria" />
+      <Button fx:id="insertUtilityBtn" layoutX="192.0" layoutY="266.0" mnemonicParsing="false" onAction="#AddUtilityBtnClicked" text="Inserisci" />
+      <Label fx:id="titoloLbl" layoutX="21.0" layoutY="14.0" text="Aggiungi utenza" />
+      <ChoiceBox fx:id="utenzeChoiceBox" layoutX="105.0" layoutY="202.0" prefWidth="150.0" />
+   </children>
+</AnchorPane>
