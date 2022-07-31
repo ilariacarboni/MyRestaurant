@@ -1,9 +1,6 @@
 
 package view.sceneControllers;
-<<<<<<< HEAD
-=======
 
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -12,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-<<<<<<< HEAD
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -22,13 +18,6 @@ import javafx.scene.layout.Pane;
 
 import javafx.scene.image.ImageView;
 import view.utils.LocatedImage;
-=======
-import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
 
 
 /**
@@ -36,7 +25,6 @@ import javafx.scene.shape.Rectangle;
  *
  * @author Natalia
  */
-<<<<<<< HEAD
 public class DashboardController extends BaseView implements Initializable {
 
 
@@ -68,10 +56,6 @@ public class DashboardController extends BaseView implements Initializable {
     public ImageView loginBtnIcon;
     @FXML
     public AnchorPane loginBtnContainer;
-=======
-public class DashboardController implements Initializable {
-
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
     @FXML
     private Button dashboardBtn;
     @FXML
@@ -81,29 +65,10 @@ public class DashboardController implements Initializable {
     @FXML
     private Button storeBtn;
     @FXML
-<<<<<<< HEAD
     private Button utilityBtn;
     @FXML
     private Button ordersBtn;
     @FXML
-=======
-    private Button billsBtn;
-    @FXML
-    private Button ordersBtn;
-    @FXML
-    private Rectangle dashRect;
-    @FXML
-    private Rectangle menuRect;
-    @FXML
-    private Rectangle employeeRect;
-    @FXML
-    private Rectangle storeRect;
-    @FXML
-    private Rectangle billsRect;
-    @FXML
-    private Rectangle ordersRect;
-    @FXML
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
     private Pane buttonContainer;
     @FXML
     private BorderPane borderPane;
@@ -115,7 +80,7 @@ public class DashboardController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-<<<<<<< HEAD
+
         dashboardBtnIcon.setImage(new LocatedImage(this.DASHBOARD_BTN_ICON_PATH));
         employeesBtnIcon.setImage(new LocatedImage(this.EMPLOYEES_BTN_ICON_PATH));
         menuBtnIcon.setImage(new LocatedImage(this.MENU_BTN_ICON_PATH));
@@ -124,40 +89,20 @@ public class DashboardController implements Initializable {
         utilityBtnIcon.setImage(new LocatedImage(this.UTILITY_BTN_ICON_PATH));
         loginBtnIcon.setImage(new LocatedImage(this.LOGIN_BTN_ICON_PATH));
         dashboardBtn.fire();
-=======
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
+
     } 
 
     private void resetAllExcept(Button btn){
         for(Node node: buttonContainer.getChildren() ){
-<<<<<<< HEAD
             if(node.getId() != btn.getId() && node.getStyleClass().contains(this.BTN_SELECTED_STYLE_CLASS)){
                 node.getStyleClass().remove(this.BTN_SELECTED_STYLE_CLASS);
-=======
-            if(node.getId() != btn.getId()){
-                node.setStyle("-fx-background-color: #c2c6c8;");
-                for(Node btnChild : ((Parent)node).getChildrenUnmodifiable()){
-                    if(btnChild.getId() != null && btnChild.getId().contains("Rect")){
-                        btnChild.setStyle("-fx-fill: #6e6c6c;");
-                    }
-                }
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
             }
         }
         
     }
     
     private void select(Button btn){
-<<<<<<< HEAD
         btn.getStyleClass().add(this.BTN_SELECTED_STYLE_CLASS);
-=======
-        btn.setStyle("-fx-background-color: #eef2e6;"); 
-        for(Node node : btn.getChildrenUnmodifiable()){
-            if(node.getId() != null && node.getId().contains("Rect")){
-                node.setStyle("-fx-fill: #211f1f;");
-            }
-        }
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
     }
     
 
@@ -193,24 +138,16 @@ public class DashboardController implements Initializable {
             this.categoryPane = FXMLLoader.load(getClass().getResource("/view/scene/categoryPane.fxml"));
         }
         borderPane.setCenter(this.categoryPane);
-<<<<<<< HEAD
+
         CategoryPaneController categoryPaneController = commController.getCategoryPaneController();
         categoryPaneController.animate();
-=======
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
         borderPane.setRight(null);
     }
 
     @FXML
-<<<<<<< HEAD
     private void utilityBtnClicked(ActionEvent event) throws IOException {
         select(utilityBtn);
         resetAllExcept(utilityBtn);
-=======
-    private void billsBtnClicked(ActionEvent event) throws IOException {
-        select(billsBtn);
-        resetAllExcept(billsBtn);
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
         borderPane.setCenter(FXMLLoader.load(getClass().getResource("/view/scene/UtilitiesPanel.fxml")));
     }
 
@@ -223,7 +160,6 @@ public class DashboardController implements Initializable {
     public void setCenterPane(Node node){
         borderPane.setCenter(node);
     }
-<<<<<<< HEAD
 
     public void menuBtnHovered(MouseEvent mouseEvent) {
         Button btn = (Button)mouseEvent.getSource();
@@ -258,7 +194,5 @@ public class DashboardController implements Initializable {
 
     public void loginBtnClicked(ActionEvent actionEvent) {
     }
-=======
-    
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
+
 }

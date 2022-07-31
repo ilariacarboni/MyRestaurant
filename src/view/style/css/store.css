@@ -3,10 +3,7 @@
     -fx-background-radius: 20;
     -fx-background-color:  #ebe7e7;
     -fx-effect: dropShadow(three-pass-box,rgba(0,0,0,0.1), 10.0 , 0.0 , 0.0 ,10.0);
-<<<<<<< HEAD
     -fx-cursor: hand;
-=======
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
 }
 
 .category-hover{
@@ -17,7 +14,6 @@
     -fx-border-width: 0 2px 0 0;
     -fx-border-color: #808080;
     -fx-border-style: solid;
-<<<<<<< HEAD
     -fx-background-color: #eef2e6;
 }
 
@@ -57,9 +53,3 @@
     -fx-background-color:  white;
     -fx-effect: dropShadow(three-pass-box,rgba(0,0,0,0.1), 10.0 , 0.0 , 0.0 ,10.0);
 }
-
-
-=======
-}
-
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714

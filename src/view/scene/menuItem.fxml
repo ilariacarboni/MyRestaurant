@@ -9,15 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<<<<<<< HEAD
-<<<<<<< HEAD:src/view/scene/menuItem.fxml
-<AnchorPane fx:id="dishAnchorPane" onMousePressed="#click" stylesheets="@../values/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.menuItemController">
-=======
-<AnchorPane fx:id="dishAnchorPane" onMousePressed="#click" stylesheets="@../style/menu.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.menuItemController">
->>>>>>> 75c338deaea6b1b1500fb9430a85d86a0134f511:src/view/menuItem.fxml
-=======
-<AnchorPane fx:id="dishAnchorPane" onMousePressed="#click" stylesheets="@../style/menupane.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.menuItemController">
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
+<AnchorPane fx:id="dishAnchorPane" onMousePressed="#click"  xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.menuItemController">
    <children>
       <VBox alignment="TOP_CENTER" layoutX="63.0" layoutY="8.0" prefHeight="215.0" prefWidth="225.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>

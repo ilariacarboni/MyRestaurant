@@ -5,25 +5,26 @@
  */
 package view.sceneControllers;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-<<<<<<< HEAD
+
 
 import javafx.animation.TranslateTransition;
-=======
-import javafx.event.ActionEvent;
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.util.Duration;
 
 /**
  * FXML Controller class
@@ -33,19 +34,13 @@ import javafx.scene.layout.GridPane;
 public class CategoryPaneController extends BaseView implements Initializable {
 
     final int GRIDPANE_COLUMNS_NUMBER = 3;
-<<<<<<< HEAD
     final int ANIMATION_DURATION = 275;
     final int ANIMATION_DISTANCE = 700;
     final String PRODUCT_PANE_LOCATION ="/view/scene/productsPane.fxml";
-=======
-    
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
     @FXML
     private BorderPane storeMainPane;
     @FXML
     private GridPane categoryContainer;
-    @FXML
-    private Button addCategoryButton;
     
     private Node productsPane = null;
 
@@ -56,28 +51,24 @@ public class CategoryPaneController extends BaseView implements Initializable {
         ArrayList<HashMap<String,Object>> categories =  this.controllerForView.getAll("category");
         categories.forEach((category) -> {
             try{
-                this.addCategory((String) category.get("name"));
+                this.addCategory(category);
             }catch (IOException ex){
                 Logger.getLogger(CategoryPaneController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }    
     
-<<<<<<< HEAD
+
     public void addCategory(HashMap<String,Object> category) throws IOException{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/scene/category.fxml"));
         Node categoryNode = loader.load();
-=======
-    public void addCategory(String label) throws IOException{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/scene/category.fxml"));
-        Node category = loader.load();
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
         CategoryController categoryContr = loader.getController();
-        categoryContr.setCategoryName(label);
+        categoryContr.setCategoryInfo(category);
         int index = categoryContainer.getChildren().size();
         int columnIndex = index%this.GRIDPANE_COLUMNS_NUMBER;
         int rowIndex = (int) Math.floor(index/this.GRIDPANE_COLUMNS_NUMBER);
-        categoryContainer.add(category, columnIndex, rowIndex);
+        categoryContainer.add(categoryNode, columnIndex, rowIndex);
+        this.animate();
     }
 
     @FXML
@@ -88,17 +79,23 @@ public class CategoryPaneController extends BaseView implements Initializable {
     
     public void showProductsForCategory(String category) throws IOException{
         if(this.productsPane == null){
-<<<<<<< HEAD
             this.productsPane = FXMLLoader.load(getClass().getResource(this.PRODUCT_PANE_LOCATION));
-=======
-            this.productsPane = FXMLLoader.load(getClass().getResource("/view/scene/productsPane.fxml"));
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
         }
         ProductsPaneController productsPaneContr = commController.getProductsPaneController();
         productsPaneContr.loadProductsByCategory(category);
         BorderPane dashboardBorderPane = (BorderPane) storeMainPane.getParent();
         dashboardBorderPane.setCenter(productsPane);
         dashboardBorderPane.setRight(null);
+    }
+
+    public void animate(){
+        List<Node> categories = categoryContainer.getChildren();
+        for(Node category: categories){
+            TranslateTransition t = new TranslateTransition(Duration.millis(this.ANIMATION_DURATION), category);
+            t.setFromX(this.ANIMATION_DISTANCE);
+            t.setToX(0);
+            t.play();
+        }
     }
     
 }

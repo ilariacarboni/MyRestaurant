@@ -9,23 +9,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-<<<<<<< HEAD
-
-=======
-import javafx.event.ActionEvent;
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-<<<<<<< HEAD
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-=======
-import javafx.scene.control.Button;
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
 
 /**
  * FXML Controller class
@@ -34,7 +25,6 @@ import javafx.scene.control.Button;
  */
 public class ProductController extends BaseView implements Initializable {
 
-<<<<<<< HEAD
     private final String PRODUCT_SCENE = "/view/scene/productInfoPane.fxml";
 
     //breakpoints for responsive adjustment of product image
@@ -73,23 +63,6 @@ public class ProductController extends BaseView implements Initializable {
     public void setProductInfo(HashMap<String, Object> productInfo){
         this.productInfo=productInfo;
         this.productNameLabel.setText((String)productInfo.get("name"));
-=======
-    @FXML
-    private Button product;
-
-    private HashMap<String, Object> productInfo;
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }
-    
-    public void setProductInfo(HashMap<String, Object> productInfo){
-        this.productInfo=productInfo;
-        this.product.setText((String)productInfo.get("name"));
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
     }
     
     public HashMap<String, Object> getProductInfo(){
@@ -97,7 +70,6 @@ public class ProductController extends BaseView implements Initializable {
     }
 
     @FXML
-<<<<<<< HEAD
     private void productSelected(MouseEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(this.PRODUCT_SCENE));
         Node productInfoPane = loader.load();
@@ -115,14 +87,4 @@ public class ProductController extends BaseView implements Initializable {
             product.getStyleClass().remove("product-hover");
         }
     }
-=======
-    private void productSelected(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/scene/productInfoPane.fxml"));
-        Node productInfoPane = loader.load();
-        ProductInfoPaneController productInfoPaneContr = loader.getController();
-        productInfoPaneContr.setProductInfo(this.productInfo);
-        commController.getProductsPaneController().showProductInfoPane(productInfoPane);
-    }
-    
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
 }

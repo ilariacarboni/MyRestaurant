@@ -38,17 +38,17 @@ public class AddCategoryPaneController extends BaseView implements Initializable
         // TODO
     }    
 
-    @FXML
-    private void addCategoryBtnClicked(ActionEvent event) throws IOException {
-        String categoryName = textField.getText();
-        if(categoryName.length() >0){
-            //aggiunta categoria a DB
-          HashMap<String, Object> categoryMap = new HashMap<String, Object>();
-          categoryMap.put("name", categoryName);
-          controllerForView.save(categoryMap, "category");
-          
-          CategoryPaneController cat = commController.getCategoryPaneController();
-          cat.addCategory(categoryName);
-        }
-    }
+//    @FXML
+//    private void addCategoryBtnClicked(ActionEvent event) throws IOException {
+//        String categoryName = textField.getText();
+//        if(categoryName.length() >0){
+//            //aggiunta categoria a DB
+//          HashMap<String, Object> categoryMap = new HashMap<String, Object>();
+//          categoryMap.put("name", categoryName);
+//          controllerForView.save(categoryMap, "category");
+//
+//          CategoryPaneController cat = commController.getCategoryPaneController();
+//          cat.addCategory(categoryName);
+//        }
+//    }
 }
