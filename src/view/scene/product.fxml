@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<<<<<<< HEAD
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -79,3 +80,9 @@
       <Insets bottom="10.0" />
    </padding>
 </AnchorPane>
+=======
+<?import javafx.scene.control.Button?>
+
+
+<Button fx:id="product" onAction="#productSelected" prefHeight="200.0" prefWidth="340.0" styleClass="productButton" stylesheets="@../style/product.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.ProductController" />
+>>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714

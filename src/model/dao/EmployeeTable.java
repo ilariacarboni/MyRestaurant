@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model.dao;
 
 /**
@@ -168,5 +164,3 @@ public class EmployeeTable implements Table<Employee>{
         return new Employee(codice_fiscale, name, surname, role, begin_date, end_date,wage);
     }
 }
-
-

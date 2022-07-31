@@ -1,4 +1,3 @@
-
 package model.dao;
 
 import model.database.dbConnection;
@@ -201,4 +200,3 @@ public class UtilityTable implements Table<Utility>{
     }
     
 }
-

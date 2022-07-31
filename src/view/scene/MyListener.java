@@ -1,6 +1,6 @@
-package view;
+package view.scene;
 
-import entity.Menu;
+import model.entity.Menu;
 
 public interface MyListener {
     public void onClickListener(Menu menu);

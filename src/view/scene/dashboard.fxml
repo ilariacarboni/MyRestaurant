@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<<<<<<< HEAD
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -77,6 +78,54 @@
                   </Button>
                </children>
             </AnchorPane>
+=======
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+
+<BorderPane fx:id="borderPane" prefHeight="901.0" prefWidth="1152.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.DashboardController">
+   <left>
+      <VBox prefHeight="901.0" prefWidth="307.0" style="-fx-background-color: #c2c6c8;" BorderPane.alignment="CENTER">
+         <children>
+            <Pane prefHeight="200.0" prefWidth="200.0" />
+            <Pane fx:id="buttonContainer" prefHeight="375.0" prefWidth="292.0">
+               <children>
+                  <Button fx:id="dashboardBtn" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutX="41.0" layoutY="25.0" mnemonicParsing="false" onAction="#dashboardBtnClicked" prefHeight="37.0" prefWidth="210.0" text="Dashboard">
+                     <graphic>
+                        <Rectangle fx:id="dashRect" arcHeight="15" arcWidth="15" fill="#6e6c6c" height="27.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="27.0" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="menuBtn" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutX="41.0" layoutY="74.0" mnemonicParsing="false" onAction="#menuBtnClicked" prefHeight="37.0" prefWidth="210.0" text="Menu">
+                     <graphic>
+                        <Rectangle fx:id="menuRect" arcHeight="15" arcWidth="15" fill="#6e6c6c" height="27.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="27.0" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="employeesBtn" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutX="41.0" layoutY="122.0" mnemonicParsing="false" onAction="#employeesBtnClicked" prefHeight="37.0" prefWidth="210.0" text="Dipendenti">
+                     <graphic>
+                        <Rectangle fx:id="employeeRect" arcHeight="15" arcWidth="15" fill="#6e6c6c" height="27.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="27.0" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="storeBtn" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutX="41.0" layoutY="170.0" mnemonicParsing="false" onAction="#storeBtnClicked" prefHeight="37.0" prefWidth="210.0" text="Magazzino">
+                     <graphic>
+                        <Rectangle fx:id="storeRect" arcHeight="15" arcWidth="15" fill="#6e6c6c" height="27.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="27.0" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="billsBtn" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutX="41.0" layoutY="220.0" mnemonicParsing="false" onAction="#billsBtnClicked" prefHeight="37.0" prefWidth="210.0" text="Utenze">
+                     <graphic>
+                        <Rectangle fx:id="billsRect" arcHeight="15" arcWidth="15" fill="#6e6c6c" height="27.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="27.0" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="ordersBtn" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutX="41.0" layoutY="268.0" mnemonicParsing="false" onAction="#ordersBtnClicked" prefHeight="37.0" prefWidth="210.0" text="Ordini">
+                     <graphic>
+                        <Rectangle fx:id="ordersRect" arcHeight="15" arcWidth="15" fill="#6e6c6c" height="27.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="27.0" />
+                     </graphic>
+                  </Button>
+                  <Separator prefHeight="4.0" prefWidth="309.0" />
+               </children>
+            </Pane>
+>>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
          </children>
       </VBox>
    </left>

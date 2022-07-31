@@ -8,7 +8,11 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
+<<<<<<< HEAD
 <AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.EmployeesListController">
+=======
+<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.EmployeesListController">
+>>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
    <children>
       <GridPane fx:id="gridPaneEmployees" layoutX="40.0" layoutY="61.0" prefHeight="296.0" prefWidth="344.0">
         <columnConstraints>
