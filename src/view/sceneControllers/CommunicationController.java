@@ -1,60 +1,3 @@
-<<<<<<< HEAD
-package view.sceneControllers;
-
-
-public final class CommunicationController {
-    
-    private static final CommunicationController commController = new CommunicationController();
-    
-    private ProductsPaneController productsPaneController = null;
-    private CategoryPaneController categoryPaneController = null;
-    private EmployeesListController employeesListController = null;
-    
-    private CommunicationController() {
-    }
-
-    public static CommunicationController getInstance(){
-    return commController;
-    }
-
-    public void setCategoryPaneController(CategoryPaneController catController){
-        if(this.categoryPaneController == null){
-            this.categoryPaneController = catController;
-        }
-    }
-    
-    public CategoryPaneController getCategoryPaneController(){
-        return this.categoryPaneController;
-    }
-    
-    public void setProductPaneController(ProductsPaneController productsPaneController){
-        if(this.productsPaneController == null){
-            this.productsPaneController = productsPaneController;
-        }
-    }
-    
-    public ProductsPaneController getProductsPaneController(){
-        return this.productsPaneController;
-    }
-
-    
-    public void setEmployeePaneController(EmployeesListController employeesListController){
-        if(this.employeesListController == null){
-            this.employeesListController = employeesListController;
-        }
-    }
-    
-    public EmployeesListController getEmployeePaneController(){
-        return this.employeesListController;
-    }
-}
-
-
-=======
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package view.sceneControllers;
 
 /**
@@ -129,5 +72,3 @@ public final class CommunicationController {
         return this.employeesListController;
     }
 }
-
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
