@@ -33,6 +33,7 @@ public class CategoryPaneController extends BaseView implements Initializable {
     final int GRIDPANE_COLUMNS_NUMBER = 3;
     final int ANIMATION_DURATION = 275;
     final int ANIMATION_DISTANCE = 700;
+    final String PRODUCT_PANE_LOCATION ="/view/scene/productsPane.fxml";
     @FXML
     private BorderPane storeMainPane;
     @FXML
@@ -67,7 +68,7 @@ public class CategoryPaneController extends BaseView implements Initializable {
     
     public void showProductsForCategory(String category) throws IOException{
         if(this.productsPane == null){
-            this.productsPane = FXMLLoader.load(getClass().getResource("/view/scene/productsPane.fxml"));
+            this.productsPane = FXMLLoader.load(getClass().getResource(this.PRODUCT_PANE_LOCATION));
         }
         ProductsPaneController productsPaneContr = commController.getProductsPaneController();
         productsPaneContr.loadProductsByCategory(category);

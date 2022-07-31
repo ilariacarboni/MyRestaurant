@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,6 +18,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
@@ -28,8 +29,11 @@ import javafx.scene.layout.GridPane;
  */
 public class ProductsPaneController extends BaseView implements Initializable {
 
-    final int GRIDPANE_COLUMNS_NUMBER = 3;
-    
+    private final String PRODUCT_LABEL_ID = "#productNameLabel";
+    private final String PRODUCT_FXML = "/view/scene/product.fxml";
+    private final String ADD_PRODUCT_PANE_FXML = "/view/scene/product.fxml";
+    //numero di colonne del gridPane che può essere settato esternamente per renderlo responsive
+    private int gridpaneColumnsNumber = 1;
     @FXML
     private Label categoryLabel;
     @FXML
@@ -40,7 +44,10 @@ public class ProductsPaneController extends BaseView implements Initializable {
     private GridPane productsContainer;
     @FXML
     private BorderPane mainContainer;
-
+    @FXML
+    public BorderPane productInfoMainContainer;
+    @FXML
+    public Label productInfoMainContainerTitle;
     /**
      * Initializes the controller class.
      */
@@ -51,8 +58,8 @@ public class ProductsPaneController extends BaseView implements Initializable {
         searchBar.textProperty().addListener((observable, oldValue, newValue) ->{
             ObservableList<Node> products = productsContainer.getChildren();
             for(Node product : products){
-                Button productBtn = (Button)product;
-                String productName = productBtn.getText();
+                Label productNameLabel = (Label)((AnchorPane) product).lookup(this.PRODUCT_LABEL_ID);
+                String productName = productNameLabel.getText();
                 if(!productName.contains(newValue)){
                     product.setVisible(false);
                     product.setManaged(false);
@@ -61,7 +68,6 @@ public class ProductsPaneController extends BaseView implements Initializable {
                     product.setManaged(true);
                 }
             }
-            
         });
     }
 
@@ -80,27 +86,37 @@ public class ProductsPaneController extends BaseView implements Initializable {
         }
     }
     
-    private void addProduct(HashMap<String, Object> product, int index) throws IOException{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/scene/product.fxml"));
+    private void addProduct(HashMap<String, Object> productInfo, int index) throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(this.PRODUCT_FXML));
         Node productNode = loader.load();
         ProductController productContr = loader.getController();
-        productContr.setProductInfo(product);
-        int columnIndex = index%this.GRIDPANE_COLUMNS_NUMBER;
-        int rowIndex = (int) Math.floor(index/this.GRIDPANE_COLUMNS_NUMBER);
+        productContr.setProductInfo(productInfo);
+        int columnIndex = index%this.gridpaneColumnsNumber;
+        int rowIndex = (int) Math.floor(index/this.gridpaneColumnsNumber);
         productsContainer.add(productNode, columnIndex, rowIndex);
     }
     
-    public void showProductInfoPane(Node productInfoPane){
-        BorderPane dashboardBorderPane = (BorderPane) mainContainer.getParent();
-        dashboardBorderPane.setRight(productInfoPane);
+    public void showProductInfoPane(Node productInfoPane, String productName){
+        productInfoMainContainerTitle.setText(productName);
+        productInfoMainContainer.setCenter(productInfoPane);
     }
 
     @FXML
     private void addProductBtnClicked(ActionEvent event) throws IOException {
         BorderPane dashboardBorderPane = (BorderPane) mainContainer.getParent();
-        dashboardBorderPane.setRight(FXMLLoader.load(getClass().getResource("/view/scene/addProductPane.fxml")));
+        dashboardBorderPane.setRight(FXMLLoader.load(getClass().getResource(this.ADD_PRODUCT_PANE_FXML)));
     }
 
+    public void setGridPaneColumnNumber(int columnNumber){
+        this.gridpaneColumnsNumber = columnNumber;
+        ObservableList<Node> products = productsContainer.getChildren();
+        for(int i = 0; i<products.size(); i++){
+            Node product = products.get(i);
+            int columnIndex = i%this.gridpaneColumnsNumber;
+            int rowIndex = (int) Math.floor(i/this.gridpaneColumnsNumber);
+            productsContainer.add(product, columnIndex, rowIndex);
+        }
+    }
 
     
 }

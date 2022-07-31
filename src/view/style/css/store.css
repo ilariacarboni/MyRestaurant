@@ -43,3 +43,15 @@
     -fx-cursor: hand;
 }
 
+.product-hover{
+    -fx-background-color:  #d3cfcf;;
+}
+
+.productInfoMainContainer{
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-background-color:  white;
+    -fx-effect: dropShadow(three-pass-box,rgba(0,0,0,0.1), 10.0 , 0.0 , 0.0 ,10.0);
+}
+
+

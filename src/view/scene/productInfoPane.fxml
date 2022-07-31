@@ -1,70 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-
-<VBox  xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.ProductInfoPaneController">
+<VBox prefHeight="440.0" prefWidth="446.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.ProductInfoPaneController">
    <children>
-      <AnchorPane >
+      <HBox VBox.vgrow="ALWAYS">
          <children>
-            <Label layoutY="26.0" text="Dettagli prodotto selezionato" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="26.0" />
+            <VBox spacing="10.0">
+               <children>
+                  <AnchorPane prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../style/img/product-info-icon/barcode.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="barcodeLabel" layoutX="32.0" layoutY="-1.0" text="Codice a barre:">
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane>
+                     <children>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <image>
+                              <Image url="@../style/img/product-info-icon/price.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="priceLabel" layoutX="32.0" layoutY="1.0" text="Costo:">
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </AnchorPane>
+                  <AnchorPane prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../style/img/product-info-icon/quantity.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="qtyLabel" layoutX="32.0" layoutY="-1.0" text="Quantità disponibile:">
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../style/img/product-info-icon/last-order.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="lastOrderLabel" layoutX="32.0" layoutY="-1.0" text="Ultimo ordine:">
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../style/img/product-info-icon/fornitore.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="supplierLabel" layoutX="32.0" layoutY="-1.0" text="Fornitore:">
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets left="20.0" top="20.0" />
+         </padding>
+      </HBox>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <LineChart layoutX="-11.0" prefHeight="275.0" prefWidth="500.0">
+              <xAxis>
+                <CategoryAxis side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </LineChart>
          </children>
       </AnchorPane>
-      <HBox  VBox.vgrow="ALWAYS">
-         <children>
-            <VBox >
-               <children>
-                  <Label  text="nome prodotto">
-                     <padding>
-                        <Insets left="10.0" top="10.0" />
-                     </padding>
-                  </Label>
-                  <Label  text="quantità in magazzino">
-                     <padding>
-                        <Insets left="10.0" top="10.0" />
-                     </padding>
-                  </Label>
-                  <Label  text="fornitore">
-                     <padding>
-                        <Insets left="10.0" top="10.0" />
-                     </padding>
-                  </Label>
-                  <Label  text="data ultimo ordine">
-                     <padding>
-                        <Insets left="10.0" top="10.0" />
-                     </padding>
-                  </Label>
-               </children>
-            </VBox>
-            <VBox  HBox.hgrow="ALWAYS">
-               <children>
-                  <Label fx:id="productNameLabel" >
-                     <padding>
-                        <Insets left="10.0" top="10.0" />
-                     </padding>
-                  </Label>
-                  <Label fx:id="productQtyLabel" >
-                     <padding>
-                        <Insets left="10.0" top="10.0" />
-                     </padding>
-                  </Label>
-                  <Label fx:id="productSupplierLabel" >
-                     <padding>
-                        <Insets left="10.0" top="10.0" />
-                     </padding>
-                  </Label>
-                  <Label fx:id="productLastOrderLabel" >
-                     <padding>
-                        <Insets left="10.0" top="10.0" />
-                     </padding>
-                  </Label>
-               </children>
-            </VBox>
-         </children>
-      </HBox>
    </children>
 </VBox>

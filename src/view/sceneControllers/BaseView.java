@@ -5,7 +5,6 @@
  */
 package view.sceneControllers;
 
-import controller.CommunicationController;
 import controller.ControllerForView;
 import controller.IControllerForView;
 

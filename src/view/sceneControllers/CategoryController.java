@@ -65,12 +65,6 @@ public class CategoryController extends BaseView implements Initializable {
     @FXML
     private void categorySelected(MouseEvent event) throws IOException, InterruptedException {
         //visualizzazione slider -> a transizione finita invoco showProductForCategory
-//        int i=0;
-//        while(i<100){
-//            String style = String.format("-fx-background-color: linear-gradient(to right, #2D819D %d%%, #969696 %d%%);", i, i);
-//            category.setStyle(style);
-//            i++;
-//        }
         try {
             commController.getCategoryPaneController().showProductsForCategory(this.categoryLabel.getText());
         } catch (IOException ex) {
