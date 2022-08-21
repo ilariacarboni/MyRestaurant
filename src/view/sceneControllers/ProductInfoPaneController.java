@@ -1,11 +1,21 @@
 package view.sceneControllers;
 
+import java.awt.*;
+import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.stage.FileChooser;
 
 /**
  * FXML Controller class
@@ -13,11 +23,6 @@ import javafx.scene.control.Label;
  * @author Natalia
  */
 public class ProductInfoPaneController implements Initializable {
-    final String PRICE_LABEL_PREFIX = "Costo: ";
-    final String QTY_LABEL_PREFIX = "Quantità disponibile: ";
-    final String LAST_ORDER_LABEL_PREFIX = "Ultimo ordine: ";
-    final String SUPPLIER_LABEL_PREFIX = "Fornitore: ";
-    final String BARCODE_LABEL_PREFIX = "Codice a barre: ";
     @FXML
     public Label priceLabel;
     @FXML
@@ -28,6 +33,12 @@ public class ProductInfoPaneController implements Initializable {
     public Label supplierLabel;
     @FXML
     public Label barcodeLabel;
+    @FXML
+    public ImageView productImage;
+    @FXML
+    public Button chooseImgBtn;
+    @FXML
+    public VBox mainContainer;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -35,12 +46,27 @@ public class ProductInfoPaneController implements Initializable {
     } 
     
     public void setProductInfo(HashMap<String, Object> product){
-
-        this.qtyLabel.setText(this.QTY_LABEL_PREFIX + String.valueOf(product.get("qty")));
-        this.supplierLabel.setText(this.SUPPLIER_LABEL_PREFIX + (String)product.get("supplier"));
-        this.priceLabel.setText(this.PRICE_LABEL_PREFIX + String.valueOf(product.get("price")));
-        this.barcodeLabel.setText(this.BARCODE_LABEL_PREFIX + String.valueOf(product.get("barcode")));
-
+        this.qtyLabel.setText(String.valueOf(product.get("qty")));
+        this.supplierLabel.setText((String)product.get("supplier"));
+        this.priceLabel.setText(String.valueOf(product.get("price")));
+        this.barcodeLabel.setText(String.valueOf(product.get("barcode")));
+        String imagePath = (String)product.get("image");
+        try{
+            Image productImage = new Image(new File(imagePath).toURI().toString());
+            this.productImage.setImage(productImage);
+        }catch (Exception e){
+            this.productImage.setImage(new Image(new File("src/view/style/img/others/product-image-not-found.png").toURI().toString()));
+        }
     }
-    
+
+    public void chooseImgForProduct(MouseEvent mouseEvent) {
+        final FileChooser fc = new FileChooser();
+        File returnVal = null;
+        returnVal = fc.showOpenDialog((Stage)((Node) mouseEvent.getSource()).getScene().getWindow());
+        if(returnVal != null){
+            System.out.println(returnVal.toURI().toString());
+        }
+        //impostare immagine del prodotto
+    }
+
 }

@@ -19,14 +19,16 @@ public class Product implements Entity{
     private double price;
     private String supplier;
     private String category;
+    private String img;
     
-    public Product(int barcode, String name, int qty, double price, String supplier, String category){
+    public Product(int barcode, String name, int qty, double price, String supplier, String category, String img){
         this.barcode=barcode;
         this.name=name;
         this.qty=qty;
         this.price=price;
         this.supplier = supplier;
         this.category=category;
+        this.img = img;
     }
     
     public int getId(){
@@ -52,6 +54,7 @@ public class Product implements Entity{
     public String getCategory(){
         return this.category;
     }
+    public String getImage(){ return this.img; }
 
     @Override
     public String getTableName() {
@@ -67,6 +70,7 @@ public class Product implements Entity{
         res.put("price", this.price);
         res.put("supplier", this.supplier);
         res.put("category", this.category);
+        res.put("image", this.img);
         return res;
     }
     
