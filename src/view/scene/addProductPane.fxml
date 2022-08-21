@@ -6,11 +6,8 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-<<<<<<< HEAD
+
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.AddProductPaneController">
-=======
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.AddProductPaneController">
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
    <children>
       <Label fx:id="barcodeLabel" layoutX="38.0" layoutY="64.0" prefHeight="17.0" prefWidth="235.0" text="codice a barre" />
       <Label fx:id="nameLabel" layoutX="38.0" layoutY="100.0" prefHeight="17.0" prefWidth="235.0" text="nome prodotto" />

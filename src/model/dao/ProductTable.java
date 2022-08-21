@@ -14,9 +14,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-
-
 /**
  *
  * @author Natalia
@@ -34,7 +31,7 @@ public class ProductTable implements Table<Product>{
             ResultSet resultSet = stm.executeQuery(sql);
             
             while (resultSet.next()) {
-                Product p = new Product(resultSet.getInt("barcode"), resultSet.getString("name"), resultSet.getInt("qty"), resultSet.getDouble("price"), resultSet.getString("supplier"), resultSet.getString("category"));
+                Product p = new Product(resultSet.getInt("barcode"), resultSet.getString("name"), resultSet.getInt("qty"), resultSet.getDouble("price"), resultSet.getString("supplier"), resultSet.getString("category"), resultSet.getString("image"));
                 resList.add(p);
             }
         } catch (SQLException ex) {
@@ -49,7 +46,7 @@ public class ProductTable implements Table<Product>{
         //se il Product è nella lista significa che è stato già inserito nel db
         boolean res = false;
    
-        String sql= "INSERT INTO product (barcode, name, qty, price, supplier, category) VALUES (?,?,?,?,?,?)";
+        String sql= "INSERT INTO product (barcode, name, qty, price, supplier, category, image) VALUES (?,?,?,?,?,?,?)";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, p.getId());
@@ -58,6 +55,7 @@ public class ProductTable implements Table<Product>{
             ps.setDouble(4, p.getPrice());
             ps.setString(5, p.getSupplier());
             ps.setString(6, p.getCategory());
+            ps.setString(7, p.getImage());
             ps.execute();
             res = true;
         } catch (SQLException ex) {
@@ -112,14 +110,14 @@ public class ProductTable implements Table<Product>{
         if(searchParam instanceof String){
             if(paramName.equals("name")){
                 //search by product name
-                String sql = "SELECT p.barcode, p.name, p.qty, p.price, p.category, p.supplier, c.name as categoryName FROM product p JOIN category c ON p.category = c.name WHERE p.name =? ";
+                String sql = "SELECT p.barcode, p.name, p.qty, p.price, p.category, p.supplier, p.image c.name as categoryName FROM product p JOIN category c ON p.category = c.name WHERE p.name =? ";
                 try {
                     PreparedStatement ps = conn.prepareStatement(sql);
                     ps.setString(1, (String) searchParam);
                     ResultSet resultSet = ps.executeQuery();
 
                     while (resultSet.next()) {
-                        Product p = new Product(resultSet.getInt("barcode"),resultSet.getString("name"), resultSet.getInt("qty"), resultSet.getDouble("price"),resultSet.getString("supplier"), resultSet.getString("categoryName"));
+                        Product p = new Product(resultSet.getInt("barcode"),resultSet.getString("name"), resultSet.getInt("qty"), resultSet.getDouble("price"),resultSet.getString("supplier"), resultSet.getString("categoryName"), resultSet.getString("image"));
                         resList.add(p);
                     }
                 } catch (SQLException ex) {
@@ -127,14 +125,14 @@ public class ProductTable implements Table<Product>{
                 }
             }else if(paramName.equals("category")){
                 //search by product category
-                String sql = "SELECT p.barcode, p.name, p.qty, p.price, p.category, p.supplier, c.name as categoryName FROM product p JOIN category c ON p.category = c.name WHERE c.name = ?";
+                String sql = "SELECT p.barcode, p.name, p.qty, p.price, p.category, p.supplier, p.image, c.name as categoryName FROM product p JOIN category c ON p.category = c.name WHERE c.name = ?";
                 try {
                     PreparedStatement ps = conn.prepareStatement(sql);
                     ps.setString(1, (String) searchParam);
                     ResultSet resultSet = ps.executeQuery();
 
                     while (resultSet.next()) {
-                        Product p = new Product(resultSet.getInt("barcode"),resultSet.getString("name"), resultSet.getInt("qty"), resultSet.getDouble("price"),resultSet.getString("supplier"), resultSet.getString("categoryName"));
+                        Product p = new Product(resultSet.getInt("barcode"),resultSet.getString("name"), resultSet.getInt("qty"), resultSet.getDouble("price"),resultSet.getString("supplier"), resultSet.getString("categoryName"), resultSet.getString("image"));
                         resList.add(p);
                     }
                 } catch (SQLException ex) {
@@ -153,7 +151,8 @@ public class ProductTable implements Table<Product>{
         double price =(double) map.get("price");
         String supplier =(String) map.get("supplier");
         String category =(String) map.get("category");
-        return new Product(barcode, name, qty, price, supplier, category);
+        String image = (String) map.get("image");
+        return new Product(barcode, name, qty, price, supplier, category, image);
     }
     
 }

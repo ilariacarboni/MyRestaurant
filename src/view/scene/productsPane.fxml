@@ -3,47 +3,25 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
-<<<<<<< HEAD
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-=======
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<<<<<<< HEAD
 <?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="mainContainer" prefHeight="513.0" prefWidth="900.0" stylesheets="@../style/css/store.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.ProductsPaneController">
    <top>
       <HBox prefHeight="200.0">
-=======
-
-<BorderPane fx:id="mainContainer" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.ProductsPaneController">
-   <center>
-      <GridPane fx:id="productsContainer" hgap="20.0" vgap="20.0">
-          <padding>
-            <Insets bottom="20.0" left="20.0" top="20.0" />
-         </padding>
-          <columnConstraints>
-            <ColumnConstraints percentWidth="33" />
-            <ColumnConstraints percentWidth="33" />
-            <ColumnConstraints percentWidth="33" />
-         </columnConstraints>
-      </GridPane>
-   </center>
-   <top>
-      <HBox>
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
          <children>
             <VBox>
                <children>
                   <Label fx:id="categoryLabel" />
-<<<<<<< HEAD
                </children>
             </VBox>
             <HBox prefHeight="32.0" prefWidth="290.0">
@@ -66,14 +44,6 @@
             <AnchorPane HBox.hgrow="ALWAYS">
                <children>
                   <Button text="Nuovo Ordine" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="25.0" />
-=======
-                  <TextField fx:id="searchBar" />
-               </children>
-            </VBox>
-            <AnchorPane HBox.hgrow="ALWAYS">
-               <children>
-                  <Button text="Nuovo Ordine" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="20.0" />
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
                </children>
             </AnchorPane>
          </children>
@@ -86,19 +56,22 @@
          </children>
       </AnchorPane>
    </bottom>
-<<<<<<< HEAD
    <center>
-      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <HBox>
          <children>
-            <GridPane fx:id="productsContainer">
-               <padding>
-                  <Insets bottom="20.0" left="20.0" top="20.0" />
-               </padding>
-               <columnConstraints>
-                  <ColumnConstraints percentWidth="90" />
-               </columnConstraints>
-            </GridPane>
-            <BorderPane fx:id="productInfoMainContainer" prefHeight="200.0" prefWidth="200.0" styleClass="productInfoMainContainer" HBox.hgrow="ALWAYS">
+            <ScrollPane hbarPolicy="NEVER" styleClass="scrollPane">
+               <content>
+                  <GridPane fx:id="productsContainer">
+                     <padding>
+                        <Insets bottom="20.0" left="20.0" top="20.0" />
+                     </padding>
+                     <columnConstraints>
+                        <ColumnConstraints percentWidth="90" />
+                     </columnConstraints>
+                  </GridPane>
+               </content>
+            </ScrollPane>
+            <BorderPane fx:id="productInfoMainContainer" prefHeight="400" prefWidth="550.0" styleClass="productInfoMainContainer">
                <top>
                   <Label fx:id="productInfoMainContainerTitle" text="Seleziona un prodotto per visualizzarne i dettagli" BorderPane.alignment="CENTER">
                      <padding>
@@ -116,6 +89,4 @@
          </children>
       </HBox>
    </center>
-=======
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
 </BorderPane>

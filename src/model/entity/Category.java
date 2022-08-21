@@ -14,14 +14,17 @@ import java.util.HashMap;
 public class Category implements Entity{
     
     private String name;
+    private String img;
     
-    public Category(String name){
+    public Category(String name, String img){
         this.name = name;
+        this.img = img;
     }
     
     public String getName(){
         return this.name;
     }
+    public String getImg(){ return this.img;}
 
     @Override
     public String getTableName() {
@@ -32,6 +35,7 @@ public class Category implements Entity{
     public HashMap<String, Object> map() {
         HashMap<String, Object> res = new HashMap<String, Object>();
         res.put("name", this.name);
+        res.put("img", this.img);
         return res;
     }
 

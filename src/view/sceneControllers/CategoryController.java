@@ -7,7 +7,6 @@ package view.sceneControllers;
 
 import java.io.IOException;
 import java.net.URL;
-<<<<<<< HEAD
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -25,15 +24,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import view.utils.LocatedImage;
-=======
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
 
 /**
  * FXML Controller class
@@ -42,7 +32,6 @@ import javafx.scene.control.Button;
  */
 public class CategoryController extends BaseView implements Initializable {
 
-<<<<<<< HEAD
     final String TOTAL_PROD_IN_CATEGORY_LABEL = "Totale prodotti:";
     final String LAST_ORDER_LABEL = "Ultimo ordine:";
     final String MONTHLY_EXPENSE_LABEL = "Spesa media mensile:";
@@ -58,18 +47,10 @@ public class CategoryController extends BaseView implements Initializable {
     public Label monthlyExpenseLabel;
     @FXML
     private AnchorPane category;
-=======
-    @FXML
-    private Button category;
-    /**
-     * Initializes the controller class.
-     */
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
 
-<<<<<<< HEAD
     public void setCategoryInfo(HashMap<String, Object> info){
         String name = (String)info.get("name");
         this.categoryLabel.setText(name.substring(0, 1).toUpperCase() + name.substring(1));
@@ -86,21 +67,10 @@ public class CategoryController extends BaseView implements Initializable {
         //visualizzazione slider -> a transizione finita invoco showProductForCategory
         try {
             commController.getCategoryPaneController().showProductsForCategory(this.categoryLabel.getText());
-=======
-    public void setCategoryName(String name){
-        category.setText(name);
-    }
-
-    @FXML
-    private void categorySelected(ActionEvent event) {
-        try {
-            commController.getCategoryPaneController().showProductsForCategory(this.category.getText());
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
         } catch (IOException ex) {
             Logger.getLogger(CategoryController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-<<<<<<< HEAD
 
     public void categoryHovered(MouseEvent mouseEvent) {
         category.getStyleClass().add("category-hover");
@@ -121,8 +91,4 @@ public class CategoryController extends BaseView implements Initializable {
         }
         return;
     }
-=======
-    
-    
->>>>>>> 27523d0ef7379d8b22f3e5c267dfc4473f2b3714
 }
