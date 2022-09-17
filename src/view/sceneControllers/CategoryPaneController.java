@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
+import business.CategoryManager;
 import javafx.animation.TranslateTransition;
 
 import javafx.fxml.FXML;
@@ -43,14 +44,19 @@ public class CategoryPaneController extends BaseView implements Initializable {
     private GridPane categoryContainer;
     
     private Node productsPane = null;
+    private CategoryManager categoryManager = new CategoryManager();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         commController.setCategoryPaneController(this);
+
         
         ArrayList<HashMap<String,Object>> categories =  this.controllerForView.getAll("category");
+        HashMap<String, HashMap<String, Object>> categoriesInfo = this.categoryManager.getCategoriesBasicInfo();
         categories.forEach((category) -> {
             try{
+                HashMap<String, Object> categoryInfo = categoriesInfo.get(category.get("name"));
+                category.put("info", categoryInfo);
                 this.addCategory(category);
             }catch (IOException ex){
                 Logger.getLogger(CategoryPaneController.class.getName()).log(Level.SEVERE, null, ex);

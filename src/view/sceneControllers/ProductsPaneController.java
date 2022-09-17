@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,7 +31,7 @@ public class ProductsPaneController extends BaseView implements Initializable {
 
     private final String PRODUCT_LABEL_ID = "#productNameLabel";
     private final String PRODUCT_FXML = "/view/scene/product.fxml";
-    private final String ADD_PRODUCT_PANE_FXML = "/view/scene/product.fxml";
+    private final String ADD_PRODUCT_PANE_FXML = "/view/scene/addProductPane.fxml";
     //numero di colonne del gridPane che può essere settato esternamente per renderlo responsive
     private int gridpaneColumnsNumber = 1;
     private final String PRODUCT_INFO_DEFAULT_TITLE = "Seleziona un prodotto per visualizzarne i dettagli";
@@ -50,12 +51,14 @@ public class ProductsPaneController extends BaseView implements Initializable {
     public Label productInfoMainContainerTitle;
 
     public boolean productInfoIsDirty;
+    private ArrayList shownProducts ;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         commController.setProductPaneController(this);
+        this.shownProducts = new ArrayList<>();
         
         searchBar.textProperty().addListener((observable, oldValue, newValue) ->{
             ObservableList<Node> products = productsContainer.getChildren();
@@ -80,22 +83,26 @@ public class ProductsPaneController extends BaseView implements Initializable {
         ArrayList<HashMap<String, Object>> products = controllerForView.getFrom(category, "category", "product");
         for(int i = 0; i<products.size(); i++){
             HashMap<String, Object> product = products.get(i);
-            try {
-                addProduct(product, i);
-            } catch (IOException ex) {
-                Logger.getLogger(ProductsPaneController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            this.addProduct(product);
+
         }
     }
     
-    private void addProduct(HashMap<String, Object> productInfo, int index) throws IOException{
+    public void addProduct(HashMap<String, Object> productInfo){
+        int index = this.shownProducts.size() ;
+        this.shownProducts.add(index, productInfo);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(this.PRODUCT_FXML));
-        Node productNode = loader.load();
-        ProductController productContr = loader.getController();
-        productContr.setProductInfo(productInfo);
-        int columnIndex = index%this.gridpaneColumnsNumber;
-        int rowIndex = (int) Math.floor(index/this.gridpaneColumnsNumber);
-        productsContainer.add(productNode, columnIndex, rowIndex);
+        Node productNode = null;
+        try {
+            productNode = loader.load();
+            ProductController productContr = loader.getController();
+            productContr.setProductInfo(productInfo);
+            int columnIndex = index%this.gridpaneColumnsNumber;
+            int rowIndex = (int) Math.floor(index/this.gridpaneColumnsNumber);
+            productsContainer.add(productNode, columnIndex, rowIndex);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     
     public void showProductInfoPane(Node productInfoPane, String productName){
@@ -115,6 +122,7 @@ public class ProductsPaneController extends BaseView implements Initializable {
     private void addProductBtnClicked(ActionEvent event) throws IOException {
         BorderPane dashboardBorderPane = (BorderPane) mainContainer.getParent();
         dashboardBorderPane.setRight(FXMLLoader.load(getClass().getResource(this.ADD_PRODUCT_PANE_FXML)));
+        this.addProductBtn.setVisible(false);
     }
 
     public void setGridPaneColumnNumber(int columnNumber){

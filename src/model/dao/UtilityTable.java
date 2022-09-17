@@ -11,13 +11,19 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 
 public class UtilityTable implements Table<Utility>{
     
     Connection conn = dbConnection.enstablishConnection();
     ArrayList<Utility> utilitiesList = new ArrayList<Utility>();
-  
+    private final String UTILITY_COST_PER_MONTH_QUERY = "select  strftime('%m-%Y', u.date) as date,\n" +
+            "sum(u.total) as sum_for_month\n" +
+            "from utility u\n" +
+            "where u.date between datetime('now', '-1 year') and datetime('now')\n" +
+            "group by strftime('%m-%Y', u.date)\n" +
+            "order by strftime('%Y', u.date) asc , strftime('%m', u.date) asc;";
 
     @Override
     public ArrayList<Utility> getAll() {
@@ -187,6 +193,23 @@ public class UtilityTable implements Table<Utility>{
             }
         }     
          return resList;
+    }
+
+    public LinkedHashMap<String, Double> getUtilityCostPerMonth(){
+        LinkedHashMap<String, Double> res = null;
+        try{
+            Statement stm = conn.createStatement();
+            ResultSet resultSet = stm.executeQuery(this.UTILITY_COST_PER_MONTH_QUERY);
+            res = new LinkedHashMap<String, Double>();
+            while (resultSet.next()) {
+                String month = resultSet.getString("date");
+                Double cost = resultSet.getDouble("sum_for_month");
+                res.put(month, cost);
+            }
+        }catch (SQLException ex){
+            System.out.println(ex.toString());
+        }
+        return res;
     }
     
     @Override

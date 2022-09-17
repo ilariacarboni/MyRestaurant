@@ -16,7 +16,6 @@ import java.util.Properties;
 public class dbConnection {
     
     private static Connection conn = null;
-    //associato alla classe e non all'istanza
     public static Connection enstablishConnection(){
         
         if(conn==null){

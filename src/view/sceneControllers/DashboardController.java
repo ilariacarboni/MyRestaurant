@@ -10,7 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -110,6 +109,7 @@ public class DashboardController extends BaseView implements Initializable {
     private void dashboardBtnClicked(ActionEvent event) throws IOException {
         select(dashboardBtn);
         resetAllExcept(dashboardBtn);
+        borderPane.setCenter(FXMLLoader.load(getClass().getResource("/view/scene/chartsPane.fxml")));
     }
 
     @FXML

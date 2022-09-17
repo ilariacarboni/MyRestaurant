@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+
+import business.ProductManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -52,6 +54,10 @@ public class ProductController extends BaseView implements Initializable {
     @FXML
     public AnchorPane productContainer;
     @FXML
+    public Label productPriceValue;
+    @FXML
+    public Label productQtyValue;
+    @FXML
     private AnchorPane product;
 
     private HashMap<String, Object> productInfo;
@@ -63,6 +69,8 @@ public class ProductController extends BaseView implements Initializable {
     public void setProductInfo(HashMap<String, Object> productInfo){
         this.productInfo=productInfo;
         this.productNameLabel.setText((String)productInfo.get("name"));
+        this.productPriceValue.setText(productInfo.get("price").toString());
+        this.productQtyValue.setText(productInfo.get("qty").toString());
     }
     
     public HashMap<String, Object> getProductInfo(){

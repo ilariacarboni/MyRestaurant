@@ -5,6 +5,7 @@
  */
 package view.sceneControllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,7 +63,7 @@ public class AddProductPaneController extends BaseView implements Initializable 
     }    
 
     @FXML
-    private void addProductBtnClicked(ActionEvent event) {
+    private void addProductBtnClicked(ActionEvent event){
         
         //controllo che siano stati inseriti tutti i campi
         if(barcodeTextField.getText().isEmpty() || qtyTextField.getText().isEmpty() || 
@@ -92,12 +93,14 @@ public class AddProductPaneController extends BaseView implements Initializable 
                 Alert a = new Alert(AlertType.WARNING);
                 a.setContentText("Il prodotto non è stato inserito!");
                 a.show();
-                resetTextFields();
             }else{
                 Alert a = new Alert(AlertType.INFORMATION);
                 a.setContentText("Il prodotto è stato inserito correttamente!");
                 a.show();
                 resetTextFields();
+                resetTextFields();
+                ProductsPaneController productsPaneController = commController.getProductsPaneController();
+                productsPaneController.addProduct(product);
             }
         }  
     }
