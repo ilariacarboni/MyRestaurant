@@ -46,20 +46,43 @@ public class CategoryController extends BaseView implements Initializable {
     @FXML
     public Label monthlyExpenseLabel;
     @FXML
+    public Label lastOrderValue;
+    @FXML
+    public Label monthlyExpenseValue;
+    @FXML
+    public Label totalProductsInCategoryValue;
+    @FXML
     private AnchorPane category;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
 
-    public void setCategoryInfo(HashMap<String, Object> info){
-        String name = (String)info.get("name");
+    public void setCategoryInfo(HashMap<String, Object> category){
+        String name = (String)category.get("name");
         this.categoryLabel.setText(name.substring(0, 1).toUpperCase() + name.substring(1));
-        if(info.get("img") != null){
-            this.categoryIcon.setImage(new LocatedImage((String) info.get("img")));
+        if (category.get("img") != null){
+            this.categoryIcon.setImage(new LocatedImage((String) category.get("img")));
         }
-        this.totalProductsInCategoryLabel.setText(this.TOTAL_PROD_IN_CATEGORY_LABEL);
-        this.lastOrderLabel.setText(this.LAST_ORDER_LABEL);
-        this.monthlyExpenseLabel.setText(this.MONTHLY_EXPENSE_LABEL);
+        HashMap<String, Object> categoryInfo = (HashMap<String, Object>) category.get("info");
+        this.initializeLabels();
+        if(categoryInfo != null){
+            if(categoryInfo.get("productsTotal") != null){
+                this.totalProductsInCategoryValue.setText(categoryInfo.get("productsTotal").toString());
+            }
+            if(categoryInfo.get("lastOrder") != null){
+                this.lastOrderValue.setText(categoryInfo.get("lastOrder").toString());
+            }
+            if(categoryInfo.get("averageExpense") != null){
+                Double floor = Math.floor((Double)categoryInfo.get("averageExpense"));
+                this.monthlyExpenseValue.setText(floor.toString());
+            }
+        }
+    }
+
+    private void initializeLabels(){
+        this.totalProductsInCategoryLabel.setText(this.TOTAL_PROD_IN_CATEGORY_LABEL + " ");
+        this.lastOrderLabel.setText(this.LAST_ORDER_LABEL + " ");
+        this.monthlyExpenseLabel.setText(this.MONTHLY_EXPENSE_LABEL + " ");
     }
 
     @FXML

@@ -19,6 +19,7 @@
    <top>
       <HBox prefHeight="200.0">
          <children>
+            <AnchorPane fx:id="backButtonContainer" />
             <VBox>
                <children>
                   <Label fx:id="categoryLabel" />

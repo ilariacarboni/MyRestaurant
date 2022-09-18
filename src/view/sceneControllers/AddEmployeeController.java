@@ -1,16 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
+
 package view.sceneControllers;
 
-import model.entity.Employee;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-import javafx.beans.value.ObservableValue;
+
+import business.EmployeeManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -78,6 +75,8 @@ public class AddEmployeeController extends BaseView implements  Initializable {
     
     @FXML
     private Label titoloLbl;
+
+    private EmployeeManager employeeManager = new EmployeeManager();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -161,7 +160,7 @@ public class AddEmployeeController extends BaseView implements  Initializable {
                 employee.put("wage", wage);
                 employee.put("begin_date", begin_date);
                 employee.put("end_date", end_date);
-                boolean res = controllerForView.save(employee, "employee");
+                boolean res = this.employeeManager.saveEmployee(employee);
                 if(!res){
                     Alert a = new Alert(AlertType.WARNING);
                     a.setContentText("Il dipendente non è stato inserito!");
@@ -189,5 +188,3 @@ public class AddEmployeeController extends BaseView implements  Initializable {
     
     
 }
-
-

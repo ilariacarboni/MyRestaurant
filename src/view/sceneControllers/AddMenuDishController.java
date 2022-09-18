@@ -1,14 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package view.sceneControllers;
 
-import model.entity.Menu;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
+
+import business.MenuManager;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -53,7 +49,7 @@ public class AddMenuDishController extends BaseView implements Initializable {
     
     @FXML
     private Label titoloLbl;
-
+    private MenuManager menuManager = new MenuManager();
    
     
     @Override
@@ -102,7 +98,7 @@ public class AddMenuDishController extends BaseView implements Initializable {
                 menu.put("price", price);
                 menu.put("category", category);
                 
-                boolean res = controllerForView.save(menu, "menu");
+                boolean res = this.menuManager.saveDish(menu);
                 if(!res){
                     Alert a = new Alert(AlertType.WARNING);
                     a.setContentText("Il piatto non è stato inserito!");
