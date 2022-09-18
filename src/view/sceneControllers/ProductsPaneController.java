@@ -8,7 +8,6 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -34,6 +33,7 @@ public class ProductsPaneController extends BaseView implements Initializable {
     private final String ADD_PRODUCT_PANE_FXML = "/view/scene/product.fxml";
     //numero di colonne del gridPane che può essere settato esternamente per renderlo responsive
     private int gridpaneColumnsNumber = 1;
+    private final String PRODUCT_INFO_DEFAULT_TITLE = "Seleziona un prodotto per visualizzarne i dettagli";
     @FXML
     private Label categoryLabel;
     @FXML
@@ -48,6 +48,8 @@ public class ProductsPaneController extends BaseView implements Initializable {
     public BorderPane productInfoMainContainer;
     @FXML
     public Label productInfoMainContainerTitle;
+
+    public boolean productInfoIsDirty;
     /**
      * Initializes the controller class.
      */
@@ -97,8 +99,16 @@ public class ProductsPaneController extends BaseView implements Initializable {
     }
     
     public void showProductInfoPane(Node productInfoPane, String productName){
+        this.productInfoIsDirty = true;
         productInfoMainContainerTitle.setText(productName);
         productInfoMainContainer.setCenter(productInfoPane);
+    }
+
+    public void emptyProductInfo(){
+        if(this.productInfoIsDirty){
+            productInfoMainContainerTitle.setText(this.PRODUCT_INFO_DEFAULT_TITLE);
+            productInfoMainContainer.setCenter(null);
+        }
     }
 
     @FXML

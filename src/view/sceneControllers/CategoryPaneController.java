@@ -82,6 +82,7 @@ public class CategoryPaneController extends BaseView implements Initializable {
             this.productsPane = FXMLLoader.load(getClass().getResource(this.PRODUCT_PANE_LOCATION));
         }
         ProductsPaneController productsPaneContr = commController.getProductsPaneController();
+        productsPaneContr.emptyProductInfo();
         productsPaneContr.loadProductsByCategory(category);
         BorderPane dashboardBorderPane = (BorderPane) storeMainPane.getParent();
         dashboardBorderPane.setCenter(productsPane);
