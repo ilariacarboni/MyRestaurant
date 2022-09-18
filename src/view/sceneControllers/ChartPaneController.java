@@ -5,8 +5,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.chart.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
@@ -22,39 +24,40 @@ public class ChartPaneController extends BaseView implements Initializable {
     private int index = 0;
     private HashMap<Integer, BarChart> monthCharts = new HashMap<>();
     @FXML
+    private ScrollPane container;
+    @FXML
     private BorderPane chartBorderPane;
-
     @FXML
     private GridPane chartsGridPane;
-
     @FXML
     private AnchorPane revenueTrendChart;
-
     @FXML
     private AnchorPane warehouseCompositionChart;
-
     @FXML
     private AnchorPane utilityCostsChart;
-
     @FXML
     private AnchorPane moreOrderedDishesChartContainer;
-
     @FXML
     private Button leftBtn;
-
     @FXML
     private Button rightBtn;
-
     @FXML
     private AnchorPane moreOrderedDishesChart;
-
+    @FXML
+    private AnchorPane revenueOrdersComparisonChart;
+    @FXML
+    private AnchorPane revenueUtilitiesComparisonChart;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        container.setFitToHeight(true);
+        container.setFitToWidth(true);
         this.makeRevenueTrendChart();
         this.makeWarehouseCompositionChart();
         this.makeUtilityCostsChart();
         this.makeMoreOrderedDishesChart();
+        this.makeRevenueOrdersComparisonChart();
+        this.makeRevenueUtilitiesComparisonChart();
     }
 
     private void makeRevenueTrendChart(){
@@ -90,6 +93,7 @@ public class ChartPaneController extends BaseView implements Initializable {
         }
         final PieChart chart = new PieChart(pieChartData);
         chart.setTitle("Composizione del magazzino");
+        this.setAnchor(chart, 0.0);
         this.warehouseCompositionChart.getChildren().add(chart);
     }
 
@@ -110,6 +114,7 @@ public class ChartPaneController extends BaseView implements Initializable {
                 series.getData().add(new XYChart.Data(key, value));
             }
             utilityChart.getData().add(series);
+            this.setAnchor(utilityChart, 10.0);
             this.utilityCostsChart.getChildren().add(utilityChart);
         }
     }
@@ -142,7 +147,6 @@ public class ChartPaneController extends BaseView implements Initializable {
         index = 0;
     }
 
-
     @FXML
     void followingMonth(MouseEvent event) {
         this.moreOrderedDishesChart.getChildren().clear();
@@ -157,5 +161,18 @@ public class ChartPaneController extends BaseView implements Initializable {
         index = (index - 1) % this.monthCharts.size();
         this.moreOrderedDishesChart.getChildren().add(this.monthCharts.get(index));
         System.out.println(index);
+    }
+
+    private void makeRevenueUtilitiesComparisonChart() {
+    }
+
+    private void makeRevenueOrdersComparisonChart() {
+    }
+
+    private void setAnchor(Node node, Double value){
+        AnchorPane.setTopAnchor(node, value);
+        AnchorPane.setBottomAnchor(node, value);
+        AnchorPane.setLeftAnchor(node, value);
+        AnchorPane.setRightAnchor(node, value);
     }
 }

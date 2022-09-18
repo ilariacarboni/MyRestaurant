@@ -90,7 +90,7 @@ public class ProductInfoPaneController extends BaseView implements Initializable
             XYChart.Series series = new XYChart.Series();
             series.setName("uso/mese");
             for (Map.Entry<Integer, Integer> entry : data.entrySet()) {
-                int key = entry.getKey();
+                String key = entry.getKey().toString();
                 int value = entry.getValue();
                 XYChart.Data point = new XYChart.Data<>(key, value);
                 series.getData().add(point);

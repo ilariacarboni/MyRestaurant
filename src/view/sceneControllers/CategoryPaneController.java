@@ -90,9 +90,13 @@ public class CategoryPaneController extends BaseView implements Initializable {
         ProductsPaneController productsPaneContr = commController.getProductsPaneController();
         productsPaneContr.emptyProductInfo();
         productsPaneContr.loadProductsByCategory(category);
-        BorderPane dashboardBorderPane = (BorderPane) storeMainPane.getParent();
-        dashboardBorderPane.setCenter(productsPane);
-        dashboardBorderPane.setRight(null);
+        //BorderPane dashboardBorderPane = (BorderPane) storeMainPane.getParent();
+        //dashboardBorderPane.setCenter(productsPane);
+        //dashboardBorderPane.setRight(null);
+        DashboardController dashboardController = commController.getDashboardController();
+        productsPaneContr.makeBackButton(dashboardController.getCenterPane(), dashboardController.getRightPane());
+        dashboardController.setCenterPane(productsPane);
+        dashboardController.setRightPane(null);
     }
 
     public void animate(){

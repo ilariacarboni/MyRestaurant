@@ -88,7 +88,7 @@ public class DashboardController extends BaseView implements Initializable {
         utilityBtnIcon.setImage(new LocatedImage(this.UTILITY_BTN_ICON_PATH));
         loginBtnIcon.setImage(new LocatedImage(this.LOGIN_BTN_ICON_PATH));
         dashboardBtn.fire();
-
+        this.commController.setDashboardController(this);
     } 
 
     private void resetAllExcept(Button btn){
@@ -97,7 +97,8 @@ public class DashboardController extends BaseView implements Initializable {
                 node.getStyleClass().remove(this.BTN_SELECTED_STYLE_CLASS);
             }
         }
-        
+        this.setCenterPane(null);
+        this.setRightPane(null);
     }
     
     private void select(Button btn){
@@ -118,7 +119,6 @@ public class DashboardController extends BaseView implements Initializable {
         resetAllExcept(menuBtn);
         borderPane.setCenter(FXMLLoader.load(getClass().getResource("/view/scene/MenuPanel.fxml")));
         borderPane.setRight(FXMLLoader.load(getClass().getResource("/view/scene/AddMenuDish.fxml")));
-
     }
 
     @FXML
@@ -160,7 +160,9 @@ public class DashboardController extends BaseView implements Initializable {
     public void setCenterPane(Node node){
         borderPane.setCenter(node);
     }
-
+    public Node getCenterPane(){ return borderPane.getCenter();}
+    public void setRightPane(Node node){ borderPane.setRight(node);}
+    public Node getRightPane(){ return borderPane.getRight();}
     public void menuBtnHovered(MouseEvent mouseEvent) {
         Button btn = (Button)mouseEvent.getSource();
         if(!btn.getStyleClass().contains(this.BTN_SELECTED_STYLE_CLASS)){

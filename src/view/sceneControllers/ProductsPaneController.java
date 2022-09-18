@@ -22,6 +22,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import view.utils.BackButton;
 
 /**
  * FXML Controller class
@@ -51,6 +52,8 @@ public class ProductsPaneController extends BaseView implements Initializable {
     public BorderPane productInfoMainContainer;
     @FXML
     public Label productInfoMainContainerTitle;
+    @FXML
+    private AnchorPane backButtonContainer;
 
     public boolean productInfoIsDirty;
     private ArrayList shownProducts ;
@@ -125,6 +128,16 @@ public class ProductsPaneController extends BaseView implements Initializable {
         BorderPane dashboardBorderPane = (BorderPane) mainContainer.getParent();
         dashboardBorderPane.setRight(FXMLLoader.load(getClass().getResource(this.ADD_PRODUCT_PANE_FXML)));
         this.addProductBtn.setVisible(false);
+    }
+
+    public void makeBackButton(Node centralScene, Node rightScene){
+        BackButton backButton = new BackButton();
+        backButton.setCenterScene(centralScene);
+        backButton.setRightScene(rightScene);
+        backButton.setText("indietro");
+        backButton.setDashboardController(commController.getDashboardController());
+        this.backButtonContainer.getChildren().clear();
+        this.backButtonContainer.getChildren().add(backButton);
     }
 
     public void setGridPaneColumnNumber(int columnNumber){

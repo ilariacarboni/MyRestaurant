@@ -13,9 +13,9 @@ public final class CommunicationController {
     private MenuPaneController menuPaneController = null;
     private EmployeesListController employeesListController = null;
     private UtilitiesPaneController utilitiesPaneController = null;
+    private DashboardController dashboardController = null;
     
-    private CommunicationController() {
-    }
+    private CommunicationController() {}
 
     public static CommunicationController getInstance(){
         return commController;
@@ -71,4 +71,12 @@ public final class CommunicationController {
     public EmployeesListController getEmployeePaneController(){
         return this.employeesListController;
     }
+
+    public void setDashboardController(DashboardController dc){
+        if(this.dashboardController == null){
+            this.dashboardController = dc;
+        }
+    }
+
+    public DashboardController getDashboardController(){ return this.dashboardController;}
 }
