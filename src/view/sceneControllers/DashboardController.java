@@ -72,9 +72,7 @@ public class DashboardController extends BaseView implements Initializable {
     private Pane buttonContainer;
     @FXML
     private BorderPane borderPane;
-    
-    @FXML
-    private Button billsBtn;
+
     @FXML
     private Node employeesPane = null;
     @FXML
@@ -163,8 +161,8 @@ public class DashboardController extends BaseView implements Initializable {
 
     @FXML
     private void utilityBtnClicked(ActionEvent event) throws IOException {
-        select(billsBtn);
-        resetAllExcept(billsBtn);
+        select(utilityBtn);
+        resetAllExcept(utilityBtn);
         
         if(this.utilitiesPane == null){
             this.utilitiesPane = FXMLLoader.load(getClass().getResource("/view/scene/UtilitiesPanel.fxml"));
