@@ -1,15 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package view.sceneControllers;
 
-import model.entity.Utility;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+
+import business.UtilityManager;
+import view.sceneControllers.CommunicationController;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,7 +25,8 @@ import javafx.scene.layout.AnchorPane;
  * @author milar
  */
 public class AddUtilityController  extends BaseView implements Initializable {
-    
+
+    private UtilityManager utilityManager = new UtilityManager();
     @FXML
     private Label categoriaLbl;
 
@@ -88,7 +87,7 @@ public class AddUtilityController  extends BaseView implements Initializable {
                 utility.put("date", date);
                 
                 
-                boolean res = controllerForView.save(utility, "utility");
+                boolean res = this.utilityManager.save(utility);
                 if(!res){
                     Alert a = new Alert(Alert.AlertType.WARNING);
                     a.setContentText("Il piatto non è stato inserito!");

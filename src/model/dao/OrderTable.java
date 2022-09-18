@@ -23,11 +23,18 @@ import java.util.HashMap;
 public class OrderTable implements Table<Order>{
     
     Connection conn = dbConnection.enstablishConnection();
+    private final String LAST_ORDER_PER_CATEGORY = "select p.category, max(o.date) as last_order from product p left join orders o on p.barcode = o.product_barcode group by p.category;";
+    private final String AVERAGE_MONTHLY_EXPENSE_PER_CATEGORY =
+            "select avg(costo_tot) as average_expense, category from(\n" +
+            "    select p.category as category,  strftime('%m', o.date) as month, sum(o.qty*p.price) as costo_tot\n" +
+            "    from product p join orders o on p.barcode = o.product_barcode\n" +
+            "    group by p.category, month\n" +
+            ") group by category;";
 
     @Override
     public ArrayList<Order> getAll() {
         ArrayList <Order> resList = new ArrayList<Order>();
-        String sql = "SELECT * FROM order";
+        String sql = "SELECT * FROM orders";
         try {
             Statement stm = conn.createStatement();
             ResultSet resultSet = stm.executeQuery(sql);
@@ -45,7 +52,7 @@ public class OrderTable implements Table<Order>{
     @Override
     public boolean save(Order o) {
         boolean res = false;
-        String sql= "INSERT INTO order (number, date, product_barcode, qty, state) VALUES (?,?,?,?,?)";
+        String sql= "INSERT INTO orders (number, date, product_barcode, qty, state) VALUES (?,?,?,?,?)";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, o.getNumber());
@@ -65,7 +72,7 @@ public class OrderTable implements Table<Order>{
     @Override
     public boolean update(Order o) {
         boolean res = false;
-        String sql= "UPDATE order SET date=?, product_barcode=?, qty=?, state=? WHERE number=?";
+        String sql= "UPDATE orders SET date=?, product_barcode=?, qty=?, state=? WHERE number=?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
                 ps.setDate(1, o.getDate());
@@ -84,7 +91,7 @@ public class OrderTable implements Table<Order>{
     @Override
     public boolean delete(Order o) {
         boolean res = false;
-        String sql= "DELETE FROM order WHERE number = ?";
+        String sql= "DELETE FROM orders WHERE number = ?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, o.getNumber());
@@ -100,7 +107,7 @@ public class OrderTable implements Table<Order>{
         //ricerca per numero
         ArrayList<Order> resList = new ArrayList<Order>();
         if(searchParam instanceof Integer && paramName.equals("number")){
-            String sql = "SELECT * FROM order WHERE number =?";
+            String sql = "SELECT * FROM orders WHERE number =?";
             try {
                 PreparedStatement ps = conn.prepareStatement(sql);
                 ps.setInt(1, (int) searchParam);
@@ -116,6 +123,40 @@ public class OrderTable implements Table<Order>{
         }
         
         return resList;
+    }
+
+    public HashMap<String, String> getLastOrderPerCategory(){
+        HashMap<String, String> res = null;
+        try {
+            Statement stm = conn.createStatement();
+            ResultSet resultSet = stm.executeQuery(this.LAST_ORDER_PER_CATEGORY);
+            res = new HashMap<String, String>();
+            while (resultSet.next()) {
+                String category = resultSet.getString("category");
+                String lastOrderDate = resultSet.getString("last_order");
+                res.put(category, lastOrderDate);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
+        return res;
+    }
+
+    public HashMap<String, Double> averageMonthlyExpensePerCategory(){
+        HashMap<String, Double> res = null;
+        try {
+            Statement stm = conn.createStatement();
+            ResultSet resultSet = stm.executeQuery(this.AVERAGE_MONTHLY_EXPENSE_PER_CATEGORY);
+            res = new HashMap<String, Double>();
+            while (resultSet.next()) {
+                String category = resultSet.getString("category");
+                Double averageExpense = resultSet.getDouble("average_expense");
+                res.put(category, averageExpense);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
+        return res;
     }
 
     @Override

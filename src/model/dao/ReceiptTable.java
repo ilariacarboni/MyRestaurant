@@ -16,6 +16,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  *
@@ -23,6 +24,18 @@ import java.util.HashMap;
  */
 public class ReceiptTable implements Table<Receipt>{
 
+    private final String REVENUE_PER_MONTH_QUERY = "select  strftime('%m-%Y', r.date) as date,\n" +
+            "sum(r.total) as sum_for_month\n" +
+            "from receipt r\n" +
+            "where r.date between datetime('now', '-1 year') and datetime('now')\n" +
+            "group by strftime('%m-%Y', r.date)\n" +
+            "order by strftime('%Y', r.date) asc , strftime('%m', r.date) asc;";
+    private final String MORE_ORDERED_DISHES_QUERY = "select * from \n" +
+            "( SELECT ROW_NUMBER() \n" +
+            "OVER (PARTITION BY strftime('%m-%Y', r.date) ORDER BY ri.qty desc) AS r,\n" +
+            "ri.qty, ri.dish, strftime('%m-%Y', r.date) as date\n" +
+            "FROM receipt r join receipt_item ri on ri.receipt = r.number order by strftime('%Y', r.date) asc, strftime('%m', r.date) asc) \n" +
+            "x where x.r < 6;";
     Connection conn = dbConnection.enstablishConnection();
 
     @Override
@@ -132,6 +145,48 @@ public class ReceiptTable implements Table<Receipt>{
             }
         }
         return resList;
+    }
+
+    public LinkedHashMap<String, Double> getRevenuePerMonth(){
+        LinkedHashMap<String, Double> res = null;
+        try{
+            Statement stm = conn.createStatement();
+            ResultSet resultSet = stm.executeQuery(this.REVENUE_PER_MONTH_QUERY);
+            res = new LinkedHashMap<String, Double>();
+            while (resultSet.next()) {
+                String month = resultSet.getString("date");
+                Double revenue = resultSet.getDouble("sum_for_month");
+                res.put(month, revenue);
+            }
+        }catch (SQLException ex){
+            System.out.println(ex.toString());
+        }
+        return res;
+    }
+
+    public LinkedHashMap<String, LinkedHashMap<String, Integer>> getMoreOrderedDishes(){
+        LinkedHashMap<String, LinkedHashMap<String, Integer>> res = null;
+        try{
+            Statement stm = conn.createStatement();
+            ResultSet resultSet = stm.executeQuery(this.MORE_ORDERED_DISHES_QUERY);
+            res = new LinkedHashMap<String, LinkedHashMap<String, Integer>>();
+            while (resultSet.next()) {
+                String key = resultSet.getString("date");
+                int qty = resultSet.getInt("qty");
+                String dName = resultSet.getString("dish");
+
+                if(res.get(key) == null){
+                    LinkedHashMap<String, Integer> value = new LinkedHashMap<>();
+                    value.put(dName, qty);
+                    res.put(key, value);
+                }else{
+                    res.get(key).put(dName, qty);
+                }
+            }
+        }catch (SQLException ex){
+            System.out.println(ex.toString());
+        }
+        return res;
     }
 
     @Override

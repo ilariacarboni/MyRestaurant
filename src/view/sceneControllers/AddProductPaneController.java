@@ -5,10 +5,15 @@
  */
 package view.sceneControllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+
+import business.CategoryManager;
+import business.ProductManager;
+import business.SupplierManager;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -25,6 +30,9 @@ import javafx.scene.control.TextField;
  */
 public class AddProductPaneController extends BaseView implements Initializable {
 
+    private ProductManager productManager = new ProductManager();
+    private CategoryManager categoryManager = new CategoryManager();
+    private SupplierManager supplierManager = new SupplierManager();
     @FXML
     private Label barcodeLabel;
     @FXML
@@ -62,7 +70,7 @@ public class AddProductPaneController extends BaseView implements Initializable 
     }    
 
     @FXML
-    private void addProductBtnClicked(ActionEvent event) {
+    private void addProductBtnClicked(ActionEvent event){
         
         //controllo che siano stati inseriti tutti i campi
         if(barcodeTextField.getText().isEmpty() || qtyTextField.getText().isEmpty() || 
@@ -87,17 +95,19 @@ public class AddProductPaneController extends BaseView implements Initializable 
             product.put("price", price);
             product.put("supplier", supplier);
             product.put("category", category);
-            boolean res = controllerForView.save(product, "product");
+            boolean res = this.productManager.saveProduct(product);
             if(!res){
                 Alert a = new Alert(AlertType.WARNING);
                 a.setContentText("Il prodotto non è stato inserito!");
                 a.show();
-                resetTextFields();
             }else{
                 Alert a = new Alert(AlertType.INFORMATION);
                 a.setContentText("Il prodotto è stato inserito correttamente!");
                 a.show();
                 resetTextFields();
+                resetTextFields();
+                ProductsPaneController productsPaneController = commController.getProductsPaneController();
+                productsPaneController.addProduct(product);
             }
         }  
     }
@@ -132,7 +142,7 @@ public class AddProductPaneController extends BaseView implements Initializable 
     }
     
     private void setCategoryComboBox(){
-        ArrayList<HashMap<String, Object>> categoryList = controllerForView.getAll("category");
+        ArrayList<HashMap<String, Object>> categoryList = this.categoryManager.getAll();
         ArrayList categoryNameList = new ArrayList();
         categoryList.forEach((category) -> {
             categoryNameList.add(category.get("name"));
@@ -141,7 +151,7 @@ public class AddProductPaneController extends BaseView implements Initializable 
     }
     
     private void setSupplierComboBox(){
-        ArrayList<HashMap<String, Object>> supplierList = controllerForView.getAll("supplier");
+        ArrayList<HashMap<String, Object>> supplierList = this.supplierManager.getAll();
         ArrayList supplierNameList = new ArrayList();
         supplierList.forEach((category) -> {
             supplierNameList.add(category.get("name"));
