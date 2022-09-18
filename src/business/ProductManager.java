@@ -1,6 +1,7 @@
 package business;
 
 import model.dao.ProductTable;
+import model.entity.Entity;
 import model.entity.Product;
 
 import java.util.ArrayList;
@@ -22,9 +23,31 @@ public class ProductManager {
         HashMap<String, Object> res = null;
         ArrayList<Product> products = this.productTable.getFrom(productId, "barcode");
         if(!products.isEmpty()){
-            //la ricerca per id (barcode) se produce risultati ne produce solo uno
             Product prod = products.get(0);
             res = prod.map();
+        }
+        return res;
+    }
+
+    public ArrayList<HashMap<String, Object>> getFrom(Object searchParam, String paramName){
+        ArrayList<Product> products = this.productTable.getFrom(searchParam, paramName);
+        ArrayList<HashMap<String,Object>> res  = new ArrayList<HashMap<String,Object>>();
+        for(Product product : products){
+            res.add(product.map());
+        }
+        return res;
+    }
+
+    public boolean saveProduct(HashMap<String, Object> data){
+        Product prod = this.productTable.constructEntityFromMap(data);
+        return this.productTable.save(prod);
+    }
+
+    public ArrayList getAll(){
+        ArrayList<Product> products = this.productTable.getAll();
+        ArrayList<HashMap<String,Object>> res  = new ArrayList<HashMap<String,Object>>();
+        for(Product product : products){
+            res.add(product.map());
         }
         return res;
     }

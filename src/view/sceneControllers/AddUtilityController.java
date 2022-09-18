@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+
+import business.UtilityManager;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,7 +24,8 @@ import javafx.scene.layout.AnchorPane;
  * @author milar
  */
 public class AddUtilityController  extends BaseView implements Initializable {
-    
+
+    private UtilityManager utilityManager = new UtilityManager();
     @FXML
     private Label categoriaLbl;
 
@@ -83,7 +86,7 @@ public class AddUtilityController  extends BaseView implements Initializable {
                 utility.put("date", date);
                 
                 
-                boolean res = controllerForView.save(utility, "utility");
+                boolean res = this.utilityManager.save(utility);
                 if(!res){
                     Alert a = new Alert(Alert.AlertType.WARNING);
                     a.setContentText("Il piatto non è stato inserito!");

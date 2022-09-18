@@ -34,6 +34,7 @@ import javafx.util.Duration;
  */
 public class CategoryPaneController extends BaseView implements Initializable {
 
+    private CategoryManager categoryManager = new CategoryManager();
     final int GRIDPANE_COLUMNS_NUMBER = 3;
     final int ANIMATION_DURATION = 275;
     final int ANIMATION_DISTANCE = 700;
@@ -44,14 +45,13 @@ public class CategoryPaneController extends BaseView implements Initializable {
     private GridPane categoryContainer;
     
     private Node productsPane = null;
-    private CategoryManager categoryManager = new CategoryManager();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         commController.setCategoryPaneController(this);
 
         
-        ArrayList<HashMap<String,Object>> categories =  this.controllerForView.getAll("category");
+        ArrayList<HashMap<String,Object>> categories =  this.categoryManager.getAll();
         HashMap<String, HashMap<String, Object>> categoriesInfo = this.categoryManager.getCategoriesBasicInfo();
         categories.forEach((category) -> {
             try{

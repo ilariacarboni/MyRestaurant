@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import business.ProductManager;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,6 +30,7 @@ import javafx.scene.layout.GridPane;
  */
 public class ProductsPaneController extends BaseView implements Initializable {
 
+    private ProductManager productManager = new ProductManager();
     private final String PRODUCT_LABEL_ID = "#productNameLabel";
     private final String PRODUCT_FXML = "/view/scene/product.fxml";
     private final String ADD_PRODUCT_PANE_FXML = "/view/scene/addProductPane.fxml";
@@ -80,7 +82,7 @@ public class ProductsPaneController extends BaseView implements Initializable {
         category = category.toLowerCase();
         this.categoryLabel.setText(category);
         productsContainer.getChildren().clear();
-        ArrayList<HashMap<String, Object>> products = controllerForView.getFrom(category, "category", "product");
+        ArrayList<HashMap<String, Object>> products = this.productManager.getFrom(category, "category");
         for(int i = 0; i<products.size(); i++){
             HashMap<String, Object> product = products.get(i);
             this.addProduct(product);
