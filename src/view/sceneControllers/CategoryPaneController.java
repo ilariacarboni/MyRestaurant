@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
+import business.CategoryManager;
 import javafx.animation.TranslateTransition;
 
 import javafx.fxml.FXML;
@@ -33,6 +34,7 @@ import javafx.util.Duration;
  */
 public class CategoryPaneController extends BaseView implements Initializable {
 
+    private CategoryManager categoryManager = new CategoryManager();
     final int GRIDPANE_COLUMNS_NUMBER = 3;
     final int ANIMATION_DURATION = 275;
     final int ANIMATION_DISTANCE = 700;
@@ -47,10 +49,14 @@ public class CategoryPaneController extends BaseView implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         commController.setCategoryPaneController(this);
+
         
-        ArrayList<HashMap<String,Object>> categories =  this.controllerForView.getAll("category");
+        ArrayList<HashMap<String,Object>> categories =  this.categoryManager.getAll();
+        HashMap<String, HashMap<String, Object>> categoriesInfo = this.categoryManager.getCategoriesBasicInfo();
         categories.forEach((category) -> {
             try{
+                HashMap<String, Object> categoryInfo = categoriesInfo.get(category.get("name"));
+                category.put("info", categoryInfo);
                 this.addCategory(category);
             }catch (IOException ex){
                 Logger.getLogger(CategoryPaneController.class.getName()).log(Level.SEVERE, null, ex);
@@ -84,9 +90,13 @@ public class CategoryPaneController extends BaseView implements Initializable {
         ProductsPaneController productsPaneContr = commController.getProductsPaneController();
         productsPaneContr.emptyProductInfo();
         productsPaneContr.loadProductsByCategory(category);
-        BorderPane dashboardBorderPane = (BorderPane) storeMainPane.getParent();
-        dashboardBorderPane.setCenter(productsPane);
-        dashboardBorderPane.setRight(null);
+        //BorderPane dashboardBorderPane = (BorderPane) storeMainPane.getParent();
+        //dashboardBorderPane.setCenter(productsPane);
+        //dashboardBorderPane.setRight(null);
+        DashboardController dashboardController = commController.getDashboardController();
+        productsPaneContr.makeBackButton(dashboardController.getCenterPane(), dashboardController.getRightPane());
+        dashboardController.setCenterPane(productsPane);
+        dashboardController.setRightPane(null);
     }
 
     public void animate(){

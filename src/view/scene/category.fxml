@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -45,7 +44,12 @@
                   </ImageView>
                   <AnchorPane>
                      <children>
-                        <Label fx:id="totalProductsInCategoryLabel" layoutY="8.0" />
+                        <HBox>
+                           <children>
+                              <Label fx:id="totalProductsInCategoryLabel" />
+                              <Label fx:id="totalProductsInCategoryValue" />
+                           </children>
+                        </HBox>
                      </children>
                   </AnchorPane>
                </children>
@@ -62,7 +66,12 @@
                   </ImageView>
                   <AnchorPane>
                      <children>
-                        <Label fx:id="lastOrderLabel" layoutY="8.0" />
+                        <HBox>
+                           <children>
+                              <Label fx:id="lastOrderLabel" />
+                              <Label fx:id="lastOrderValue" />
+                           </children>
+                        </HBox>
                      </children>
                   </AnchorPane>
                </children>
@@ -79,7 +88,12 @@
                   </ImageView>
                   <AnchorPane>
                      <children>
-                        <Label fx:id="monthlyExpenseLabel" layoutY="8.0" />
+                        <HBox>
+                           <children>
+                              <Label fx:id="monthlyExpenseLabel" />
+                              <Label fx:id="monthlyExpenseValue" />
+                           </children>
+                        </HBox>
                      </children>
                   </AnchorPane>
                </children>
@@ -88,4 +102,3 @@
       </VBox>
    </children>
 </AnchorPane>
-
