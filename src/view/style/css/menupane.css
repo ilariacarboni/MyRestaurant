@@ -13,3 +13,23 @@
 #menuContainer{
     -fx-background-color: #c2c6c8;
 }
+
+
+.menuDish-item{
+    -fx-background-color: #FFFFFF;
+        -fx-background-radius: 30;
+}
+
+.shadow{
+    -fx-effect: dropShadow(three-pass-box,rgba(0,0,0,0.1), 10.0 , 0.0 , 0.0 ,10.0);
+}
+
+.chosen-dish-card{
+    -fx-background-color: #F16C31;
+    -fx-background-radius: 30;
+}
+
+.delete-btn{
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 100;
+}

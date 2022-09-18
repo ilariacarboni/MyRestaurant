@@ -1,15 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<ScrollPane fx:id="menuListScrollPane" prefHeight="342.0" prefWidth="354.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.MenuListController">
-  <content>
-      <GridPane fx:id="menuListGridPane">
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-      </GridPane>
-  </content>
-</ScrollPane>
+<BorderPane fx:id="menuListPane" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.MenuListController">
+   <center>
+      <ScrollPane fx:id="menuListScrollPane" BorderPane.alignment="CENTER">
+        <content>
+            <GridPane fx:id="menuListGridPane">
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+        </content>
+      </ScrollPane>
+   </center>
+   <top>
+      <Button fx:id="backBtn" mnemonicParsing="false" onAction="#goBack" prefHeight="20.0" prefWidth="30.0" BorderPane.alignment="TOP_LEFT">
+         <graphic>
+            <ImageView fx:id="backImg" fitHeight="20.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../style/img/menu/icons8-back-24.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <BorderPane.margin>
+            <Insets left="20.0" />
+         </BorderPane.margin>
+      </Button>
+   </top>
+</BorderPane>

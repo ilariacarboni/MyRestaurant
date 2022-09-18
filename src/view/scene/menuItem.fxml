@@ -9,13 +9,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="dishAnchorPane" onMousePressed="#click"  xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.menuItemController">
+<AnchorPane fx:id="dishAnchorPane" onMouseClicked="#itemSelected" stylesheets="@../style/css/menupane.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.menuItemController">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="63.0" layoutY="8.0" prefHeight="215.0" prefWidth="225.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox fx:id="itemVbox" alignment="TOP_CENTER" layoutX="63.0" layoutY="8.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox prefHeight="51.0" prefWidth="185.0">
+            <HBox prefHeight="51.0" prefWidth="207.0">
                <children>
-                  <Label fx:id="itemNameLbl" prefHeight="49.0" prefWidth="137.0" text="Fettuccine">
+                  <Label fx:id="itemNameLbl" prefHeight="50.0" prefWidth="157.0" text="Fettuccine">
                      <font>
                         <Font name="Cambria" size="24.0" />
                      </font>
@@ -25,12 +25,12 @@
                   <Insets left="20.0" top="20.0" />
                </VBox.margin>
             </HBox>
-            <Label fx:id="itemPriceLbl" prefHeight="34.0" prefWidth="186.0" text="€10">
+            <Label fx:id="itemPriceLbl" prefHeight="34.0" prefWidth="180.0" text="€10">
                <font>
                   <Font name="Cambria Bold" size="18.0" />
                </font>
             </Label>
-            <ImageView fx:id="imgDish" fitHeight="115.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imgDish" fitHeight="93.0" fitWidth="98.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </VBox>
    </children>

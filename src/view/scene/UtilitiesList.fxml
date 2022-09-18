@@ -2,11 +2,21 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane id="AnchorPane" minWidth="-Infinity" prefHeight="400.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.UtilityListController">
    <children>
       <Label fx:id="titioloLbl" layoutX="40.0" layoutY="21.0" text="lista utenze" />
       <ListView fx:id="listaUtenze" layoutX="20.0" layoutY="40.0" prefHeight="92.0" prefWidth="350.0" />
+      <TableView layoutX="20.0" layoutY="132.0" prefHeight="200.0" prefWidth="350.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="C1" />
+          <TableColumn prefWidth="75.0" text="C2" />
+            <TableColumn prefWidth="75.0" text="Column X" />
+            <TableColumn prefWidth="119.19999694824219" text="Column X" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

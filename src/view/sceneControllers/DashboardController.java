@@ -72,7 +72,16 @@ public class DashboardController extends BaseView implements Initializable {
     private Pane buttonContainer;
     @FXML
     private BorderPane borderPane;
-
+    
+    @FXML
+    private Button billsBtn;
+    @FXML
+    private Node employeesPane = null;
+    @FXML
+    private Node menuPane = null;
+    @FXML
+    private Node utilitiesPane = null;
+    @FXML
     private Node categoryPane = null;
 
     /**
@@ -116,8 +125,12 @@ public class DashboardController extends BaseView implements Initializable {
     private void menuBtnClicked(ActionEvent event) throws IOException {
         select(menuBtn);
         resetAllExcept(menuBtn);
-        borderPane.setCenter(FXMLLoader.load(getClass().getResource("/view/scene/MenuPanel.fxml")));
-        borderPane.setRight(FXMLLoader.load(getClass().getResource("/view/scene/AddMenuDish.fxml")));
+        
+        if(this.menuPane == null){
+           this.menuPane = FXMLLoader.load(getClass().getResource("/view/scene/MenuPanel.fxml"));
+        }
+        borderPane.setCenter(this.menuPane);
+        borderPane.setRight(null);
 
     }
 
@@ -125,8 +138,12 @@ public class DashboardController extends BaseView implements Initializable {
     private void employeesBtnClicked(ActionEvent event) throws IOException {
         select(employeesBtn);
         resetAllExcept(employeesBtn);
-        borderPane.setRight(FXMLLoader.load(getClass().getResource("/view/scene/AddEmployee.fxml")));
-        borderPane.setCenter(FXMLLoader.load(getClass().getResource("/view/scene/EmployeesList.fxml")));
+        
+        if(this.employeesPane == null){
+            this.employeesPane = FXMLLoader.load(getClass().getResource("/view/scene/EmployeesList.fxml"));
+        }
+        borderPane.setCenter(this.employeesPane);
+        borderPane.setRight(null);
     }
 
     @FXML
@@ -146,9 +163,14 @@ public class DashboardController extends BaseView implements Initializable {
 
     @FXML
     private void utilityBtnClicked(ActionEvent event) throws IOException {
-        select(utilityBtn);
-        resetAllExcept(utilityBtn);
-        borderPane.setCenter(FXMLLoader.load(getClass().getResource("/view/scene/UtilitiesPanel.fxml")));
+        select(billsBtn);
+        resetAllExcept(billsBtn);
+        
+        if(this.utilitiesPane == null){
+            this.utilitiesPane = FXMLLoader.load(getClass().getResource("/view/scene/UtilitiesPanel.fxml"));
+        }
+        borderPane.setCenter(this.utilitiesPane);
+        borderPane.setRight(null);
     }
 
     @FXML

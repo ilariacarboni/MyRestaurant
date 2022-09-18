@@ -1,20 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane minWidth="-Infinity" prefHeight="328.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.AddMenuDishController">
+<AnchorPane prefHeight="328.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.AddMenuDishController">
    <children>
-      <Label fx:id="nomeLbl" layoutX="15.0" layoutY="68.0" text="Nome Piatto" />
-      <Label fx:id="prezzoLbl" layoutX="15.0" layoutY="117.0" text="Prezzo" />
-      <TextField fx:id="nomeTxt" layoutX="115.0" layoutY="64.0" />
-      <TextField fx:id="prezzoTxt" layoutX="115.0" layoutY="113.0" />
-      <Button fx:id="insertdishBtn" layoutX="212.0" layoutY="220.0" mnemonicParsing="false" onAction="#addMenuDishBtnClicked" text="inserisci" />
-      <Label fx:id="categoriaLbl" layoutX="19.0" layoutY="164.0" text="Categoria" />
-      <ChoiceBox fx:id="categorieChoicebox" layoutX="116.0" layoutY="160.0" prefHeight="27.0" prefWidth="153.0" />
-      <Label fx:id="titoloLbl" layoutX="14.0" layoutY="14.0" text="Aggiungi piatto" />
+      <VBox layoutX="10.0" layoutY="10.0" prefHeight="486.0" prefWidth="410.0" styleClass="right-bar">
+         <children>
+            <HBox alignment="CENTER">
+               <children>
+                  <Label fx:id="titoloLbl" text="Aggiungi piatto" textFill="#878787">
+                     <font>
+                        <Font name="Cambria Bold" size="28.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets right="20.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </HBox>
+            <VBox fx:id="chosenDishCard" alignment="CENTER" prefHeight="311.0" prefWidth="273.0" stylesheets="@../style/css/menupane.css">
+               <VBox.margin>
+                  <Insets left="50.0" right="50.0" top="10.0" />
+               </VBox.margin>
+               <children>
+                  <HBox prefHeight="30.0" prefWidth="329.0">
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                     <children>
+                        <Label fx:id="nomeLbl" prefHeight="30.0" prefWidth="200.0" text="Nome Piatto" textFill="WHITE">
+                           <font>
+                              <Font name="Cambria" size="24.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="nomeTxt" prefHeight="27.0" prefWidth="137.0">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Label fx:id="prezzoLbl" prefHeight="30.0" prefWidth="263.0" text="Prezzo" textFill="WHITE">
+                           <font>
+                              <Font name="Cambria" size="24.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="prezzoTxt" prefHeight="27.0" prefWidth="116.0">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="42.0" prefWidth="356.0">
+                     <children>
+                        <Label fx:id="categoriaLbl" prefHeight="30.0" prefWidth="203.0" text="Categoria" textFill="WHITE">
+                           <font>
+                              <Font name="Cambria" size="24.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Label>
+                        <ChoiceBox fx:id="categorieChoicebox" prefHeight="27.0" prefWidth="153.0">
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </ChoiceBox>
+                     </children>
+                  </HBox>
+                  <Button fx:id="insertdishBtn" mnemonicParsing="false" onAction="#addMenuDishBtnClicked" prefHeight="42.0" prefWidth="116.0" text="inserisci" textFill="#828282">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+               <styleClass>
+                  <String fx:value="chosen-dish-card" />
+                  <String fx:value="shadow" />
+               </styleClass>
+            </VBox>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

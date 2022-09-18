@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package view.sceneControllers;
 
 /**
@@ -13,6 +17,7 @@ public final class CommunicationController {
     private MenuPaneController menuPaneController = null;
     private EmployeesListController employeesListController = null;
     private UtilitiesPaneController utilitiesPaneController = null;
+    private DishInfoController dishinfoController = null;
     
     private CommunicationController() {
     }
@@ -71,4 +76,15 @@ public final class CommunicationController {
     public EmployeesListController getEmployeePaneController(){
         return this.employeesListController;
     }
+    
+    public void setDishInfoController(DishInfoController dishinfoController){
+        if(this.dishinfoController == null){
+            this.dishinfoController = dishinfoController;
+        }
+    }
+    
+    public DishInfoController getDishInfoController(){
+        return this.dishinfoController;
+    }
 }
+

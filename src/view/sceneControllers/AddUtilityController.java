@@ -1,5 +1,10 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
+ */
 package view.sceneControllers;
 
+import model.entity.Utility;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
