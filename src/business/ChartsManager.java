@@ -1,5 +1,6 @@
 package business;
 
+import model.dao.OrderTable;
 import model.dao.ProductTable;
 import model.dao.ReceiptTable;
 import model.dao.UtilityTable;
@@ -11,6 +12,7 @@ public class ChartsManager {
     private ReceiptTable receiptTable = new ReceiptTable();
     private ProductTable productTable = new ProductTable();
     private UtilityTable utilityTable = new UtilityTable();
+    private OrderTable orderTable = new OrderTable();
 
     /**
      * @return an HashMap containing the revenue month by month in a time window of one year;
@@ -24,11 +26,9 @@ public class ChartsManager {
         return this.productTable.getWarehouseComposition();
     }
 
-    public LinkedHashMap<String, Double> getUtilityCostPerMonthData(){
-        return this.utilityTable.getUtilityCostPerMonth();
-    }
+    public LinkedHashMap<String, Double> getUtilityCostPerMonthData(){ return this.utilityTable.getUtilityCostPerMonth();}
 
-    public LinkedHashMap<String, LinkedHashMap<String, Integer>> getMoreOrderedDishes(){
-        return this.receiptTable.getMoreOrderedDishes();
-    }
+    public LinkedHashMap<String, LinkedHashMap<String, Integer>> getMoreOrderedDishes(){return this.receiptTable.getMoreOrderedDishes();}
+
+    public LinkedHashMap<String, Double> getMonthlyOrderExpense(){return this.orderTable.getMonthlyExpense();}
 }

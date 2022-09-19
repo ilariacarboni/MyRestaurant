@@ -15,6 +15,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  *
@@ -30,6 +31,11 @@ public class OrderTable implements Table<Order>{
             "    from product p join orders o on p.barcode = o.product_barcode\n" +
             "    group by p.category, month\n" +
             ") group by category;";
+    private final String MONTHLY_ORDERS_EXPENSE_QUERY = "select  strftime('%m-%Y', o.date) as date,\n" +
+            "sum(p.price*o.qty) as expense\n" +
+            "from orders o join product p on o.product_barcode = p.barcode\n" +
+            "group by strftime('%m-%Y', o.date)\n" +
+            "order by strftime('%Y', o.date) asc , strftime('%m', o.date) asc;";
 
     @Override
     public ArrayList<Order> getAll() {
@@ -154,6 +160,23 @@ public class OrderTable implements Table<Order>{
                 res.put(category, averageExpense);
             }
         } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
+        return res;
+    }
+
+    public LinkedHashMap<String, Double> getMonthlyExpense(){
+        LinkedHashMap<String, Double> res = null;
+        try{
+            Statement stm = conn.createStatement();
+            ResultSet resultSet = stm.executeQuery(this.MONTHLY_ORDERS_EXPENSE_QUERY);
+            res = new LinkedHashMap<String, Double>();
+            while (resultSet.next()) {
+                String month = resultSet.getString("date");
+                Double expense = resultSet.getDouble("expense");
+                res.put(month, expense);
+            }
+        }catch (SQLException ex){
             System.out.println(ex.toString());
         }
         return res;

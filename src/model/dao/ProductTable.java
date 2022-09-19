@@ -210,11 +210,11 @@ public class ProductTable implements Table<Product>{
         int totalProductsInWarehouse = 0;
         try{
             Statement stm = conn.createStatement();
-            ResultSet resultSet = stm.executeQuery(this.PRODUCTS_PER_CATEGORY_QUERY);
+            ResultSet resultSet = stm.executeQuery(this.WAREHOUSE_COMPOSITION_QUERY);
             categoryOccupation = new HashMap<String, Double>();
             while (resultSet.next()) {
                 String category = resultSet.getString("category");
-                double prodNumber = resultSet.getInt("prod_number");
+                double prodNumber = resultSet.getInt("qty");
                 totalProductsInWarehouse += prodNumber;
                 categoryOccupation.put(category, prodNumber);
             }

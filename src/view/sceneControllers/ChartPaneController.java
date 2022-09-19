@@ -32,6 +32,7 @@ public class ChartPaneController extends BaseView implements Initializable {
     private BorderPane chartBorderPane;
     @FXML
     private GridPane chartsGridPane;
+
     @FXML
     private HBox revenueTrendChart;
     @FXML
@@ -61,6 +62,7 @@ public class ChartPaneController extends BaseView implements Initializable {
         this.makeMoreOrderedDishesChart();
         this.makeRevenueOrdersComparisonChart();
         this.makeRevenueUtilitiesComparisonChart();
+
     }
 
     private void makeRevenueTrendChart(){
@@ -165,9 +167,64 @@ public class ChartPaneController extends BaseView implements Initializable {
     }
 
     private void makeRevenueUtilitiesComparisonChart() {
+        CategoryAxis xAxis = new CategoryAxis();
+        NumberAxis yAxis = new NumberAxis();
+        LinkedHashMap<String, Double> revenueData = this.chartsManager.getRevenueData();
+        LinkedHashMap<String, Double> utilityData = this.chartsManager.getUtilityCostPerMonthData();
+
+        AreaChart<String, Number> chart = new AreaChart<>(xAxis, yAxis);
+        xAxis.setLabel("mese");
+
+        XYChart.Series series1 = new XYChart.Series();
+        for (Map.Entry<String, Double> revenue : revenueData.entrySet()) {
+            String month = revenue.getKey();
+            Double value = revenue.getValue();
+            series1.getData().add(new XYChart.Data(month, value));
+        }
+
+        XYChart.Series series2 = new XYChart.Series();
+        for (Map.Entry<String, Double> utility : utilityData.entrySet()) {
+            String month = utility.getKey();
+            Double value = utility.getValue();
+            series2.getData().add(new XYChart.Data(month, value));
+        }
+
+        series1.setName("incassi");
+        series2.setName("spese utenze");
+        chart.getData().addAll(series1, series2);
+        this.revenueUtilitiesComparisonChart.getChildren().add(chart);
     }
 
+    /**
+     * grafico confronto incassi-spese ordini
+     */
     private void makeRevenueOrdersComparisonChart() {
+        CategoryAxis xAxis = new CategoryAxis();
+        NumberAxis yAxis = new NumberAxis();
+        LinkedHashMap<String, Double> revenueData = this.chartsManager.getRevenueData();
+        LinkedHashMap<String, Double> ordersData = this.chartsManager.getMonthlyOrderExpense();
+
+        AreaChart<String, Number> chart = new AreaChart<>(xAxis, yAxis);
+        xAxis.setLabel("mese");
+
+        XYChart.Series series1 = new XYChart.Series();
+        for (Map.Entry<String, Double> revenue : revenueData.entrySet()) {
+            String month = revenue.getKey();
+            Double value = revenue.getValue();
+            series1.getData().add(new XYChart.Data(month, value));
+        }
+
+        XYChart.Series series2 = new XYChart.Series();
+        for (Map.Entry<String, Double> order : ordersData.entrySet()) {
+            String month = order.getKey();
+            Double value = order.getValue();
+            series2.getData().add(new XYChart.Data(month, value));
+        }
+
+        series1.setName("incassi");
+        series2.setName("spese ordini");
+        chart.getData().addAll(series1, series2);
+        this.revenueOrdersComparisonChart.getChildren().add(chart);
     }
 
 }
