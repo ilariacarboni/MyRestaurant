@@ -12,8 +12,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import view.utils.CustomLineChart?>
 
+<?import javafx.scene.chart.CategoryAxis?>
+<?import view.utils.CustomLineChart?>
 <ScrollPane hbarPolicy="NEVER" styleClass="scrollPaneProductInfo" stylesheets="@../style/css/store.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.ProductInfoPaneController">
    <content>
       <VBox fx:id="mainContainer">
@@ -161,17 +162,7 @@
                   <Insets left="20.0" top="20.0" />
                </padding>
             </HBox>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0">
-               <children>
-                  <CustomLineChart fx:id="storeQuantityChart" prefHeight="360.0" prefWidth="500.0" title="Uso mensile nell'ultimo anno">
-                    <xAxis>
-                      <NumberAxis label="Mesi" side="BOTTOM" />
-                    </xAxis>
-                    <yAxis>
-                      <NumberAxis label="Quantità" side="LEFT" />
-                    </yAxis>
-                  </CustomLineChart>
-               </children>
+            <AnchorPane fx:id="storeQuantityChartContainer" prefHeight="200.0" prefWidth="200.0">
             </AnchorPane>
             <Button fx:id="chooseImgBtn" mnemonicParsing="false" onMouseClicked="#chooseImgForProduct" text="Scegli immagine" />
          </children>

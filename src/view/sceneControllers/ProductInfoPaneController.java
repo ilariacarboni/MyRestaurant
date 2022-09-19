@@ -10,12 +10,15 @@ import business.ProductManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser;
@@ -43,9 +46,8 @@ public class ProductInfoPaneController extends BaseView implements Initializable
     public Button chooseImgBtn;
     @FXML
     public VBox mainContainer;
-    @FXML
-    public CustomLineChart storeQuantityChart;
     public HashMap<String,Object> shownProduct = null;
+    public AnchorPane storeQuantityChartContainer;
     private ProductManager prodManager;
 
     @Override
@@ -86,6 +88,9 @@ public class ProductInfoPaneController extends BaseView implements Initializable
         //ottenimento informazioni dalla classe di business
         int barcode = (int)product.get("barcode");
         HashMap<Integer, Integer> data = this.prodManager.getStoreStatistics(barcode);
+        CategoryAxis catAx = new CategoryAxis();
+        NumberAxis numAx = new NumberAxis();
+        CustomLineChart storeQtyChart = new CustomLineChart(catAx, numAx);
         if(data != null){
             XYChart.Series series = new XYChart.Series();
             series.setName("uso/mese");
@@ -95,8 +100,9 @@ public class ProductInfoPaneController extends BaseView implements Initializable
                 XYChart.Data point = new XYChart.Data<>(key, value);
                 series.getData().add(point);
             }
-            storeQuantityChart.addData(series);
+            storeQtyChart.addData(series);
         }
+        this.storeQuantityChartContainer.getChildren().add(storeQtyChart);
     }
     public void chooseImgForProduct(MouseEvent mouseEvent) {
         final FileChooser fc = new FileChooser();

@@ -7,16 +7,17 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
 <BorderPane fx:id="chartBorderPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.ChartPaneController">
    <center>
       <ScrollPane fx:id="container">
          <content>
-            <GridPane fx:id="chartsGridPane" gridLinesVisible="true">
+            <GridPane fx:id="chartsGridPane" alignment="BOTTOM_RIGHT" gridLinesVisible="true">
               <columnConstraints>
-                <ColumnConstraints hgrow="ALWAYS" />
-                <ColumnConstraints hgrow="ALWAYS" />
+                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints vgrow="ALWAYS" />
@@ -24,13 +25,12 @@
                   <RowConstraints vgrow="ALWAYS" />
               </rowConstraints>
                <children>
-                  <AnchorPane fx:id="revenueTrendChart">
-                        </AnchorPane>
-                  <AnchorPane fx:id="warehouseCompositionChart" GridPane.columnIndex="1" />
-                  <AnchorPane fx:id="utilityCostsChart" GridPane.rowIndex="1" />
-                  <AnchorPane fx:id="moreOrderedDishesChartContainer" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <HBox fx:id="revenueTrendChart" alignment="CENTER" />
+                  <HBox fx:id="warehouseCompositionChart" alignment="CENTER" GridPane.columnIndex="1" />
+                  <HBox fx:id="utilityCostsChart" alignment="CENTER" GridPane.rowIndex="1" />
+                  <HBox fx:id="moreOrderedDishesChartContainer" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <BorderPane layoutX="25.0">
+                        <BorderPane>
                            <left>
                               <Button fx:id="leftBtn" mnemonicParsing="false" onMouseClicked="#previousMonth" text="&lt;" BorderPane.alignment="CENTER" />
                            </left>
@@ -49,9 +49,9 @@
                            </top>
                         </BorderPane>
                      </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="revenueOrdersComparisonChart" GridPane.rowIndex="2" />
-                  <AnchorPane fx:id="revenueUtilitiesComparisonChart" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  </HBox>
+                  <HBox fx:id="revenueOrdersComparisonChart" alignment="CENTER" GridPane.rowIndex="2" />
+                  <HBox fx:id="revenueUtilitiesComparisonChart" alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
             </GridPane>
          </content>

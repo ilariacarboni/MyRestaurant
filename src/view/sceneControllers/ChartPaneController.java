@@ -5,6 +5,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.chart.*;
 import javafx.scene.control.Button;
@@ -30,13 +33,13 @@ public class ChartPaneController extends BaseView implements Initializable {
     @FXML
     private GridPane chartsGridPane;
     @FXML
-    private AnchorPane revenueTrendChart;
+    private HBox revenueTrendChart;
     @FXML
-    private AnchorPane warehouseCompositionChart;
+    private HBox warehouseCompositionChart;
     @FXML
-    private AnchorPane utilityCostsChart;
+    private HBox utilityCostsChart;
     @FXML
-    private AnchorPane moreOrderedDishesChartContainer;
+    private HBox moreOrderedDishesChartContainer;
     @FXML
     private Button leftBtn;
     @FXML
@@ -44,9 +47,9 @@ public class ChartPaneController extends BaseView implements Initializable {
     @FXML
     private AnchorPane moreOrderedDishesChart;
     @FXML
-    private AnchorPane revenueOrdersComparisonChart;
+    private HBox revenueOrdersComparisonChart;
     @FXML
-    private AnchorPane revenueUtilitiesComparisonChart;
+    private HBox revenueUtilitiesComparisonChart;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -93,7 +96,6 @@ public class ChartPaneController extends BaseView implements Initializable {
         }
         final PieChart chart = new PieChart(pieChartData);
         chart.setTitle("Composizione del magazzino");
-        this.setAnchor(chart, 0.0);
         this.warehouseCompositionChart.getChildren().add(chart);
     }
 
@@ -114,7 +116,6 @@ public class ChartPaneController extends BaseView implements Initializable {
                 series.getData().add(new XYChart.Data(key, value));
             }
             utilityChart.getData().add(series);
-            this.setAnchor(utilityChart, 10.0);
             this.utilityCostsChart.getChildren().add(utilityChart);
         }
     }
@@ -169,10 +170,4 @@ public class ChartPaneController extends BaseView implements Initializable {
     private void makeRevenueOrdersComparisonChart() {
     }
 
-    private void setAnchor(Node node, Double value){
-        AnchorPane.setTopAnchor(node, value);
-        AnchorPane.setBottomAnchor(node, value);
-        AnchorPane.setLeftAnchor(node, value);
-        AnchorPane.setRightAnchor(node, value);
-    }
 }
