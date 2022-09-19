@@ -47,6 +47,7 @@ public class ProductInfoPaneController extends BaseView implements Initializable
     @FXML
     public VBox mainContainer;
     public HashMap<String,Object> shownProduct = null;
+    @FXML
     public AnchorPane storeQuantityChartContainer;
     private ProductManager prodManager;
 
