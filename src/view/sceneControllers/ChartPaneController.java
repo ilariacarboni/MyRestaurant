@@ -14,6 +14,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import view.utils.CustomAreaChart;
+import view.utils.CustomLineChart;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -172,7 +174,7 @@ public class ChartPaneController extends BaseView implements Initializable {
         LinkedHashMap<String, Double> revenueData = this.chartsManager.getRevenueData();
         LinkedHashMap<String, Double> utilityData = this.chartsManager.getUtilityCostPerMonthData();
 
-        AreaChart<String, Number> chart = new AreaChart<>(xAxis, yAxis);
+        CustomAreaChart chart = new CustomAreaChart(xAxis, yAxis);
         xAxis.setLabel("mese");
 
         XYChart.Series series1 = new XYChart.Series();
@@ -191,7 +193,7 @@ public class ChartPaneController extends BaseView implements Initializable {
 
         series1.setName("incassi");
         series2.setName("spese utenze");
-        chart.getData().addAll(series1, series2);
+        chart.addSeries(series1, series2);
         this.revenueUtilitiesComparisonChart.getChildren().add(chart);
     }
 
@@ -204,7 +206,7 @@ public class ChartPaneController extends BaseView implements Initializable {
         LinkedHashMap<String, Double> revenueData = this.chartsManager.getRevenueData();
         LinkedHashMap<String, Double> ordersData = this.chartsManager.getMonthlyOrderExpense();
 
-        AreaChart<String, Number> chart = new AreaChart<>(xAxis, yAxis);
+        CustomAreaChart chart = new CustomAreaChart(xAxis, yAxis);
         xAxis.setLabel("mese");
 
         XYChart.Series series1 = new XYChart.Series();
@@ -223,7 +225,7 @@ public class ChartPaneController extends BaseView implements Initializable {
 
         series1.setName("incassi");
         series2.setName("spese ordini");
-        chart.getData().addAll(series1, series2);
+        chart.addSeries(series1, series2);
         this.revenueOrdersComparisonChart.getChildren().add(chart);
     }
 
