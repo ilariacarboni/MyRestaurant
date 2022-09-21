@@ -157,7 +157,6 @@ public class ChartPaneController extends BaseView implements Initializable {
         this.moreOrderedDishesChart.getChildren().clear();
         index = (index + 1) % this.monthCharts.size();
         this.moreOrderedDishesChart.getChildren().add(this.monthCharts.get(index));
-        System.out.println(index);
     }
 
     @FXML
@@ -165,7 +164,6 @@ public class ChartPaneController extends BaseView implements Initializable {
         this.moreOrderedDishesChart.getChildren().clear();
         index = (index - 1) % this.monthCharts.size();
         this.moreOrderedDishesChart.getChildren().add(this.monthCharts.get(index));
-        System.out.println(index);
     }
 
     private void makeRevenueUtilitiesComparisonChart() {

@@ -15,6 +15,7 @@ public final class CommunicationController {
     private UtilitiesPaneController utilitiesPaneController = null;
     private DashboardController dashboardController = null;
     private DishInfoController dishinfoController = null;
+    private OrderPaneController orderPaneController = null;
     
     private CommunicationController() {}
 
@@ -89,4 +90,12 @@ public final class CommunicationController {
     public DishInfoController getDishInfoController(){
         return this.dishinfoController;
     }
+
+    public void setOrderPaneController(OrderPaneController op){
+        if(this.orderPaneController == null){
+            this.orderPaneController = op;
+        }
+    }
+
+    public OrderPaneController getOrderPaneController(){return this.orderPaneController; }
 }
