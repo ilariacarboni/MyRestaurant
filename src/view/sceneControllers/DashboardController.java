@@ -80,6 +80,7 @@ public class DashboardController extends BaseView implements Initializable {
     private Node utilitiesPane = null;
     @FXML
     private Node categoryPane = null;
+    private Node ordersPane = null;
 
     /**
      * Initializes the controller class.
@@ -173,9 +174,15 @@ public class DashboardController extends BaseView implements Initializable {
     }
 
     @FXML
-    private void ordersBtnClicked(ActionEvent event) {
+    private void ordersBtnClicked(ActionEvent event) throws IOException {
         select(ordersBtn);
         resetAllExcept(ordersBtn);
+
+        if(this.ordersPane == null){
+            this.ordersPane =  FXMLLoader.load(getClass().getResource("/view/scene/orderPane.fxml"));
+        }
+        borderPane.setCenter(this.ordersPane);
+        borderPane.setRight(null);
     }
     
     public void setCenterPane(Node node){
