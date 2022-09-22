@@ -183,6 +183,8 @@ public class DashboardController extends BaseView implements Initializable {
         }
         borderPane.setCenter(this.ordersPane);
         borderPane.setRight(null);
+        OrderPaneController orderPaneController = commController.getOrderPaneController();
+        orderPaneController.setMode(orderPaneController.ORDERS_ON_DELIVERY_MODE);
     }
     
     public void setCenterPane(Node node){
