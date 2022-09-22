@@ -14,14 +14,17 @@ import java.util.HashMap;
  * @author Natalia
  */
 public class Order implements Entity{
-    
+
+    public static final String CREATED_STATE   = "created";
+    public static final String DELIVERED_STATE = "delivered";
+    public static final String DELETED_STATE   = "deleted";
     private int number;
-    private LocalDate date;
+    private String date;
     private int product_barcode;
     private int qty;
     private int state;
 
-    public Order(int number, LocalDate date, int prodBarcode, int qty, int state){
+    public Order(int number, String date, int prodBarcode, int qty, int state){
         this.number=number;
         this.date=date;
         this.product_barcode=prodBarcode;
