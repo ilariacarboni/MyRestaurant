@@ -11,16 +11,29 @@ public class OrderManager {
     private OrderTable orderTable = new OrderTable();
     //salvataggio
     //modifica
-    //getAll
+    public ArrayList getDeliveringOrdersPage(int page){
+        ArrayList<Order> orders = this.orderTable.getPageWithStatus(Order.CREATED_STATE, page);
+        return this.parseRes(orders);
+    }
     public ArrayList getAllDeliveringOrders(){
-        ArrayList<Order> orders = this.orderTable.getAllDelivering();
+        return this.getAllByStatus(Order.CREATED_STATE);
+    }
+    public ArrayList getAllDeliveredOrders(){
+        return this.getAllByStatus(Order.DELIVERED_STATE);
+    }
+    private ArrayList getAllByStatus(String status){
+        ArrayList<Order> orders = this.orderTable.getAllByStatus(status);
+        return this.parseRes(orders);
+    }
+    private ArrayList parseRes(ArrayList<Order> list){
         ArrayList<HashMap<String,Object>> res  = new ArrayList<HashMap<String,Object>>();
-        for(Order order : orders){
+        for(Order order : list){
             res.add(order.map());
         }
         return res;
     }
-
-    //getPage
+    public void setOrdersPageLength(int l){
+        this.orderTable.setPageLength(l);
+    }
 
 }
