@@ -36,6 +36,11 @@ public class OrderTable implements Table<Order>{
             "from orders o join product p on o.product_barcode = p.barcode\n" +
             "group by strftime('%m-%Y', o.date)\n" +
             "order by strftime('%Y', o.date) asc , strftime('%m', o.date) asc;";
+    private int pageLength = 0;
+
+    public void setPageLength(int l){
+        this.pageLength = l;
+    }
 
     @Override
     public ArrayList<Order> getAll() {
@@ -55,12 +60,32 @@ public class OrderTable implements Table<Order>{
         return resList;
     }
 
-    public ArrayList<Order> getAllDelivering(){
+    public ArrayList<Order> getAllByStatus(String status){
         ArrayList <Order> resList = new ArrayList<Order>();
-        String sql = "SELECT * FROM orders WHERE state = '"+ Order.CREATED_STATE +"'";
+        String sql = "SELECT * FROM orders WHERE state = ?";
         try {
-            Statement stm = conn.createStatement();
-            ResultSet resultSet = stm.executeQuery(sql);
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, status);
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                Order o = new Order( resultSet.getInt("number"), resultSet.getString("date"), resultSet.getInt("product_barcode"), resultSet.getInt("qty"), resultSet.getInt("state"));
+                resList.add(o);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
+        return resList;
+    }
+
+    public ArrayList<Order> getPageWithStatus(String status, int page){
+        ArrayList <Order> resList = new ArrayList<Order>();
+        int offset = offset = (page-1) * this.pageLength;
+        String sql = "SELECT * FROM orders WHERE state = ? LIMIT "+ offset +","+this.pageLength+";";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, status);
+            ResultSet resultSet = ps.executeQuery();
 
             while (resultSet.next()) {
                 Order o = new Order( resultSet.getInt("number"), resultSet.getString("date"), resultSet.getInt("product_barcode"), resultSet.getInt("qty"), resultSet.getInt("state"));
