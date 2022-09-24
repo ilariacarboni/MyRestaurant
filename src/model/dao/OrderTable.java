@@ -22,7 +22,7 @@ import java.util.LinkedHashMap;
  * @author Natalia
  */
 public class OrderTable implements Table<Order>{
-    
+
     Connection conn = dbConnection.enstablishConnection();
     private final String LAST_ORDER_PER_CATEGORY = "select p.category, max(o.date) as last_order from product p left join orders o on p.barcode = o.product_barcode group by p.category;";
     private final String AVERAGE_MONTHLY_EXPENSE_PER_CATEGORY =
@@ -46,7 +46,24 @@ public class OrderTable implements Table<Order>{
             ResultSet resultSet = stm.executeQuery(sql);
 
             while (resultSet.next()) {
-                Order o = new Order( resultSet.getInt("number"), resultSet.getDate("date").toLocalDate(), resultSet.getInt("product_barcode"), resultSet.getInt("qty"), resultSet.getInt("state"));
+                Order o = new Order( resultSet.getInt("number"), resultSet.getString("date"), resultSet.getInt("product_barcode"), resultSet.getInt("qty"), resultSet.getInt("state"));
+                resList.add(o);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
+        return resList;
+    }
+
+    public ArrayList<Order> getAllDelivering(){
+        ArrayList <Order> resList = new ArrayList<Order>();
+        String sql = "SELECT * FROM orders WHERE state = '"+ Order.CREATED_STATE +"'";
+        try {
+            Statement stm = conn.createStatement();
+            ResultSet resultSet = stm.executeQuery(sql);
+
+            while (resultSet.next()) {
+                Order o = new Order( resultSet.getInt("number"), resultSet.getString("date"), resultSet.getInt("product_barcode"), resultSet.getInt("qty"), resultSet.getInt("state"));
                 resList.add(o);
             }
         } catch (SQLException ex) {
@@ -120,7 +137,7 @@ public class OrderTable implements Table<Order>{
                 ResultSet resultSet = ps.executeQuery();
                 
                 while (resultSet.next()) {
-                    Order o = new Order(resultSet.getInt("number"),resultSet.getDate("date").toLocalDate(),resultSet.getInt("product_barcode"), resultSet.getInt("qty"), resultSet.getInt("state"));
+                    Order o = new Order(resultSet.getInt("number"),resultSet.getString("date"),resultSet.getInt("product_barcode"), resultSet.getInt("qty"), resultSet.getInt("state"));
                     resList.add(o);
                 }
             } catch (SQLException ex) {
@@ -185,7 +202,7 @@ public class OrderTable implements Table<Order>{
     @Override
     public Order constructEntityFromMap(HashMap<String, Object> map) {
         int number = (int) map.get("number");
-        LocalDate date = (LocalDate) map.get("date");
+        String date =  map.get("date").toString();
         int productBarcode = (int) map.get("productBarcode");
         int qty = (int) map.get("qty");
         int state = (int) map.get("state");
