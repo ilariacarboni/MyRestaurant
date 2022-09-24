@@ -80,8 +80,8 @@ public class OrderTable implements Table<Order>{
 
     public ArrayList<Order> getPageWithStatus(String status, int page){
         ArrayList <Order> resList = new ArrayList<Order>();
-        int offset = offset = (page-1) * this.pageLength;
-        String sql = "SELECT * FROM orders WHERE state = ? LIMIT "+ offset +","+this.pageLength+";";
+        int offset =  (page-1) * this.pageLength;
+        String sql = "SELECT * FROM orders WHERE state = ? ORDER BY orders.date desc LIMIT "+ offset +","+this.pageLength+" ;";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, status);
@@ -220,6 +220,18 @@ public class OrderTable implements Table<Order>{
             }
         }catch (SQLException ex){
             System.out.println(ex.toString());
+        }
+        return res;
+    }
+    public int getTotal(){
+        int res = 0;
+        String sql= "SELECT count(*) as tot FROM orders";
+        try {
+            Statement stm = conn.createStatement();
+            ResultSet resultSet = stm.executeQuery(sql);
+            res = resultSet.getInt("tot");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
         return res;
     }

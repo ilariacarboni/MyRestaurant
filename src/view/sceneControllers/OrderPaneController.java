@@ -43,24 +43,25 @@ public class OrderPaneController extends BaseView implements Initializable {
     private Button nextPageButton;
     private int index = 0;
     private int pageNumber = 1;
-    private int lastPage = 25;
-    private Integer[] pageLengthValues = {15,30,45};
+    private int lastPage;
+    private Integer[] pageLengthValues = {15,30,60};
+    private int  currentPageLength = pageLengthValues[0];
+    private int totalOrders;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.commController.setOrderPaneController(this);
-        this.ordersContainer.getChildren().clear();
+        commController.setOrderPaneController(this);
+        ordersContainer.getChildren().clear();
+        totalOrders = orderManager.getTotalOrders();
         try {
             this.insertSearchComponent();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        this.pageLengthSelector.setValue(pageLengthValues[0]);
-        this.orderManager.setOrdersPageLength(pageLengthValues[0]);
-        this.pageLengthSelector.getItems().addAll(pageLengthValues);
+        pageLengthSelector.setValue(pageLengthValues[0]);
+        orderManager.setOrdersPageLength(pageLengthValues[0]);
+        pageLengthSelector.getItems().addAll(pageLengthValues);
+        lastPage = (int)(Math.ceil(totalOrders/(double)currentPageLength));
     }
-
-
-
     public void setMode(String mode){
         this.renderingMode = mode;
         this.insertOrders(1);
@@ -110,7 +111,17 @@ public class OrderPaneController extends BaseView implements Initializable {
         }
     }
     public void changePageLength(ActionEvent actionEvent) {
-        this.orderManager.setOrdersPageLength(pageLengthSelector.getValue());
+        int nextPageLength = pageLengthSelector.getValue();
+        if(nextPageLength > currentPageLength){
+            int ratio = (int)Math.ceil(nextPageLength/(double)currentPageLength);
+            pageNumber = (int)Math.ceil(pageNumber/ratio);
+        }else if(nextPageLength < currentPageLength){
+
+        }
+
+        this.orderManager.setOrdersPageLength(nextPageLength);
+        currentPageLength = nextPageLength;
+        lastPage = (int)(Math.ceil(totalOrders/(double)currentPageLength));
         this.insertOrders(pageNumber);
     }
 }

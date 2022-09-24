@@ -9,8 +9,7 @@ import java.util.HashMap;
 public class OrderManager {
 
     private OrderTable orderTable = new OrderTable();
-    //salvataggio
-    //modifica
+    public int currentPageLength;
     public ArrayList getDeliveringOrdersPage(int page){
         ArrayList<Order> orders = this.orderTable.getPageWithStatus(Order.CREATED_STATE, page);
         return this.parseRes(orders);
@@ -35,5 +34,7 @@ public class OrderManager {
     public void setOrdersPageLength(int l){
         this.orderTable.setPageLength(l);
     }
-
+    public int getTotalOrders(){
+        return orderTable.getTotal();
+    }
 }
