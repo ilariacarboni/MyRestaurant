@@ -48,7 +48,7 @@
             </AnchorPane>
             <AnchorPane fx:id="supplierLabelContainer">
                <children>
-                  <Label alignment="CENTER" layoutY="10.0" text="Fornitore">
+                  <Label fx:id="supplierLabel" alignment="CENTER" layoutY="10.0" text="Fornitore">
                      <font>
                         <Font size="14.0" />
                      </font>

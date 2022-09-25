@@ -3,6 +3,7 @@ package view.sceneControllers;
 import business.OrderManager;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -43,24 +45,35 @@ public class OrderPaneController extends BaseView implements Initializable {
     private Button nextPageButton;
     private int index = 0;
     private int pageNumber = 1;
-    private int lastPage = 25;
-    private Integer[] pageLengthValues = {15,30,45};
+    private int lastPage;
+    private Integer[] pageLengthValues = {15,30,60};
+    private int  currentPageLength = pageLengthValues[0];
+    private int totalOrders;
+    private OrderSearchController orderSearchController;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.commController.setOrderPaneController(this);
-        this.ordersContainer.getChildren().clear();
+        commController.setOrderPaneController(this);
+        ordersContainer.getChildren().clear();
+        totalOrders = orderManager.getTotalOrders();
         try {
             this.insertSearchComponent();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        this.pageLengthSelector.setValue(pageLengthValues[0]);
-        this.orderManager.setOrdersPageLength(pageLengthValues[0]);
-        this.pageLengthSelector.getItems().addAll(pageLengthValues);
+        pageLengthSelector.setValue(pageLengthValues[0]);
+        orderManager.setOrdersPageLength(pageLengthValues[0]);
+        pageLengthSelector.getItems().addAll(pageLengthValues);
+        lastPage = (int)(Math.ceil(totalOrders/(double)currentPageLength));
+        addFilterListener(orderSearchController.numberSearchBar);
+        addFilterListener(orderSearchController.dateSearchBar);
+        addFilterListener(orderSearchController.supplierSearchBar);
     }
 
-
-
+    private void addFilterListener(TextField field){
+        field.textProperty().addListener((observable, oldValue, newValue) ->{
+            insertOrders(pageNumber);
+        });
+    }
     public void setMode(String mode){
         this.renderingMode = mode;
         this.insertOrders(1);
@@ -69,15 +82,15 @@ public class OrderPaneController extends BaseView implements Initializable {
     private void insertSearchComponent() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/scene/ordersSearchPane.fxml"));
         Node orderSearch = loader.load();
-        OrderSearchController orderSearchController = loader.getController();
+        this.orderSearchController = commController.getOrderSearchController();
         searchComponentContainer.getChildren().add(orderSearch);
     }
-
     private void insertOrders(int pageNumber){
+        HashMap<String, String> filters = this.getFilters();
         this.ordersContainer.getChildren().clear();
         index = 0;
         if(this.renderingMode == this.ORDERS_ON_DELIVERY_MODE){
-            ArrayList<HashMap<String,Object>> orders = this.orderManager.getDeliveringOrdersPage(pageNumber);
+            ArrayList<HashMap<String,Object>> orders = this.orderManager.getDeliveringOrdersPage(pageNumber, filters);
             orders.forEach((order)->{
                 try {
                     this.addOrder(order, index);
@@ -87,6 +100,17 @@ public class OrderPaneController extends BaseView implements Initializable {
                 }
             });
         }
+    }
+
+    private HashMap<String, String> getFilters(){
+        String orderNumberFilter = this.orderSearchController.numberSearchBar.getText();
+        String orderDateFilter = this.orderSearchController.dateSearchBar.getText();
+        String orderSupplierFilter = this.orderSearchController.supplierSearchBar.getText();
+        HashMap<String, String> res = new HashMap<>();
+        res.put("number", orderNumberFilter);
+        res.put("date", orderDateFilter);
+        res.put("supplier", orderSupplierFilter);
+        return res;
     }
 
     private void addOrder(HashMap<String, Object> order, int i) throws IOException {
@@ -110,7 +134,16 @@ public class OrderPaneController extends BaseView implements Initializable {
         }
     }
     public void changePageLength(ActionEvent actionEvent) {
-        this.orderManager.setOrdersPageLength(pageLengthSelector.getValue());
+        int nextPageLength = pageLengthSelector.getValue();
+        if(nextPageLength > currentPageLength){
+            int ratio = (int)Math.ceil(nextPageLength/(double)currentPageLength);
+            pageNumber = (int)Math.ceil(pageNumber/ratio);
+        }else if(nextPageLength < currentPageLength){
+
+        }
+        this.orderManager.setOrdersPageLength(nextPageLength);
+        currentPageLength = nextPageLength;
+        lastPage = (int)(Math.ceil(totalOrders/(double)currentPageLength));
         this.insertOrders(pageNumber);
     }
 }

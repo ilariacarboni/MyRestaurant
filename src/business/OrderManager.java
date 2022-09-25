@@ -9,10 +9,9 @@ import java.util.HashMap;
 public class OrderManager {
 
     private OrderTable orderTable = new OrderTable();
-    //salvataggio
-    //modifica
-    public ArrayList getDeliveringOrdersPage(int page){
-        ArrayList<Order> orders = this.orderTable.getPageWithStatus(Order.CREATED_STATE, page);
+    public int currentPageLength;
+    public ArrayList getDeliveringOrdersPage(int page, HashMap<String, String> filters){
+        ArrayList<Order> orders = this.orderTable.getPageWithStatus(Order.CREATED_STATE, page, filters);
         return this.parseRes(orders);
     }
     public ArrayList getAllDeliveringOrders(){
@@ -35,5 +34,7 @@ public class OrderManager {
     public void setOrdersPageLength(int l){
         this.orderTable.setPageLength(l);
     }
-
+    public int getTotalOrders(){
+        return orderTable.getTotal();
+    }
 }
