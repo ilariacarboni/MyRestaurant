@@ -23,6 +23,7 @@ public class Order implements Entity{
     private int product_barcode;
     private int qty;
     private int state;
+    private String supplier = null;
 
     public Order(int number, String date, int prodBarcode, int qty, int state){
         this.number=number;
@@ -30,6 +31,15 @@ public class Order implements Entity{
         this.product_barcode=prodBarcode;
         this.qty=qty;
         this.state=state;
+    }
+
+    public Order(int number, String date, int prodBarcode, int qty, int state, String supplier){
+        this.number=number;
+        this.date=date;
+        this.product_barcode=prodBarcode;
+        this.qty=qty;
+        this.state=state;
+        this.supplier = supplier;
     }
     
     public int getNumber(){
@@ -65,6 +75,9 @@ public class Order implements Entity{
         res.put("productBarcode", this.product_barcode);
         res.put("qty", this.qty);
         res.put("state", this.state);
+        if(this.supplier != null){
+            res.put("supplier", this.supplier);
+        }
         return res;
     }
     

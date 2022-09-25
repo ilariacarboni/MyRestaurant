@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  *
@@ -78,17 +79,34 @@ public class OrderTable implements Table<Order>{
         return resList;
     }
 
-    public ArrayList<Order> getPageWithStatus(String status, int page){
+    public ArrayList<Order> getPageWithStatus(String status, int page, HashMap<String, String> filters){
         ArrayList <Order> resList = new ArrayList<Order>();
         int offset =  (page-1) * this.pageLength;
-        String sql = "SELECT * FROM orders WHERE state = ? ORDER BY orders.date desc LIMIT "+ offset +","+this.pageLength+" ;";
+        String sql = "SELECT o.*, p.supplier FROM orders o JOIN product p ON o.product_barcode = p.barcode ";
+        String orderBy = " ORDER BY o.date desc LIMIT "+ offset +","+this.pageLength;
+        String wheres = " WHERE  state = ? AND ";
+        for (Map.Entry<String, String> entry : filters.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            if(!value.isEmpty()){
+                wheres += key+" LIKE '"+value+"%' AND ";
+            }
+        }
+        //eliminazione ultimo AND
+        wheres = wheres.substring(0, wheres.length() - 4);
+        sql += wheres + orderBy;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, status);
             ResultSet resultSet = ps.executeQuery();
 
             while (resultSet.next()) {
-                Order o = new Order( resultSet.getInt("number"), resultSet.getString("date"), resultSet.getInt("product_barcode"), resultSet.getInt("qty"), resultSet.getInt("state"));
+                Order o = new Order( resultSet.getInt("number"),
+                        resultSet.getString("date"),
+                        resultSet.getInt("product_barcode"),
+                        resultSet.getInt("qty"),
+                        resultSet.getInt("state"),
+                        resultSet.getString("supplier"));
                 resList.add(o);
             }
         } catch (SQLException ex) {
@@ -238,12 +256,19 @@ public class OrderTable implements Table<Order>{
 
     @Override
     public Order constructEntityFromMap(HashMap<String, Object> map) {
+        Order res = null;
         int number = (int) map.get("number");
         String date =  map.get("date").toString();
         int productBarcode = (int) map.get("productBarcode");
         int qty = (int) map.get("qty");
         int state = (int) map.get("state");
-        return new Order(number, date, productBarcode, qty, state);
+        if(map.containsKey("supplier")){
+            String supplier = map.get("supplier").toString();
+            res = new Order(number, date, productBarcode, qty, state, supplier);
+        }else{
+            res = new Order(number, date, productBarcode, qty, state);
+        }
+        return res;
     }
     
 }

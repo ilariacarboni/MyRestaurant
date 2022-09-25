@@ -10,8 +10,8 @@ public class OrderManager {
 
     private OrderTable orderTable = new OrderTable();
     public int currentPageLength;
-    public ArrayList getDeliveringOrdersPage(int page){
-        ArrayList<Order> orders = this.orderTable.getPageWithStatus(Order.CREATED_STATE, page);
+    public ArrayList getDeliveringOrdersPage(int page, HashMap<String, String> filters){
+        ArrayList<Order> orders = this.orderTable.getPageWithStatus(Order.CREATED_STATE, page, filters);
         return this.parseRes(orders);
     }
     public ArrayList getAllDeliveringOrders(){
