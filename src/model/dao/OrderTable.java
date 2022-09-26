@@ -52,7 +52,7 @@ public class OrderTable implements Table<Order>{
             ResultSet resultSet = stm.executeQuery(sql);
 
             while (resultSet.next()) {
-                Order o = new Order( resultSet.getInt("number"), resultSet.getString("date"), resultSet.getInt("product_barcode"), resultSet.getInt("qty"), resultSet.getInt("state"));
+                Order o = new Order( resultSet.getInt("number"), resultSet.getString("date"), resultSet.getInt("product_barcode"), resultSet.getInt("qty"), resultSet.getString("state"));
                 resList.add(o);
             }
         } catch (SQLException ex) {
@@ -70,7 +70,7 @@ public class OrderTable implements Table<Order>{
             ResultSet resultSet = ps.executeQuery();
 
             while (resultSet.next()) {
-                Order o = new Order( resultSet.getInt("number"), resultSet.getString("date"), resultSet.getInt("product_barcode"), resultSet.getInt("qty"), resultSet.getInt("state"));
+                Order o = new Order( resultSet.getInt("number"), resultSet.getString("date"), resultSet.getInt("product_barcode"), resultSet.getInt("qty"), resultSet.getString("state"));
                 resList.add(o);
             }
         } catch (SQLException ex) {
@@ -105,7 +105,7 @@ public class OrderTable implements Table<Order>{
                         resultSet.getString("date"),
                         resultSet.getInt("product_barcode"),
                         resultSet.getInt("qty"),
-                        resultSet.getInt("state"),
+                        resultSet.getString("state"),
                         resultSet.getString("supplier"));
                 resList.add(o);
             }
@@ -118,14 +118,13 @@ public class OrderTable implements Table<Order>{
     @Override
     public boolean save(Order o) {
         boolean res = false;
-        String sql= "INSERT INTO orders (number, date, product_barcode, qty, state) VALUES (?,?,?,?,?)";
+        String sql= "INSERT INTO orders (date, product_barcode, qty, state) VALUES (?,?,?,?)";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, o.getNumber());
-            ps.setDate(2, o.getDate());
-            ps.setInt(3, o.getProduct());
-            ps.setInt(4, o.getQty());
-            ps.setInt(5, o.getState());
+            ps.setString(1, o.getDate());
+            ps.setInt(2, o.getProduct());
+            ps.setInt(3, o.getQty());
+            ps.setString(4, o.getState());
 
             ps.execute();
             res = true;
@@ -141,10 +140,10 @@ public class OrderTable implements Table<Order>{
         String sql= "UPDATE orders SET date=?, product_barcode=?, qty=?, state=? WHERE number=?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
-                ps.setDate(1, o.getDate());
+                ps.setString(1, o.getDate());
                 ps.setInt(2, o.getProduct());
                 ps.setDouble(3, o.getQty());
-                ps.setInt(4, o.getState());
+                ps.setString(4, o.getState());
                 ps.setInt(5, o.getNumber());
             ps.execute();
             res = true;
@@ -180,7 +179,7 @@ public class OrderTable implements Table<Order>{
                 ResultSet resultSet = ps.executeQuery();
                 
                 while (resultSet.next()) {
-                    Order o = new Order(resultSet.getInt("number"),resultSet.getString("date"),resultSet.getInt("product_barcode"), resultSet.getInt("qty"), resultSet.getInt("state"));
+                    Order o = new Order(resultSet.getInt("number"),resultSet.getString("date"),resultSet.getInt("product_barcode"), resultSet.getInt("qty"), resultSet.getString("state"));
                     resList.add(o);
                 }
             } catch (SQLException ex) {
@@ -261,7 +260,7 @@ public class OrderTable implements Table<Order>{
         String date =  map.get("date").toString();
         int productBarcode = (int) map.get("productBarcode");
         int qty = (int) map.get("qty");
-        int state = (int) map.get("state");
+        String state = map.get("state").toString();
         if(map.containsKey("supplier")){
             String supplier = map.get("supplier").toString();
             res = new Order(number, date, productBarcode, qty, state, supplier);

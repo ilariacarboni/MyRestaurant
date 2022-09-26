@@ -1,9 +1,6 @@
 package view.sceneControllers;
 
 import business.OrderManager;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,10 +24,16 @@ public class OrderPaneController extends BaseView implements Initializable {
 
     public static final String ORDERS_ON_DELIVERY_MODE = "DELIVERING";
     public static final String ORDERS_HISTORY_MODE     = "HISTORY";
+    private final String TO_HISTORY_TEXT = "Storico Ordini";
+    private final String TO_CURRENT_TEXT = "Ordini in consegna";
+    @FXML
+    public Button newOrderBtn;
     private OrderManager orderManager = new OrderManager();
     private String renderingMode;
     @FXML
     private Label statusLabel;
+    @FXML
+    public Button changeRenderingModeBtn;
     @FXML
     private GridPane ordersContainer;
     @FXML
@@ -89,17 +92,20 @@ public class OrderPaneController extends BaseView implements Initializable {
         HashMap<String, String> filters = this.getFilters();
         this.ordersContainer.getChildren().clear();
         index = 0;
+        ArrayList<HashMap<String, Object>> orders = null;
         if(this.renderingMode == this.ORDERS_ON_DELIVERY_MODE){
-            ArrayList<HashMap<String,Object>> orders = this.orderManager.getDeliveringOrdersPage(pageNumber, filters);
-            orders.forEach((order)->{
-                try {
-                    this.addOrder(order, index);
-                    index ++;
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
+            orders = this.orderManager.getDeliveringOrdersPage(pageNumber, filters);
+        }else {
+            orders = orderManager.getDeliveredOrdersPage(pageNumber, filters);
         }
+        orders.forEach((order)->{
+            try {
+                this.addOrder(order, index);
+                index ++;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     private HashMap<String, String> getFilters(){
@@ -117,6 +123,9 @@ public class OrderPaneController extends BaseView implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/scene/order.fxml"));
         Node orderNode = loader.load();
         OrderController orderController = loader.getController();
+        if(this.renderingMode == this.ORDERS_HISTORY_MODE){
+            orderController.hideDeliveredBtn();
+        }
         orderController.setOrderInfo(order);
         ordersContainer.add(orderNode, 0, i);
     }
@@ -145,5 +154,37 @@ public class OrderPaneController extends BaseView implements Initializable {
         currentPageLength = nextPageLength;
         lastPage = (int)(Math.ceil(totalOrders/(double)currentPageLength));
         this.insertOrders(pageNumber);
+    }
+
+    public void changeRenderingMode(MouseEvent mouseEvent) {
+        if(renderingMode == this.ORDERS_ON_DELIVERY_MODE){
+            renderingMode = this.ORDERS_HISTORY_MODE;
+            changeRenderingModeBtn.setText(this.TO_CURRENT_TEXT);
+            statusLabel.setText(this.TO_HISTORY_TEXT);
+        }else if(renderingMode == this.ORDERS_HISTORY_MODE){
+            renderingMode = this.ORDERS_ON_DELIVERY_MODE;
+            changeRenderingModeBtn.setText(this.TO_HISTORY_TEXT);
+            statusLabel.setText(this.TO_CURRENT_TEXT);
+        }
+        //inserire un loader o una cosa del genere
+        this.insertOrders(pageNumber);
+    }
+
+    public void setDelivered(HashMap<String, Object> order) {
+        boolean res = orderManager.setDelivered(order);
+        if(res){
+            this.insertOrders(pageNumber);
+        }
+    }
+    public void newOrderBtnClicked(MouseEvent mouseEvent) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/scene/addOrderPane.fxml"));
+        Node addOrderPane = null;
+        try {
+            addOrderPane = loader.load();
+            AddOrderPaneController addOrderController = loader.getController();
+            this.commController.getDashboardController().setRightPane(addOrderPane);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
