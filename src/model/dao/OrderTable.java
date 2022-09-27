@@ -126,7 +126,7 @@ public class OrderTable implements Table<Order>{
             ps.setInt(3, o.getQty());
             ps.setString(4, o.getState());
 
-            ps.execute();
+            ps.executeQuery();
             res = true;
         } catch (SQLException ex) {
             ex.printStackTrace();

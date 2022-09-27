@@ -1,19 +1,24 @@
 package view.sceneControllers;
 
 import business.OrderManager;
+import business.ProductManager;
+import impl.org.controlsfx.autocompletion.AutoCompletionTextFieldBinding;
+import impl.org.controlsfx.autocompletion.SuggestionProvider;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import model.entity.Product;
 import org.controlsfx.control.textfield.TextFields;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class AddOrderPaneController extends BaseView implements Initializable {
 
     private OrderManager orderManager = new OrderManager();
+    private ProductManager productManager = new ProductManager();
     @FXML
     private DatePicker dateField;
 
@@ -50,10 +55,21 @@ public class AddOrderPaneController extends BaseView implements Initializable {
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100);
         valueFactory.setValue(1);
         qtyField.setValueFactory(valueFactory);
-
-        TextFields.bindAutoCompletion(productField, new String[]{"pippo", "pluto", "paperino"});
+        SuggestionProvider suggestionProvider = SuggestionProvider.create(new ArrayList());
+        new AutoCompletionTextFieldBinding<>(productField, suggestionProvider);
+        this.addListenerForAutocompletion(suggestionProvider);
     }
 
-    //aggiunta di un listener sul campo prodotto che a ogni carattere inserito fa query per prodotti like testo inserito
-    //limit 10 o 15 e riinizializza i dati
+    private void addListenerForAutocompletion(SuggestionProvider sp){
+        productField.textProperty().addListener((observable, oldValue, newValue) -> {
+            ArrayList<String> suggestions = new ArrayList<>();
+            ArrayList<HashMap<String, Object>> products = this.productManager.getProductsWithNameLike(newValue);
+            for(HashMap<String, Object> product : products){
+                suggestions.add(product.get("name").toString());
+            }
+            List<String> newSuggestions = new ArrayList(suggestions);
+            sp.clearSuggestions();
+            sp.addPossibleSuggestions(newSuggestions);
+        });
+    }
 }
