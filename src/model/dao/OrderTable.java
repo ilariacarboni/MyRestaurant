@@ -61,11 +61,12 @@ public class OrderTable implements Table<Order>{
         return resList;
     }
 
-    public ArrayList<Order> getAllByStatus(String status){
+    public ArrayList<Order> getAllByStatus(String status) {
         ArrayList <Order> resList = new ArrayList<Order>();
         String sql = "SELECT * FROM orders WHERE state = ?";
+        PreparedStatement ps = null;
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
+            ps = conn.prepareStatement(sql);
             ps.setString(1, status);
             ResultSet resultSet = ps.executeQuery();
 
@@ -75,6 +76,12 @@ public class OrderTable implements Table<Order>{
             }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
+        } finally {
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return resList;
     }
@@ -95,8 +102,9 @@ public class OrderTable implements Table<Order>{
         //eliminazione ultimo AND
         wheres = wheres.substring(0, wheres.length() - 4);
         sql += wheres + orderBy;
+        PreparedStatement ps = null;
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
+           ps = conn.prepareStatement(sql);
             ps.setString(1, status);
             ResultSet resultSet = ps.executeQuery();
 
@@ -111,6 +119,12 @@ public class OrderTable implements Table<Order>{
             }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
+        }finally {
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return resList;
     }
@@ -119,8 +133,9 @@ public class OrderTable implements Table<Order>{
     public boolean save(Order o) {
         boolean res = false;
         String sql= "INSERT INTO orders (date, product_barcode, qty, state) VALUES (?,?,?,?)";
+        PreparedStatement ps = null;
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
+            ps = conn.prepareStatement(sql);
             ps.setString(1, o.getDate());
             ps.setInt(2, o.getProduct());
             ps.setInt(3, o.getQty());
@@ -130,16 +145,23 @@ public class OrderTable implements Table<Order>{
             res = true;
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }  
+        } finally {
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
         return res;
     }
 
     @Override
-    public boolean update(Order o) {
+    public boolean update(Order o){
         boolean res = false;
         String sql= "UPDATE orders SET date=?, product_barcode=?, qty=?, state=? WHERE number=?";
+        PreparedStatement ps = null;
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
+            ps = conn.prepareStatement(sql);
                 ps.setString(1, o.getDate());
                 ps.setInt(2, o.getProduct());
                 ps.setDouble(3, o.getQty());
@@ -149,20 +171,33 @@ public class OrderTable implements Table<Order>{
             res = true;
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return res;
     }
 
     @Override
-    public boolean delete(Order o) {
+    public boolean delete(Order o){
         boolean res = false;
         String sql= "DELETE FROM orders WHERE number = ?";
+        PreparedStatement ps = null;
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
+            ps = conn.prepareStatement(sql);
             ps.setInt(1, o.getNumber());
             res = true;
         } catch (SQLException ex) {
             ex.printStackTrace();
+        }finally {
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return res;
     }
@@ -171,10 +206,11 @@ public class OrderTable implements Table<Order>{
     public ArrayList<Order> getFrom(Object searchParam, String paramName) {
         //ricerca per numero
         ArrayList<Order> resList = new ArrayList<Order>();
+        PreparedStatement ps = null;
         if(searchParam instanceof Integer && paramName.equals("number")){
             String sql = "SELECT * FROM orders WHERE number =?";
             try {
-                PreparedStatement ps = conn.prepareStatement(sql);
+                ps = conn.prepareStatement(sql);
                 ps.setInt(1, (int) searchParam);
                 ResultSet resultSet = ps.executeQuery();
                 
@@ -184,6 +220,12 @@ public class OrderTable implements Table<Order>{
                 }
             } catch (SQLException ex) {
                 ex.printStackTrace();
+            }finally {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
         
@@ -192,8 +234,9 @@ public class OrderTable implements Table<Order>{
 
     public HashMap<String, String> getLastOrderPerCategory(){
         HashMap<String, String> res = null;
+        Statement stm = null;
         try {
-            Statement stm = conn.createStatement();
+            stm = conn.createStatement();
             ResultSet resultSet = stm.executeQuery(this.LAST_ORDER_PER_CATEGORY);
             res = new HashMap<String, String>();
             while (resultSet.next()) {
@@ -203,14 +246,21 @@ public class OrderTable implements Table<Order>{
             }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
+        }finally {
+            try {
+                stm.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return res;
     }
 
-    public HashMap<String, Double> averageMonthlyExpensePerCategory(){
+    public HashMap<String, Double> averageMonthlyExpensePerCategory() {
         HashMap<String, Double> res = null;
+        Statement stm = null;
         try {
-            Statement stm = conn.createStatement();
+            stm = conn.createStatement();
             ResultSet resultSet = stm.executeQuery(this.AVERAGE_MONTHLY_EXPENSE_PER_CATEGORY);
             res = new HashMap<String, Double>();
             while (resultSet.next()) {
@@ -220,14 +270,21 @@ public class OrderTable implements Table<Order>{
             }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
+        } finally {
+            try {
+                stm.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return res;
     }
 
-    public LinkedHashMap<String, Double> getMonthlyExpense(){
+    public LinkedHashMap<String, Double> getMonthlyExpense() {
         LinkedHashMap<String, Double> res = null;
+        Statement stm = null;
         try{
-            Statement stm = conn.createStatement();
+            stm = conn.createStatement();
             ResultSet resultSet = stm.executeQuery(this.MONTHLY_ORDERS_EXPENSE_QUERY);
             res = new LinkedHashMap<String, Double>();
             while (resultSet.next()) {
@@ -237,18 +294,31 @@ public class OrderTable implements Table<Order>{
             }
         }catch (SQLException ex){
             System.out.println(ex.toString());
+        } finally {
+            try {
+                stm.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return res;
     }
-    public int getTotal(){
+    public int getTotal() {
         int res = 0;
         String sql= "SELECT count(*) as tot FROM orders";
+        Statement stm = null;
         try {
-            Statement stm = conn.createStatement();
+            stm = conn.createStatement();
             ResultSet resultSet = stm.executeQuery(sql);
             res = resultSet.getInt("tot");
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            try {
+                stm.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return res;
     }

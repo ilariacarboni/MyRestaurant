@@ -160,6 +160,28 @@ public class ProductTable implements Table<Product>{
         return resList;
     }
 
+    public ArrayList<Product> getWithLikeCondition(Object searchParam, String paramName){
+        ArrayList<Product> resList = new ArrayList<Product>();
+        String sql = "SELECT * FROM product p WHERE ";
+        switch (paramName){
+            case "name":
+                sql += "p.name LIKE '"+searchParam+"%' ";
+                break;
+        }
+        sql += "LIMIT 20";
+        try{
+            Statement stm = conn.createStatement();
+            ResultSet resultSet = stm.executeQuery(sql);
+            while (resultSet.next()) {
+                Product p = new Product(resultSet.getInt("barcode"),resultSet.getString("name"), resultSet.getInt("qty"), resultSet.getDouble("price"),resultSet.getString("supplier"), resultSet.getString("category"), resultSet.getString("image"));
+                resList.add(p);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return resList;
+    }
+
     /**
      * @param productBarcode the barcode of the product
      * @return an HashMap with its usage per month;
@@ -226,6 +248,7 @@ public class ProductTable implements Table<Product>{
         }
         return categoryOccupation;
     }
+
 
     @Override
     public Product constructEntityFromMap(HashMap<String, Object> map) {
