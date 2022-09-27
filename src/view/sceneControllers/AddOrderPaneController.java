@@ -33,6 +33,7 @@ public class AddOrderPaneController extends BaseView implements Initializable {
 
     @FXML
     void insertOrderBtnClicked(MouseEvent event) {
+        Alert a = new Alert(Alert.AlertType.WARNING);
         LocalDate d = dateField.getValue();
         String date = "";
         if(d != null){
@@ -42,11 +43,19 @@ public class AddOrderPaneController extends BaseView implements Initializable {
         int qty = qtyField.getValue();
         if(date.isEmpty() || productName.isEmpty()){
             String alertText = "Tutti i campi devono essere riempiti";
-            Alert a = new Alert(Alert.AlertType.WARNING);
+
             a.setContentText(alertText);
             a.show();
         }else{
-            this.orderManager.insertOrder(date, productName, qty);
+            boolean res = this.orderManager.insertOrder(date, productName, qty);
+            if(!res){
+                a.setContentText("Ordine non creato");
+                a.show();
+            }else{
+                a.setAlertType(Alert.AlertType.CONFIRMATION);
+                a.setContentText("Ordine aggiunto con successo");
+                a.show();
+            }
         }
     }
 

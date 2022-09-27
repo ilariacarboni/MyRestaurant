@@ -3,6 +3,7 @@ package business;
 import model.dao.OrderTable;
 import model.entity.Order;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -25,7 +26,9 @@ public class OrderManager {
         return this.getAllByStatus(Order.DELIVERED_STATE);
     }
     private ArrayList getAllByStatus(String status){
-        ArrayList<Order> orders = this.orderTable.getAllByStatus(status);
+        ArrayList<Order> orders = null;
+        orders = this.orderTable.getAllByStatus(status);
+
         return this.parseRes(orders);
     }
     private ArrayList parseRes(ArrayList<Order> list){
@@ -50,7 +53,7 @@ public class OrderManager {
     public boolean insertOrder(String date, String productName, int qty){
         boolean res = false;
         ArrayList<HashMap<String, Object>> products = this.productManager.getFrom(productName, "name");
-        if(products != null){
+        if(!products.isEmpty()){
             HashMap<String, Object> product = products.get(0);
             int barcode = (int)product.get("barcode");
             Order order = new Order(date, barcode, qty, Order.CREATED_STATE);
