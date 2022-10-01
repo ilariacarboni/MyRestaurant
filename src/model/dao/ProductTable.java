@@ -160,6 +160,28 @@ public class ProductTable implements Table<Product>{
         return resList;
     }
 
+    public ArrayList<Product> getWithLikeCondition(Object searchParam, String paramName){
+        ArrayList<Product> resList = new ArrayList<Product>();
+        String sql = "SELECT * FROM product p WHERE ";
+        switch (paramName){
+            case "name":
+                sql += "p.name LIKE '"+searchParam+"%' ";
+                break;
+        }
+        sql += "LIMIT 20";
+        try{
+            Statement stm = conn.createStatement();
+            ResultSet resultSet = stm.executeQuery(sql);
+            while (resultSet.next()) {
+                Product p = new Product(resultSet.getInt("barcode"),resultSet.getString("name"), resultSet.getInt("qty"), resultSet.getDouble("price"),resultSet.getString("supplier"), resultSet.getString("category"), resultSet.getString("image"));
+                resList.add(p);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return resList;
+    }
+
     /**
      * @param productBarcode the barcode of the product
      * @return an HashMap with its usage per month;
@@ -210,11 +232,11 @@ public class ProductTable implements Table<Product>{
         int totalProductsInWarehouse = 0;
         try{
             Statement stm = conn.createStatement();
-            ResultSet resultSet = stm.executeQuery(this.PRODUCTS_PER_CATEGORY_QUERY);
+            ResultSet resultSet = stm.executeQuery(this.WAREHOUSE_COMPOSITION_QUERY);
             categoryOccupation = new HashMap<String, Double>();
             while (resultSet.next()) {
                 String category = resultSet.getString("category");
-                double prodNumber = resultSet.getInt("prod_number");
+                double prodNumber = resultSet.getInt("qty");
                 totalProductsInWarehouse += prodNumber;
                 categoryOccupation.put(category, prodNumber);
             }
@@ -226,6 +248,7 @@ public class ProductTable implements Table<Product>{
         }
         return categoryOccupation;
     }
+
 
     @Override
     public Product constructEntityFromMap(HashMap<String, Object> map) {

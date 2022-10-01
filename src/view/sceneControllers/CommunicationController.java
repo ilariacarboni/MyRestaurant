@@ -15,7 +15,8 @@ public final class CommunicationController {
     private UtilitiesPaneController utilitiesPaneController = null;
     private DashboardController dashboardController = null;
     private DishInfoController dishinfoController = null;
-    
+    private OrderPaneController orderPaneController = null;
+    private OrderSearchController orderSearchController = null;
     private CommunicationController() {}
 
     public static CommunicationController getInstance(){
@@ -27,7 +28,6 @@ public final class CommunicationController {
             this.categoryPaneController = catController;
         }
     }
-    
     public CategoryPaneController getCategoryPaneController(){
         return this.categoryPaneController;
     }
@@ -37,7 +37,6 @@ public final class CommunicationController {
             this.productsPaneController = productsPaneController;
         }
     }
-    
     public ProductsPaneController getProductsPaneController(){
         return this.productsPaneController;
     }
@@ -47,7 +46,6 @@ public final class CommunicationController {
             this.utilitiesPaneController = utilitiesPaneController;
         }
     }
-    
     public UtilitiesPaneController getUtilitiesPaneController(){
         return this.utilitiesPaneController;
     }
@@ -58,7 +56,6 @@ public final class CommunicationController {
             this.menuPaneController = menuPaneController;
         }
     }
-    
     public MenuPaneController getMenuPaneController(){
         return this.menuPaneController;
     }
@@ -68,7 +65,6 @@ public final class CommunicationController {
             this.employeesListController = employeesListController;
         }
     }
-    
     public EmployeesListController getEmployeePaneController(){
         return this.employeesListController;
     }
@@ -78,15 +74,27 @@ public final class CommunicationController {
             this.dashboardController = dc;
         }
     }
-
     public DashboardController getDashboardController(){ return this.dashboardController;}
     public void setDishInfoController(DishInfoController dishinfoController){
         if(this.dishinfoController == null){
             this.dishinfoController = dishinfoController;
         }
     }
-
     public DishInfoController getDishInfoController(){
         return this.dishinfoController;
     }
+
+    public void setOrderPaneController(OrderPaneController op){
+        if(this.orderPaneController == null){
+            this.orderPaneController = op;
+        }
+    }
+    public OrderPaneController getOrderPaneController(){return this.orderPaneController; }
+
+    public void setOrderSearchController(OrderSearchController osc){
+        if(this.orderSearchController == null){
+             this.orderSearchController = osc;
+        }
+    }
+    public OrderSearchController getOrderSearchController(){return this.orderSearchController;}
 }

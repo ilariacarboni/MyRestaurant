@@ -55,4 +55,13 @@ public class ProductManager {
     public HashMap<Integer, Integer> getStoreStatistics(int prodId){
         return this.productTable.getProductUsageInLastYear(prodId);
     }
+
+    public ArrayList<HashMap<String, Object>> getProductsWithNameLike(String name){
+        ArrayList<Product> products = this.productTable.getWithLikeCondition(name, "name");
+        ArrayList<HashMap<String,Object>> res  = new ArrayList<HashMap<String,Object>>();
+        for(Product product : products){
+            res.add(product.map());
+        }
+        return res;
+    }
 }

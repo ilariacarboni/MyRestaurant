@@ -5,12 +5,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.chart.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import view.utils.CustomAreaChart;
+import view.utils.CustomLineChart;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -29,14 +34,15 @@ public class ChartPaneController extends BaseView implements Initializable {
     private BorderPane chartBorderPane;
     @FXML
     private GridPane chartsGridPane;
+
     @FXML
-    private AnchorPane revenueTrendChart;
+    private HBox revenueTrendChart;
     @FXML
-    private AnchorPane warehouseCompositionChart;
+    private HBox warehouseCompositionChart;
     @FXML
-    private AnchorPane utilityCostsChart;
+    private HBox utilityCostsChart;
     @FXML
-    private AnchorPane moreOrderedDishesChartContainer;
+    private HBox moreOrderedDishesChartContainer;
     @FXML
     private Button leftBtn;
     @FXML
@@ -44,9 +50,9 @@ public class ChartPaneController extends BaseView implements Initializable {
     @FXML
     private AnchorPane moreOrderedDishesChart;
     @FXML
-    private AnchorPane revenueOrdersComparisonChart;
+    private HBox revenueOrdersComparisonChart;
     @FXML
-    private AnchorPane revenueUtilitiesComparisonChart;
+    private HBox revenueUtilitiesComparisonChart;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -58,6 +64,7 @@ public class ChartPaneController extends BaseView implements Initializable {
         this.makeMoreOrderedDishesChart();
         this.makeRevenueOrdersComparisonChart();
         this.makeRevenueUtilitiesComparisonChart();
+
     }
 
     private void makeRevenueTrendChart(){
@@ -93,7 +100,6 @@ public class ChartPaneController extends BaseView implements Initializable {
         }
         final PieChart chart = new PieChart(pieChartData);
         chart.setTitle("Composizione del magazzino");
-        this.setAnchor(chart, 0.0);
         this.warehouseCompositionChart.getChildren().add(chart);
     }
 
@@ -114,7 +120,6 @@ public class ChartPaneController extends BaseView implements Initializable {
                 series.getData().add(new XYChart.Data(key, value));
             }
             utilityChart.getData().add(series);
-            this.setAnchor(utilityChart, 10.0);
             this.utilityCostsChart.getChildren().add(utilityChart);
         }
     }
@@ -152,7 +157,6 @@ public class ChartPaneController extends BaseView implements Initializable {
         this.moreOrderedDishesChart.getChildren().clear();
         index = (index + 1) % this.monthCharts.size();
         this.moreOrderedDishesChart.getChildren().add(this.monthCharts.get(index));
-        System.out.println(index);
     }
 
     @FXML
@@ -160,19 +164,67 @@ public class ChartPaneController extends BaseView implements Initializable {
         this.moreOrderedDishesChart.getChildren().clear();
         index = (index - 1) % this.monthCharts.size();
         this.moreOrderedDishesChart.getChildren().add(this.monthCharts.get(index));
-        System.out.println(index);
     }
 
     private void makeRevenueUtilitiesComparisonChart() {
+        CategoryAxis xAxis = new CategoryAxis();
+        NumberAxis yAxis = new NumberAxis();
+        LinkedHashMap<String, Double> revenueData = this.chartsManager.getRevenueData();
+        LinkedHashMap<String, Double> utilityData = this.chartsManager.getUtilityCostPerMonthData();
+
+        CustomAreaChart chart = new CustomAreaChart(xAxis, yAxis);
+        xAxis.setLabel("mese");
+
+        XYChart.Series series1 = new XYChart.Series();
+        for (Map.Entry<String, Double> revenue : revenueData.entrySet()) {
+            String month = revenue.getKey();
+            Double value = revenue.getValue();
+            series1.getData().add(new XYChart.Data(month, value));
+        }
+
+        XYChart.Series series2 = new XYChart.Series();
+        for (Map.Entry<String, Double> utility : utilityData.entrySet()) {
+            String month = utility.getKey();
+            Double value = utility.getValue();
+            series2.getData().add(new XYChart.Data(month, value));
+        }
+
+        series1.setName("incassi");
+        series2.setName("spese utenze");
+        chart.addSeries(series1, series2);
+        this.revenueUtilitiesComparisonChart.getChildren().add(chart);
     }
 
+    /**
+     * grafico confronto incassi-spese ordini
+     */
     private void makeRevenueOrdersComparisonChart() {
+        CategoryAxis xAxis = new CategoryAxis();
+        NumberAxis yAxis = new NumberAxis();
+        LinkedHashMap<String, Double> revenueData = this.chartsManager.getRevenueData();
+        LinkedHashMap<String, Double> ordersData = this.chartsManager.getMonthlyOrderExpense();
+
+        CustomAreaChart chart = new CustomAreaChart(xAxis, yAxis);
+        xAxis.setLabel("mese");
+
+        XYChart.Series series1 = new XYChart.Series();
+        for (Map.Entry<String, Double> revenue : revenueData.entrySet()) {
+            String month = revenue.getKey();
+            Double value = revenue.getValue();
+            series1.getData().add(new XYChart.Data(month, value));
+        }
+
+        XYChart.Series series2 = new XYChart.Series();
+        for (Map.Entry<String, Double> order : ordersData.entrySet()) {
+            String month = order.getKey();
+            Double value = order.getValue();
+            series2.getData().add(new XYChart.Data(month, value));
+        }
+
+        series1.setName("incassi");
+        series2.setName("spese ordini");
+        chart.addSeries(series1, series2);
+        this.revenueOrdersComparisonChart.getChildren().add(chart);
     }
 
-    private void setAnchor(Node node, Double value){
-        AnchorPane.setTopAnchor(node, value);
-        AnchorPane.setBottomAnchor(node, value);
-        AnchorPane.setLeftAnchor(node, value);
-        AnchorPane.setRightAnchor(node, value);
-    }
 }
