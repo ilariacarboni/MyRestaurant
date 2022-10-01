@@ -36,7 +36,7 @@ public class ReceiptTable implements Table<Receipt>{
             "ri.qty, ri.dish, strftime('%m-%Y', r.date) as date\n" +
             "FROM receipt r join receipt_item ri on ri.receipt = r.number order by strftime('%Y', r.date) asc, strftime('%m', r.date) asc) \n" +
             "x where x.r < 6;";
-    Connection conn = dbConnection.enstablishConnection();
+    Connection conn = dbConnection.establishConnection();
 
     @Override
     public ArrayList<Receipt> getAll() {

@@ -12,7 +12,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -24,7 +23,7 @@ import java.util.Map;
  */
 public class OrderTable implements Table<Order>{
 
-    Connection conn = dbConnection.enstablishConnection();
+    Connection conn = dbConnection.establishConnection();
     private final String LAST_ORDER_PER_CATEGORY = "select p.category, max(o.date) as last_order from product p left join orders o on p.barcode = o.product_barcode group by p.category;";
     private final String AVERAGE_MONTHLY_EXPENSE_PER_CATEGORY =
             "select avg(costo_tot) as average_expense, category from(\n" +

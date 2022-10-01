@@ -15,6 +15,8 @@ public class Category implements Entity{
     
     private String name;
     private String img;
+    //aggiunta del tipo di dato
+    public String[] fields = {"name", "img"};
     
     public Category(String name, String img){
         this.name = name;
