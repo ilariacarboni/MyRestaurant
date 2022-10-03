@@ -15,9 +15,10 @@ import java.util.HashMap;
  *
  * @author Natalia
  */
-public class CategoryTable implements Table<Category>{
+public class CategoryTable extends DataObject implements Table<Category>{
 
-    Connection conn = dbConnection.enstablishConnection();
+    Connection conn = dbConnection.establishConnection();
+    protected String tableName = "category";
     
     @Override
     public ArrayList<Category> getAll() {
@@ -111,5 +112,19 @@ public class CategoryTable implements Table<Category>{
         String img = (String) map.get("img");
         return new Category(name,img);
     }
-    
+
+    @Override
+    protected String[] getQueryFrom() {
+        return new String[0];
+    }
+
+    @Override
+    protected String[] getQueryWhere() {
+        return new String[0];
+    }
+
+    @Override
+    protected String[] getQueryOrderBy() {
+        return new String[0];
+    }
 }

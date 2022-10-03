@@ -21,8 +21,8 @@ import java.util.Map;
  * @author Natalia
  */
 public class ProductTable implements Table<Product>{
-    
-    Connection conn = dbConnection.enstablishConnection();
+
+    Connection conn = dbConnection.establishConnection();
     private final String PRODUCT_USAGE_QUERY =
             "select strftime('%m', r.date) as month, count(*) as count\n" +
             "from receipt r \n" +
@@ -159,6 +159,7 @@ public class ProductTable implements Table<Product>{
         }
         return resList;
     }
+
 
     public ArrayList<Product> getWithLikeCondition(Object searchParam, String paramName){
         ArrayList<Product> resList = new ArrayList<Product>();

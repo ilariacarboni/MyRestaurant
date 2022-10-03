@@ -21,7 +21,7 @@ import java.util.HashMap;
  */
 public class SupplierTable implements Table<Supplier>{
 
-    Connection conn = dbConnection.enstablishConnection();
+    Connection conn = dbConnection.establishConnection();
 
     @Override
     public ArrayList<Supplier> getAll() {

@@ -20,7 +20,7 @@ import java.util.HashMap;
 
 public class EmployeeTable implements Table<Employee>{
     
-    Connection conn = dbConnection.enstablishConnection();
+    Connection conn = dbConnection.establishConnection();
     ArrayList<Employee> employeesList = new ArrayList<Employee>();
 
     @Override

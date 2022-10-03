@@ -16,7 +16,7 @@ import java.util.LinkedHashMap;
 
 public class UtilityTable implements Table<Utility>{
     
-    Connection conn = dbConnection.enstablishConnection();
+    Connection conn = dbConnection.establishConnection();
     ArrayList<Utility> utilitiesList = new ArrayList<Utility>();
     private final String UTILITY_COST_PER_MONTH_QUERY = "select  strftime('%m-%Y', u.date) as date,\n" +
             "sum(u.total) as sum_for_month\n" +
