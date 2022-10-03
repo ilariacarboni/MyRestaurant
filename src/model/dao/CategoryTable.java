@@ -15,7 +15,7 @@ import java.util.HashMap;
  *
  * @author Natalia
  */
-public class CategoryTable extends DataObject implements Table<Category>{
+public class CategoryTable implements Table<Category>{
 
     Connection conn = dbConnection.establishConnection();
     protected String tableName = "category";
@@ -29,7 +29,7 @@ public class CategoryTable extends DataObject implements Table<Category>{
             ResultSet resultSet = stm.executeQuery(sql);
 
             while (resultSet.next()) {
-                Category c = new Category( resultSet.getString("name"),resultSet.getString("img"));
+                Category c = new Category( resultSet.getString("name"),resultSet.getString("img"), resultSet.getString("icon"),resultSet.getString("name_img"));
                 resList.add(c);
             }
         } catch (SQLException ex) {
@@ -96,7 +96,7 @@ public class CategoryTable extends DataObject implements Table<Category>{
                 ResultSet resultSet = ps.executeQuery();
                 
                 while(resultSet.next()){
-                    Category c = new Category(resultSet.getString("name"),resultSet.getString("img"));
+                    Category c = new Category( resultSet.getString("name"),resultSet.getString("img"), resultSet.getString("icon"),resultSet.getString("name_img"));
                     resList.add(c);
                 }
             } catch (Exception e) {
@@ -110,21 +110,9 @@ public class CategoryTable extends DataObject implements Table<Category>{
     public Category constructEntityFromMap(HashMap<String, Object> map) {
         String name = (String) map.get("name");
         String img = (String) map.get("img");
-        return new Category(name,img);
+        String icon = (String) map.get("icon");
+        String nameImg = (String) map.get("nameImg");
+        return new Category(name,img,icon,nameImg);
     }
 
-    @Override
-    protected String[] getQueryFrom() {
-        return new String[0];
-    }
-
-    @Override
-    protected String[] getQueryWhere() {
-        return new String[0];
-    }
-
-    @Override
-    protected String[] getQueryOrderBy() {
-        return new String[0];
-    }
 }

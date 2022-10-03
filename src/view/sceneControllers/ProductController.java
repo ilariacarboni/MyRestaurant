@@ -19,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import view.utils.LocatedImage;
 
 /**
  * FXML Controller class
@@ -66,11 +67,14 @@ public class ProductController extends BaseView implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
     }
 
-    public void setProductInfo(HashMap<String, Object> productInfo){
+    public void setProductInfo(HashMap<String, Object> productInfo, HashMap<String, Object> category){
         this.productInfo=productInfo;
         this.productNameLabel.setText((String)productInfo.get("name"));
         this.productPriceValue.setText(productInfo.get("price").toString());
         this.productQtyValue.setText(productInfo.get("qty").toString());
+        if (category != null && category.get("img") != null){
+            this.productIcon.setImage(new LocatedImage((String) category.get("icon")));
+        }
     }
     
     public HashMap<String, Object> getProductInfo(){

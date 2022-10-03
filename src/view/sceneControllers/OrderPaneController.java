@@ -6,10 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -22,14 +19,14 @@ import java.util.ResourceBundle;
 
 public class OrderPaneController extends BaseView implements Initializable {
 
+    private OrderManager orderManager = new OrderManager();
     public static final String ORDERS_ON_DELIVERY_MODE = "DELIVERING";
     public static final String ORDERS_HISTORY_MODE     = "HISTORY";
     private final String TO_HISTORY_TEXT = "Storico Ordini";
     private final String TO_CURRENT_TEXT = "Ordini in consegna";
+    private String renderingMode;
     @FXML
     public Button newOrderBtn;
-    private OrderManager orderManager = new OrderManager();
-    private String renderingMode;
     @FXML
     private Label statusLabel;
     @FXML
@@ -46,6 +43,10 @@ public class OrderPaneController extends BaseView implements Initializable {
     private ComboBox<Integer> pageLengthSelector;
     @FXML
     private Button nextPageButton;
+    @FXML
+    public AnchorPane newOrderContainer;
+    @FXML
+    public ScrollPane ordersOuterContainer;
     private int index = 0;
     private int pageNumber = 1;
     private int lastPage;
@@ -186,5 +187,14 @@ public class OrderPaneController extends BaseView implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        newOrderBtn.setVisible(false);
+        newOrderBtn.setManaged(false);
     }
+
+    public void showAddOrderBtn(){
+        newOrderBtn.setVisible(true);
+        newOrderBtn.setManaged(true);
+    }
+
+
 }

@@ -16,6 +16,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
 import javafx.scene.image.ImageView;
+import view.utils.BackButton;
 import view.utils.LocatedImage;
 
 
@@ -55,6 +56,7 @@ public class DashboardController extends BaseView implements Initializable {
     public ImageView loginBtnIcon;
     @FXML
     public AnchorPane loginBtnContainer;
+    public AnchorPane backButtonContainer;
     @FXML
     private Button dashboardBtn;
     @FXML
@@ -99,6 +101,14 @@ public class DashboardController extends BaseView implements Initializable {
         this.commController.setDashboardController(this);
     } 
 
+    public void addBackButton(BackButton btn){
+        this.backButtonContainer.getChildren().clear();
+        this.backButtonContainer.getChildren().add(btn);
+    }
+
+    public void removeBackButton(){
+        this.backButtonContainer.getChildren().clear();
+    }
     private void resetAllExcept(Button btn){
         for(Node node: buttonContainer.getChildren() ){
             if(node.getId() != btn.getId() && node.getStyleClass().contains(this.BTN_SELECTED_STYLE_CLASS)){

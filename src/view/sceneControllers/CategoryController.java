@@ -35,6 +35,8 @@ public class CategoryController extends BaseView implements Initializable {
     final String TOTAL_PROD_IN_CATEGORY_LABEL = "Totale prodotti:";
     final String LAST_ORDER_LABEL = "Ultimo ordine:";
     final String MONTHLY_EXPENSE_LABEL = "Spesa media mensile:";
+
+    private HashMap<String, Object> category;
     @FXML
     public Label categoryLabel;
     @FXML
@@ -52,12 +54,13 @@ public class CategoryController extends BaseView implements Initializable {
     @FXML
     public Label totalProductsInCategoryValue;
     @FXML
-    private AnchorPane category;
+    private AnchorPane categoryContainer;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
 
     public void setCategoryInfo(HashMap<String, Object> category){
+        this.category = category;
         String name = (String)category.get("name");
         this.categoryLabel.setText(name.substring(0, 1).toUpperCase() + name.substring(1));
         if (category.get("img") != null){
@@ -87,21 +90,20 @@ public class CategoryController extends BaseView implements Initializable {
 
     @FXML
     private void categorySelected(MouseEvent event) throws IOException, InterruptedException {
-        //visualizzazione slider -> a transizione finita invoco showProductForCategory
         try {
-            commController.getCategoryPaneController().showProductsForCategory(this.categoryLabel.getText());
+            commController.getCategoryPaneController().showProductsForCategory(this.category);
         } catch (IOException ex) {
             Logger.getLogger(CategoryController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public void categoryHovered(MouseEvent mouseEvent) {
-        category.getStyleClass().add("category-hover");
+        categoryContainer.getStyleClass().add("category-hover");
     }
 
     public void catergoyNotHovered(MouseEvent mouseEvent) {
-        if( category.getStyleClass().contains("category-hover")){
-            category.getStyleClass().remove("category-hover");
+        if( categoryContainer.getStyleClass().contains("category-hover")){
+            categoryContainer.getStyleClass().remove("category-hover");
         }
     }
 
@@ -109,7 +111,7 @@ public class CategoryController extends BaseView implements Initializable {
         int i=0;
         while(i<100){
             String style = String.format("-fx-background-color: linear-gradient(to right, #2D819D %d%%, #969696 %d%%);", i, i);
-            category.setStyle(style);
+            categoryContainer.setStyle(style);
             i++;
         }
         return;

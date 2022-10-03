@@ -24,6 +24,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -57,13 +59,14 @@ public class AddProductPaneController extends BaseView implements Initializable 
     private ComboBox<String> categoryComboBox;
     @FXML
     private ComboBox<String> supplierComboBox;
+    @FXML
+    private ImageView closePaneBtn;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
         addListenersToTextFields();
         setCategoryComboBox();
         setSupplierComboBox();
@@ -96,6 +99,11 @@ public class AddProductPaneController extends BaseView implements Initializable 
             product.put("supplier", supplier);
             product.put("category", category);
             boolean res = this.productManager.saveProduct(product);
+            HashMap<String, Object> categoryEntity = null;
+            ArrayList<HashMap> categories = categoryManager.getFrom(category, "name");
+            if(!categories.isEmpty()){
+                categoryEntity = categories.get(0);
+            }
             if(!res){
                 Alert a = new Alert(AlertType.WARNING);
                 a.setContentText("Il prodotto non è stato inserito!");
@@ -107,7 +115,7 @@ public class AddProductPaneController extends BaseView implements Initializable 
                 resetTextFields();
                 resetTextFields();
                 ProductsPaneController productsPaneController = commController.getProductsPaneController();
-                productsPaneController.addProduct(product);
+                productsPaneController.addProduct(product, categoryEntity);
             }
         }  
     }
@@ -167,5 +175,9 @@ public class AddProductPaneController extends BaseView implements Initializable 
         categoryComboBox.valueProperty().set(null);
         supplierComboBox.valueProperty().set(null);
     }
-    
+
+    public void closePaneBtnClicked(MouseEvent mouseEvent){
+        commController.getDashboardController().setRightPane(null);
+        commController.getProductsPaneController().refresh();
+    }
 }
