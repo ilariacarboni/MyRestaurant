@@ -19,10 +19,12 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import view.utils.BackButton;
+import view.utils.LocatedImage;
 
 /**
  * FXML Controller class
@@ -38,8 +40,9 @@ public class ProductsPaneController extends BaseView implements Initializable {
     //numero di colonne del gridPane che può essere settato esternamente per renderlo responsive
     private int gridpaneColumnsNumber = 1;
     private final String PRODUCT_INFO_DEFAULT_TITLE = "Seleziona un prodotto per visualizzarne i dettagli";
+
     @FXML
-    private Label categoryLabel;
+    private ImageView categoryName;
     @FXML
     private TextField searchBar;
     @FXML
@@ -64,7 +67,6 @@ public class ProductsPaneController extends BaseView implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         commController.setProductPaneController(this);
         this.shownProducts = new ArrayList<>();
-        
         searchBar.textProperty().addListener((observable, oldValue, newValue) ->{
             ObservableList<Node> products = productsContainer.getChildren();
             for(Node product : products){
@@ -81,19 +83,26 @@ public class ProductsPaneController extends BaseView implements Initializable {
         });
     }
 
-    public void loadProductsByCategory(String category){
-        category = category.toLowerCase();
-        this.categoryLabel.setText(category);
+    public void loadProductsByCategory(HashMap<String, Object> category){
+        refresh();
+        String categoryName = category.get("name").toString();
+        if(category.get("nameImg") != null){
+            this.categoryName.setImage(new LocatedImage(category.get("nameImg").toString()));
+        }
         productsContainer.getChildren().clear();
-        ArrayList<HashMap<String, Object>> products = this.productManager.getFrom(category, "category");
+        ArrayList<HashMap<String, Object>> products = this.productManager.getFrom(categoryName, "category");
         for(int i = 0; i<products.size(); i++){
             HashMap<String, Object> product = products.get(i);
-            this.addProduct(product);
-
+            this.addProduct(product, category);
         }
     }
+
+    public void refresh(){
+        this.addProductBtn.setVisible(true);
+        this.addProductBtn.setManaged(true);
+    }
     
-    public void addProduct(HashMap<String, Object> productInfo){
+    public void addProduct(HashMap<String, Object> productInfo, HashMap<String, Object> category){
         int index = this.shownProducts.size() ;
         this.shownProducts.add(index, productInfo);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(this.PRODUCT_FXML));
@@ -101,7 +110,7 @@ public class ProductsPaneController extends BaseView implements Initializable {
         try {
             productNode = loader.load();
             ProductController productContr = loader.getController();
-            productContr.setProductInfo(productInfo);
+            productContr.setProductInfo(productInfo, category);
             int columnIndex = index%this.gridpaneColumnsNumber;
             int rowIndex = (int) Math.floor(index/this.gridpaneColumnsNumber);
             productsContainer.add(productNode, columnIndex, rowIndex);
@@ -125,19 +134,22 @@ public class ProductsPaneController extends BaseView implements Initializable {
 
     @FXML
     private void addProductBtnClicked(ActionEvent event) throws IOException {
-        BorderPane dashboardBorderPane = (BorderPane) mainContainer.getParent();
-        dashboardBorderPane.setRight(FXMLLoader.load(getClass().getResource(this.ADD_PRODUCT_PANE_FXML)));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(this.ADD_PRODUCT_PANE_FXML));
+        Node addProductPane = loader.load();
+        commController.getDashboardController().setRightPane(addProductPane);
         this.addProductBtn.setVisible(false);
+        this.addProductBtn.setManaged(false);
     }
 
     public void makeBackButton(Node centralScene, Node rightScene){
         BackButton backButton = new BackButton();
         backButton.setCenterScene(centralScene);
         backButton.setRightScene(rightScene);
-        backButton.setText("indietro");
-        backButton.setDashboardController(commController.getDashboardController());
-        this.backButtonContainer.getChildren().clear();
-        this.backButtonContainer.getChildren().add(backButton);
+        DashboardController dc = commController.getDashboardController();
+        backButton.setDashboardController(dc);
+        dc.addBackButton(backButton);
+//        this.backButtonContainer.getChildren().clear();
+//        this.backButtonContainer.getChildren().add(backButton);
     }
 
     public void setGridPaneColumnNumber(int columnNumber){
@@ -151,5 +163,4 @@ public class ProductsPaneController extends BaseView implements Initializable {
         }
     }
 
-    
 }

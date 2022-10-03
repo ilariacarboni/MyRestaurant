@@ -83,7 +83,7 @@ public class CategoryPaneController extends BaseView implements Initializable {
         dashboardBorderPane.setRight(FXMLLoader.load(getClass().getResource("/view/scene/addCategory.fxml")));
     }
     
-    public void showProductsForCategory(String category) throws IOException{
+    public void showProductsForCategory(HashMap<String, Object> category) throws IOException{
         if(this.productsPane == null){
             this.productsPane = FXMLLoader.load(getClass().getResource(this.PRODUCT_PANE_LOCATION));
         }

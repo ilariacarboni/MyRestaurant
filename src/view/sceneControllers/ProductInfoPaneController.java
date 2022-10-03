@@ -20,6 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser;
 import view.utils.CustomLineChart;
@@ -30,6 +31,8 @@ import view.utils.CustomLineChart;
  * @author Natalia
  */
 public class ProductInfoPaneController extends BaseView implements Initializable {
+
+    private final String DEFAULT_IMAGE_PATH = "src/view/style/img/others/no-results.png";
     @FXML
     public Label priceLabel;
     @FXML
@@ -49,6 +52,7 @@ public class ProductInfoPaneController extends BaseView implements Initializable
     public HashMap<String,Object> shownProduct = null;
     @FXML
     public AnchorPane storeQuantityChartContainer;
+    public Circle circle;
     private ProductManager prodManager;
 
     @Override
@@ -68,7 +72,6 @@ public class ProductInfoPaneController extends BaseView implements Initializable
         }
         this.shownProduct = product;
         this.setLabels(product);
-
     }
 
     private void setLabels(HashMap<String, Object> product){
@@ -77,11 +80,15 @@ public class ProductInfoPaneController extends BaseView implements Initializable
         this.priceLabel.setText(String.valueOf(product.get("price")));
         this.barcodeLabel.setText(String.valueOf(product.get("barcode")));
         String imagePath = (String)product.get("image");
-        try{
-            Image productImage = new Image(new File(imagePath).toURI().toString());
-            this.productImage.setImage(productImage);
-        }catch (Exception e){
-            this.productImage.setImage(new Image(new File("src/view/style/img/others/product-image-not-found.png").toURI().toString()));
+        if(imagePath != null && !imagePath.equals("")){
+            try{
+                Image productImage = new Image(new File(imagePath).toURI().toString());
+                this.productImage.setImage(productImage);
+            }catch(Exception e){
+                this.productImage.setImage(new Image(new File(this.DEFAULT_IMAGE_PATH).toURI().toString()));
+            }
+        }else{
+            this.productImage.setImage(new Image(new File(this.DEFAULT_IMAGE_PATH).toURI().toString()));
         }
     }
 
@@ -122,5 +129,4 @@ public class ProductInfoPaneController extends BaseView implements Initializable
             this.setProductInfo(updatedProd);
         }
     }
-
 }

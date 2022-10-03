@@ -47,4 +47,8 @@ public class CategoryManager {
         }
         return res;
     }
+
+    public ArrayList getFrom(Object searchParam, String paramName ){
+        return this.categoryTable.getFrom(searchParam, paramName);
+    }
 }
