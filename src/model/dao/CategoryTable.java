@@ -89,7 +89,7 @@ public class CategoryTable implements Table<Category>{
         //ricerca per nome
         ArrayList<Category> resList = new ArrayList<Category>();
         if(searchParam instanceof String){
-            String sql = "SELECT * FROM category WHERE id = ?";
+            String sql = "SELECT * FROM category WHERE name = ?";
             try {
                 PreparedStatement ps = conn.prepareStatement(sql);
                 ps.setString(1, (String)searchParam);

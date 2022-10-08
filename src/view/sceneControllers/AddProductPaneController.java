@@ -5,7 +5,6 @@
  */
 package view.sceneControllers;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,7 +15,6 @@ import business.ProductManager;
 import business.SupplierManager;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -36,14 +34,6 @@ public class AddProductPaneController extends BaseView implements Initializable 
     private CategoryManager categoryManager = new CategoryManager();
     private SupplierManager supplierManager = new SupplierManager();
     @FXML
-    private Label barcodeLabel;
-    @FXML
-    private Label nameLabel;
-    @FXML
-    private Label qtyLabel;
-    @FXML
-    private Label priceLabel;
-    @FXML
     private TextField barcodeTextField;
     @FXML
     private TextField nameTextField;
@@ -52,15 +42,9 @@ public class AddProductPaneController extends BaseView implements Initializable 
     @FXML
     private TextField priceTextField;
     @FXML
-    private Label priceLabel1;
-    @FXML
-    private Label priceLabel11;
-    @FXML
     private ComboBox<String> categoryComboBox;
     @FXML
     private ComboBox<String> supplierComboBox;
-    @FXML
-    private ImageView closePaneBtn;
 
     /**
      * Initializes the controller class.
@@ -73,7 +57,7 @@ public class AddProductPaneController extends BaseView implements Initializable 
     }    
 
     @FXML
-    private void addProductBtnClicked(ActionEvent event){
+    private void addProductBtnClicked(MouseEvent event){
         
         //controllo che siano stati inseriti tutti i campi
         if(barcodeTextField.getText().isEmpty() || qtyTextField.getText().isEmpty() || 

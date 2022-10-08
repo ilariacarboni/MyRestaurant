@@ -64,3 +64,7 @@
 .scrollPaneProductInfo{
     -fx-background-color: white;
 }
+
+.arrow{
+    -fx-cursor: hand;
+}

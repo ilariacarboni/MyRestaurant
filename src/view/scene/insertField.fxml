@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefWidth="250.0" styleClass="insertField" stylesheets="@../style/css/insertField.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.scene.InsertField">
+   <padding>
+      <Insets bottom="10.0" />
+   </padding>
+   <children>
+      <Label layoutX="25.0" layoutY="7.0" text="Codice a barre">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <TextField layoutX="22.0" layoutY="35.0" style="-fx-background-radius: 20;" />
+   </children>
+</AnchorPane>

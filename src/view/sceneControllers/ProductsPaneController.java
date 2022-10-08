@@ -5,13 +5,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import business.ProductManager;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -41,12 +38,12 @@ public class ProductsPaneController extends BaseView implements Initializable {
     private int gridpaneColumnsNumber = 1;
     private final String PRODUCT_INFO_DEFAULT_TITLE = "Seleziona un prodotto per visualizzarne i dettagli";
 
+    public AnchorPane addProductBtn;
     @FXML
     private ImageView categoryName;
     @FXML
     private TextField searchBar;
-    @FXML
-    private Button addProductBtn;
+
     @FXML
     private GridPane productsContainer;
     @FXML
@@ -133,7 +130,7 @@ public class ProductsPaneController extends BaseView implements Initializable {
     }
 
     @FXML
-    private void addProductBtnClicked(ActionEvent event) throws IOException {
+    private void addProductBtnClicked(MouseEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(this.ADD_PRODUCT_PANE_FXML));
         Node addProductPane = loader.load();
         commController.getDashboardController().setRightPane(addProductPane);
