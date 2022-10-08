@@ -1,0 +1,6 @@
+.custom-button{
+    -fx-background-radius: 10;
+    -fx-background-color: #fe724c;
+    -fx-font-size: 16;
+    -fx-cursor: hand;
+}

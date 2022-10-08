@@ -1,11 +1,11 @@
 package business;
 
 import model.dao.ProductTable;
-import model.entity.Entity;
 import model.entity.Product;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class ProductManager {
     private ProductTable productTable;
@@ -52,8 +52,12 @@ public class ProductManager {
         return res;
     }
 
-    public HashMap<Integer, Integer> getStoreStatistics(int prodId){
+    public LinkedHashMap<String, Integer> getProductUsage(int prodId){
         return this.productTable.getProductUsageInLastYear(prodId);
+    }
+
+    public LinkedHashMap<String, Integer> getProductOrders(int prodId){
+        return this.productTable.getProductOrdersInLastYear(prodId);
     }
 
     public ArrayList<HashMap<String, Object>> getProductsWithNameLike(String name){

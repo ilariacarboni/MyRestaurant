@@ -49,6 +49,11 @@ public class CategoryManager {
     }
 
     public ArrayList getFrom(Object searchParam, String paramName ){
-        return this.categoryTable.getFrom(searchParam, paramName);
+        ArrayList<Category> categories = this.categoryTable.getFrom(searchParam, paramName);
+        ArrayList<HashMap<String,Object>> res  = new ArrayList<HashMap<String,Object>>();
+        for(Category category : categories){
+            res.add(category.map());
+        }
+        return res;
     }
 }
