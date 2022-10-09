@@ -74,7 +74,10 @@ public final class CommunicationController {
             this.dashboardController = dc;
         }
     }
-    public DashboardController getDashboardController(){ return this.dashboardController;}
+    public DashboardController getDashboardController(){ 
+        return this.dashboardController;
+    }
+    
     public void setDishInfoController(DishInfoController dishinfoController){
         if(this.dishinfoController == null){
             this.dishinfoController = dishinfoController;

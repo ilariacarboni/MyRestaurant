@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="portataItem" maxWidth="500.0" onMouseClicked="#courseSelected" onMouseEntered="#courseHovered" onMouseExited="#courseNotHovered" prefHeight="350.0" prefWidth="500.0" styleClass="category" stylesheets="@../style/css/store.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.portataItemController">
+   <children>
+      <HBox layoutY="7.0" prefHeight="122.0" prefWidth="520.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="7.0">
+         <children>
+            <Pane prefHeight="92.0" prefWidth="126.0">
+               <children>
+                  <ImageView fx:id="portataIcon" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" x="10.0" y="10.0" />
+               </children>
+            </Pane>
+            <AnchorPane prefHeight="92.0" prefWidth="76.0">
+               <children>
+                  <Label fx:id="portataLabel" layoutX="14.0" layoutY="22.0" text="Label" AnchorPane.leftAnchor="14.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+      <VBox layoutY="150.0" spacing="10.0" styleClass="categoryInfoContainer" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <HBox prefHeight="78.0" prefWidth="500.0" spacing="20.0">
+               <children>
+                  <ImageView fitHeight="42.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../style/img/category-icons/total-products.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="70.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <AnchorPane>
+                     <children>
+                        <HBox>
+                           <children>
+                              <Label fx:id="totaldishesinPortataLbl" />
+                              <Label fx:id="totaldishesinPortataValue" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

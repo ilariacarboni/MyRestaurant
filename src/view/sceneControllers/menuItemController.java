@@ -41,21 +41,16 @@ public class menuItemController extends BaseView {
     private VBox itemVbox;
     
 
-    @FXML
-    /*void click(MouseEvent event) {
-        myListener.onClickListener(menu);
-}*/
-
-    public void setData(Menu menu) {
+    public void setDishInfo(Menu menu) {
         this.menu = menu;
        //this.myListener = myListener; se necessario da passare come parametro in setData
         itemNameLbl.setText(menu.getNameDish());
         itemPriceLbl.setText("€"+ menu.getPrice());
-        //Image image = new Image(getClass().getResourceAsStream(menu.getImgSrc()));
-        //img.setImage(image);
+        //Image image = new Image(getClass().getResourceAsStream(menu.getImage()));
+        //image.setImage(image);
     }
     
-   // private MyListener myListener;
+
     public Menu menu;
     
     @FXML
@@ -63,9 +58,9 @@ public class menuItemController extends BaseView {
        
        //commController.getDishInfoController().setChosenDish(itemNameLbl.getText(), itemPriceLbl.getText());
        //myListener.onClickListener(menu);
-       commController.getDishInfoController().setChosenDish(menu);    
+       commController.getDishInfoController().setChosenDish(menu);  //aggiornamento pane laterale dishinfo
 }
     
     
 }
-//Integer.parseInt(prezzoTxt.getText())
+
