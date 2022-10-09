@@ -7,29 +7,25 @@ package model.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.util.Properties;
 
 /**
- * class used to enstablish and close the connection to the db
+ * class used to establish and close the connection to the db
  * @author Natalia
  */
 public class dbConnection {
     
     private static Connection conn = null;
-    public static Connection enstablishConnection(){
+    public static Connection establishConnection(){
         
         if(conn==null){
             try {
                 Class.forName("org.sqlite.JDBC");
                 String url = "jdbc:sqlite:RestaurantDB.db";
-                return DriverManager.getConnection(url);
+                conn = DriverManager.getConnection(url);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        
         }
-           
         return conn;
     }
-    
 }

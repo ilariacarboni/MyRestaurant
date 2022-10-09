@@ -2,9 +2,7 @@ package view.sceneControllers;
 
 import java.io.File;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import business.ProductManager;
 import javafx.fxml.FXML;
@@ -20,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser;
 import view.utils.CustomLineChart;
@@ -30,6 +29,11 @@ import view.utils.CustomLineChart;
  * @author Natalia
  */
 public class ProductInfoPaneController extends BaseView implements Initializable {
+
+    private final String DEFAULT_IMAGE_PATH = "src/view/style/img/others/no-results.png";
+    private ProductManager prodManager;
+    private ArrayList productCharts = new ArrayList();
+    private int index = 0;
     @FXML
     public Label priceLabel;
     @FXML
@@ -43,13 +47,10 @@ public class ProductInfoPaneController extends BaseView implements Initializable
     @FXML
     public ImageView productImage;
     @FXML
-    public Button chooseImgBtn;
-    @FXML
     public VBox mainContainer;
     public HashMap<String,Object> shownProduct = null;
     @FXML
-    public AnchorPane storeQuantityChartContainer;
-    private ProductManager prodManager;
+    public AnchorPane chartContainer;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -61,14 +62,19 @@ public class ProductInfoPaneController extends BaseView implements Initializable
             int oldProductId = (int)this.shownProduct.get("barcode");
             int newProductId = (int)product.get("barcode");
             if(oldProductId != newProductId){
-                this.initializeStoreQtyChart(product);
+                this.initializeUsageChart(product);
+                this.initializeOrdersChart(product);
             }
         }else{
-            this.initializeStoreQtyChart(product);
+            this.initializeUsageChart(product);
+            this.initializeOrdersChart(product);
         }
         this.shownProduct = product;
         this.setLabels(product);
-
+        if(this.productCharts != null){
+            this.chartContainer.getChildren().clear();
+            this.chartContainer.getChildren().add((Node)this.productCharts.get(index));
+        }
     }
 
     private void setLabels(HashMap<String, Object> product){
@@ -77,33 +83,62 @@ public class ProductInfoPaneController extends BaseView implements Initializable
         this.priceLabel.setText(String.valueOf(product.get("price")));
         this.barcodeLabel.setText(String.valueOf(product.get("barcode")));
         String imagePath = (String)product.get("image");
-        try{
-            Image productImage = new Image(new File(imagePath).toURI().toString());
-            this.productImage.setImage(productImage);
-        }catch (Exception e){
-            this.productImage.setImage(new Image(new File("src/view/style/img/others/product-image-not-found.png").toURI().toString()));
+        if(imagePath != null && !imagePath.equals("")){
+            try{
+                Image productImage = new Image(new File(imagePath).toURI().toString());
+                this.productImage.setImage(productImage);
+            }catch(Exception e){
+                this.productImage.setImage(new Image(new File(this.DEFAULT_IMAGE_PATH).toURI().toString()));
+            }
+        }else{
+            this.productImage.setImage(new Image(new File(this.DEFAULT_IMAGE_PATH).toURI().toString()));
         }
     }
 
-    private void initializeStoreQtyChart(HashMap<String, Object> product){
-        //ottenimento informazioni dalla classe di business
+    private void initializeUsageChart(HashMap<String, Object> product){
         int barcode = (int)product.get("barcode");
-        HashMap<Integer, Integer> data = this.prodManager.getStoreStatistics(barcode);
+        LinkedHashMap<String, Integer> data = this.prodManager.getProductUsage(barcode);
+        CustomLineChart storeQtyChart = this.buildChart(data, "uso/mese");
+        this.productCharts.add(storeQtyChart);
+    }
+
+    private void initializeOrdersChart(HashMap<String, Object> product){
+        int barcode = (int)product.get("barcode");
+        LinkedHashMap<String, Integer> data = this.prodManager.getProductOrders(barcode);
+        CustomLineChart ordersForProductChart = this.buildChart(data, "ordini/mese");
+        this.productCharts.add(ordersForProductChart);
+    }
+
+    private CustomLineChart buildChart(LinkedHashMap<String, Integer> data, String name){
         CategoryAxis catAx = new CategoryAxis();
         NumberAxis numAx = new NumberAxis();
-        CustomLineChart storeQtyChart = new CustomLineChart(catAx, numAx);
+        CustomLineChart chart = new CustomLineChart(catAx, numAx);
         if(data != null){
             XYChart.Series series = new XYChart.Series();
-            series.setName("uso/mese");
-            for (Map.Entry<Integer, Integer> entry : data.entrySet()) {
-                String key = entry.getKey().toString();
+            series.setName(name);
+            for (Map.Entry<String, Integer> entry : data.entrySet()) {
+                String key = entry.getKey();
                 int value = entry.getValue();
                 XYChart.Data point = new XYChart.Data<>(key, value);
                 series.getData().add(point);
             }
-            storeQtyChart.addData(series);
+            chart.addData(series);
         }
-        this.storeQuantityChartContainer.getChildren().add(storeQtyChart);
+        return chart;
+    }
+
+    @FXML
+    void followingChart(MouseEvent event) {
+        index = (index+1)%this.productCharts.size();
+        this.chartContainer.getChildren().clear();
+        this.chartContainer.getChildren().add((Node)this.productCharts.get(index));
+    }
+
+    @FXML
+    void previousChart(MouseEvent event) {
+        index = Math.abs((index-1)%this.productCharts.size());
+        this.chartContainer.getChildren().clear();
+        this.chartContainer.getChildren().add((Node)this.productCharts.get(index));
     }
     public void chooseImgForProduct(MouseEvent mouseEvent) {
         final FileChooser fc = new FileChooser();
@@ -122,5 +157,4 @@ public class ProductInfoPaneController extends BaseView implements Initializable
             this.setProductInfo(updatedProd);
         }
     }
-
 }

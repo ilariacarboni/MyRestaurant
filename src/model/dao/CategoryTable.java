@@ -17,7 +17,8 @@ import java.util.HashMap;
  */
 public class CategoryTable implements Table<Category>{
 
-    Connection conn = dbConnection.enstablishConnection();
+    Connection conn = dbConnection.establishConnection();
+    protected String tableName = "category";
     
     @Override
     public ArrayList<Category> getAll() {
@@ -28,7 +29,7 @@ public class CategoryTable implements Table<Category>{
             ResultSet resultSet = stm.executeQuery(sql);
 
             while (resultSet.next()) {
-                Category c = new Category( resultSet.getString("name"),resultSet.getString("img"));
+                Category c = new Category( resultSet.getString("name"),resultSet.getString("img"), resultSet.getString("icon"),resultSet.getString("name_img"));
                 resList.add(c);
             }
         } catch (SQLException ex) {
@@ -88,14 +89,14 @@ public class CategoryTable implements Table<Category>{
         //ricerca per nome
         ArrayList<Category> resList = new ArrayList<Category>();
         if(searchParam instanceof String){
-            String sql = "SELECT * FROM category WHERE id = ?";
+            String sql = "SELECT * FROM category WHERE name = ?";
             try {
                 PreparedStatement ps = conn.prepareStatement(sql);
                 ps.setString(1, (String)searchParam);
                 ResultSet resultSet = ps.executeQuery();
                 
                 while(resultSet.next()){
-                    Category c = new Category(resultSet.getString("name"),resultSet.getString("img"));
+                    Category c = new Category( resultSet.getString("name"),resultSet.getString("img"), resultSet.getString("icon"),resultSet.getString("name_img"));
                     resList.add(c);
                 }
             } catch (Exception e) {
@@ -109,7 +110,9 @@ public class CategoryTable implements Table<Category>{
     public Category constructEntityFromMap(HashMap<String, Object> map) {
         String name = (String) map.get("name");
         String img = (String) map.get("img");
-        return new Category(name,img);
+        String icon = (String) map.get("icon");
+        String nameImg = (String) map.get("nameImg");
+        return new Category(name,img,icon,nameImg);
     }
-    
+
 }

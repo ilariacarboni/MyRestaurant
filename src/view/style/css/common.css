@@ -1,0 +1,21 @@
+.no-border:focused {
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color: transparent;
+}
+.no-border{
+    -fx-box-border: transparent;
+}
+.button:hover{
+    -fx-cursor: hand;
+}
+.back-button:hover{
+    -fx-cursor: hand;
+}
+.border-right{
+    -fx-border-style: hidden solid hidden hidden;
+    -fx-border-width: 2;
+    -fx-border-color: #c2c6c8;
+}
+.search-field{
+    -fx-background-radius: 20px;
+}

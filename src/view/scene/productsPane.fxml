@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
@@ -12,82 +12,123 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainContainer" prefHeight="513.0" prefWidth="900.0" stylesheets="@../style/css/store.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.ProductsPaneController">
+<BorderPane fx:id="mainContainer" prefHeight="513.0" prefWidth="900.0" styleClass="border-right" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.ProductsPaneController">
    <top>
-      <HBox prefHeight="200.0">
+      <HBox alignment="CENTER">
          <children>
-            <AnchorPane fx:id="backButtonContainer" />
-            <VBox>
+            <AnchorPane fx:id="backButtonContainer" HBox.hgrow="NEVER" />
+            <AnchorPane>
                <children>
-                  <Label fx:id="categoryLabel" />
-               </children>
-            </VBox>
-            <HBox prefHeight="32.0" prefWidth="290.0">
-               <children>
-                  <TextField fx:id="searchBar" prefHeight="32.0" prefWidth="214.0" styleClass="searchBarTextField">
-                     <HBox.margin>
-                        <Insets left="35.0" />
-                     </HBox.margin>
-                  </TextField>
-                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" styleClass="searchBarIcon" translateX="-20.0">
-                     <image>
-                        <Image url="@../style/img/others/search.png" />
-                     </image>
+                  <ImageView fx:id="categoryName" fitHeight="255.0" fitWidth="407.0">
                   </ImageView>
                </children>
-               <HBox.margin>
-                  <Insets top="25.0" />
-               </HBox.margin>
-            </HBox>
-            <AnchorPane HBox.hgrow="ALWAYS">
+            </AnchorPane>
+            <AnchorPane prefWidth="359.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Button text="Nuovo Ordine" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="25.0" />
+                  <HBox fillHeight="false" layoutX="212.0" layoutY="14.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="14.0">
+                     <children>
+                        <TextField fx:id="searchBar" prefHeight="32.0" prefWidth="214.0" styleClass="searchBarTextField">
+                           <HBox.margin>
+                              <Insets left="35.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" styleClass="searchBarIcon" translateX="-20.0">
+                           <image>
+                              <Image url="@../style/img/others/search.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+                  <AnchorPane layoutX="408.0" layoutY="59.0" prefHeight="40.0" styleClass="custom-button" stylesheets="@../style/css/customButton.css" AnchorPane.rightAnchor="25.0">
+                     <children>
+                        <AnchorPane layoutX="-3.0" layoutY="3.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: ea613f;" styleClass="custom-button" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="12.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../style/img/buttons-icon/checkout.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                        <Label layoutX="36.0" layoutY="8.0" text="Nuovo Ordine">
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="addProductBtn" layoutX="276.0" layoutY="108.0" onMouseClicked="#addProductBtnClicked" prefHeight="40.0" styleClass="custom-button" stylesheets="@../style/css/customButton.css" AnchorPane.rightAnchor="25.0">
+                     <children>
+                        <AnchorPane layoutX="-3.0" layoutY="3.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: ea613f;" styleClass="custom-button" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="12.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../style/img/buttons-icon/add2.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </AnchorPane>
+                        <Label layoutX="36.0" layoutY="8.0" text="Aggiungi Prodotto">
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </AnchorPane>
                </children>
             </AnchorPane>
          </children>
       </HBox>
    </top>
    <bottom>
-      <AnchorPane BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="addProductBtn" mnemonicParsing="false" onAction="#addProductBtnClicked" text="Aggiungi prodotto" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="30.0" />
-         </children>
-      </AnchorPane>
+      <AnchorPane BorderPane.alignment="CENTER" />
    </bottom>
    <center>
-      <HBox>
+      <HBox spacing="20.0">
          <children>
-            <ScrollPane hbarPolicy="NEVER" styleClass="scrollPane">
+            <ScrollPane hbarPolicy="NEVER" prefHeight="400.0" prefWidth="560.0" styleClass="scrollPane">
                <content>
                   <GridPane fx:id="productsContainer">
-                     <padding>
-                        <Insets bottom="20.0" left="20.0" top="20.0" />
-                     </padding>
                      <columnConstraints>
                         <ColumnConstraints percentWidth="90" />
                      </columnConstraints>
                   </GridPane>
                </content>
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
             </ScrollPane>
-            <BorderPane fx:id="productInfoMainContainer" prefHeight="400" prefWidth="550.0" styleClass="productInfoMainContainer">
+            <BorderPane fx:id="productInfoMainContainer" styleClass="productInfoMainContainer">
                <top>
-                  <Label fx:id="productInfoMainContainerTitle" text="Seleziona un prodotto per visualizzarne i dettagli" BorderPane.alignment="CENTER">
+                  <Label fx:id="productInfoMainContainerTitle" minWidth="-Infinity" text="Seleziona un prodotto per visualizzarne i dettagli" BorderPane.alignment="CENTER">
                      <padding>
                         <Insets top="10.0" />
                      </padding>
                      <font>
                         <Font size="20.0" />
                      </font>
+                     <BorderPane.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </BorderPane.margin>
                   </Label>
                </top>
                <HBox.margin>
                   <Insets right="20.0" />
                </HBox.margin>
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
             </BorderPane>
          </children>
       </HBox>
    </center>
+   <stylesheets>
+      <URL value="@../style/css/store.css" />
+      <URL value="@../style/css/common.css" />
+   </stylesheets>
+   <padding>
+      <Insets bottom="10.0" />
+   </padding>
 </BorderPane>

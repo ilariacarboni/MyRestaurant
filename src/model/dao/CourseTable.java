@@ -20,7 +20,7 @@ import model.entity.Course;
  * @author milar
  */
 public class CourseTable {
-    Connection conn = dbConnection.enstablishConnection();
+    Connection conn = dbConnection.establishConnection();
     
 public ArrayList<Course> getAll() {
         ArrayList <Course> resList = new ArrayList<Course>();

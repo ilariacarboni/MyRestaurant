@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -21,15 +22,19 @@ import java.util.Map;
  * @author Natalia
  */
 public class ProductTable implements Table<Product>{
-    
-    Connection conn = dbConnection.enstablishConnection();
+
+    Connection conn = dbConnection.establishConnection();
     private final String PRODUCT_USAGE_QUERY =
-            "select strftime('%m', r.date) as month, count(*) as count\n" +
+            "select strftime('%m-%Y', r.date) as month, count(*) as count\n" +
             "from receipt r \n" +
             "join receipt_item ri on r.number=ri.receipt\n" +
             "join composition c on ri.dish = c.dish\n" +
             "where c.product = ? and r.date between date('now', '-1 year') and date('now')\n" +
-            "group by month;";
+            "group by month order by strftime('%Y', r.date) asc , strftime('%m', r.date);";
+
+    private final String PRODUCT_ORDERS_QUERY = "select strftime('%m-%Y', o.date) as month, count(*) as tot from orders o where o.product_barcode = ?\n" +
+            "group by strftime('%m-%Y', o.date)\n" +
+            "order by strftime('%Y', o.date) asc , strftime('%m', o.date);";
     private final String PRODUCTS_PER_CATEGORY_QUERY = "select p.category, count(*) as prod_number from product p group by p.category;";
     private final String WAREHOUSE_COMPOSITION_QUERY = "select category, sum(qty) as qty from product group by category;";
 
@@ -52,8 +57,6 @@ public class ProductTable implements Table<Product>{
 
     @Override
     public boolean save(Product p) {
-        //lo inserisce nella lista e nel db
-        //se il Product è nella lista significa che è stato già inserito nel db
         boolean res = false;
    
         String sql= "INSERT INTO product (barcode, name, qty, price, supplier, category, image) VALUES (?,?,?,?,?,?,?)";
@@ -160,6 +163,7 @@ public class ProductTable implements Table<Product>{
         return resList;
     }
 
+
     public ArrayList<Product> getWithLikeCondition(Object searchParam, String paramName){
         ArrayList<Product> resList = new ArrayList<Product>();
         String sql = "SELECT * FROM product p WHERE ";
@@ -187,17 +191,35 @@ public class ProductTable implements Table<Product>{
      * @return an HashMap with its usage per month;
      * the HashMap has as key the numeric representation of the month and as value the usage of the product
      */
-    public HashMap<Integer,Integer> getProductUsageInLastYear(int productBarcode){
-        HashMap<Integer, Integer> res = null;
+    public LinkedHashMap<String,Integer> getProductUsageInLastYear(int productBarcode){
+        LinkedHashMap<String, Integer> res = null;
         try {
             PreparedStatement ps = conn.prepareStatement(this.PRODUCT_USAGE_QUERY);
             ps.setInt(1, productBarcode);
             ResultSet resultSet = ps.executeQuery();
-            res = new HashMap<Integer, Integer>();
+            res = new LinkedHashMap<String, Integer>();
             while (resultSet.next()) {
-                int month = resultSet.getInt("month");
+                String month = resultSet.getString("month");
                 int usage = resultSet.getInt("count");
                 res.put(month, usage);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }
+        return res;
+    }
+
+    public LinkedHashMap<String, Integer> getProductOrdersInLastYear(int productBarcode){
+        LinkedHashMap<String, Integer> res = null;
+        try {
+            PreparedStatement ps = conn.prepareStatement(this.PRODUCT_ORDERS_QUERY);
+            ps.setInt(1, productBarcode);
+            ResultSet resultSet = ps.executeQuery();
+            res = new LinkedHashMap<String, Integer>();
+            while (resultSet.next()) {
+                String month = resultSet.getString("month");
+                int totOrders = resultSet.getInt("tot");
+                res.put(month, totOrders);
             }
         } catch (SQLException ex) {
             System.out.println(ex.toString());

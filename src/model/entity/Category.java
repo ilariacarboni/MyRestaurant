@@ -15,16 +15,24 @@ public class Category implements Entity{
     
     private String name;
     private String img;
+    private String icon;
+    private String nameImg;
     
-    public Category(String name, String img){
+    public Category(String name, String img, String icon, String nameImg){
         this.name = name;
         this.img = img;
+        this.icon = icon;
+        this.nameImg = nameImg;
     }
     
     public String getName(){
         return this.name;
     }
     public String getImg(){ return this.img;}
+    public String getIcon(){
+        return this.icon;
+    }
+    public String getNameImg(){ return this.nameImg;}
 
     @Override
     public String getTableName() {
@@ -36,6 +44,8 @@ public class Category implements Entity{
         HashMap<String, Object> res = new HashMap<String, Object>();
         res.put("name", this.name);
         res.put("img", this.img);
+        res.put("icon", this.icon);
+        res.put("nameImg", this.nameImg);
         return res;
     }
 

@@ -8,8 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import model.entity.Product;
-import org.controlsfx.control.textfield.TextFields;
+import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -21,18 +20,21 @@ public class AddOrderPaneController extends BaseView implements Initializable {
     private ProductManager productManager = new ProductManager();
     @FXML
     private DatePicker dateField;
-
     @FXML
     private TextField productField;
-
     @FXML
     private Spinner<Integer> qtyField;
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100);
+        valueFactory.setValue(1);
+        qtyField.setValueFactory(valueFactory);
+        SuggestionProvider suggestionProvider = SuggestionProvider.create(new ArrayList());
+        new AutoCompletionTextFieldBinding<>(productField, suggestionProvider);
+        this.addListenerForAutocompletion(suggestionProvider);
+    }
 
-    @FXML
-    private Button insertBtn;
-
-    @FXML
-    void insertOrderBtnClicked(MouseEvent event) {
+    public void insertOrderBtnClicked(MouseEvent event) {
         Alert a = new Alert(Alert.AlertType.WARNING);
         LocalDate d = dateField.getValue();
         String date = "";
@@ -59,15 +61,6 @@ public class AddOrderPaneController extends BaseView implements Initializable {
         }
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100);
-        valueFactory.setValue(1);
-        qtyField.setValueFactory(valueFactory);
-        SuggestionProvider suggestionProvider = SuggestionProvider.create(new ArrayList());
-        new AutoCompletionTextFieldBinding<>(productField, suggestionProvider);
-        this.addListenerForAutocompletion(suggestionProvider);
-    }
 
     private void addListenerForAutocompletion(SuggestionProvider sp){
         productField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -80,5 +73,10 @@ public class AddOrderPaneController extends BaseView implements Initializable {
             sp.clearSuggestions();
             sp.addPossibleSuggestions(newSuggestions);
         });
+    }
+
+    public void hideAddOrderPane(MouseEvent mouseEvent) {
+        commController.getDashboardController().setRightPane(null);
+        commController.getOrderPaneController().showAddOrderBtn();
     }
 }

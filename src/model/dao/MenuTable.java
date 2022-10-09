@@ -17,7 +17,7 @@ import java.util.HashMap;
 
 public class MenuTable implements Table<Menu>{
     
-    Connection conn = dbConnection.enstablishConnection();
+    Connection conn = dbConnection.establishConnection();
     private final String DISHES_PER_COURSE = "select m.course, count(*) as menu_number from menu m group by m.course;";
    
     @Override
