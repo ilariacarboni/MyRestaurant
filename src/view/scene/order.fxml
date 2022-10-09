@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -9,9 +8,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.OrderController">
+<AnchorPane stylesheets="@../style/css/order.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.OrderController">
    <children>
-      <HBox prefWidth="200.0">
+      <HBox spacing="10.0">
          <children>
             <AnchorPane prefHeight="40.0" prefWidth="40.0">
                <children>
@@ -22,48 +21,64 @@
                   </ImageView>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="numberLabelContainer">
+            <AnchorPane fx:id="numberLabelContainer" prefWidth="149.0" styleClass="order-field">
                <children>
-                  <Label fx:id="numberLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="10.0" text="numero">
+                  <Label fx:id="numberLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="10.0" prefWidth="149.0" text="numero">
                      <font>
                         <Font size="14.0" />
                      </font>
                      <padding>
-                        <Insets left="10.0" right="10.0" />
+                        <Insets right="10.0" />
                      </padding>
                   </Label>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="dateLabelContainer">
+            <AnchorPane fx:id="dateLabelContainer" prefWidth="149.0" styleClass="order-field">
                <children>
-                  <Label fx:id="dateLabel" alignment="CENTER" layoutY="10.0" text="21/09/2022">
+                  <Label fx:id="dateLabel" alignment="CENTER" layoutY="10.0" prefWidth="149.0" text="21/09/2022">
                      <font>
                         <Font size="14.0" />
                      </font>
                      <padding>
-                        <Insets left="10.0" right="10.0" />
+                        <Insets right="10.0" />
                      </padding>
                   </Label>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="supplierLabelContainer">
+            <AnchorPane fx:id="supplierLabelContainer" prefWidth="149.0" styleClass="order-field">
                <children>
-                  <Label fx:id="supplierLabel" alignment="CENTER" layoutY="10.0" text="Fornitore">
+                  <Label fx:id="supplierLabel" alignment="CENTER" layoutY="10.0" prefWidth="149.0" text="Fornitore">
                      <font>
                         <Font size="14.0" />
                      </font>
                      <padding>
-                        <Insets left="10.0" right="10.0" />
+                        <Insets right="10.0" />
                      </padding>
                   </Label>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="checkBoxContainer">
+            <AnchorPane fx:id="deliveredBtn" onMouseClicked="#setDelivered" prefHeight="40.0" styleClass="custom-button" stylesheets="@../style/css/customButton.css">
                <children>
-                  <Button fx:id="deliveredBtn" layoutY="8.0" mnemonicParsing="false" onMouseClicked="#setDelivered" text="Consegnato" />
+                  <AnchorPane layoutX="-3.0" layoutY="3.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: ea613f;" styleClass="custom-button" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="12.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../style/img/buttons-icon/check.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+                  <Label layoutX="36.0" layoutY="8.0" text="Consegnato">
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </Label>
                </children>
             </AnchorPane>
          </children>
       </HBox>
    </children>
+   <padding>
+      <Insets bottom="15.0" />
+   </padding>
 </AnchorPane>

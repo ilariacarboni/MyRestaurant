@@ -34,7 +34,7 @@ public class ProductsPaneController extends BaseView implements Initializable {
     private final String PRODUCT_LABEL_ID = "#productNameLabel";
     private final String PRODUCT_FXML = "/view/scene/product.fxml";
     private final String ADD_PRODUCT_PANE_FXML = "/view/scene/addProductPane.fxml";
-    //numero di colonne del gridPane che può essere settato esternamente per renderlo responsive
+    //gridpane's columns number, can be set externally to make it responsive
     private int gridpaneColumnsNumber = 1;
     private final String PRODUCT_INFO_DEFAULT_TITLE = "Seleziona un prodotto per visualizzarne i dettagli";
 
@@ -136,17 +136,6 @@ public class ProductsPaneController extends BaseView implements Initializable {
         commController.getDashboardController().setRightPane(addProductPane);
         this.addProductBtn.setVisible(false);
         this.addProductBtn.setManaged(false);
-    }
-
-    public void makeBackButton(Node centralScene, Node rightScene){
-        BackButton backButton = new BackButton();
-        backButton.setCenterScene(centralScene);
-        backButton.setRightScene(rightScene);
-        DashboardController dc = commController.getDashboardController();
-        backButton.setDashboardController(dc);
-        dc.addBackButton(backButton);
-//        this.backButtonContainer.getChildren().clear();
-//        this.backButtonContainer.getChildren().add(backButton);
     }
 
     public void setGridPaneColumnNumber(int columnNumber){

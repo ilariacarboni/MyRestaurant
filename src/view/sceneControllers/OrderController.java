@@ -17,21 +17,11 @@ public class OrderController extends BaseView{
     @FXML
     public Label supplierLabel;
     @FXML
-    public AnchorPane checkBoxContainer;
-    @FXML
-    public CheckBox deliveredCheckbox;
-    @FXML
-    private AnchorPane numberLabelContainer;
-    @FXML
     private Label numberLabel;
-    @FXML
-    private AnchorPane dateLabelContainer;
     @FXML
     private Label dateLabel;
     @FXML
-    private AnchorPane supplierLabelContainer;
-    @FXML
-    public Button deliveredBtn;
+    public AnchorPane deliveredBtn;
 
     public void setOrderInfo(HashMap<String, Object> info){
         this.info = info;

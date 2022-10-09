@@ -57,12 +57,4 @@
          </content>
       </ScrollPane>
    </center>
-   <bottom>
-      <AnchorPane BorderPane.alignment="CENTER">
-         <children>
-            <Button layoutX="121.0" mnemonicParsing="false" text="andamento ordinazioni piatti" />
-            <Button layoutX="300.0" mnemonicParsing="false" text="numero ordini singolo prodotto" />
-         </children>
-      </AnchorPane>
-   </bottom>
 </BorderPane>

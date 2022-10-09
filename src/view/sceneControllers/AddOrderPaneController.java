@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -23,10 +24,6 @@ public class AddOrderPaneController extends BaseView implements Initializable {
     private TextField productField;
     @FXML
     private Spinner<Integer> qtyField;
-    @FXML
-    private Button insertBtn;
-    @FXML
-    public Button hideAddOrderPaneBtn;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100);

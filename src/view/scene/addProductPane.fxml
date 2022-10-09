@@ -32,7 +32,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <TextField fx:id="barcodeTextField" layoutX="22.0" layoutY="35.0" prefWidth="301.0" style="-fx-background-radius: 20;" />
+            <TextField fx:id="barcodeTextField" layoutX="22.0" layoutY="35.0" prefWidth="301.0" styleClass="search-field" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="24.0" layoutY="127.0" prefWidth="400.0" styleClass="insertField" stylesheets="@../style/css/insertField.css">
@@ -45,7 +45,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <TextField fx:id="nameTextField" layoutX="22.0" layoutY="35.0" prefWidth="301.0" style="-fx-background-radius: 20;" />
+            <TextField fx:id="nameTextField" layoutX="22.0" layoutY="35.0" prefWidth="301.0" styleClass="search-field" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="24.0" layoutY="219.0" prefWidth="400.0" styleClass="insertField" stylesheets="@../style/css/insertField.css">
@@ -58,7 +58,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <TextField fx:id="qtyTextField" layoutX="22.0" layoutY="35.0" prefHeight="25.0" prefWidth="128.0" style="-fx-background-radius: 20;" />
+            <TextField fx:id="qtyTextField" layoutX="22.0" layoutY="35.0" prefHeight="25.0" prefWidth="128.0" styleClass="search-field" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="24.0" layoutY="307.0" prefWidth="400.0" styleClass="insertField" stylesheets="@../style/css/insertField.css">
@@ -71,7 +71,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <TextField fx:id="priceTextField" layoutX="22.0" layoutY="35.0" prefHeight="25.0" prefWidth="128.0" style="-fx-background-radius: 20;" />
+            <TextField fx:id="priceTextField" layoutX="22.0" layoutY="35.0" prefHeight="25.0" prefWidth="128.0" styleClass="search-field" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="24.0" layoutY="396.0" prefWidth="400.0" styleClass="insertField" stylesheets="@../style/css/insertField.css">
@@ -84,7 +84,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <ComboBox fx:id="supplierComboBox" layoutX="25.0" layoutY="37.0" prefWidth="150.0" style="-fx-background-radius: 20;" />
+            <ComboBox fx:id="supplierComboBox" layoutX="25.0" layoutY="37.0" prefWidth="150.0" styleClass="search-field" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="24.0" layoutY="493.0" prefWidth="400.0" styleClass="insertField" stylesheets="@../style/css/insertField.css">
@@ -97,7 +97,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <ComboBox fx:id="categoryComboBox" layoutX="25.0" layoutY="37.0" prefWidth="150.0" style="-fx-background-radius: 20;" />
+            <ComboBox fx:id="categoryComboBox" layoutX="25.0" layoutY="37.0" prefWidth="150.0" styleClass="search-field" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="303.0" layoutY="587.0" onMouseClicked="#addProductBtnClicked" prefHeight="40.0" styleClass="custom-button" stylesheets="@../style/css/customButton.css">

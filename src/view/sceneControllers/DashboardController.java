@@ -115,7 +115,7 @@ public class DashboardController extends BaseView implements Initializable {
                 node.getStyleClass().remove(this.BTN_SELECTED_STYLE_CLASS);
             }
         }
-        this.setCenterPane(null);
+        this.setCenterPane(null, null);
         this.setRightPane(null);
     }
     
@@ -197,7 +197,10 @@ public class DashboardController extends BaseView implements Initializable {
         orderPaneController.setMode(orderPaneController.ORDERS_ON_DELIVERY_MODE);
     }
     
-    public void setCenterPane(Node node){
+    public void setCenterPane(Node node, BackButton backButton){
+        if(backButton != null){
+            this.addBackButton(backButton);
+        }
         borderPane.setCenter(node);
     }
     public Node getCenterPane(){ return borderPane.getCenter();}
