@@ -18,7 +18,8 @@ import java.util.HashMap;
 public class MenuTable implements Table<Menu>{
     
     Connection conn = dbConnection.establishConnection();
-
+    private final String DISHES_PER_COURSE = "select m.course, count(*) as menu_number from menu m group by m.course;";
+   
     @Override
     public ArrayList<Menu> getAll() {
         
@@ -29,7 +30,7 @@ public class MenuTable implements Table<Menu>{
             ResultSet resultSet = stm.executeQuery(sql);
             
             while (resultSet.next()) {
-                Menu m= new Menu(resultSet.getString("nameDish"),resultSet.getInt("price"), resultSet.getString("category"));
+                Menu m= new Menu(resultSet.getString("nameDish"),resultSet.getInt("price"),resultSet.getString("course") ,resultSet.getString("image"));
                 resList.add(m);
             }
         } catch (SQLException ex) {
@@ -44,12 +45,13 @@ public class MenuTable implements Table<Menu>{
         //se il dipendente è nella lista significa che è stato già inserito nel db
         boolean res = false;
  
-        String sql= "INSERT INTO Menu (nameDish, price, category) VALUES (?,?,?)";
+        String sql= "INSERT INTO Menu (nameDish, price, course,image) VALUES (?,?,?,?)";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, m.getNameDish());
             ps.setInt(2, (int)m.getPrice());
-            ps.setString(3, m.getCategory());
+            ps.setString(3, m.getCourse());
+            ps.setString(4, m.getImage());
             ps.execute();
 
             res = true;
@@ -66,12 +68,13 @@ public class MenuTable implements Table<Menu>{
         //lo inserisce nella lista e nel db
         //se il dipendente è nella lista significa che è stato già inserito nel db
         boolean res = false;      
-        String sql= "UPDATE Menu SET nameDish=? , price=? , category=? WHERE nameDish=?";
+        String sql= "UPDATE Menu SET nameDish=? , price=? , course=? WHERE nameDish=?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, m.getNameDish());
             ps.setInt(2, (int)m.getPrice());
-            ps.setString(3, m.getCategory());
+            ps.setString(3, m.getCourse());
+            ps.setString(4, m.getImage());
             ps.execute();
 
             res = true;
@@ -102,21 +105,28 @@ public class MenuTable implements Table<Menu>{
     
     
     @Override
-     public ArrayList<Menu> getFrom(Object searchParam, String paramName)  { 
-        
+    public ArrayList<Menu> getFrom(Object searchParam, String paramName)  { 
+        String baseSql = "SELECT m.name, m.price, m.course,m.image c.name as courseName FROM menu m JOIN course c ON m.category = c.name ";
+        String sql = null;
         ArrayList<Menu> resList = new ArrayList<Menu>();
         
         if(searchParam instanceof String){   //passso un oggetto di ricerca textinput
-           if(paramName.equals("nameDish")){
-            String sql= "SELECT * FROM Menu WHERE nameDish =? ";
+          switch(paramName){
+                case "name":
+                    sql = baseSql + "WHERE m.name =? ";
+                    break;
+                case "course":
+                    sql = baseSql + "WHERE c.name = ?";
+                    break;
+            }
         try {
                 PreparedStatement ps = conn.prepareStatement(sql); 
                 ps.setString(1, (String) searchParam);
-                ps.execute();
+               // ps.execute();
                 ResultSet resultSet = ps.executeQuery();
                 
                 while (resultSet.next()) {
-                    Menu m = new Menu(resultSet.getString("name"),resultSet.getInt("price"),resultSet.getString("category"));
+                    Menu m = new Menu(resultSet.getString("name"),resultSet.getInt("price"),resultSet.getString("course"),resultSet.getString("image"));
                     resList.add(m);
                 }
             }
@@ -125,42 +135,33 @@ public class MenuTable implements Table<Menu>{
                 ex.printStackTrace();
             }   
         }
-        }
-        
-        else if (searchParam instanceof Integer) {
-            if(paramName.equals("price")){
-            
-        String sql=  "SELECT * FROM Menu WHERE price=? "; 
-       
-        
-            try {
-                PreparedStatement ps = conn.prepareStatement(sql); 
-                ps.setInt(1, (int) searchParam);
-               
-                ps.execute();
-                ResultSet resultSet = ps.executeQuery();
-                
-                while (resultSet.next()) {
-                    Menu m = new Menu(resultSet.getString("nameDish"),resultSet.getInt("price"),resultSet.getString("category"));
-                    resList.add(m);
-                }
-            }
-            catch (SQLException ex) {
-        
-                ex.printStackTrace();
-            }  
-        }
-   
-    }
     return resList;
-}
-   
+    }
+     
+    public HashMap<String, Integer> getTotalDishesPerCourse(){
+        HashMap<String, Integer> res = null;
+        try{
+            Statement stm = conn.createStatement();
+            ResultSet resultSet = stm.executeQuery(this.DISHES_PER_COURSE);
+            res = new HashMap<String, Integer>();
+            while (resultSet.next()) {
+                String course = resultSet.getString("course");
+                int dishNumber = resultSet.getInt("menu_number");
+                res.put(course, dishNumber);
+            }
+        }catch (SQLException ex){
+            System.out.println(ex.toString());
+        }
+        return res;
+     }
+     
     public Menu constructEntityFromMap(HashMap<String, Object> map) {
         
         String nameDish =(String) map.get("nameDish");
         int price =(int) map.get("price");
-        String category =(String) map.get("category");
-        return new Menu(nameDish, price, category);
+        String course =(String) map.get("course");
+        String image =(String) map.get("image");
+        return new Menu(nameDish, price, course,image);
     }
 
 

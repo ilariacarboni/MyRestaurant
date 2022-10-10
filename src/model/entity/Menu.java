@@ -10,13 +10,15 @@ public class Menu implements Entity{
     
     private String nameDish;
     private int price;
-    private String category;
+    private String course;
+    private String image;
    
     
-    public Menu (String nameDish, int price, String category){    
+    public Menu (String nameDish, int price, String course, String image){    
 	this.nameDish=nameDish;
     	this.price=price;
-	this.category=category;
+	this.course=course;
+        this.image=image;
     }
     
     public String getNameDish(){
@@ -27,11 +29,13 @@ public class Menu implements Entity{
         return this.price;
     }
     
-    public String getCategory(){
-        return this.category;
+    public String getCourse(){
+        return this.course;
     }
     
-
+    public String getImage(){
+        return this.image;
+    }
     @Override
     public String getTableName() {
         return "menu";
@@ -42,7 +46,8 @@ public class Menu implements Entity{
         HashMap<String, Object> res = new HashMap<String, Object>();
         res.put("nameDish", this.nameDish);
         res.put("price", this.price);
-        res.put("category", this.category);
+        res.put("course", this.course);
+        res.put("image", this.image);
         return res;
     }
     

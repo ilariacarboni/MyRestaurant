@@ -15,7 +15,6 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 import business.CategoryManager;
 import javafx.animation.TranslateTransition;
 
@@ -50,7 +49,6 @@ public class CategoryPaneController extends BaseView implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         commController.setCategoryPaneController(this);
-
         
         ArrayList<HashMap<String,Object>> categories =  this.categoryManager.getAll();
         HashMap<String, HashMap<String, Object>> categoriesInfo = this.categoryManager.getCategoriesBasicInfo();

@@ -141,6 +141,8 @@ public class DashboardController extends BaseView implements Initializable {
            this.menuPane = FXMLLoader.load(getClass().getResource("/view/scene/MenuPanel.fxml"));
         }
         borderPane.setCenter(this.menuPane);
+        MenuPaneController menuPaneController = commController.getMenuPaneController();
+        //menuPaneController.animate();
         borderPane.setRight(null);
 
     }
