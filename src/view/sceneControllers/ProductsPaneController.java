@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -149,4 +150,19 @@ public class ProductsPaneController extends BaseView implements Initializable {
         }
     }
 
+    public void newProductOrder(MouseEvent mouseEvent) {
+        ProductInfoPaneController productInfoPaneController = commController.getProductInfoPaneController();
+        HashMap<String, Object> productInfo = null;
+        if(productInfoPaneController != null){
+            productInfo = productInfoPaneController.getCurrentProductInfo();
+        }
+        if(productInfo != null){
+            String name = (String) productInfo.get("name");
+            commController.getDashboardController().newOrderFor(name);
+        }else{
+            Alert a = new Alert(Alert.AlertType.INFORMATION);
+            a.setContentText("Selezionare il prodotto per cui si vuole effettuare l'ordine");
+            a.show();
+        }
+    }
 }

@@ -41,7 +41,7 @@
                         </ImageView>
                      </children>
                   </HBox>
-                  <AnchorPane layoutX="408.0" layoutY="59.0" prefHeight="40.0" styleClass="custom-button" stylesheets="@../style/css/customButton.css" AnchorPane.rightAnchor="25.0">
+                  <AnchorPane layoutX="408.0" layoutY="59.0" onMouseClicked="#newProductOrder" prefHeight="40.0" styleClass="custom-button" stylesheets="@../style/css/customButton.css" AnchorPane.rightAnchor="25.0">
                      <children>
                         <AnchorPane layoutX="-3.0" layoutY="3.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: ea613f;" styleClass="custom-button" AnchorPane.topAnchor="0.0">
                            <children>

@@ -17,6 +17,8 @@ public final class CommunicationController {
     private DishInfoController dishinfoController = null;
     private OrderPaneController orderPaneController = null;
     private OrderSearchController orderSearchController = null;
+    private ProductInfoPaneController productInfoPaneController = null;
+    private AddOrderPaneController addOrderPaneController = null;
     private CommunicationController() {}
 
     public static CommunicationController getInstance(){
@@ -97,4 +99,19 @@ public final class CommunicationController {
         }
     }
     public OrderSearchController getOrderSearchController(){return this.orderSearchController;}
+
+    public void setProductInfoPaneController(ProductInfoPaneController productInfoPaneController) {
+        if(this.productInfoPaneController == null){
+            this.productInfoPaneController = productInfoPaneController;
+        }
+    }
+    public ProductInfoPaneController getProductInfoPaneController(){return this.productInfoPaneController;}
+
+    public void setAddOrderPaneController(AddOrderPaneController addOrderPaneController){
+        if(this.addOrderPaneController == null){
+            this.addOrderPaneController = addOrderPaneController;
+        }
+    }
+    public AddOrderPaneController getAddOrderPaneController(){return this.addOrderPaneController;}
+
 }

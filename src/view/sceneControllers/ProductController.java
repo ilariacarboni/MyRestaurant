@@ -83,9 +83,17 @@ public class ProductController extends BaseView implements Initializable {
 
     @FXML
     private void productSelected(MouseEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(this.PRODUCT_SCENE));
-        Node productInfoPane = loader.load();
-        ProductInfoPaneController productInfoPaneContr = loader.getController();
+        Node productInfoPane = null;
+        ProductInfoPaneController productInfoPaneContr = null;
+        if(commController.getProductInfoPaneController() != null){
+            productInfoPaneContr = commController.getProductInfoPaneController();
+            productInfoPaneContr.refresh();
+            productInfoPane = productInfoPaneContr.getInfoPane();
+        }else{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(this.PRODUCT_SCENE));
+            productInfoPane = loader.load();
+            productInfoPaneContr = loader.getController();
+        }
         productInfoPaneContr.setProductInfo(this.productInfo);
         commController.getProductsPaneController().showProductInfoPane(productInfoPane,(String)productInfo.get("name"));
     }

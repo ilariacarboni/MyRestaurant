@@ -3,6 +3,7 @@ package view.sceneControllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -194,6 +195,7 @@ public class DashboardController extends BaseView implements Initializable {
         borderPane.setCenter(this.ordersPane);
         borderPane.setRight(null);
         OrderPaneController orderPaneController = commController.getOrderPaneController();
+        orderPaneController.refresh();
         orderPaneController.setMode(orderPaneController.ORDERS_ON_DELIVERY_MODE);
     }
     
@@ -238,6 +240,14 @@ public class DashboardController extends BaseView implements Initializable {
     }
 
     public void loginBtnClicked(ActionEvent actionEvent) {
+    }
+
+    public void newOrderFor(String productName){
+        ordersBtn.fire();
+        OrderPaneController orderPaneController = commController.getOrderPaneController();
+        HashMap<String, Object> info = new HashMap<>();
+        info.put("name", productName);
+        orderPaneController.showNewOrderPane(info);
     }
 
 }

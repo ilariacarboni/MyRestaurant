@@ -67,8 +67,13 @@ public class OrderPaneController extends BaseView implements Initializable {
         addFilterListener(orderSearchController.numberSearchBar);
         addFilterListener(orderSearchController.dateSearchBar);
         addFilterListener(orderSearchController.supplierSearchBar);
+        this.refresh();
     }
 
+    public void refresh(){
+        newOrderBtn.setVisible(true);
+        newOrderBtn.setManaged(true);
+    }
     private void addFilterListener(TextField field){
         field.textProperty().addListener((observable, oldValue, newValue) ->{
             insertOrders(pageNumber);
@@ -176,17 +181,33 @@ public class OrderPaneController extends BaseView implements Initializable {
         }
     }
     public void newOrderBtnClicked(MouseEvent mouseEvent) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/scene/addOrderPane.fxml"));
+        showNewOrderPane(null);
+    }
+
+    public void showNewOrderPane(HashMap<String, Object> orderInfo) {
         Node addOrderPane = null;
-        try {
-            addOrderPane = loader.load();
-            AddOrderPaneController addOrderController = loader.getController();
-            this.commController.getDashboardController().setRightPane(addOrderPane);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if(commController.getAddOrderPaneController() != null){
+            AddOrderPaneController addOrderPaneController =  commController.getAddOrderPaneController();
+            addOrderPaneController.refresh();
+            addOrderPane = addOrderPaneController.getAddOrderPane();
+        }else{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/scene/addOrderPane.fxml"));
+            try {
+                addOrderPane = loader.load();
+            } catch (IOException e) {
+                System.out.println(e);
+            }
         }
-        newOrderBtn.setVisible(false);
-        newOrderBtn.setManaged(false);
+        this.commController.getDashboardController().setRightPane(addOrderPane);
+        hideAddOrderBtn();
+        if(orderInfo != null){
+            commController.getAddOrderPaneController().setOrderInfo(orderInfo);
+        }
+    }
+
+    public void updateOrders(){
+        pageNumber = 1;
+        this.insertOrders(1);
     }
 
     public void showAddOrderBtn(){
@@ -194,5 +215,9 @@ public class OrderPaneController extends BaseView implements Initializable {
         newOrderBtn.setManaged(true);
     }
 
+    private void hideAddOrderBtn(){
+        newOrderBtn.setVisible(false);
+        newOrderBtn.setManaged(false);
+    }
 
 }
