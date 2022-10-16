@@ -14,7 +14,7 @@ import java.util.HashMap;
  * @author Natalia
  */
 public class Order implements Entity{
-
+    private final String TABLE_NAME = "order";
     public static final String CREATED_STATE   = "created";
     public static final String DELIVERED_STATE = "delivered";
     public static final String DELETED_STATE   = "deleted";
@@ -75,7 +75,7 @@ public class Order implements Entity{
     
     @Override
     public String getTableName() {
-        return "order";
+        return this.TABLE_NAME;
     }
 
     @Override

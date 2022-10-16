@@ -12,7 +12,7 @@ import java.util.HashMap;
  * @author Natalia
  */
 public class Category implements Entity{
-    
+    public static final String TABLE_NAME = "category";
     private String name;
     private String img;
     private String icon;
@@ -36,7 +36,7 @@ public class Category implements Entity{
 
     @Override
     public String getTableName() {
-        return "category";
+        return this.TABLE_NAME;
     }
 
     @Override

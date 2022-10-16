@@ -14,7 +14,7 @@ import java.util.HashMap;
  * @author Natalia
  */
 public class Receipt implements Entity{
-    
+    private final String TABLE_NAME = "receipt";
     private int number;
     private LocalDate date;
     private double total;
@@ -39,7 +39,7 @@ public class Receipt implements Entity{
     
     @Override
     public String getTableName() {
-        return "receipt";
+        return this.TABLE_NAME;
     }
 
     @Override

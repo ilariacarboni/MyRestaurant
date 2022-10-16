@@ -18,6 +18,7 @@ public class AddOrderPaneController extends BaseView implements Initializable {
 
     private OrderManager orderManager = new OrderManager();
     private ProductManager productManager = new ProductManager();
+    public AnchorPane addOrderPane;
     @FXML
     private DatePicker dateField;
     @FXML
@@ -26,12 +27,19 @@ public class AddOrderPaneController extends BaseView implements Initializable {
     private Spinner<Integer> qtyField;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        commController.setAddOrderPaneController(this);
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100);
         valueFactory.setValue(1);
         qtyField.setValueFactory(valueFactory);
         SuggestionProvider suggestionProvider = SuggestionProvider.create(new ArrayList());
         new AutoCompletionTextFieldBinding<>(productField, suggestionProvider);
         this.addListenerForAutocompletion(suggestionProvider);
+    }
+
+    public void refresh(){
+        dateField.setValue(null);
+        productField.setText("");
+        qtyField.getValueFactory().setValue(1);
     }
 
     public void insertOrderBtnClicked(MouseEvent event) {
@@ -57,6 +65,8 @@ public class AddOrderPaneController extends BaseView implements Initializable {
                 a.setAlertType(Alert.AlertType.CONFIRMATION);
                 a.setContentText("Ordine aggiunto con successo");
                 a.show();
+                commController.getOrderPaneController().updateOrders();
+                this.refresh();
             }
         }
     }
@@ -79,4 +89,18 @@ public class AddOrderPaneController extends BaseView implements Initializable {
         commController.getDashboardController().setRightPane(null);
         commController.getOrderPaneController().showAddOrderBtn();
     }
+
+    public void setOrderInfo(HashMap<String, Object> info){
+        if(info.containsKey("date")){
+            this.dateField.setValue((LocalDate) info.get("date"));
+        }
+        if(info.containsKey("name")){
+            this.productField.setText(info.get("name").toString());
+        }
+        if(info.containsKey("qty")){
+            this.qtyField.getValueFactory().setValue((int)info.get("qty"));
+        }
+    }
+
+    public AnchorPane getAddOrderPane(){return this.addOrderPane;}
 }

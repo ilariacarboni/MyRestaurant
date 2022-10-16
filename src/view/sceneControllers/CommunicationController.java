@@ -1,5 +1,7 @@
 package view.sceneControllers;
 
+import java.util.HashMap;
+
 /**
  *
  * @author milar
@@ -7,7 +9,6 @@ package view.sceneControllers;
 public final class CommunicationController {
     
     private static final CommunicationController commController = new CommunicationController();
-    
     private ProductsPaneController productsPaneController = null;
     private CategoryPaneController categoryPaneController = null;
     private MenuPaneController menuPaneController = null;
@@ -17,6 +18,10 @@ public final class CommunicationController {
     private DishInfoController dishinfoController = null;
     private OrderPaneController orderPaneController = null;
     private OrderSearchController orderSearchController = null;
+    private ProductInfoPaneController productInfoPaneController = null;
+    private AddOrderPaneController addOrderPaneController = null;
+    private LoginPaneController loginPaneController = null;
+    private HashMap<String, Object> loggedUser = null;
     private CommunicationController() {}
 
     public static CommunicationController getInstance(){
@@ -100,4 +105,31 @@ public final class CommunicationController {
         }
     }
     public OrderSearchController getOrderSearchController(){return this.orderSearchController;}
+
+    public void setProductInfoPaneController(ProductInfoPaneController productInfoPaneController) {
+        if(this.productInfoPaneController == null){
+            this.productInfoPaneController = productInfoPaneController;
+        }
+    }
+    public ProductInfoPaneController getProductInfoPaneController(){return this.productInfoPaneController;}
+
+    public void setAddOrderPaneController(AddOrderPaneController addOrderPaneController){
+        if(this.addOrderPaneController == null){
+            this.addOrderPaneController = addOrderPaneController;
+        }
+    }
+    public AddOrderPaneController getAddOrderPaneController(){return this.addOrderPaneController;}
+
+    public void setLoginPaneController(LoginPaneController lpc){
+        if(this.loginPaneController == null){
+            this.loginPaneController = lpc;
+        }
+    }
+
+    public LoginPaneController getLoginPaneController() { return this.loginPaneController; }
+
+    public void setLoggedUser(HashMap<String, Object> user){
+        this.loggedUser = user;
+    }
+    public HashMap<String, Object> getLoggedUser(){ return this.loggedUser; }
 }
