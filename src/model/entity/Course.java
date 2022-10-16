@@ -11,6 +11,7 @@ import java.util.HashMap;
  * @author milar
  */
 public class Course {
+    private final String TABLE_NAME = "course";
     private String name;
     private String img;
     
@@ -27,7 +28,7 @@ public Course(String name,String img){
     }
     
     public String getTableName() {
-        return "course";
+        return this.TABLE_NAME;
     }
 
     public HashMap<String, Object> map() {

@@ -1,5 +1,7 @@
 package view.sceneControllers;
 
+import java.util.HashMap;
+
 /**
  *
  * @author milar
@@ -7,7 +9,6 @@ package view.sceneControllers;
 public final class CommunicationController {
     
     private static final CommunicationController commController = new CommunicationController();
-    
     private ProductsPaneController productsPaneController = null;
     private CategoryPaneController categoryPaneController = null;
     private MenuPaneController menuPaneController = null;
@@ -19,6 +20,8 @@ public final class CommunicationController {
     private OrderSearchController orderSearchController = null;
     private ProductInfoPaneController productInfoPaneController = null;
     private AddOrderPaneController addOrderPaneController = null;
+    private LoginPaneController loginPaneController = null;
+    private HashMap<String, Object> loggedUser = null;
     private CommunicationController() {}
 
     public static CommunicationController getInstance(){
@@ -117,4 +120,16 @@ public final class CommunicationController {
     }
     public AddOrderPaneController getAddOrderPaneController(){return this.addOrderPaneController;}
 
+    public void setLoginPaneController(LoginPaneController lpc){
+        if(this.loginPaneController == null){
+            this.loginPaneController = lpc;
+        }
+    }
+
+    public LoginPaneController getLoginPaneController() { return this.loginPaneController; }
+
+    public void setLoggedUser(HashMap<String, Object> user){
+        this.loggedUser = user;
+    }
+    public HashMap<String, Object> getLoggedUser(){ return this.loggedUser; }
 }

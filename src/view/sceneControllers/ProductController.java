@@ -10,7 +10,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-import business.ProductManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -28,7 +27,7 @@ import view.utils.LocatedImage;
  */
 public class ProductController extends BaseView implements Initializable {
 
-    private final String PRODUCT_SCENE = "/view/scene/productInfoPane.fxml";
+    private final String PRODUCT_SCENE = this.PRODUCT_INFO_PANE_PATH;
 
     //breakpoints for responsive adjustment of product image
     private final int BREAKPOINT_0 = 300;
@@ -81,8 +80,7 @@ public class ProductController extends BaseView implements Initializable {
         return productInfo;
     }
 
-    @FXML
-    private void productSelected(MouseEvent event) throws IOException {
+    public void select(){
         Node productInfoPane = null;
         ProductInfoPaneController productInfoPaneContr = null;
         if(commController.getProductInfoPaneController() != null){
@@ -91,11 +89,20 @@ public class ProductController extends BaseView implements Initializable {
             productInfoPane = productInfoPaneContr.getInfoPane();
         }else{
             FXMLLoader loader = new FXMLLoader(getClass().getResource(this.PRODUCT_SCENE));
-            productInfoPane = loader.load();
+            try {
+                productInfoPane = loader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             productInfoPaneContr = loader.getController();
         }
         productInfoPaneContr.setProductInfo(this.productInfo);
         commController.getProductsPaneController().showProductInfoPane(productInfoPane,(String)productInfo.get("name"));
+    }
+
+    @FXML
+    private void productSelected(MouseEvent event){
+        this.select();
     }
 
     public void productHovered(MouseEvent mouseEvent) {

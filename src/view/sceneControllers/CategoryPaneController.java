@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import business.AdminManager;
 import business.CategoryManager;
 import javafx.animation.TranslateTransition;
 
@@ -38,12 +39,9 @@ public class CategoryPaneController extends BaseView implements Initializable {
     final int GRIDPANE_COLUMNS_NUMBER = 3;
     final int ANIMATION_DURATION = 275;
     final int ANIMATION_DISTANCE = 700;
-    final String PRODUCT_PANE_LOCATION ="/view/scene/productsPane.fxml";
-    @FXML
-    private BorderPane storeMainPane;
-    @FXML
-    private GridPane categoryContainer;
-    
+    public BorderPane storeMainPane;
+    public GridPane categoryContainer;
+    public int permissionLevel = AdminManager.ROOT_PERMISSION_LEVEL;
     private Node productsPane = null;
 
     @Override
@@ -65,7 +63,7 @@ public class CategoryPaneController extends BaseView implements Initializable {
     
 
     public void addCategory(HashMap<String,Object> category) throws IOException{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/scene/category.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(this.CATEGORY_COMPONENT_PATH));
         Node categoryNode = loader.load();
         CategoryController categoryContr = loader.getController();
         categoryContr.setCategoryInfo(category);
@@ -79,12 +77,12 @@ public class CategoryPaneController extends BaseView implements Initializable {
     @FXML
     private void addCategoryButtonClicked(ActionEvent event) throws IOException {
         BorderPane dashboardBorderPane = (BorderPane) storeMainPane.getParent();
-        dashboardBorderPane.setRight(FXMLLoader.load(getClass().getResource("/view/scene/addCategory.fxml")));
+        dashboardBorderPane.setRight(FXMLLoader.load(getClass().getResource(this.ADD_CATEGORY_PANE_PATH)));
     }
     
     public void showProductsForCategory(HashMap<String, Object> category) throws IOException{
         if(this.productsPane == null){
-            this.productsPane = FXMLLoader.load(getClass().getResource(this.PRODUCT_PANE_LOCATION));
+            this.productsPane = FXMLLoader.load(getClass().getResource(this.PRODUCT_PANE_PATH));
         }
         ProductsPaneController productsPaneContr = commController.getProductsPaneController();
         productsPaneContr.emptyProductInfo();

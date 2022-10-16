@@ -2,7 +2,6 @@ package view.sceneControllers;
 
 import business.OrderManager;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -85,7 +84,7 @@ public class OrderPaneController extends BaseView implements Initializable {
     }
 
     private void insertSearchComponent() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/scene/ordersSearchPane.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(this.ORDER_SEARCH_PANE_PATH));
         Node orderSearch = loader.load();
         this.orderSearchController = commController.getOrderSearchController();
         searchComponentContainer.getChildren().add(orderSearch);
@@ -122,7 +121,7 @@ public class OrderPaneController extends BaseView implements Initializable {
     }
 
     private void addOrder(HashMap<String, Object> order, int i) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/scene/order.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(this.ORDER_COMPONENT_PATH));
         Node orderNode = loader.load();
         OrderController orderController = loader.getController();
         if(this.renderingMode == this.ORDERS_HISTORY_MODE){
@@ -191,7 +190,7 @@ public class OrderPaneController extends BaseView implements Initializable {
             addOrderPaneController.refresh();
             addOrderPane = addOrderPaneController.getAddOrderPane();
         }else{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/scene/addOrderPane.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(this.ADD_ORDER_PANE_PATH));
             try {
                 addOrderPane = loader.load();
             } catch (IOException e) {

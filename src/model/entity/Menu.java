@@ -7,7 +7,7 @@ import java.util.HashMap;
  * @author milar
  */
 public class Menu implements Entity{
-    
+    private final String TABLE_NAME = "menu";
     private String nameDish;
     private int price;
     private String course;
@@ -38,7 +38,7 @@ public class Menu implements Entity{
     }
     @Override
     public String getTableName() {
-        return "menu";
+        return this.TABLE_NAME;
     }
     
         @Override

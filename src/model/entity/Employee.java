@@ -9,7 +9,8 @@ import java.time.LocalDate;
 import java.util.HashMap;
 
 public class Employee implements Entity{
-    
+    private final String TABLE_NAME = "employee";
+
     private String codice_fiscale;
     private String name;
     private String surname;
@@ -58,7 +59,7 @@ public class Employee implements Entity{
 
     @Override
     public String getTableName() {
-        return "employee";
+        return this.TABLE_NAME;
     }
     
     @Override

@@ -12,7 +12,7 @@ import java.util.HashMap;
  * @author Natalia
  */
 public class Product implements Entity{
-    
+    private final String TABLE_NAME = "product";
     private int barcode;
     private String name;
     private int qty;
@@ -58,7 +58,7 @@ public class Product implements Entity{
 
     @Override
     public String getTableName() {
-        return "product";
+        return this.TABLE_NAME;
     }
 
     @Override

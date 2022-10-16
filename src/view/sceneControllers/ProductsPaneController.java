@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import business.ProductManager;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -33,8 +34,8 @@ public class ProductsPaneController extends BaseView implements Initializable {
 
     private ProductManager productManager = new ProductManager();
     private final String PRODUCT_LABEL_ID = "#productNameLabel";
-    private final String PRODUCT_FXML = "/view/scene/product.fxml";
-    private final String ADD_PRODUCT_PANE_FXML = "/view/scene/addProductPane.fxml";
+    private final String PRODUCT_FXML = this.PRODUCT_COMPONENT_PATH;
+    private final String ADD_PRODUCT_PANE_FXML = this.ADD_PRODUCT_PANE_PATH;
     //gridpane's columns number, can be set externally to make it responsive
     private int gridpaneColumnsNumber = 1;
     private final String PRODUCT_INFO_DEFAULT_TITLE = "Seleziona un prodotto per visualizzarne i dettagli";
@@ -96,6 +97,7 @@ public class ProductsPaneController extends BaseView implements Initializable {
     }
 
     public void refresh(){
+        this.shownProducts = new ArrayList();
         this.addProductBtn.setVisible(true);
         this.addProductBtn.setManaged(true);
     }
@@ -112,6 +114,9 @@ public class ProductsPaneController extends BaseView implements Initializable {
             int columnIndex = index%this.gridpaneColumnsNumber;
             int rowIndex = (int) Math.floor(index/this.gridpaneColumnsNumber);
             productsContainer.add(productNode, columnIndex, rowIndex);
+            if(index == 0){
+                productContr.select();
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

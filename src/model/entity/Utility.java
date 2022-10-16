@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 
 public class Utility implements Entity{
-    
+    private final String TABLE_NAME = "utility";
     private int numberId;
     private int total;
     private String type;
@@ -37,7 +37,7 @@ public class Utility implements Entity{
 
     @Override
     public String getTableName() {
-        return "utility";
+        return this.TABLE_NAME;
     }
     
         @Override

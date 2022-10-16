@@ -4,19 +4,24 @@ package view.sceneControllers;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import view.utils.BackButton;
 import view.utils.LocatedImage;
 
@@ -39,51 +44,33 @@ public class DashboardController extends BaseView implements Initializable {
     final String EMPLOYEES_BTN_ICON_PATH = "/view/style/img/menu-icons/employees.png";
     final String LOGIN_BTN_ICON_PATH = "/view/style/img/menu-icons/login.png";
 
-    @FXML
+    public StackPane centralPane;
     public ImageView dashboardBtnIcon;
-    @FXML
     public ImageView menuBtnIcon;
-    @FXML
     public ImageView ordersBtnIcon;
-    @FXML
     public ImageView utilityBtnIcon;
-    @FXML
     public ImageView storeBtnIcon;
-    @FXML
     public ImageView employeesBtnIcon;
-    @FXML
     public Button loginBtn;
-    @FXML
     public ImageView loginBtnIcon;
-    @FXML
     public AnchorPane loginBtnContainer;
     public AnchorPane backButtonContainer;
-    @FXML
-    private Button dashboardBtn;
-    @FXML
-    private Button menuBtn;
-    @FXML
-    private Button employeesBtn;
-    @FXML
-    private Button storeBtn;
-    @FXML
-    private Button utilityBtn;
-    @FXML
-    private Button ordersBtn;
-    @FXML
-    private Pane buttonContainer;
-    @FXML
-    private BorderPane borderPane;
+    public Button dashboardBtn;
+    public Button menuBtn;
+    public Button employeesBtn;
+    public Button storeBtn;
+    public Button utilityBtn;
+    public Button ordersBtn;
+    public Pane buttonContainer;
+    public BorderPane borderPane;
+    public Label usernameTextField;
 
-    @FXML
     private Node employeesPane = null;
-    @FXML
     private Node menuPane = null;
-    @FXML
     private Node utilitiesPane = null;
-    @FXML
     private Node categoryPane = null;
     private Node ordersPane = null;
+    private Node loginPane;
 
     /**
      * Initializes the controller class.
@@ -129,7 +116,7 @@ public class DashboardController extends BaseView implements Initializable {
     private void dashboardBtnClicked(ActionEvent event) throws IOException {
         select(dashboardBtn);
         resetAllExcept(dashboardBtn);
-        borderPane.setCenter(FXMLLoader.load(getClass().getResource("/view/scene/chartsPane.fxml")));
+        borderPane.setCenter(FXMLLoader.load(getClass().getResource(this.CHART_PANE_PATH)));
     }
 
     @FXML
@@ -138,7 +125,7 @@ public class DashboardController extends BaseView implements Initializable {
         resetAllExcept(menuBtn);
         
         if(this.menuPane == null){
-           this.menuPane = FXMLLoader.load(getClass().getResource("/view/scene/MenuPanel.fxml"));
+           this.menuPane = FXMLLoader.load(getClass().getResource(this.MENU_PANE_PATH));
         }
         borderPane.setCenter(this.menuPane);
         MenuPaneController menuPaneController = commController.getMenuPaneController();
@@ -153,7 +140,7 @@ public class DashboardController extends BaseView implements Initializable {
         resetAllExcept(employeesBtn);
         
         if(this.employeesPane == null){
-            this.employeesPane = FXMLLoader.load(getClass().getResource("/view/scene/EmployeesList.fxml"));
+            this.employeesPane = FXMLLoader.load(getClass().getResource(this.EMPLOYEE_LIST_PANE_PATH));
         }
         borderPane.setCenter(this.employeesPane);
         borderPane.setRight(null);
@@ -164,14 +151,31 @@ public class DashboardController extends BaseView implements Initializable {
         select(storeBtn);
         resetAllExcept(storeBtn);
 
-        if(this.categoryPane == null){
-            this.categoryPane = FXMLLoader.load(getClass().getResource("/view/scene/categoryPane.fxml"));
+        boolean isLogged = isLoggedUser();
+        if(isLogged){
+            if(this.categoryPane == null){
+                this.categoryPane = FXMLLoader.load(getClass().getResource(this.CATEGORY_PANE_PATH));
+            }
+            CategoryPaneController categoryPaneController = commController.getCategoryPaneController();
+            boolean hasPermission = checkPermission(categoryPaneController);
+            if(hasPermission){
+                borderPane.setCenter(this.categoryPane);
+                categoryPaneController.animate();
+                borderPane.setRight(null);
+            }else{
+                Alert a = new Alert(Alert.AlertType.WARNING);
+                a.setContentText("Non si hanno i permessi necessari per visualizzare questa sezione");
+                a.show();
+            }
+        }else{
+            Alert a = new Alert(Alert.AlertType.WARNING);
+            a.setContentText("Devi essere loggato per visualizzare questa sezione");
+            Optional<ButtonType> result = a.showAndWait();
+            if(!result.isPresent() || result.get() == ButtonType.OK ){
+                loginBtn.fire();
+                commController.getLoginPaneController().setSource(storeBtn);
+            }
         }
-        borderPane.setCenter(this.categoryPane);
-
-        CategoryPaneController categoryPaneController = commController.getCategoryPaneController();
-        categoryPaneController.animate();
-        borderPane.setRight(null);
     }
 
     @FXML
@@ -180,7 +184,7 @@ public class DashboardController extends BaseView implements Initializable {
         resetAllExcept(utilityBtn);
         
         if(this.utilitiesPane == null){
-            this.utilitiesPane = FXMLLoader.load(getClass().getResource("/view/scene/UtilitiesPanel.fxml"));
+            this.utilitiesPane = FXMLLoader.load(getClass().getResource(this.UTILITIES_PANE_PATH));
         }
         borderPane.setCenter(this.utilitiesPane);
         borderPane.setRight(null);
@@ -192,7 +196,7 @@ public class DashboardController extends BaseView implements Initializable {
         resetAllExcept(ordersBtn);
 
         if(this.ordersPane == null){
-            this.ordersPane =  FXMLLoader.load(getClass().getResource("/view/scene/orderPane.fxml"));
+            this.ordersPane =  FXMLLoader.load(getClass().getResource(this.ORDER_PANE_PATH));
         }
         borderPane.setCenter(this.ordersPane);
         borderPane.setRight(null);
@@ -204,8 +208,16 @@ public class DashboardController extends BaseView implements Initializable {
     public void setCenterPane(Node node, BackButton backButton){
         if(backButton != null){
             this.addBackButton(backButton);
+        }else{
+            this.removeBackButton();
         }
-        borderPane.setCenter(node);
+//        borderPane.setCenter(node);
+        if(centralPane.getChildren() != null){
+            centralPane.getChildren().clear();
+        }
+        if(node != null){
+            centralPane.getChildren().add(node);
+        }
     }
     public Node getCenterPane(){ return borderPane.getCenter();}
     public void setRightPane(Node node){ borderPane.setRight(node);}
@@ -241,8 +253,20 @@ public class DashboardController extends BaseView implements Initializable {
         }
     }
 
-    public void loginBtnClicked(ActionEvent actionEvent) {
+    public void loginBtnClicked(ActionEvent actionEvent) throws IOException {
+        select(loginBtn);
+        resetAllExcept(loginBtn);
+
+        if(this.loginPane == null){
+            this.loginPane =  FXMLLoader.load(getClass().getResource(this.LOGIN_PANE_PATH));
+        }
+        borderPane.setCenter(this.loginPane);
+        borderPane.setRight(null);
+        //se servisse il controller:
+        //LoginPaneController loginPaneController = commController.getLoginPaneController();
     }
+
+
 
     public void newOrderFor(String productName){
         ordersBtn.fire();
@@ -252,4 +276,24 @@ public class DashboardController extends BaseView implements Initializable {
         orderPaneController.showNewOrderPane(info);
     }
 
+    private boolean isLoggedUser(){
+        boolean res = false;
+        HashMap<String, Object> loggedUser = commController.getLoggedUser();
+        if(loggedUser != null){
+            res = true;
+        }
+        return res;
+    }
+    private boolean checkPermission(BaseView sceneController){
+        boolean res = false;
+        HashMap<String, Object> loggedUser = commController.getLoggedUser();
+        if(loggedUser != null && (int)loggedUser.get("level") <= sceneController.permissionLevel){
+            res = true;
+        }
+        return res;
+    }
+
+    public void setUsername(String username){
+        usernameTextField.setText(username);
+    }
 }
