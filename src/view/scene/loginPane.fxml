@@ -18,72 +18,76 @@
       <HBox alignment="CENTER" VBox.vgrow="NEVER">
          <children>
             <AnchorPane style="-fx-background-color: yellow;" />
-            <AnchorPane prefWidth="250.0" style="-fx-background-radius: 20; -fx-background-color: white;" HBox.hgrow="NEVER">
+            <AnchorPane HBox.hgrow="NEVER">
                <children>
-                  <Label layoutX="77.0" layoutY="93.0" text="WELCOME">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font>
-                  </Label>
-                  <AnchorPane layoutX="1.0" layoutY="137.0">
+                  <AnchorPane fx:id="loginForm" prefWidth="250.0" style="-fx-background-radius: 10; -fx-background-color: white;">
                      <children>
-                        <AnchorPane layoutX="13.0" layoutY="24.0" styleClass="border-bottom" stylesheets="@../style/css/common.css">
+                        <Label layoutX="77.0" layoutY="93.0" text="WELCOME">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <AnchorPane layoutX="1.0" layoutY="137.0">
                            <children>
-                              <TextField fx:id="usernameTextField" layoutX="25.0" onMouseClicked="#moveOutUsernameLabel" prefHeight="25.0" prefWidth="199.0" style="-fx-background-color: transparent;">
-                                 <styleClass>
-                                    <String fx:value="no-border" />
-                                    <String fx:value="search-field" />
-                                 </styleClass>
-                              </TextField>
-                              <ImageView fitHeight="16.0" fitWidth="16.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../style/img/login-icons/user.png" />
-                                 </image>
-                              </ImageView>
-                              <Label fx:id="usernameLabel" layoutX="25.0" layoutY="4.0" text="Username" />
-                           </children>
-                        </AnchorPane>
-                        <Label fx:id="wrongUsernameLabel" layoutX="31.0" layoutY="55.0" prefHeight="17.0" prefWidth="149.0" textFill="RED" />
-                        <Label fx:id="wrongPasswordLabel" layoutX="29.0" layoutY="116.0" prefHeight="17.0" prefWidth="149.0" textFill="RED" />
-                        <AnchorPane fx:id="loginBtn" layoutX="77.0" layoutY="158.0" onMouseClicked="#doLogin" prefHeight="40.0" styleClass="custom-button" stylesheets="@../style/css/customButton.css">
-                           <children>
-                              <AnchorPane layoutX="-3.0" layoutY="3.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: ea613f;" styleClass="custom-button" AnchorPane.topAnchor="0.0">
+                              <AnchorPane fx:id="usernameContainer" layoutX="13.0" layoutY="24.0" styleClass="border-bottom" stylesheets="@../style/css/common.css">
                                  <children>
-                                    <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="12.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                                    <TextField fx:id="usernameTextField" layoutX="25.0" onMouseClicked="#moveOutUsernameLabel" prefHeight="25.0" prefWidth="199.0" style="-fx-background-color: transparent;">
+                                       <styleClass>
+                                          <String fx:value="no-border" />
+                                          <String fx:value="search-field" />
+                                       </styleClass>
+                                    </TextField>
+                                    <ImageView fitHeight="16.0" fitWidth="16.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../style/img/buttons-icon/login.png" />
+                                          <Image url="@../style/img/login-icons/user.png" />
                                        </image>
                                     </ImageView>
+                                    <Label fx:id="usernameLabel" layoutX="25.0" layoutY="4.0" text="Username" />
                                  </children>
                               </AnchorPane>
-                              <Label layoutX="36.0" layoutY="8.0" text="Login">
-                                 <padding>
-                                    <Insets left="10.0" right="10.0" />
-                                 </padding>
-                              </Label>
+                              <Label fx:id="wrongUsernameLabel" layoutX="31.0" layoutY="55.0" prefHeight="17.0" prefWidth="149.0" textFill="RED" />
+                              <Label fx:id="wrongPasswordLabel" layoutX="29.0" layoutY="116.0" prefHeight="17.0" prefWidth="149.0" textFill="RED" />
+                              <AnchorPane fx:id="loginBtn" layoutX="77.0" layoutY="158.0" onMouseClicked="#doLogin" prefHeight="40.0" styleClass="custom-button" stylesheets="@../style/css/customButton.css">
+                                 <children>
+                                    <AnchorPane layoutX="-3.0" layoutY="3.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: ea613f;" styleClass="custom-button" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="12.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../style/img/buttons-icon/login.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </AnchorPane>
+                                    <Label layoutX="36.0" layoutY="8.0" text="Login">
+                                       <padding>
+                                          <Insets left="10.0" right="10.0" />
+                                       </padding>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane fx:id="passwordContainer" layoutX="13.0" layoutY="90.0" prefHeight="25.0" prefWidth="228.0" styleClass="border-bottom" stylesheets="@../style/css/common.css">
+                                 <children>
+                                    <PasswordField fx:id="passwordField" layoutX="25.0" onMouseClicked="#moveOutPasswordLabel" prefHeight="25.0" prefWidth="199.0" style="-fx-background-color: transparent;" styleClass="search-field" />
+                                    <ImageView fitHeight="16.0" fitWidth="16.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../style/img/login-icons/password.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label fx:id="passwordLabel" layoutX="25.0" layoutY="4.0" text="Password" />
+                                 </children>
+                              </AnchorPane>
                            </children>
+                           <padding>
+                              <Insets top="20.0" />
+                           </padding>
                         </AnchorPane>
-                        <AnchorPane layoutX="13.0" layoutY="90.0" prefHeight="25.0" prefWidth="228.0" styleClass="border-bottom" stylesheets="@../style/css/common.css">
-                           <children>
-                              <PasswordField fx:id="passwordField" layoutX="25.0" onMouseClicked="#moveOutPasswordLabel" prefHeight="25.0" prefWidth="199.0" style="-fx-background-color: transparent;" styleClass="search-field" />
-                              <ImageView fitHeight="16.0" fitWidth="16.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../style/img/login-icons/password.png" />
-                                 </image>
-                              </ImageView>
-                              <Label fx:id="passwordLabel" layoutX="25.0" layoutY="4.0" text="Password" />
-                           </children>
-                        </AnchorPane>
+                        <ImageView fitHeight="64.0" fitWidth="64.0" layoutX="94.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../style/img/others/user.png" />
+                           </image>
+                        </ImageView>
                      </children>
-                     <padding>
-                        <Insets top="20.0" />
-                     </padding>
                   </AnchorPane>
-                  <ImageView fitHeight="64.0" fitWidth="64.0" layoutX="94.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../style/img/others/user.png" />
-                     </image>
-                  </ImageView>
                </children>
             </AnchorPane>
             <AnchorPane style="-fx-background-color: yellow;" />

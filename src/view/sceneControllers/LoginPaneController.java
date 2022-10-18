@@ -1,6 +1,9 @@
 package view.sceneControllers;
 
 import business.AdminManager;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -11,11 +14,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import view.utils.LocatedImage;
 
+import java.io.File;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -36,9 +42,13 @@ public class LoginPaneController extends BaseView implements Initializable {
     private Button sourceBtn = null;
     private boolean usernameLabelMoved = false;
     private boolean passwordLabelMoved = false;
+
+    public AnchorPane loginForm;
     public VBox pane;
+    public AnchorPane usernameContainer;
     public TextField usernameTextField;
     public Label usernameLabel;
+    public AnchorPane passwordContainer;
     public PasswordField passwordField;
     public Label passwordLabel;
     public Label wrongUsernameLabel;
@@ -66,6 +76,9 @@ public class LoginPaneController extends BaseView implements Initializable {
                     userWarnedForUsername = false;
                     wrongUsernameLabel.setText(null);
                 }
+                if(usernameContainer.getStyleClass().contains("error")){
+                    usernameContainer.getStyleClass().remove("error");
+                }
             }
         });
         usernameTextField.focusedProperty().addListener(new ChangeListener<Boolean>() {
@@ -85,6 +98,7 @@ public class LoginPaneController extends BaseView implements Initializable {
                         }
                     }else if(usernameLabelMoved){
                         moveInLabel(usernameLabel);
+                        usernameLabelMoved = false;
                     }
                 }else{
                     if(userWarnedForUsername){
@@ -99,12 +113,25 @@ public class LoginPaneController extends BaseView implements Initializable {
         passwordField.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue){
+                String password = passwordField.getText();
                 if (!newPropertyValue){
                     //quando il campo username non è selezionato controllo che lo username inserito sia valido
-                    String password = passwordField.getText();
                     if(password.isEmpty() && passwordLabelMoved){
                         moveInLabel(passwordLabel);
+                        passwordLabelMoved = false;
                     }
+                }else{
+                    if(!passwordLabelMoved){
+                        moveOutLabel(passwordLabel, passwordField);
+                    }
+                }
+            }
+        });
+        passwordField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(passwordContainer.getStyleClass().contains("error")){
+                    passwordContainer.getStyleClass().remove("error");
                 }
             }
         });
@@ -130,10 +157,7 @@ public class LoginPaneController extends BaseView implements Initializable {
                     }
                 }
             }else{
-                a.setAlertType(Alert.AlertType.ERROR);
-                content = "Login non effettuato";
-                a.setContentText(content);
-                a.show();
+                this.wrongLoginAnimation();
             }
         }
     }
@@ -169,6 +193,33 @@ public class LoginPaneController extends BaseView implements Initializable {
     public void removeFocus(MouseEvent mouseEvent) {
         if(usernameTextField.isFocused() || passwordField.isFocused()){
             pane.requestFocus();
+        }
+    }
+
+    private void wrongLoginAnimation(){
+        Timeline t1 = new Timeline(
+                new KeyFrame(Duration.millis(0),new KeyValue(loginForm.translateXProperty(), 0)),
+                new KeyFrame(Duration.millis(100),new KeyValue(loginForm.translateXProperty(), -10)),
+                new KeyFrame(Duration.millis(200),new KeyValue(loginForm.translateXProperty(), 10)),
+                new KeyFrame(Duration.millis(300),new KeyValue(loginForm.translateXProperty(), -10)),
+                new KeyFrame(Duration.millis(400),new KeyValue(loginForm.translateXProperty(), 10)),
+                new KeyFrame(Duration.millis(500),new KeyValue(loginForm.translateXProperty(), -10))
+        );
+        t1.play();
+        AudioClip clip = new AudioClip(new File("src/view/audio/error.mp3").toURI().toString());
+        clip.play();
+        passwordField.setText("");
+        passwordContainer.getStyleClass().add("error");
+        if(userWarnedForUsername || usernameTextField.getText().isEmpty()){
+            usernameContainer.getStyleClass().add("error");
+        }
+        if(usernameTextField.getText().isEmpty()){
+            moveInLabel(usernameLabel);
+            usernameLabelMoved = false;
+        }
+        if(passwordField.getText().isEmpty()){
+            moveInLabel(passwordLabel);
+            passwordLabelMoved = false;
         }
     }
 
