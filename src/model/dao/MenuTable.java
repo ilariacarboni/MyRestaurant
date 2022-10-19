@@ -106,14 +106,14 @@ public class MenuTable implements Table<Menu>{
     
     @Override
     public ArrayList<Menu> getFrom(Object searchParam, String paramName)  { 
-        String baseSql = "SELECT m.name, m.price, m.course,m.image c.name as courseName FROM menu m JOIN course c ON m.category = c.name ";
+        String baseSql = "SELECT m.nameDish, m.price, m.course,m.image, c.name as courseName FROM menu m JOIN course c ON m.course = c.name ";
         String sql = null;
         ArrayList<Menu> resList = new ArrayList<Menu>();
         
         if(searchParam instanceof String){   //passso un oggetto di ricerca textinput
           switch(paramName){
-                case "name":
-                    sql = baseSql + "WHERE m.name =? ";
+                case "nameDish":
+                    sql = baseSql + "WHERE m.nameDish =? ";
                     break;
                 case "course":
                     sql = baseSql + "WHERE c.name = ?";
@@ -126,7 +126,7 @@ public class MenuTable implements Table<Menu>{
                 ResultSet resultSet = ps.executeQuery();
                 
                 while (resultSet.next()) {
-                    Menu m = new Menu(resultSet.getString("name"),resultSet.getInt("price"),resultSet.getString("course"),resultSet.getString("image"));
+                    Menu m = new Menu(resultSet.getString("nameDish"),resultSet.getInt("price"),resultSet.getString("course"),resultSet.getString("image"));
                     resList.add(m);
                 }
             }

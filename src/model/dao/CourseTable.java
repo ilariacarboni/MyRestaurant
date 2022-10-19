@@ -24,7 +24,7 @@ public class CourseTable {
     
 public ArrayList<Course> getAll() {
         ArrayList <Course> resList = new ArrayList<Course>();
-        String sql = "SELECT * FROM course";
+        String sql = "SELECT * FROM course ORDER BY name";
         try {
             Statement stm = conn.createStatement();
             ResultSet resultSet = stm.executeQuery(sql);
@@ -41,7 +41,7 @@ public ArrayList<Course> getAll() {
 
     public boolean save(Course c){
         boolean res = false;
-        String sql= "INSERT INTO course (name) VALUES (?)"; //manca img
+        String sql= "INSERT INTO course (name) VALUES (?)"; 
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, c.getName());

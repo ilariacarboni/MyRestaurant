@@ -4,6 +4,7 @@
  */
 package view.sceneControllers;
 
+import business.CourseManager;
 import java.io.IOException;
 import java.net.URL;
 import static java.nio.file.Files.delete;
@@ -32,6 +33,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 import model.entity.Course;
+import view.utils.BackButton;
 
 /**
  *
@@ -39,9 +41,9 @@ import model.entity.Course;
  */
 public class MenuPaneController extends BaseView implements Initializable{
     
-    //private CourseManager courseManager = new CourseManager();
+    private CourseManager courseManager = new CourseManager();
    
-   // final String PRODUCT_PANE_LOCATION = "/view/scene/productsPane.fxml";
+    final String MENU_PANE_LOCATION = "/view/scene/menuList.fxml";
     
     private Node menuListPane = null;
     
@@ -49,7 +51,6 @@ public class MenuPaneController extends BaseView implements Initializable{
     final int ANIMATION_DISTANCE = 700;
     @FXML
     private BorderPane anchorPaneMenu;
-    
     @FXML
     private Button insertDishBtn;
     @FXML
@@ -61,8 +62,8 @@ public class MenuPaneController extends BaseView implements Initializable{
     @FXML
     private Label titoloLbl;
     
-    public List<Course> portate = new ArrayList<>();
-    private Image image;
+    //public List<Course> portate = new ArrayList<>();
+   
     
     @FXML
     void insertDishBtnClicked(ActionEvent event) throws IOException {
@@ -70,32 +71,6 @@ public class MenuPaneController extends BaseView implements Initializable{
       BorderPane borderPane = (BorderPane) anchorPaneMenu.getParent();
       borderPane.setRight(FXMLLoader.load(getClass().getResource("/view/scene/AddMenuDish.fxml")));  
 
-    }
-    
-    private List<Course> coursesList() {
-        List<Course> portate = new ArrayList<>();
-        Course portata;
-
-        portata = new Course("Antipasti","/view/style/img/menu-portate/finger-food.png");
-        portate.add(portata); 
-
-        portata = new Course("Pimi","/view/style/img/category-icons/pasta.png");
-        portate.add(portata);
-        
-        portata = new Course("Secondi","/view/style/img/menu-portate/meat.png"); 
-        portate.add(portata);
-        
-        portata = new Course("Contorni","/view/style/img/menu-portate/vegetables.png");
-        portate.add(portata);
-        
-        portata = new Course("Dolci","/view/style/img/category-icons/dessert.png");
-        portate.add(portata);
-        
-        portata = new Course("Bevande","/view/style/img/menu-portate/alcoholic-drink.png");
-        portate.add(portata);
-        
-        return portate;
-       //this.animate();
     }
     
     public void animate(){
@@ -110,52 +85,55 @@ public class MenuPaneController extends BaseView implements Initializable{
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       commController.setMenuPaneController(this);
-        
-       portate.addAll(coursesList());
-       int column=3;
-       int row=0;
-       try {
-            for (int i = 0; i < portate.size(); i++) {
-                
-                FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource("/view/scene/PortataItem.fxml"));
-                AnchorPane anchorPane = fxmlLoader.load();
-
-                portataItemController itemController = fxmlLoader.getController();
-                itemController.setCourseInfo(portate.get(i));
-                if (column == 3) {
-                    column = 0;
-                    row++;
-                }
-
-                menuGridPane.add(anchorPane, column++, row); //(child,column,row)
-                GridPane.setMargin(anchorPane, new Insets(10));
+        commController.setMenuPaneController(this);
+        ArrayList<HashMap<String,Object>> portate =  this.courseManager.getAll(); //lista portate
+        portate.forEach((portata) -> {
+            try{
+                this.addCourse(portata);
+            }catch (IOException ex){
+                Logger.getLogger(CategoryPaneController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        });
+      
     }
     
+        public void addCourse(HashMap<String,Object> course ) throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/scene/PortataItem.fxml"));
+        Node courseNode = loader.load();
+        portataItemController portataContr = loader.getController();
+        portataContr.setCourseInfo(course);
+        int index = menuGridPane.getChildren().size();
+        int columnIndex = index%3;
+        int rowIndex = (int) Math.floor(index/3);
+        menuGridPane.add(courseNode, columnIndex, rowIndex);
+        this.animate();
+        }
+
    
     @FXML
-    void showDishesForPortata(String portata) throws IOException {
+    void showDishesForPortata(HashMap<String, Object> course) throws IOException {
         
-        BorderPane borderPane = (BorderPane) anchorPaneMenu.getParent();
+       /* BorderPane borderPane = (BorderPane) anchorPaneMenu.getParent();
         borderPane.setCenter(FXMLLoader.load(getClass().getResource("/view/scene/menuList.fxml"))); 
-        borderPane.setRight(FXMLLoader.load(getClass().getResource("/view/scene/dishInfo.fxml")));
+        borderPane.setRight(FXMLLoader.load(getClass().getResource("/view/scene/dishInfo.fxml")));*/
         
-        /*if(this.menuListPane == null){
+        if(this.menuListPane == null){
             this.menuListPane = FXMLLoader.load(getClass().getResource("/view/scene/menuList.fxml"));
         }
         MenuListController menuListContr = commController.getMenuListController();
-        menuListContr.emptyProductInfo();
-        menuListContr.loadDishesByCourse(portata);
+        menuListContr.loadDishesByCourses(course);
         DashboardController dashboardController = commController.getDashboardController();
-        //productsPaneContr.makeBackButton(dashboardController.getCenterPane(), dashboardController.getRightPane());
-        dashboardController.setCenterPane(productsPane);
-        dashboardController.setRightPane(null);*/
+        BackButton backButton = this.makeBackButton(dashboardController);
+        dashboardController.setCenterPane(menuListPane, backButton);
+        dashboardController.setRightPane(null);
         
+    }
+     private BackButton makeBackButton(DashboardController dc){
+        BackButton backButton = new BackButton();
+        backButton.setCenterScene(dc.getCenterPane());
+        backButton.setRightScene(dc.getRightPane());
+        backButton.setDashboardController(dc);
+        return backButton;
     }
       
 }
