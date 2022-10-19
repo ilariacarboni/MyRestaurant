@@ -41,35 +41,35 @@ public class portataItemController extends BaseView implements Initializable {
     @FXML
     private Label totaldishesinPortataValue;
     
-    private HashMap<String, Object> portata;
+    public Course portata;
 
-    public void setCourseInfo(HashMap<String, Object> portata){
+    @FXML
+    void courseHovered(MouseEvent event) {
+        portataItem.getStyleClass().add("category-hover");
+    }
+    
+    public void setCourseInfo(Course portata){
         this.portata = portata;
-        this.portataLabel.setText((String)portata.get("name"));
-         if (portata.get("img") != null){
-             this.portataIcon.setImage(new LocatedImage((String) portata.get("img")));
-         }   
-        /*Image image = new Image(getClass().getResource((String)portata.get("img")).toExternalForm());
-        this.portataIcon.setImage(image);*/
+        
+        portataLabel.setText(portata.getName());
+        //portataIcon.setImage(new LocatedImage((String) portata.getImg()));
+        Image image = new Image(getClass().getResource("/view/style/img/menu-portate/finger-food.png").toExternalForm());
+        portataIcon.setImage(image);
         
         // aggiungere info ulteriori piatti in una categoria per label
     }
 
     @FXML
     void courseSelected(MouseEvent event) {
+        
         try {
-            commController.getMenuPaneController().showDishesForPortata(this.portata);  
+            commController.getMenuPaneController().showDishesForPortata(this.portataLabel.getText());  //definire metodo show..
         } catch (IOException ex) {
             Logger.getLogger(portataItemController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
-    
-    @FXML
-    void courseHovered(MouseEvent event) {
-        portataItem.getStyleClass().add("category-hover");
-    }
-    
+
     @FXML
     void courseNotHovered(MouseEvent event) {
          if( portataItem.getStyleClass().contains("category-hover")){
