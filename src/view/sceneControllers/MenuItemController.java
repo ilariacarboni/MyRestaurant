@@ -23,9 +23,8 @@ import view.utils.LocatedImage;
  *
  * @author milar
  */
-public class MenuItemController extends BaseView implements Initializable{
-    
-    @FXML
+public class MenuItemController extends BaseView implements Initializable {
+        @FXML
     private AnchorPane dishAnchorPane;
     @FXML
     private ImageView imgDish;
@@ -71,5 +70,5 @@ public class MenuItemController extends BaseView implements Initializable{
             this.dishAnchorPane.getStyleClass().remove("product-hover");
         }
     }
-    
+
 }
