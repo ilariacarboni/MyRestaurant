@@ -36,10 +36,10 @@ public class portataItemController extends BaseView implements Initializable {
     private Label portataLabel;
 
     @FXML
-    private Label totaldishesinPortataLbl;
+    private Label totaldishesLbl;
 
     @FXML
-    private Label totaldishesinPortataValue;
+    private Label totaldishesValue;
     
     private HashMap<String, Object> portata;
 
@@ -48,11 +48,11 @@ public class portataItemController extends BaseView implements Initializable {
         this.portataLabel.setText((String)portata.get("name"));
          if (portata.get("img") != null){
              this.portataIcon.setImage(new LocatedImage((String) portata.get("img")));
-         }   
-        /*Image image = new Image(getClass().getResource((String)portata.get("img")).toExternalForm());
-        this.portataIcon.setImage(image);*/
-        
-        // aggiungere info ulteriori piatti in una categoria per label
+         } 
+        HashMap<String, Object> infoPortata = (HashMap<String, Object>) portata.get("info");
+        if(infoPortata.get("totalDishes") != null){
+            this.totaldishesValue.setText(infoPortata.get("totalDishes").toString());
+        }
     }
 
     @FXML

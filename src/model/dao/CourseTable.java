@@ -30,7 +30,7 @@ public ArrayList<Course> getAll() {
             ResultSet resultSet = stm.executeQuery(sql);
 
             while (resultSet.next()) {
-                Course c = new Course( resultSet.getString("name"),resultSet.getString("img"));
+                Course c = new Course( resultSet.getString("name"),resultSet.getString("img"),resultSet.getString("dish-icon"));
                 resList.add(c);
             }
         } catch (SQLException ex) {
@@ -46,6 +46,7 @@ public ArrayList<Course> getAll() {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, c.getName());
             ps.setString(2, c.getImg());
+            ps.setString(3, c.getIcon());
             ps.execute();
             res = true;
         } catch (SQLException ex) {
@@ -61,6 +62,7 @@ public ArrayList<Course> getAll() {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, c.getName());
             ps.setString(2, c.getImg());
+            ps.setString(3, c.getIcon());
             ps.execute();
             res = true;
         } catch (SQLException ex) {
@@ -93,7 +95,7 @@ public ArrayList<Course> getAll() {
                 ResultSet resultSet = ps.executeQuery();
                 
                 while(resultSet.next()){
-                    Course c = new Course(resultSet.getString("name"),resultSet.getString("img"));
+                    Course c = new Course(resultSet.getString("name"),resultSet.getString("img"),resultSet.getString("dish-icon"));
                     resList.add(c);
                 }
             } catch (Exception e) {
@@ -106,7 +108,8 @@ public ArrayList<Course> getAll() {
     public Course constructEntityFromMap(HashMap<String, Object> map) {
         String name = (String) map.get("name");
         String img = (String) map.get("img");
-        return new Course(name,img);
+        String dish_icon = (String) map.get("dish-icon");
+        return new Course(name,img,dish_icon);
     }
     
 }

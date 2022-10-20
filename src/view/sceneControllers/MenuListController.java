@@ -42,11 +42,8 @@ public class MenuListController extends BaseView implements Initializable {
     @FXML
     private BorderPane menuListPane;
      
-    @FXML
-    private Button backBtn;
-
-    @FXML
-    private ImageView backImg;
+     @FXML
+    private Button insertDishBtn;
     
     private ArrayList dishes;
 
@@ -105,12 +102,11 @@ public class MenuListController extends BaseView implements Initializable {
     }
    
    
-   @FXML
-    void goBack(ActionEvent event) throws IOException {
-      
+    @FXML
+    void insertDishBtnClicked(ActionEvent event) throws IOException {
+     
       BorderPane borderPane = (BorderPane) menuListPane.getParent();
-      borderPane.setCenter(FXMLLoader.load(getClass().getResource("/view/scene/MenuPanel.fxml"))); 
-      borderPane.setRight(null);
+      borderPane.setRight(FXMLLoader.load(getClass().getResource("/view/scene/AddMenuDish.fxml")));  
 
     }
     

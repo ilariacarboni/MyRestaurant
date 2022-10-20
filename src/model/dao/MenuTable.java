@@ -42,7 +42,7 @@ public class MenuTable implements Table<Menu>{
     @Override
     public boolean save(Menu m) {
         //lo inserisce nella lista e nel db
-        //se il dipendente è nella lista significa che è stato già inserito nel db
+        //se il menu è nella lista significa che è stato già inserito nel db
         boolean res = false;
  
         String sql= "INSERT INTO Menu (nameDish, price, course,image) VALUES (?,?,?,?)";
@@ -66,7 +66,7 @@ public class MenuTable implements Table<Menu>{
     @Override
      public boolean update (Menu m) {
         //lo inserisce nella lista e nel db
-        //se il dipendente è nella lista significa che è stato già inserito nel db
+        //se il menu è nella lista significa che è stato già inserito nel db
         boolean res = false;      
         String sql= "UPDATE Menu SET nameDish=? , price=? , course=? WHERE nameDish=?";
         try {

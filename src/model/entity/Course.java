@@ -13,10 +13,12 @@ import java.util.HashMap;
 public class Course {
     private String name;
     private String img;
+    private String dish_icon;
     
-public Course(String name,String img){
+public Course(String name,String img,String dish_icon){
         this.name = name;
         this.img = img;
+        this.dish_icon = dish_icon;
     }
     
     public String getName(){
@@ -26,6 +28,9 @@ public Course(String name,String img){
         return this.img;
     }
     
+    public String getIcon(){
+        return this.dish_icon;
+    }
     public String getTableName() {
         return "course";
     }
@@ -34,6 +39,7 @@ public Course(String name,String img){
         HashMap<String, Object> res = new HashMap<String, Object>();
         res.put("name", this.name);
         res.put("img", this.img);
+        res.put("dish-icon", this.dish_icon);
         return res;
     }
     

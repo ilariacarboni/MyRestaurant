@@ -19,6 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import model.entity.Menu;
+import view.utils.LocatedImage;
 /**
  * FXML Controller class
  *
@@ -28,7 +29,7 @@ import model.entity.Menu;
 
     public class DishInfoController extends BaseView implements Initializable {
 
-    private final String DEFAULT_IMAGE_PATH = "src/view/style/img/others/no-results.png";
+    private final String DEFAULT_IMAGE_PATH = "src/view/style/img/others/default-dish.png";
     private MenuManager menuManager;    
     @FXML
     private VBox chosenDishCard;
@@ -42,8 +43,8 @@ import model.entity.Menu;
     @FXML
     private Label dishNameLbl;
 
-    @FXML
-    private Label dishPriceLbl;
+    /*@FXML
+    private Label dishPriceLbl;*/
 
     @FXML
     private Button modifyBtn;
@@ -60,18 +61,14 @@ import model.entity.Menu;
     
     public void setChosenDish(HashMap<String, Object> menu){
         this.dishNameLbl.setText(String.valueOf(menu.get("nameDish")));
-        this.dishPriceLbl.setText(String.valueOf(menu.get("price")));
-        String imagePath = (String)menu.get("image");
-        if(imagePath != null && !imagePath.equals("")){
-            try{
-                Image img = new Image(new File(imagePath).toURI().toString());
-                this.dishImg.setImage(img);
-            }catch(Exception e){
-                this.dishImg.setImage(new Image(new File(this.DEFAULT_IMAGE_PATH).toURI().toString()));
-    }
+       // this.dishPriceLbl.setText(String.valueOf(menu.get("price")));
+       if (menu.get("image") != null){
+             this.dishImg.setImage(new LocatedImage((String) menu.get("image"))); 
         }else{
             this.dishImg.setImage(new Image(new File(this.DEFAULT_IMAGE_PATH).toURI().toString()));
         }
+        
+        
        /* this.dishNameLbl.setText(menu.getNameDish());
         this.dishPriceLbl.setText(String.valueOf(menu.getPrice()));*/
     }

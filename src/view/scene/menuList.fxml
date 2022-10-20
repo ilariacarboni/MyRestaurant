@@ -13,7 +13,7 @@
    <center>
       <ScrollPane fx:id="menuListScrollPane" BorderPane.alignment="CENTER">
         <content>
-            <GridPane fx:id="menuListGridPane" hgap="10.0" vgap="10.0">
+            <GridPane fx:id="menuListGridPane" hgap="20.0" vgap="20.0">
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
@@ -27,18 +27,18 @@
          </BorderPane.margin>
       </ScrollPane>
    </center>
-   <top>
-      <Button fx:id="backBtn" mnemonicParsing="false" onAction="#goBack" prefHeight="20.0" prefWidth="30.0" BorderPane.alignment="TOP_LEFT">
+   <bottom>
+      <Button fx:id="insertDishBtn" mnemonicParsing="false" onAction="#insertDishBtnClicked" prefHeight="38.0" prefWidth="159.0" style="-fx-background-color: ea613f;" styleClass="custom-button" stylesheets="@../style/css/customButton.css" text="Aggiungi piatto" BorderPane.alignment="BOTTOM_RIGHT">
          <graphic>
-            <ImageView fx:id="backImg" fitHeight="20.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="18.0" fitWidth="18.0" layoutX="12.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../style/img/menu/icons8-back-24.png" />
+                  <Image url="@../style/img/buttons-icon/add2.png" />
                </image>
             </ImageView>
          </graphic>
          <BorderPane.margin>
-            <Insets left="20.0" />
+            <Insets bottom="20.0" right="20.0" />
          </BorderPane.margin>
       </Button>
-   </top>
+   </bottom>
 </BorderPane>

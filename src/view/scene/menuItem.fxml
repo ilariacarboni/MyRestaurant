@@ -1,56 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="dishAnchorPane" onMouseClicked="#itemSelected" prefHeight="250.0" prefWidth="251.0" stylesheets="@../style/css/menupane.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.MenuItemController">
+<AnchorPane fx:id="dishAnchorPane" onMouseClicked="#itemSelected" onMouseEntered="#itemHovered" onMouseExited="#itemNotHovered" prefHeight="250.0" prefWidth="251.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.MenuItemController">
    <children>
-      <VBox fx:id="itemVbox" alignment="TOP_CENTER" layoutX="63.0" layoutY="8.0" prefHeight="250.0" prefWidth="251.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox prefHeight="95.0" prefWidth="251.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox prefHeight="81.0" prefWidth="228.0">
-               <children>
-                  <Label fx:id="itemNameLbl" prefHeight="54.0" prefWidth="207.0" text="Fettuccine">
-                     <font>
-                        <Font name="Cambria" size="24.0" />
-                     </font>
-                  </Label>
-               </children>
-               <VBox.margin>
+            <Label fx:id="itemNameLbl" prefHeight="82.0" prefWidth="242.0" text="Fettuccine">
+               <font>
+                  <Font name="Cambria" size="24.0" />
+               </font>
+               <HBox.margin>
                   <Insets left="20.0" top="20.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox>
-               <children>
-                  <Label fx:id="itemPriceLbl" prefHeight="22.0" prefWidth="145.0" text="€10">
-                     <font>
-                        <Font name="Cambria Bold" size="18.0" />
-                     </font>
-                  </Label>
-               </children>
-               <VBox.margin>
-                  <Insets left="20.0" top="20.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox>
-               <children>
-                  <ImageView fx:id="imgDish" fitHeight="123.0" fitWidth="123.0" pickOnBounds="true" preserveRatio="true">
-                     <HBox.margin>
-                        <Insets left="20.0" />
-                     </HBox.margin>
-                  </ImageView>
-               </children>
-            </HBox>
+               </HBox.margin>
+            </Label>
          </children>
-      </VBox>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </HBox>
+      <ImageView fx:id="imgDish" fitHeight="95.0" fitWidth="95.0" layoutX="78.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="78.0" />
+      <Label fx:id="itemPriceLbl" layoutX="20.0" layoutY="102.0" prefHeight="22.0" prefWidth="145.0" text="€10" AnchorPane.leftAnchor="20.0">
+         <font>
+            <Font name="Cambria Bold" size="18.0" />
+         </font>
+      </Label>
    </children>
    <styleClass>
-      <String fx:value="menuDish-item" />
+      <String fx:value="category" />
       <String fx:value="shadow" />
    </styleClass>
+   <stylesheets>
+      <URL value="@../style/css/menupane.css" />
+      <URL value="@../style/css/store.css" />
+   </stylesheets>
 </AnchorPane>

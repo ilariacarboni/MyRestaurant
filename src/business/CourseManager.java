@@ -6,6 +6,7 @@ package business;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 import model.dao.CourseTable;
 import model.dao.MenuTable;
 import model.entity.Course;
@@ -40,6 +41,17 @@ public class CourseManager {
         }
         return res;
     }
-    
+    public HashMap<String, HashMap<String, Object>> getTotalDishes() {
+        HashMap<String, Integer> dishesPerCourse = this.menuTable.getTotalDishesPerCourse();
+
+        Set<String> courses = dishesPerCourse.keySet();
+        HashMap<String, HashMap<String, Object>> res = new HashMap<>();
+        for (String course : courses){
+            HashMap<String, Object> courseInfo = new HashMap<>();
+            courseInfo.put("totalDishes", dishesPerCourse.get(course));
+            res.put(course, courseInfo);
+        }
+        return res;
+    }
     
 }

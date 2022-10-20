@@ -27,7 +27,6 @@ public class CategoryTable implements Table<Category>{
         try {
             Statement stm = conn.createStatement();
             ResultSet resultSet = stm.executeQuery(sql);
-
             while (resultSet.next()) {
                 Category c = new Category( resultSet.getString("name"),resultSet.getString("img"), resultSet.getString("icon"),resultSet.getString("name_img"));
                 resList.add(c);

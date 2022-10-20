@@ -73,25 +73,18 @@ public class MenuPaneController extends BaseView implements Initializable{
 
     }
     
-    public void animate(){
-        List<Node> courses = menuGridPane.getChildren();
-        for(Node course: courses){
-            TranslateTransition t = new TranslateTransition(Duration.millis(this.ANIMATION_DURATION), course);
-            t.setFromX(this.ANIMATION_DISTANCE);
-            t.setToX(0);
-            t.play();
-        }
-    }
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         commController.setMenuPaneController(this);
         ArrayList<HashMap<String,Object>> portate =  this.courseManager.getAll(); //lista portate
+        HashMap<String, HashMap<String, Object>> coursesInfo = this.courseManager.getTotalDishes();
         portate.forEach((portata) -> {
             try{
+                HashMap<String, Object> courseInfo = coursesInfo.get(portata.get("name"));
+                portata.put("info", courseInfo);
                 this.addCourse(portata);
             }catch (IOException ex){
-                Logger.getLogger(CategoryPaneController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MenuPaneController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
       
@@ -109,7 +102,6 @@ public class MenuPaneController extends BaseView implements Initializable{
         this.animate();
         }
 
-   
     @FXML
     void showDishesForPortata(HashMap<String, Object> course) throws IOException {
         
@@ -134,6 +126,16 @@ public class MenuPaneController extends BaseView implements Initializable{
         backButton.setRightScene(dc.getRightPane());
         backButton.setDashboardController(dc);
         return backButton;
+    }
+     
+     public void animate(){
+        List<Node> courses = menuGridPane.getChildren();
+        for(Node course: courses){
+            TranslateTransition t = new TranslateTransition(Duration.millis(this.ANIMATION_DURATION), course);
+            t.setFromX(this.ANIMATION_DISTANCE);
+            t.setToX(0);
+            t.play();
+        }
     }
       
 }
