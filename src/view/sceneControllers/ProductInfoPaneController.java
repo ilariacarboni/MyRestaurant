@@ -13,6 +13,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -34,6 +35,7 @@ public class ProductInfoPaneController extends BaseView implements Initializable
     private ProductManager prodManager;
     private ArrayList productCharts = new ArrayList();
     private int index = 0;
+    public ScrollPane infoPane;
     @FXML
     public Label priceLabel;
     @FXML
@@ -54,7 +56,13 @@ public class ProductInfoPaneController extends BaseView implements Initializable
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        commController.setProductInfoPaneController(this);
         this.prodManager = new ProductManager();
+    }
+
+    public void refresh(){
+        productCharts = new ArrayList();
+        index = 0;
     }
     
     public void setProductInfo(HashMap<String, Object> product){
@@ -71,11 +79,13 @@ public class ProductInfoPaneController extends BaseView implements Initializable
         }
         this.shownProduct = product;
         this.setLabels(product);
-        if(this.productCharts != null){
+        if(this.productCharts != null && !this.productCharts.isEmpty()){
             this.chartContainer.getChildren().clear();
             this.chartContainer.getChildren().add((Node)this.productCharts.get(index));
         }
     }
+
+    public ScrollPane getInfoPane(){return this.infoPane;}
 
     private void setLabels(HashMap<String, Object> product){
         this.qtyLabel.setText(String.valueOf(product.get("qty")));
@@ -156,5 +166,9 @@ public class ProductInfoPaneController extends BaseView implements Initializable
         if(updatedProd != null){
             this.setProductInfo(updatedProd);
         }
+    }
+
+    public HashMap<String, Object> getCurrentProductInfo(){
+        return this.shownProduct;
     }
 }

@@ -138,6 +138,7 @@ public class ChartPaneController extends BaseView implements Initializable {
                 xAxis.setLabel("Piatto");
                 yAxis.setLabel("N° ordini");
                 XYChart.Series series = new XYChart.Series();
+                series.setName("Piatti più ordinati del mese");
                 for (Map.Entry<String, Integer> dish : dishes.entrySet()) {
                     String dishName = dish.getKey();
                     int qty = dish.getValue();

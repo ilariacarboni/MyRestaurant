@@ -16,6 +16,14 @@
     -fx-border-width: 2;
     -fx-border-color: #c2c6c8;
 }
+.border-bottom{
+    -fx-border-style: hidden hidden solid hidden;
+    -fx-border-width: 2;
+    -fx-border-color: #c2c6c8;
+}
+.border-bottom.error{
+    -fx-border-color: #fe724c;
+}
 .search-field{
     -fx-background-radius: 20px;
 }

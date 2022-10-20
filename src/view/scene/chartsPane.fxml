@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -10,11 +9,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane fx:id="chartBorderPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.ChartPaneController">
+<BorderPane fx:id="chartBorderPane" stylesheets="@../style/css/chart.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.ChartPaneController">
    <center>
       <ScrollPane fx:id="container" fitToHeight="true" fitToWidth="true">
          <content>
-            <GridPane fx:id="chartsGridPane" gridLinesVisible="true">
+            <GridPane fx:id="chartsGridPane" hgap="10.0" vgap="10.0">
               <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
                 <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
@@ -40,13 +39,6 @@
                            <center>
                               <AnchorPane fx:id="moreOrderedDishesChart" BorderPane.alignment="CENTER" />
                            </center>
-                           <top>
-                              <AnchorPane BorderPane.alignment="CENTER">
-                                 <children>
-                                    <Label alignment="CENTER" layoutX="51.0" text="Piatti più venduti ogni mese" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                                 </children>
-                              </AnchorPane>
-                           </top>
                         </BorderPane>
                      </children>
                   </HBox>

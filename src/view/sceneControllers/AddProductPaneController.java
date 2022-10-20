@@ -105,29 +105,18 @@ public class AddProductPaneController extends BaseView implements Initializable 
     }
     
     private void addListenersToTextFields(){
-        barcodeTextField.textProperty().addListener(new ChangeListener<String>() {
+        this.addListener(barcodeTextField, "\\d*");
+        this.addListener(qtyTextField, "\\d*");
+        this.addListener(priceTextField, "\\d*\\.?\\d*");
+    }
+
+    private void addListener(TextField field, String regexToMatch){
+        field.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (!newValue.matches("\\d*")) {
-                barcodeTextField.setText(newValue.replaceAll("[^\\d]", ""));
-                }
-            }
-        });
-        
-        qtyTextField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (!newValue.matches("\\d*")) {
-                qtyTextField.setText(newValue.replaceAll("[^\\d]", ""));
-                }
-            }
-        });
-        
-        priceTextField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (!newValue.matches("\\d*\\.?\\d*")) {
-                priceTextField.setText(newValue.replaceAll("[^\\d*\\.?\\d*]", ""));
+                if (!newValue.matches(regexToMatch)) {
+                    String toReplace = "[^"+regexToMatch+"]";
+                    field.setText(newValue.replaceAll(toReplace, ""));
                 }
             }
         });

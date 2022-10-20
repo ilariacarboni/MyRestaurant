@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -21,19 +22,23 @@
             </AnchorPane>
             <AnchorPane prefHeight="200.0">
                <children>
-                  <ImageView fitHeight="64.0" fitWidth="64.0" layoutX="94.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../style/img/others/user.png" />
-                     </image>
-                  </ImageView>
-                  <Label layoutX="71.0" layoutY="100.0" text="Nome Utente">
-                     <font>
-                        <Font name="Arial Nova" size="20.0" />
-                     </font>
-                  </Label>
+                  <VBox alignment="TOP_CENTER" layoutX="89.0" layoutY="36.0">
+                     <children>
+                        <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../style/img/others/user.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="usernameTextField" prefHeight="25.0">
+                           <font>
+                              <Font name="Arial Nova" size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
                </children>
             </AnchorPane>
-            <Pane fx:id="buttonContainer" prefHeight="375.0">
+            <Pane fx:id="buttonContainer" prefHeight="468.0" prefWidth="251.0">
                <children>
                   <Button fx:id="dashboardBtn" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutX="41.0" layoutY="25.0" mnemonicParsing="false" onAction="#dashboardBtnClicked" onMouseEntered="#menuBtnHovered" onMouseExited="#menuBtnNotHovered" prefHeight="37.0" prefWidth="210.0" styleClass="menuButton" text="Dashboard">
                      <graphic>
@@ -71,22 +76,17 @@
                         </ImageView>
                      </graphic>
                   </Button>
-               </children>
-            </Pane>
-            <AnchorPane fx:id="loginBtnContainer" prefHeight="200.0" prefWidth="200.0">
-               <children>
-                  <Button fx:id="loginBtn" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutX="41.0" layoutY="7.0" mnemonicParsing="false" onAction="#loginBtnClicked" onMouseEntered="#menuBtnHovered" onMouseExited="#menuBtnNotHovered" prefHeight="37.0" prefWidth="210.0" styleClass="menuButton" text="Login">
+                  <Button fx:id="loginBtn" alignment="BASELINE_LEFT" graphicTextGap="15.0" layoutX="41.0" layoutY="424.0" mnemonicParsing="false" onAction="#loginBtnClicked" onMouseEntered="#menuBtnHovered" onMouseExited="#menuBtnNotHovered" prefHeight="37.0" prefWidth="210.0" styleClass="menuButton" text="Login">
                      <graphic>
                         <ImageView fx:id="loginBtnIcon" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
                      </graphic>
                   </Button>
                </children>
-            </AnchorPane>
+            </Pane>
          </children>
       </VBox>
    </left>
    <center>
-      <Pane style="-fx-background-color: #ebe7e7;" styleClass="central-region" BorderPane.alignment="CENTER">
-      </Pane>
+      <StackPane fx:id="centralPane" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>
