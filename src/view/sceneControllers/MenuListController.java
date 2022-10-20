@@ -83,7 +83,7 @@ public class MenuListController extends BaseView implements Initializable {
 
    
    public void addMenu(HashMap<String, Object> dishInfo,  HashMap<String, Object> course){
-        int index = dishes.size() ;
+        int index = this.dishes.size() ;
         this.dishes.add(index, dishInfo);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/scene/menuItem.fxml"));
         

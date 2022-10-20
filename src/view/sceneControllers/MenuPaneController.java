@@ -114,6 +114,7 @@ public class MenuPaneController extends BaseView implements Initializable{
         }
         MenuListController menuListContr = commController.getMenuListController();
         menuListContr.loadDishesByCourses(course);
+        
         DashboardController dashboardController = commController.getDashboardController();
         BackButton backButton = this.makeBackButton(dashboardController);
         dashboardController.setCenterPane(menuListPane, backButton);

@@ -24,7 +24,7 @@ import view.utils.LocatedImage;
  * @author milar
  */
 public class MenuItemController extends BaseView implements Initializable {
-        @FXML
+    @FXML
     private AnchorPane dishAnchorPane;
     @FXML
     private ImageView imgDish;
@@ -39,7 +39,7 @@ public class MenuItemController extends BaseView implements Initializable {
     public void initialize(final URL url, final ResourceBundle rb) {
     }
     
-    public void setDishInfo(final HashMap<String, Object> dishInfo, HashMap<String, Object> course) {
+    public void setDishInfo( HashMap<String, Object> dishInfo, HashMap<String, Object> course) {
         this.dishInfo = dishInfo;
         this.itemNameLbl.setText((String)dishInfo.get("nameDish"));
         this.itemPriceLbl.setText("€" + dishInfo.get("price").toString());
@@ -49,7 +49,7 @@ public class MenuItemController extends BaseView implements Initializable {
     }
     
     public HashMap<String, Object> getDishInfo() {
-        return this.dishInfo;
+        return dishInfo;
     }
     
     @FXML
