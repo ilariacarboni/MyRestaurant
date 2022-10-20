@@ -18,12 +18,11 @@ import java.util.HashMap;
 public class CategoryTable implements Table<Category>{
 
     Connection conn = dbConnection.establishConnection();
-    protected String tableName = "category";
     
     @Override
     public ArrayList<Category> getAll() {
         ArrayList <Category> resList = new ArrayList<Category>();
-        String sql = "SELECT * FROM category";
+        String sql = "SELECT * FROM "+ Category.TABLE_NAME;
         try {
             Statement stm = conn.createStatement();
             ResultSet resultSet = stm.executeQuery(sql);
