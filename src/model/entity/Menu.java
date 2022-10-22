@@ -9,12 +9,12 @@ import java.util.HashMap;
 public class Menu implements Entity{
     private final String TABLE_NAME = "menu";
     private String nameDish;
-    private int price;
+    private double price;
     private String course;
     private String image;
    
     
-    public Menu (String nameDish, int price, String course, String image){    
+    public Menu (String nameDish, double price, String course, String image){    
 	this.nameDish=nameDish;
     	this.price=price;
 	this.course=course;
@@ -25,7 +25,7 @@ public class Menu implements Entity{
         return this.nameDish;
     }
     
-    public int getPrice(){
+    public double getPrice(){
         return this.price;
     }
     

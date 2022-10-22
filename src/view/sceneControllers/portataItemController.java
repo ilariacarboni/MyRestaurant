@@ -56,7 +56,7 @@ public class portataItemController extends BaseView implements Initializable {
     }
 
     @FXML
-    void courseSelected(MouseEvent event) {
+    void courseSelected(MouseEvent event) throws IOException, InterruptedException  {
         try {
             commController.getMenuPaneController().showDishesForPortata(this.portata);  
         } catch (IOException ex) {

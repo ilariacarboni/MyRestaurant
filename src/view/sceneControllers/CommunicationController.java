@@ -20,6 +20,7 @@ public final class CommunicationController {
     private OrderPaneController orderPaneController = null;
     private OrderSearchController orderSearchController = null;
     private MenuItemController menuitemController = null;
+    private EmployeeInfoPaneController employeeinfoController = null;
     private ProductInfoPaneController productInfoPaneController = null;
     private AddOrderPaneController addOrderPaneController = null;
     private LoginPaneController loginPaneController = null;
@@ -102,6 +103,14 @@ public final class CommunicationController {
     }
     public DishInfoController getDishInfoController(){
         return this.dishinfoController;
+    }
+    public void setEmployeeInfoController(EmployeeInfoPaneController employeeinfoController){
+        if(this.employeeinfoController == null){
+            this.employeeinfoController = employeeinfoController;
+        }
+    }
+    public EmployeeInfoPaneController getEmployeeInfoController(){
+        return this.employeeinfoController;
     }
 
     public void setOrderPaneController(OrderPaneController op){

@@ -10,7 +10,7 @@ import java.util.HashMap;
  *
  * @author milar
  */
-public class Course {
+public class Course implements Entity {
     private final String TABLE_NAME = "course";
     private String name;
     private String img;
@@ -32,10 +32,12 @@ public Course(String name,String img,String dish_icon){
     public String getIcon(){
         return this.dish_icon;
     }
+    @Override
     public String getTableName() {
         return this.TABLE_NAME;
     }
 
+    @Override
     public HashMap<String, Object> map() {
         HashMap<String, Object> res = new HashMap<String, Object>();
         res.put("name", this.name);

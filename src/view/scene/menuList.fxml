@@ -6,20 +6,22 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 
 <BorderPane fx:id="menuListPane" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.MenuListController">
    <center>
       <ScrollPane fx:id="menuListScrollPane" BorderPane.alignment="CENTER">
         <content>
-            <GridPane fx:id="menuListGridPane" hgap="20.0" vgap="20.0">
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
+            <GridPane fx:id="menuListGridPane" gridLinesVisible="true" hgap="20.0" prefHeight="50.0" prefWidth="2.0" vgap="20.0">
                <padding>
                   <Insets left="20.0" top="20.0" />
                </padding>
+               <columnConstraints>
+                   <ColumnConstraints percentWidth="50" /> 
+                   <ColumnConstraints percentWidth="50" />
+                   <ColumnConstraints percentWidth="50" />
+               </columnConstraints>
             </GridPane>
         </content>
          <BorderPane.margin>

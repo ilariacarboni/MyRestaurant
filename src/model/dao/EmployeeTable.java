@@ -21,7 +21,7 @@ import java.util.HashMap;
 public class EmployeeTable implements Table<Employee>{
     
     Connection conn = dbConnection.establishConnection();
-    ArrayList<Employee> employeesList = new ArrayList<Employee>();
+    //ArrayList<Employee> employeesList = new ArrayList<Employee>();
 
     @Override
     public ArrayList<Employee> getAll() {
@@ -32,20 +32,20 @@ public class EmployeeTable implements Table<Employee>{
             ResultSet resultSet = stm.executeQuery(sql);
 
             while (resultSet.next()) {
-                Employee em = new Employee( resultSet.getString("codice_fiscale"),resultSet.getString("name"),resultSet.getString("surname"),resultSet.getString("role"),resultSet.getDate("begin_date").toLocalDate(),resultSet.getDate("end_date").toLocalDate(),resultSet.getInt("wage"));
+                Employee em = new Employee( resultSet.getString("codice_fiscale"),resultSet.getString("name"),resultSet.getString("surname"),
+                            resultSet.getString("role"),resultSet.getString("begin_date"),resultSet.getString("end_date"),resultSet.getInt("wage") );
                 resList.add(em);
             }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
         }
-        this.employeesList = resList;
+        //this.employeesList = resList;
         return resList;
     }
 
     @Override
     public boolean save(Employee em) {
         boolean res = false;
-        if(employeesList.indexOf(em)<0){
             
             String sql= "INSERT INTO Employee (codice_fiscale, name, surname, role, begin_date, end_date, wage) VALUES (?,?,?,?,?,?,?)";
             try {
@@ -54,8 +54,8 @@ public class EmployeeTable implements Table<Employee>{
                 ps.setString(2, em.getName());
                 ps.setString(3, em.getSurname());
 		ps.setString(4, em.getRole());
-                ps.setDate(5, em.getBeginDate());
-		ps.setDate(6, em.getEndDate());
+                ps.setString(5, em.getBeginDate());
+		ps.setString(6, em.getEndDate());
                 ps.setInt(7, em.getWage()); 
                 ps.execute();
                 
@@ -64,9 +64,7 @@ public class EmployeeTable implements Table<Employee>{
                 
                 ex.printStackTrace();
             }
-
-            employeesList.add(em); 
-        }
+        
         return res;
         
     }
@@ -76,7 +74,6 @@ public class EmployeeTable implements Table<Employee>{
         //t deve essere un istanza di Product con lo stesso identificativo 
         //dell'istanza che si vuole modificare
         boolean res = false;
-        if(employeesList.indexOf(em)>0){
 		
 	String sql= "UPDATE Employee  SET codice_fiscale=?, name=?, surname=?, role=?, begin_date=?, end_date=?, wage=? WHERE codice_fiscale = ?";
            	try {
@@ -85,8 +82,8 @@ public class EmployeeTable implements Table<Employee>{
                 ps.setString(2, em.getName());
                 ps.setString(3, em.getSurname());
 		ps.setString(4, em.getRole());
-                ps.setDate(5, em.getBeginDate());
-		ps.setDate(6, em.getEndDate());
+                ps.setString(5, em.getBeginDate());
+		ps.setString(6, em.getEndDate());
                 ps.setInt(7, em.getWage());
                 ps.execute();
                 
@@ -97,15 +94,14 @@ public class EmployeeTable implements Table<Employee>{
                 
                 ex.printStackTrace();
             }
-         }
         return res;
+         
     }
 
  
     public boolean delete (Employee em) {
         boolean res = false;
         
-	if(employeesList.indexOf(em)>0){
             
             String sql= "DELETE FROM Employee WHERE codiceF = ?";
             try {
@@ -117,9 +113,6 @@ public class EmployeeTable implements Table<Employee>{
                 
                 ex.printStackTrace();
             }
-
-    }
-        this.employeesList.remove(em);
         return res;
     
   }
@@ -140,7 +133,8 @@ public class EmployeeTable implements Table<Employee>{
                 ResultSet resultSet = ps.executeQuery();
                 
                 while (resultSet.next()) {
-                    Employee em = new Employee(resultSet.getString("codice_fiscale"), resultSet.getString("name"),resultSet.getString("surname"),resultSet.getString("role"),resultSet.getDate("begin_date").toLocalDate(),resultSet.getDate("end_date").toLocalDate(),resultSet.getInt("wage") );
+                    Employee em = new Employee(resultSet.getString("codice_fiscale"), resultSet.getString("name"),resultSet.getString("surname"),
+                            resultSet.getString("role"),resultSet.getString("begin_date"),resultSet.getString("end_date"),resultSet.getInt("wage") );
                     resList.add(em);
                 }
             } catch (SQLException ex) {
@@ -157,8 +151,8 @@ public class EmployeeTable implements Table<Employee>{
         String name =(String) map.get("name");
         String surname =(String) map.get("surname");
         String role =(String) map.get("role");
-        LocalDate begin_date =(LocalDate) map.get("begin_date");
-        LocalDate end_date =(LocalDate) map.get("end_date");
+        String begin_date = (String) map.get("begin_date");
+        String end_date = (String) map.get("end_date");
         int wage =(int) map.get("wage");
       
         return new Employee(codice_fiscale, name, surname, role, begin_date, end_date,wage);
