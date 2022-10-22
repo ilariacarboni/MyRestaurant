@@ -30,6 +30,7 @@ public class BaseView {
     protected final String PRODUCT_COMPONENT_PATH ="/view/scene/product.fxml";
     protected final String ADD_PRODUCT_PANE_PATH ="/view/scene/addProductPane.fxml";
     protected final String LOGIN_PANE_PATH = "/view/scene/loginPane.fxml";
+    protected final String USER_COMPONENT_PATH = "view/scene/userInfoPane.fxml";
 
     public int permissionLevel;
 

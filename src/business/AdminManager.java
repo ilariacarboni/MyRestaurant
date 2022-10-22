@@ -30,6 +30,14 @@ public class AdminManager {
         }
         return admin;
     }
+    public ArrayList<HashMap<String, Object>> getAll(){
+        ArrayList<HashMap<String, Object>> res = new ArrayList();
+        ArrayList<Admin> admins = this.adminsTable.getAll();
+        for(Admin admin:admins){
+            res.add(admin.map());
+        }
+        return res;
+    }
     /**
      * crypt the string with SHA-256
      * @param password

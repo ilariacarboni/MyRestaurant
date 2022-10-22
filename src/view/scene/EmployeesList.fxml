@@ -19,7 +19,7 @@
             <Insets left="20.0" top="20.0" />
          </BorderPane.margin>
          <content>
-            <GridPane fx:id="employeesGridPane" gridLinesVisible="true" hgap="20.0" vgap="20.0">
+            <GridPane fx:id="employeesGridPane" hgap="20.0" vgap="20.0">
               <columnConstraints> 
                   <ColumnConstraints percentWidth="50" />   
                   <ColumnConstraints percentWidth="50" />

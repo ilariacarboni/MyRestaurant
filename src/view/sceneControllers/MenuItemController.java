@@ -19,10 +19,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import view.utils.LocatedImage;
 
-/**
- *
- * @author milar
- */
 public class MenuItemController extends BaseView implements Initializable {
     @FXML
     private AnchorPane dishAnchorPane;

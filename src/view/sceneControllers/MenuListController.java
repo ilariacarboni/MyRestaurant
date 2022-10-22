@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package view.sceneControllers;
 
 import business.MenuManager;
@@ -31,25 +27,25 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 
 public class MenuListController extends BaseView implements Initializable {
-    
+
     private MenuManager menuManager = new MenuManager();
     @FXML
     private GridPane menuListGridPane;
 
     @FXML
     private ScrollPane menuListScrollPane;
-    
+
     @FXML
     private BorderPane menuListPane;
-     
-     @FXML
+
+    @FXML
     private Button insertDishBtn;
-    
+
     private ArrayList dishes;
 
- 
+
     public void initialize(URL location, ResourceBundle resources) {
-       
+
         commController.setMenuListController(this);
         this.dishes = new ArrayList<>();
         //definire metodo search
@@ -68,10 +64,10 @@ public class MenuListController extends BaseView implements Initializable {
             }
         });*/
     }
-    
-    
+
+
     public void loadDishesByCourses(HashMap<String, Object> portata){
-  
+
         String course = portata.get("name").toString();
         menuListGridPane.getChildren().clear();
         ArrayList<HashMap<String, Object>> menulist = this.menuManager.getFrom(course, "course");
@@ -81,35 +77,33 @@ public class MenuListController extends BaseView implements Initializable {
         }
     }
 
-   
-   public void addMenu(HashMap<String, Object> dishInfo,  HashMap<String, Object> course){
+
+    public void addMenu(HashMap<String, Object> dishInfo,  HashMap<String, Object> course){
         int index = this.dishes.size() ;
         this.dishes.add(index, dishInfo);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/scene/menuItem.fxml"));
-        
+
         Node menuNode = null;
         try {
-                menuNode = loader.load();
-                MenuItemController menuitemContr = loader.getController();
-                menuitemContr.setDishInfo(dishInfo, course); //definire metodo
-                int column = index%3;
-                int row = (int) Math.floor(index/3);
-               
-                menuListGridPane.add(menuNode,column ,row );  
+            menuNode = loader.load();
+            MenuItemController menuitemContr = loader.getController();
+            menuitemContr.setDishInfo(dishInfo, course); //definire metodo
+            int column = index%3;
+            int row = (int) Math.floor(index/3);
+
+            menuListGridPane.add(menuNode,column ,row );
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-   
-   
+
+
     @FXML
     void insertDishBtnClicked(ActionEvent event) throws IOException {
-     
-      BorderPane borderPane = (BorderPane) menuListPane.getParent();
-      borderPane.setRight(FXMLLoader.load(getClass().getResource("/view/scene/AddMenuDish.fxml")));  
+
+        BorderPane borderPane = (BorderPane) menuListPane.getParent();
+        borderPane.setRight(FXMLLoader.load(getClass().getResource("/view/scene/AddMenuDish.fxml")));
 
     }
-    
+
 }
-    
- 
