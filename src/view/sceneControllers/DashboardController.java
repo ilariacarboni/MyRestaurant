@@ -211,13 +211,7 @@ public class DashboardController extends BaseView implements Initializable {
         }else{
             this.removeBackButton();
         }
-//        borderPane.setCenter(node);
-        if(centralPane.getChildren() != null){
-            centralPane.getChildren().clear();
-        }
-        if(node != null){
-            centralPane.getChildren().add(node);
-        }
+        borderPane.setCenter(node);
     }
     public Node getCenterPane(){ return borderPane.getCenter();}
     public void setRightPane(Node node){ borderPane.setRight(node);}

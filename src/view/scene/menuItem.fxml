@@ -9,7 +9,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
+<<<<<<< HEAD
+<AnchorPane fx:id="dishAnchorPane" onMouseClicked="#itemSelected" stylesheets="@../style/css/menupane.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.MenuItemController">
+=======
 <AnchorPane fx:id="dishAnchorPane" onMouseClicked="#itemSelected" onMouseEntered="#itemHovered" onMouseExited="#itemNotHovered" prefHeight="250.0" prefWidth="251.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.MenuItemController">
+>>>>>>> main
    <children>
       <HBox prefHeight="95.0" prefWidth="251.0" AnchorPane.topAnchor="0.0">
          <children>

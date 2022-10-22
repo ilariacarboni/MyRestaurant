@@ -87,6 +87,5 @@
       </VBox>
    </left>
    <center>
-      <StackPane fx:id="centralPane" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>
