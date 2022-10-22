@@ -21,6 +21,7 @@ public final class CommunicationController {
     private ProductInfoPaneController productInfoPaneController = null;
     private AddOrderPaneController addOrderPaneController = null;
     private LoginPaneController loginPaneController = null;
+    private UserAdministrationPaneController userAdministrationPaneController = null;
     private HashMap<String, Object> loggedUser = null;
     private CommunicationController() {}
 
@@ -125,8 +126,16 @@ public final class CommunicationController {
             this.loginPaneController = lpc;
         }
     }
-
     public LoginPaneController getLoginPaneController() { return this.loginPaneController; }
+
+    public void setUserAdministrationPaneController(UserAdministrationPaneController uapc){
+        if(this.userAdministrationPaneController == null){
+            this.userAdministrationPaneController = uapc;
+        }
+    }
+    public UserAdministrationPaneController getUserAdministrationPaneController() {
+        return userAdministrationPaneController;
+    }
 
     public void setLoggedUser(HashMap<String, Object> user){
         this.loggedUser = user;
