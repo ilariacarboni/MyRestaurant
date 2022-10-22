@@ -55,6 +55,7 @@ public class EmployeeInfoPaneController extends BaseView implements Initializabl
     private Label wageLbl;
     private EmployeeManager employeeManager;
     private HashMap<String, Object> empInfo;
+    private final String DEFAULT_IMAGE_PATH = "src/view/style/img/employee-icons/employee-of-the-month.png";
 
 
     @Override
@@ -71,11 +72,11 @@ public class EmployeeInfoPaneController extends BaseView implements Initializabl
        this.wageLbl.setText(String.valueOf(employeeInfo.get("wage")));
        this.beginLbl.setText(String.valueOf(employeeInfo.get("begin_date")));
        this.endLbl.setText(String.valueOf(employeeInfo.get("end_date")));
-      /* if (menu.get("image") != null){
-             this.dishImg.setImage(new LocatedImage((String) employeeInfo.get("image"))); 
+       if (employeeInfo.get("image") != null){
+             this.employeeImg.setImage(new LocatedImage((String) employeeInfo.get("image"))); 
         }else{
-            this.dishImg.setImage(new Image(new File(this.DEFAULT_IMAGE_PATH).toURI().toString()));
-        }*/
+            this.employeeImg.setImage(new Image(new File(this.DEFAULT_IMAGE_PATH).toURI().toString()));
+        }
     }
     
 }

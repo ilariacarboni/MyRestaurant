@@ -42,12 +42,15 @@ public class MenuListController extends BaseView implements Initializable {
     private Button insertDishBtn;
 
     private ArrayList dishes;
+    final int GRIDPANE_COLUMNS_NUMBER = 3;
 
 
     public void initialize(URL location, ResourceBundle resources) {
 
         commController.setMenuListController(this);
         this.dishes = new ArrayList<>();
+        
+        
         //definire metodo search
        /* searchBar.textProperty().addListener((observable, oldValue, newValue) ->{
             ObservableList<Node> products = productsContainer.getChildren();
@@ -88,8 +91,8 @@ public class MenuListController extends BaseView implements Initializable {
             menuNode = loader.load();
             MenuItemController menuitemContr = loader.getController();
             menuitemContr.setDishInfo(dishInfo, course); //definire metodo
-            int column = index%3;
-            int row = (int) Math.floor(index/3);
+            int column = index%this.GRIDPANE_COLUMNS_NUMBER;
+            int row = (int) Math.floor(index/this.GRIDPANE_COLUMNS_NUMBER);
 
             menuListGridPane.add(menuNode,column ,row );
         } catch (IOException e) {

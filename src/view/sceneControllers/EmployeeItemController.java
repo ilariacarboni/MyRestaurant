@@ -39,6 +39,7 @@ public class EmployeeItemController extends BaseView implements Initializable {
     private HashMap<String, Object> employeeInfo;
     private Node employeeInfoPane = null;
     
+    
     public void setEmployeeInfo( HashMap<String, Object> empInfo) {
         this.employeeInfo = empInfo;
         this.nameLbl.setText((String)empInfo.get("name"));
@@ -76,8 +77,7 @@ public class EmployeeItemController extends BaseView implements Initializable {
          Node employeeInfoPane = loader.load();
          commController.getDashboardController().setRightPane(employeeInfoPane);
          EmployeeInfoPaneController empInfoContr = loader.getController();
-         commController.getEmployeeInfoController().setChosenEmployee(this.employeeInfo);
-         //empInfoContr.setChosenEmployee(this.employeeInfo);
+         empInfoContr.setChosenEmployee(this.employeeInfo);
 
     }
 

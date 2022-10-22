@@ -33,7 +33,7 @@ public class EmployeeTable implements Table<Employee>{
 
             while (resultSet.next()) {
                 Employee em = new Employee( resultSet.getString("codice_fiscale"),resultSet.getString("name"),resultSet.getString("surname"),
-                            resultSet.getString("role"),resultSet.getString("begin_date"),resultSet.getString("end_date"),resultSet.getInt("wage") );
+                            resultSet.getString("role"),resultSet.getString("begin_date"),resultSet.getString("end_date"),resultSet.getInt("wage"), resultSet.getString("image") );
                 resList.add(em);
             }
         } catch (SQLException ex) {
@@ -47,7 +47,7 @@ public class EmployeeTable implements Table<Employee>{
     public boolean save(Employee em) {
         boolean res = false;
             
-            String sql= "INSERT INTO Employee (codice_fiscale, name, surname, role, begin_date, end_date, wage) VALUES (?,?,?,?,?,?,?)";
+            String sql= "INSERT INTO Employee (codice_fiscale, name, surname, role, begin_date, end_date, wage,image) VALUES (?,?,?,?,?,?,?,?)";
             try {
                 PreparedStatement ps = conn.prepareStatement(sql);
                 ps.setString(1, em.getCodiceF());
@@ -57,6 +57,7 @@ public class EmployeeTable implements Table<Employee>{
                 ps.setString(5, em.getBeginDate());
 		ps.setString(6, em.getEndDate());
                 ps.setInt(7, em.getWage()); 
+                ps.setString(8, em.getImage());
                 ps.execute();
                 
                 res = true;
@@ -75,7 +76,7 @@ public class EmployeeTable implements Table<Employee>{
         //dell'istanza che si vuole modificare
         boolean res = false;
 		
-	String sql= "UPDATE Employee  SET codice_fiscale=?, name=?, surname=?, role=?, begin_date=?, end_date=?, wage=? WHERE codice_fiscale = ?";
+	String sql= "UPDATE Employee  SET codice_fiscale=?, name=?, surname=?, role=?, begin_date=?, end_date=?, wage=?, image=? WHERE codice_fiscale = ?";
            	try {
                 PreparedStatement ps = conn.prepareStatement(sql);
                 ps.setString(1, em.getCodiceF());
@@ -85,6 +86,7 @@ public class EmployeeTable implements Table<Employee>{
                 ps.setString(5, em.getBeginDate());
 		ps.setString(6, em.getEndDate());
                 ps.setInt(7, em.getWage());
+                ps.setString(8, em.getImage());
                 ps.execute();
                 
                 res = true;
@@ -134,7 +136,7 @@ public class EmployeeTable implements Table<Employee>{
                 
                 while (resultSet.next()) {
                     Employee em = new Employee(resultSet.getString("codice_fiscale"), resultSet.getString("name"),resultSet.getString("surname"),
-                            resultSet.getString("role"),resultSet.getString("begin_date"),resultSet.getString("end_date"),resultSet.getInt("wage") );
+                            resultSet.getString("role"),resultSet.getString("begin_date"),resultSet.getString("end_date"),resultSet.getInt("wage"),resultSet.getString("image") );
                     resList.add(em);
                 }
             } catch (SQLException ex) {
@@ -154,7 +156,8 @@ public class EmployeeTable implements Table<Employee>{
         String begin_date = (String) map.get("begin_date");
         String end_date = (String) map.get("end_date");
         int wage =(int) map.get("wage");
+        String image = (String) map.get("image");
       
-        return new Employee(codice_fiscale, name, surname, role, begin_date, end_date,wage);
+        return new Employee(codice_fiscale, name, surname, role, begin_date, end_date,wage,image);
     }
 }

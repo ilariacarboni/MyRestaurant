@@ -51,6 +51,7 @@ public class EmployeesListController extends BaseView implements Initializable {
     
     final int ANIMATION_DURATION = 275;
     final int ANIMATION_DISTANCE = 700;
+    final int GRIDPANE_COLUMNS_NUMBER = 2;
     
     private ArrayList employees;
     private EmployeeManager employeeManager = new EmployeeManager();
@@ -84,8 +85,8 @@ public class EmployeesListController extends BaseView implements Initializable {
                 empNode = loader.load();
                 EmployeeItemController empitemContr = loader.getController();
                 empitemContr.setEmployeeInfo(employee); //definire metodo
-                int column = index%2;
-                int row = (int) Math.floor(index/2);
+                int column = index%this.GRIDPANE_COLUMNS_NUMBER;
+                int row = (int) Math.floor(index/this.GRIDPANE_COLUMNS_NUMBER);
                
                 employeesGridPane.add(empNode,column ,row ); 
                 this.animate();

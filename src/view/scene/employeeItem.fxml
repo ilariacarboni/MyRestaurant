@@ -7,20 +7,20 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="employeeAnchorPane" onMouseClicked="#itemSelected" onMouseEntered="#itemHovered" onMouseExited="#itemNotHovered" prefHeight="220.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.EmployeeItemController">
+<AnchorPane fx:id="employeeAnchorPane" onMouseClicked="#itemSelected" onMouseEntered="#itemHovered" onMouseExited="#itemNotHovered" prefHeight="250.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.EmployeeItemController">
    <children>
-      <Label fx:id="nameLbl" layoutX="168.0" layoutY="55.0" prefHeight="48.0" prefWidth="168.0" text="Nome">
+      <Label fx:id="nameLbl" layoutX="184.0" layoutY="55.0" prefHeight="48.0" prefWidth="168.0" text="Nome">
          <font>
             <Font name="Cambria" size="24.0" />
          </font>
       </Label>
-      <ImageView fx:id="iconEmployee" fitHeight="120.0" fitWidth="120.0" layoutX="18.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="18.0" />
-      <Label fx:id="roleLbl" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="183.0" prefHeight="22.0" prefWidth="120.0" text="Ruolo" AnchorPane.leftAnchor="18.0">
+      <ImageView fx:id="iconEmployee" fitHeight="140.0" fitWidth="140.0" layoutX="18.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="18.0" />
+      <Label fx:id="roleLbl" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="189.0" prefHeight="22.0" prefWidth="120.0" text="Ruolo" AnchorPane.leftAnchor="18.0">
          <font>
             <Font name="Candara Italic" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="surnameLbl" layoutX="168.0" layoutY="103.0" prefHeight="48.0" prefWidth="184.0" text="Cognome">
+      <Label fx:id="surnameLbl" layoutX="184.0" layoutY="101.0" prefHeight="48.0" prefWidth="184.0" text="Cognome">
          <font>
             <Font name="Cambria" size="24.0" />
          </font>

@@ -13,7 +13,7 @@
 
 <AnchorPane prefHeight="328.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.AddMenuDishController">
    <children>
-      <VBox layoutX="10.0" layoutY="10.0" prefHeight="486.0" prefWidth="410.0" styleClass="right-bar">
+      <VBox layoutX="10.0" layoutY="10.0" prefHeight="486.0" prefWidth="410.0" styleClass="right-bar" AnchorPane.topAnchor="30.0">
          <children>
             <HBox alignment="CENTER">
                <children>
@@ -109,4 +109,7 @@
          </children>
       </VBox>
    </children>
+   <padding>
+      <Insets top="30.0" />
+   </padding>
 </AnchorPane>
