@@ -129,7 +129,7 @@ public class DashboardController extends BaseView implements Initializable {
         }
         borderPane.setCenter(this.menuPane);
         MenuPaneController menuPaneController = commController.getMenuPaneController();
-        //menuPaneController.animate();
+        menuPaneController.animate();
         borderPane.setRight(null);
 
     }

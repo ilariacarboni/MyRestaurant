@@ -4,17 +4,22 @@
  */
 package view.sceneControllers;
 
+import business.MenuManager;
+import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import model.entity.Menu;
+import view.utils.LocatedImage;
 /**
  * FXML Controller class
  *
@@ -24,6 +29,8 @@ import model.entity.Menu;
 
     public class DishInfoController extends BaseView implements Initializable {
 
+    private final String DEFAULT_IMAGE_PATH = "src/view/style/img/others/default-dish.png";
+    private MenuManager menuManager;    
     @FXML
     private VBox chosenDishCard;
 
@@ -36,8 +43,8 @@ import model.entity.Menu;
     @FXML
     private Label dishNameLbl;
 
-    @FXML
-    private Label dishPriceLbl;
+    /*@FXML
+    private Label dishPriceLbl;*/
 
     @FXML
     private Button modifyBtn;
@@ -45,14 +52,32 @@ import model.entity.Menu;
     @FXML
     private TextField priceTxtfield;
     
+    public boolean dishInfoIsDirty;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+         this.menuManager = new MenuManager();
     }  
     
-    public void setChosenDish(Menu menu){
-        this.dishNameLbl.setText(menu.getNameDish());
-        this.dishPriceLbl.setText(String.valueOf(menu.getPrice()));
+    public void setChosenDish(HashMap<String, Object> menu){
+        this.dishNameLbl.setText(String.valueOf(menu.get("nameDish")));
+       // this.dishPriceLbl.setText(String.valueOf(menu.get("price")));
+       if (menu.get("image") != null){
+             this.dishImg.setImage(new LocatedImage((String) menu.get("image"))); 
+        }else{
+            this.dishImg.setImage(new Image(new File(this.DEFAULT_IMAGE_PATH).toURI().toString()));
+        }
+        
+        
+       /* this.dishNameLbl.setText(menu.getNameDish());
+        this.dishPriceLbl.setText(String.valueOf(menu.getPrice()));*/
     }
+    
+    
+    //scelta immagine
+    
+    //modifica prezzo con rif a update dish
+    
+    //cancellazione menu
     
 }

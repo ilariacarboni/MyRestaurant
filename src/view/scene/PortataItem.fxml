@@ -46,8 +46,14 @@
                      <children>
                         <HBox>
                            <children>
-                              <Label fx:id="totaldishesinPortataLbl" />
-                              <Label fx:id="totaldishesinPortataValue" />
+                              <Label fx:id="totaldishesLbl" text="Numero piatti :">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font></Label>
+                              <Label fx:id="totaldishesValue">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font></Label>
                            </children>
                         </HBox>
                      </children>

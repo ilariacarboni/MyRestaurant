@@ -4,57 +4,67 @@
  */
 package view.sceneControllers;
 
-/**
- *
- * @author milar
- */
-import model.entity.Menu;
-import javafx.fxml.FXML;
+import java.io.IOException;
+import javafx.scene.Node;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.input.MouseEvent;
+import java.util.ResourceBundle;
+import java.net.URL;
+import java.util.HashMap;
+import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
+import view.utils.LocatedImage;
 
-
-public class MenuItemController extends BaseView {
-
+public class MenuItemController extends BaseView implements Initializable {
     @FXML
     private AnchorPane dishAnchorPane;
-
     @FXML
     private ImageView imgDish;
-
     @FXML
     private Label itemNameLbl;
-
     @FXML
     private Label itemPriceLbl;
     
-    @FXML
-    private VBox itemVbox;
+    private HashMap<String, Object> dishInfo;
     
-
-    public void setDishInfo(Menu menu) {
-        this.menu = menu;
-       //this.myListener = myListener; se necessario da passare come parametro in setData
-        itemNameLbl.setText(menu.getNameDish());
-        itemPriceLbl.setText("€"+ menu.getPrice());
-        //Image image = new Image(getClass().getResourceAsStream(menu.getImage()));
-        //image.setImage(image);
+    @Override
+    public void initialize(final URL url, final ResourceBundle rb) {
     }
     
-
-    public Menu menu;
+    public void setDishInfo( HashMap<String, Object> dishInfo, HashMap<String, Object> course) {
+        this.dishInfo = dishInfo;
+        this.itemNameLbl.setText((String)dishInfo.get("nameDish"));
+        this.itemPriceLbl.setText("€" + dishInfo.get("price").toString());
+        if (course.get("img") != null){
+            this.imgDish.setImage(new LocatedImage((String) course.get("dish-icon")));
+        }
+    }
+    
+    public HashMap<String, Object> getDishInfo() {
+        return dishInfo;
+    }
     
     @FXML
-    public void itemSelected(MouseEvent event) {
-       
-       //commController.getDishInfoController().setChosenDish(itemNameLbl.getText(), itemPriceLbl.getText());
-       //myListener.onClickListener(menu);
-       commController.getDishInfoController().setChosenDish(menu);  //aggiornamento pane laterale dishinfo
-}
+    public void itemSelected( MouseEvent event) throws IOException {
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/scene/dishInfo.fxml"));
+         Node dishInfoPane = loader.load();
+         commController.getDashboardController().setRightPane(dishInfoPane);
+         DishInfoController dishInfoContr = loader.getController();
+         dishInfoContr.setChosenDish(this.dishInfo);
+    }
     
+    public void itemHovered(MouseEvent mouseEvent) {
+        this.dishAnchorPane.getStyleClass().add("product-hover");
+    }
     
-}
+    public void itemNotHovered( MouseEvent mouseEvent) {
+        if (this.dishAnchorPane.getStyleClass().contains("product-hover")) {
+            this.dishAnchorPane.getStyleClass().remove("product-hover");
+        }
+    }
 
+}

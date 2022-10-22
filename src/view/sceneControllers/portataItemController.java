@@ -36,40 +36,40 @@ public class portataItemController extends BaseView implements Initializable {
     private Label portataLabel;
 
     @FXML
-    private Label totaldishesinPortataLbl;
+    private Label totaldishesLbl;
 
     @FXML
-    private Label totaldishesinPortataValue;
+    private Label totaldishesValue;
     
-    public Course portata;
+    private HashMap<String, Object> portata;
 
-    @FXML
-    void courseHovered(MouseEvent event) {
-        portataItem.getStyleClass().add("category-hover");
-    }
-    
-    public void setCourseInfo(Course portata){
+    public void setCourseInfo(HashMap<String, Object> portata){
         this.portata = portata;
-        
-        portataLabel.setText(portata.getName());
-        //portataIcon.setImage(new LocatedImage((String) portata.getImg()));
-        Image image = new Image(getClass().getResource("/view/style/img/menu-portate/finger-food.png").toExternalForm());
-        portataIcon.setImage(image);
-        
-        // aggiungere info ulteriori piatti in una categoria per label
+        this.portataLabel.setText((String)portata.get("name"));
+         if (portata.get("img") != null){
+             this.portataIcon.setImage(new LocatedImage((String) portata.get("img")));
+         } 
+        HashMap<String, Object> infoPortata = (HashMap<String, Object>) portata.get("info");
+        if(infoPortata.get("totalDishes") != null){
+            this.totaldishesValue.setText(infoPortata.get("totalDishes").toString());
+        }
     }
 
     @FXML
     void courseSelected(MouseEvent event) {
-        
         try {
-            commController.getMenuPaneController().showDishesForPortata(this.portataLabel.getText());  //definire metodo show..
+            commController.getMenuPaneController().showDishesForPortata(this.portata);  
         } catch (IOException ex) {
             Logger.getLogger(portataItemController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
-
+    
+    @FXML
+    void courseHovered(MouseEvent event) {
+        portataItem.getStyleClass().add("category-hover");
+    }
+    
     @FXML
     void courseNotHovered(MouseEvent event) {
          if( portataItem.getStyleClass().contains("category-hover")){

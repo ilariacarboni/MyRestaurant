@@ -12,17 +12,20 @@ public final class CommunicationController {
     private ProductsPaneController productsPaneController = null;
     private CategoryPaneController categoryPaneController = null;
     private MenuPaneController menuPaneController = null;
+    private MenuListController menuListController = null;
     private EmployeesListController employeesListController = null;
     private UtilitiesPaneController utilitiesPaneController = null;
     private DashboardController dashboardController = null;
     private DishInfoController dishinfoController = null;
     private OrderPaneController orderPaneController = null;
     private OrderSearchController orderSearchController = null;
+    private MenuItemController menuitemController = null;
     private ProductInfoPaneController productInfoPaneController = null;
     private AddOrderPaneController addOrderPaneController = null;
     private LoginPaneController loginPaneController = null;
     private UserAdministrationPaneController userAdministrationPaneController = null;
     private HashMap<String, Object> loggedUser = null;
+    
     private CommunicationController() {}
 
     public static CommunicationController getInstance(){
@@ -66,6 +69,15 @@ public final class CommunicationController {
         return this.menuPaneController;
     }
     
+    public void setMenuListController(MenuListController menuListController){
+        if(this.menuListController == null){
+            this.menuListController = menuListController;
+        }
+    }
+    public MenuListController getMenuListController(){
+        return this.menuListController;
+    }
+    
     public void setEmployeePaneController(EmployeesListController employeesListController){
         if(this.employeesListController == null){
             this.employeesListController = employeesListController;
@@ -107,6 +119,17 @@ public final class CommunicationController {
     }
     public OrderSearchController getOrderSearchController(){return this.orderSearchController;}
 
+    
+    public void setMenuItemController(MenuItemController menuitemController){
+        if(this.menuitemController == null){
+            this.menuitemController = menuitemController;
+        }
+    }
+    public MenuItemController getMenuItemController(){
+        return this.menuitemController;
+    }
+
+
     public void setProductInfoPaneController(ProductInfoPaneController productInfoPaneController) {
         if(this.productInfoPaneController == null){
             this.productInfoPaneController = productInfoPaneController;
@@ -141,4 +164,5 @@ public final class CommunicationController {
         this.loggedUser = user;
     }
     public HashMap<String, Object> getLoggedUser(){ return this.loggedUser; }
+
 }
