@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="dishAnchorPane" onMouseClicked="#itemSelected" stylesheets="@../style/css/menupane.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.menuItemController">
+<AnchorPane fx:id="dishAnchorPane" onMouseClicked="#itemSelected" stylesheets="@../style/css/menupane.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.MenuItemController">
    <children>
       <VBox fx:id="itemVbox" alignment="TOP_CENTER" layoutX="63.0" layoutY="8.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>

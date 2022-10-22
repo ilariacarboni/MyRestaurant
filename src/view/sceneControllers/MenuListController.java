@@ -9,7 +9,6 @@ import model.entity.Menu;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -17,15 +16,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
 
 public class MenuListController extends BaseView implements Initializable {
 
@@ -81,7 +77,7 @@ public class MenuListController extends BaseView implements Initializable {
                 fxmlLoader.setLocation(getClass().getResource("/view/scene/menuItem.fxml"));
                 AnchorPane anchorPane = fxmlLoader.load();
 
-                menuItemController itemController = fxmlLoader.getController();
+                MenuItemController itemController = fxmlLoader.getController();
                 itemController.setDishInfo(dishes.get(i)); //mylistener 
 
                 if (column == 3) {

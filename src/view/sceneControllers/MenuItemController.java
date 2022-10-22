@@ -8,22 +8,16 @@ package view.sceneControllers;
  *
  * @author milar
  */
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.entity.Menu;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 
-public class menuItemController extends BaseView {
+public class MenuItemController extends BaseView {
 
     @FXML
     private AnchorPane dishAnchorPane;
