@@ -52,14 +52,16 @@ import view.utils.LocatedImage;
     @FXML
     private TextField priceTxtfield;
     
-    public boolean dishInfoIsDirty;
+    private HashMap<String, Object> dishInfo;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+         commController.setDishInfoController(this);
          this.menuManager = new MenuManager();
     }  
     
     public void setChosenDish(HashMap<String, Object> menu){
+        this.dishInfo = menu;
         this.dishNameLbl.setText(String.valueOf(menu.get("nameDish")));
        // this.dishPriceLbl.setText(String.valueOf(menu.get("price")));
        if (menu.get("image") != null){
@@ -68,16 +70,13 @@ import view.utils.LocatedImage;
             this.dishImg.setImage(new Image(new File(this.DEFAULT_IMAGE_PATH).toURI().toString()));
         }
         
-        
-       /* this.dishNameLbl.setText(menu.getNameDish());
-        this.dishPriceLbl.setText(String.valueOf(menu.getPrice()));*/
     }
     
     
     //scelta immagine
     
-    //modifica prezzo con rif a update dish
+    //modifica prezzo con rif a update 
     
-    //cancellazione menu
+    //cancellazione menu delete
     
 }

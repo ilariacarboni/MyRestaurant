@@ -141,9 +141,11 @@ public class DashboardController extends BaseView implements Initializable {
         resetAllExcept(employeesBtn);
         
         if(this.employeesPane == null){
-            this.employeesPane = FXMLLoader.load(getClass().getResource(this.EMPLOYEE_LIST_PANE_PATH));
+            this.employeesPane = FXMLLoader.load(getClass().getResource(EMPLOYEE_LIST_PANE_PATH));
         }
         borderPane.setCenter(this.employeesPane);
+        EmployeesListController empListController = commController.getEmployeePaneController();
+        empListController.animate();
         borderPane.setRight(null);
     }
 

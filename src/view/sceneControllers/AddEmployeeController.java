@@ -16,6 +16,13 @@ import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import view.utils.CustomDialog;
+
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
+
 import view.utils.LocatedImage;
 
 /**
@@ -29,104 +36,62 @@ public class AddEmployeeController extends BaseView implements  Initializable {
      * Initializes the controller class.
      */
     
-     @FXML
+         @FXML
+    private Label categoriaLbl;
+
+    @FXML
+    private VBox chosenDishCard;
+
+    @FXML
     private TextField codicefEmpTxt;
 
     @FXML
     private Label codicefLbl;
 
     @FXML
-    private TextField cognomeEmpTxt;
+    private Label codicefLbl1;
 
     @FXML
-    private Label cognomeLbl;
+    private Label codicefLbl11;
+
+    @FXML
+    private TextField cognomeEmpTxt;
 
     @FXML
     private TextField finecontrattoEmpTxt;
 
     @FXML
-    private Label finecontrattoLbl;
-
-    @FXML
-    private Label iniziocontrattoLbl;
-
-    @FXML
-    private Button insertEmployeeBtn;
+    private ImageView imgEmployee;
 
     @FXML
     private TextField iniziocontrattoEmpTxt;
 
     @FXML
+    private Button insertEmployeeBtn;
+
+    @FXML
     private TextField nomeEmpTxt;
 
     @FXML
-    private Label nomeLbl;
+    private Label prezzoLbl;
+
+    @FXML
+    private Label prezzoLbl1;
 
     @FXML
     private TextField ruoloEmpTxt;
 
     @FXML
-    private Label ruoloLbl;
-
-    @FXML
     private TextField stipendioEmpTxt;
 
     @FXML
-    private Label stipendioLbl;
-    
-    @FXML
-    private Label titoloLbl;
+    private Label titoloLbl1;
 
     private EmployeeManager employeeManager = new EmployeeManager();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-       /* nomeEmpTxt.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                nomeEmpTxt.setText(newValue.replaceAll("[^\\d]", ""));
-            }
-        });
-        
-        
-        stipendioEmpTxt.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                stipendioEmpTxt.setText(newValue.replaceAll("[^\\d]", ""));
-            }
-        });
-        
-         
-        cognomeEmpTxt.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                cognomeEmpTxt.setText(newValue.replaceAll("[^\\d]", ""));
-            }
-        });
-        
-         ruoloEmpTxt.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                ruoloEmpTxt.setText(newValue.replaceAll("[^\\d]", ""));
-            }
-        });
-        
-        
-        codicefEmpTxt.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                codicefEmpTxt.setText(newValue.replaceAll("[^\\d]", ""));
-            }
-        });
-        
-         
-        iniziocontrattoEmpTxt.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                iniziocontrattoEmpTxt.setText(newValue.replaceAll("[^\\d]", ""));
-            }
-        });
-        
-        finecontrattoEmpTxt.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                finecontrattoEmpTxt.setText(newValue.replaceAll("[^\\d]", ""));
-            }
-        });*/
+        imgEmployee.setImage(new LocatedImage("view/style/img/employee-icons/employee-of-the-month.png"));
         
     }  
      @FXML

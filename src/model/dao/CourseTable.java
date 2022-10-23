@@ -19,7 +19,7 @@ import model.entity.Course;
  *
  * @author milar
  */
-public class CourseTable {
+public class CourseTable implements Table<Course> {
     Connection conn = dbConnection.establishConnection();
     
 public ArrayList<Course> getAll() {
@@ -45,8 +45,6 @@ public ArrayList<Course> getAll() {
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, c.getName());
-            ps.setString(2, c.getImg());
-            ps.setString(3, c.getIcon());
             ps.execute();
             res = true;
         } catch (SQLException ex) {
@@ -61,8 +59,6 @@ public ArrayList<Course> getAll() {
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, c.getName());
-            ps.setString(2, c.getImg());
-            ps.setString(3, c.getIcon());
             ps.execute();
             res = true;
         } catch (SQLException ex) {

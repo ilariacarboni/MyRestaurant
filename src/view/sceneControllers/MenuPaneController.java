@@ -105,10 +105,6 @@ public class MenuPaneController extends BaseView implements Initializable{
     @FXML
     void showDishesForPortata(HashMap<String, Object> course) throws IOException {
         
-       /* BorderPane borderPane = (BorderPane) anchorPaneMenu.getParent();
-        borderPane.setCenter(FXMLLoader.load(getClass().getResource("/view/scene/menuList.fxml"))); 
-        borderPane.setRight(FXMLLoader.load(getClass().getResource("/view/scene/dishInfo.fxml")));*/
-        
         if(this.menuListPane == null){
             this.menuListPane = FXMLLoader.load(getClass().getResource("/view/scene/menuList.fxml"));
         }
@@ -118,7 +114,7 @@ public class MenuPaneController extends BaseView implements Initializable{
         DashboardController dashboardController = commController.getDashboardController();
         BackButton backButton = this.makeBackButton(dashboardController);
         dashboardController.setCenterPane(menuListPane, backButton);
-        dashboardController.setRightPane(null);
+        //dashboardController.setRightPane(null);
         
     }
      private BackButton makeBackButton(DashboardController dc){

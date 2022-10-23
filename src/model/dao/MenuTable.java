@@ -30,7 +30,7 @@ public class MenuTable implements Table<Menu>{
             ResultSet resultSet = stm.executeQuery(sql);
             
             while (resultSet.next()) {
-                Menu m= new Menu(resultSet.getString("nameDish"),resultSet.getInt("price"),resultSet.getString("course") ,resultSet.getString("image"));
+                Menu m= new Menu(resultSet.getString("nameDish"),resultSet.getDouble("price"),resultSet.getString("course") ,resultSet.getString("image"));
                 resList.add(m);
             }
         } catch (SQLException ex) {
@@ -45,11 +45,11 @@ public class MenuTable implements Table<Menu>{
         //se il menu è nella lista significa che è stato già inserito nel db
         boolean res = false;
  
-        String sql= "INSERT INTO Menu (nameDish, price, course,image) VALUES (?,?,?,?)";
+        String sql= "INSERT INTO menu (nameDish, price, course, image) VALUES (?,?,?,?)";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, m.getNameDish());
-            ps.setInt(2, (int)m.getPrice());
+            ps.setDouble(2, m.getPrice());
             ps.setString(3, m.getCourse());
             ps.setString(4, m.getImage());
             ps.execute();
@@ -68,11 +68,11 @@ public class MenuTable implements Table<Menu>{
         //lo inserisce nella lista e nel db
         //se il menu è nella lista significa che è stato già inserito nel db
         boolean res = false;      
-        String sql= "UPDATE Menu SET nameDish=? , price=? , course=? WHERE nameDish=?";
+        String sql= "UPDATE menu SET nameDish=? , price=? , course=? WHERE nameDish=?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, m.getNameDish());
-            ps.setInt(2, (int)m.getPrice());
+            ps.setDouble(2, m.getPrice());
             ps.setString(3, m.getCourse());
             ps.setString(4, m.getImage());
             ps.execute();
@@ -90,7 +90,7 @@ public class MenuTable implements Table<Menu>{
         
         boolean res = false;
             
-        String sql= "DELETE FROM Menu WHERE nameDish = ?";
+        String sql= "DELETE FROM menu WHERE nameDish = ?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, m.getNameDish());
@@ -106,7 +106,7 @@ public class MenuTable implements Table<Menu>{
     
     @Override
     public ArrayList<Menu> getFrom(Object searchParam, String paramName)  { 
-        String baseSql = "SELECT m.nameDish, m.price, m.course,m.image, c.name as courseName FROM menu m JOIN course c ON m.course = c.name ";
+        String baseSql = "SELECT m.nameDish, m.price, m.course, m.image, c.name as courseName FROM menu m JOIN course c ON m.course = c.name ";
         String sql = null;
         ArrayList<Menu> resList = new ArrayList<Menu>();
         
@@ -126,7 +126,7 @@ public class MenuTable implements Table<Menu>{
                 ResultSet resultSet = ps.executeQuery();
                 
                 while (resultSet.next()) {
-                    Menu m = new Menu(resultSet.getString("nameDish"),resultSet.getInt("price"),resultSet.getString("course"),resultSet.getString("image"));
+                    Menu m = new Menu(resultSet.getString("nameDish"),resultSet.getDouble("price"),resultSet.getString("course"),resultSet.getString("image"));
                     resList.add(m);
                 }
             }
@@ -158,7 +158,7 @@ public class MenuTable implements Table<Menu>{
     public Menu constructEntityFromMap(HashMap<String, Object> map) {
         
         String nameDish =(String) map.get("nameDish");
-        int price =(int) map.get("price");
+        double price =(double) map.get("price");
         String course =(String) map.get("course");
         String image =(String) map.get("image");
         return new Menu(nameDish, price, course,image);

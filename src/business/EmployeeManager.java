@@ -1,5 +1,6 @@
 package business;
 
+import java.util.ArrayList;
 import model.dao.EmployeeTable;
 import model.entity.Employee;
 
@@ -16,5 +17,23 @@ public class EmployeeManager {
     public boolean saveEmployee(HashMap<String, Object> data){
         Employee employee = this.employeeTable.constructEntityFromMap(data);
         return this.employeeTable.save(employee);
+    }
+    
+    public ArrayList getAll(){
+        ArrayList<Employee> employees = this.employeeTable.getAll();
+        ArrayList<HashMap<String,Object>> res  = new ArrayList<HashMap<String,Object>>();
+        for(Employee employee : employees){
+            res.add(employee.map());
+        }
+        return res;
+    }
+
+    public ArrayList getFrom(Object searchParam, String paramName ){
+        ArrayList<Employee> employees = this.employeeTable.getFrom(searchParam, paramName);
+        ArrayList<HashMap<String,Object>> res  = new ArrayList<HashMap<String,Object>>();
+        for(Employee employee : employees){
+            res.add(employee.map());
+        }
+        return res;
     }
 }

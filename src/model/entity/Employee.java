@@ -15,11 +15,12 @@ public class Employee implements Entity{
     private String name;
     private String surname;
     private String role;
-    private LocalDate begin_date;
-    private LocalDate end_date;
+    private String begin_date;
+    private String end_date;
     private int wage;
+    private String image;
     
-    public Employee (String codice_fiscale, String name, String surname,  String role, LocalDate begin_date , LocalDate end_date , int wage){
+    public Employee (String codice_fiscale, String name, String surname,  String role, String begin_date , String end_date , int wage, String image){
         this.codice_fiscale=codice_fiscale;
         this.name=name;
         this.surname=surname;
@@ -27,6 +28,7 @@ public class Employee implements Entity{
         this.begin_date=begin_date;
 	this.end_date=end_date; // nel metodo conversione da localdate di java a date sql
         this.wage=wage;
+        this.image=image;
     }
     
     public String getCodiceF(){
@@ -44,17 +46,20 @@ public class Employee implements Entity{
         return this.role;
     }
     
-    public Date getBeginDate(){
-	Date sql_begin_date = Date.valueOf(this.begin_date);
-	return sql_begin_date;
+    public String getBeginDate(){
+	//Date sql_begin_date = Date.valueOf(this.begin_date);
+	return this.begin_date;
     }
-    public Date getEndDate(){
-	Date sql_end_date = Date.valueOf(this.end_date);
-	return sql_end_date;
+    public String getEndDate(){
+	//Date sql_end_date = Date.valueOf(this.end_date);
+	return this.begin_date;
     }
     
     public int getWage(){
         return this.wage;
+    }
+    public String getImage(){
+        return this.image;
     }
 
     @Override
@@ -72,6 +77,7 @@ public class Employee implements Entity{
         res.put("begin_date", this.begin_date);
         res.put("end_date", this.end_date);
         res.put("wage", this.wage);
+        res.put("image", this.image);
         return res;
     }
     
