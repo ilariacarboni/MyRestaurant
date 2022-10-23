@@ -9,6 +9,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -17,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import view.utils.CustomDialog;
 import view.utils.LocatedImage;
 
 import java.io.File;
@@ -141,13 +143,15 @@ public class LoginPaneController extends BaseView implements Initializable {
         String encrypted = adminManager.cryptPassword(unencryptedPsw);
         if(currentUser != null){
             String currentUserPassword = currentUser.get("password").toString();
-            Alert a = new Alert(Alert.AlertType.INFORMATION);
-            String content = null;
             if(encrypted.equals(currentUserPassword)){
                 this.commController.setLoggedUser(currentUser);
-                content = "Login effettuato";
-                a.setContentText(content);
-                Optional<ButtonType> result = a.showAndWait();
+
+                String text = "Login effettuato correttamente";
+                Image img = new LocatedImage("/view/style/img/dialog-icons/check.png");
+                CustomDialog dialog = new CustomDialog(text, img);
+                dialog.setButtons(ButtonType.OK);
+                Optional<ButtonType> result = dialog.showAndWait("Login");
+
                 if((!result.isPresent() || result.get() == ButtonType.OK)){
                     commController.getDashboardController().setUsername(currentUser.get("username").toString());
                     if(sourceBtn != null){

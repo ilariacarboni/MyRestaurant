@@ -36,7 +36,10 @@ public class AddCategoryPaneController extends BaseView implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
+
+    public void addCategoryBtnClicked(ActionEvent actionEvent) {
+    }
 
 //    @FXML
 //    private void addCategoryBtnClicked(ActionEvent event) throws IOException {

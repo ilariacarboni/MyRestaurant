@@ -2,6 +2,7 @@ package view.sceneControllers;
 
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import business.MenuManager;
@@ -9,13 +10,12 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 
-import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import view.utils.CustomDialog;
+import view.utils.LocatedImage;
 
 /**
  * FXML Controller class
@@ -100,14 +100,19 @@ public class AddMenuDishController extends BaseView implements Initializable {
                 
                 boolean res = this.menuManager.saveDish(menu);
                 if(!res){
-                    Alert a = new Alert(AlertType.WARNING);
-                    a.setContentText("Il piatto non è stato inserito!");
-                    a.show();
+                    String text = "Il piatto non è stato inserito";
+                    Image img = new LocatedImage("/view/style/img/dialog-icons/warning.png");
+                    CustomDialog dialog = new CustomDialog(text, img);
+                    dialog.setButtons(ButtonType.OK);
+                    dialog.showAndWait("Attenzione !");
+
                     resetTextFields();
                 }else{
-                    Alert a = new Alert(AlertType.INFORMATION);
-                    a.setContentText("Il piatto è stato inserito correttamente!");
-                    a.show();
+                    String text = "Il piatto è stato inserito correttamente";
+                    Image img = new LocatedImage("/view/style/img/dialog-icons/check.png");
+                    CustomDialog dialog = new CustomDialog(text, img);
+                    dialog.setButtons(ButtonType.OK);
+                    dialog.showAndWait("Inserimento Piatto");
                     resetTextFields();
                 }
         }
