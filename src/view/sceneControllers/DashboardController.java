@@ -167,16 +167,14 @@ public class DashboardController extends BaseView implements Initializable {
                 borderPane.setRight(null);
             }else{
                 String text = "Non possiedi i permessi per visualizzare questa sezione.";
-                Image img = new LocatedImage("/view/style/img/dialog-icons/forbidden.png");
-                CustomDialog dialog = new CustomDialog(text, img);
+                CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_FORBIDDEN);
                 dialog.setButtons(ButtonType.OK);
                 Optional<ButtonType> res = dialog.showAndWait("Attenzione !");
                 dashboardBtn.fire();
             }
         }else{
             String text = "Per accedere a questa sezione devi effettuare il Login.";
-            Image img = new LocatedImage("/view/style/img/dialog-icons/lock.png");
-            CustomDialog dialog = new CustomDialog(text, img);
+            CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_LOCK);
             dialog.setButtons(ButtonType.OK, ButtonType.CANCEL);
             Optional<ButtonType> res = dialog.showAndWait("Attenzione !");
             if(res.get() == ButtonType.OK){

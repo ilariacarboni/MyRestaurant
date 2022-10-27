@@ -101,16 +101,14 @@ public class AddMenuDishController extends BaseView implements Initializable {
                 boolean res = this.menuManager.saveDish(menu);
                 if(!res){
                     String text = "Il piatto non è stato inserito";
-                    Image img = new LocatedImage("/view/style/img/dialog-icons/warning.png");
-                    CustomDialog dialog = new CustomDialog(text, img);
+                    CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_WARNING);
                     dialog.setButtons(ButtonType.OK);
                     dialog.showAndWait("Attenzione !");
 
                     resetTextFields();
                 }else{
                     String text = "Il piatto è stato inserito correttamente";
-                    Image img = new LocatedImage("/view/style/img/dialog-icons/check.png");
-                    CustomDialog dialog = new CustomDialog(text, img);
+                    CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_SUCCESS);
                     dialog.setButtons(ButtonType.OK);
                     dialog.showAndWait("Inserimento Piatto");
                     resetTextFields();

@@ -147,8 +147,7 @@ public class LoginPaneController extends BaseView implements Initializable {
                 this.commController.setLoggedUser(currentUser);
 
                 String text = "Login effettuato correttamente";
-                Image img = new LocatedImage("/view/style/img/dialog-icons/check.png");
-                CustomDialog dialog = new CustomDialog(text, img);
+                CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_SUCCESS);
                 dialog.setButtons(ButtonType.OK);
                 Optional<ButtonType> result = dialog.showAndWait("Login");
 

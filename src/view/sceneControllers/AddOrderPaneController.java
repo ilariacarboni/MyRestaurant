@@ -55,22 +55,19 @@ public class AddOrderPaneController extends BaseView implements Initializable {
         int qty = qtyField.getValue();
         if(date.isEmpty() || productName.isEmpty()){
             String text = "Tutti i campi devono essere riempiti";
-            Image img = new LocatedImage("/view/style/img/dialog-icons/warning.png");
-            CustomDialog dialog = new CustomDialog(text, img);
+            CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_WARNING);
             dialog.setButtons(ButtonType.OK);
             dialog.showAndWait("Attenzione !");
         }else{
             boolean res = this.orderManager.insertOrder(date, productName, qty);
             if(!res){
                 String text = "Ordine non creato";
-                Image img = new LocatedImage("/view/style/img/dialog-icons/error.png");
-                CustomDialog dialog = new CustomDialog(text, img);
+                CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_ERROR);
                 dialog.setButtons(ButtonType.OK);
                 dialog.showAndWait("Errore !");
             }else{
                 String text = "Ordine aggiunto con successo";
-                Image img = new LocatedImage("/view/style/img/dialog-icons/check.png");
-                CustomDialog dialog = new CustomDialog(text, img);
+                CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_SUCCESS);
                 dialog.setButtons(ButtonType.OK);
                 dialog.showAndWait("Aggiunta Ordine");
 
