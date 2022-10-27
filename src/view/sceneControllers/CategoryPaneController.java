@@ -63,8 +63,10 @@ public class CategoryPaneController extends BaseView implements Initializable {
         //storeMainPane.setBackground(new Background(new BackgroundImage(new LocatedImage(BACKGROUND_PATH), REPEAT, NO_REPEAT, CENTER, DEFAULT)));
         mainPane.setStyle("-fx-background-image: url(\"/view/style/img/background/grey.jpeg\");-fx-background-repeat: no-repeat;");
         gridPane = new CustomGridPane(this.GRIDPANE_COLUMNS_NUMBER);
-        gridPane.setFinalColumnsNumber(2);
-        gridPane.setBreakPoint(1200, commController.getStage());
+        gridPane.setBreakPoint(0, 1200, 2);
+        gridPane.setBreakPoint(1200, 1400, 3);
+        gridPane.setBreakPoint(1400, Double.MAX_VALUE, 4);
+        gridPane.startToListenForAdjustments(commController.getStage());
         gridPane.setHgap(20);
         gridPane.setVgap(20);
         gridPane.setPadding(new Insets(5, 20, 20, 20));
