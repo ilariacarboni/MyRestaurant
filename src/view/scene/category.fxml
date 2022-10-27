@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="categoryContainer" maxWidth="521.0" onMouseClicked="#categorySelected" onMouseEntered="#categoryHovered" onMouseExited="#catergoyNotHovered" prefHeight="350.0" prefWidth="521.0" styleClass="category" stylesheets="@../style/css/store.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.CategoryController">
+<AnchorPane fx:id="categoryContainer" maxWidth="521.0" onMouseClicked="#categorySelected" onMouseEntered="#categoryHovered" onMouseExited="#catergoyNotHovered" styleClass="category" stylesheets="@../style/css/store.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.CategoryController">
    <children>
       <HBox prefHeight="64.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -30,7 +30,7 @@
             </AnchorPane>
          </children>
       </HBox>
-      <VBox layoutY="150.0" spacing="10.0" styleClass="categoryInfoContainer" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <VBox layoutY="70.0" spacing="10.0" styleClass="categoryInfoContainer" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <HBox spacing="20.0">
                <children>
@@ -101,4 +101,7 @@
          </children>
       </VBox>
    </children>
+   <padding>
+      <Insets bottom="20.0" right="30.0" />
+   </padding>
 </AnchorPane>

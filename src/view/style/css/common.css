@@ -27,3 +27,9 @@
 .search-field{
     -fx-background-radius: 20px;
 }
+.scroll-pane{
+   -fx-background-color:transparent;
+}
+.scroll-pane > .viewport {  //not .scrollpane but .scroll-pane
+   -fx-background-color: transparent;
+}

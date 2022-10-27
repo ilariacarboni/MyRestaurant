@@ -132,12 +132,10 @@ public class AddEmployeeController extends BaseView implements  Initializable {
             String title = "";
             if(!res){
                 text = "Il dipendente non è stato inserito!";
-                img = new LocatedImage("/view/style/img/dialog-icons/check.png");
             }else{
                 text = "Il dipendente è stato inserito correttamente!";
-                img = new LocatedImage("/view/style/img/dialog-icons/check.png");
             }
-            CustomDialog dialog = new CustomDialog(text, img);
+            CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_SUCCESS);
             dialog.setButtons(ButtonType.OK);
             dialog.showAndWait(title);
             resetTextFields();

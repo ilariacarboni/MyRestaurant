@@ -65,8 +65,7 @@ public class AddProductPaneController extends BaseView implements Initializable 
            nameTextField.getText().isEmpty() || priceTextField.getText().isEmpty()){
 
             String text = "Non ci possono essere campi vuoti";
-            Image img = new LocatedImage("/view/style/img/dialog-icons/warning.png");
-            CustomDialog dialog = new CustomDialog(text, img);
+            CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_WARNING);
             dialog.setButtons(ButtonType.OK);
             Optional<ButtonType> res = dialog.showAndWait("Attenzione !");
                 
@@ -93,14 +92,12 @@ public class AddProductPaneController extends BaseView implements Initializable 
             }
             if(!res){
                 String text = "Il prodotto non è stato inserito!";
-                Image img = new LocatedImage("/view/style/img/dialog-icons/error.png");
-                CustomDialog dialog = new CustomDialog(text, img);
+                CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_ERROR);
                 dialog.setButtons(ButtonType.OK);
                 dialog.showAndWait("Errore !");
             }else{
                 String text = "Il prodotto è stato inserito correttamente!";
-                Image img = new LocatedImage("/view/style/img/dialog-icons/check.png");
-                CustomDialog dialog = new CustomDialog(text, img);
+                CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_SUCCESS);
                 dialog.setButtons(ButtonType.OK);
                 dialog.showAndWait("Inserimento Prodotto");
 

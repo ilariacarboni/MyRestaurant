@@ -165,8 +165,7 @@ public class ProductsPaneController extends BaseView implements Initializable {
             commController.getDashboardController().newOrderFor(name);
         }else{
             String text = "Selezionare il prodotto per cui si vuole effettuare l'ordine";
-            Image img = new LocatedImage("/view/style/img/dialog-icons/info.png");
-            CustomDialog dialog = new CustomDialog(text, img);
+            CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_INFO);
             dialog.setButtons(ButtonType.OK);
             dialog.showAndWait("Attenzione !");
         }
