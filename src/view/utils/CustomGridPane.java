@@ -6,11 +6,20 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 public class CustomGridPane extends GridPane {
 
+    /**
+     * numero di colonne fino al primo breakpoint
+     */
     private int initialColumnsNumber;
-    private int breakPoint;
-    private int finalColumnsNumber;
+    private int currentColumnNumber;
+    /**
+     * contiene il numero di colonne associato a un certo range di larghezza dello schermo
+     * [start, end)
+     */
+    private ArrayList<MediaQuery> mediaQueries = new ArrayList<>();
     /**
      * true when the CustomGridPane is already resized
      */
@@ -22,33 +31,36 @@ public class CustomGridPane extends GridPane {
         this.addColumnsConstraints(columnsNumber);
     }
 
-    public void setBreakPoint(int breakPoint, Stage stage){
-        this.breakPoint = breakPoint;
+    public void setBreakPoint(double start, double end, int columnNumber){
+        MediaQuery mediaQuery = new MediaQuery(start, end, columnNumber);
+        this.mediaQueries.add(mediaQuery);
+    }
+
+    public void startToListenForAdjustments(Stage stage){
         stage.widthProperty().addListener((obs, oldVal, newVal) -> {
-            if((double)newVal <= this.breakPoint && !this.inResponsiveMode){
-                this.resize();
-            }
-            if(this.inResponsiveMode && (double)newVal > this.breakPoint){
-                this.resize();
+            for(MediaQuery mediaQuery:mediaQueries){
+                if(mediaQuery.contains(newVal.doubleValue())){
+                    int colNum = (int) mediaQuery.getBehaviour();
+                    if(colNum != this.currentColumnNumber){
+                        this.resize(colNum);
+                        break;
+                    }
+                }
             }
         });
     }
 
-    private void resize() {
-        int cn = this.initialColumnsNumber;
-        if(!this.inResponsiveMode){
-            cn = this.finalColumnsNumber;
-        }
-        this.addColumnsConstraints(cn);
+    private void resize(int columnNumber){
+        this.addColumnsConstraints(columnNumber);
         ObservableList<Node> children = this.getChildren();
         for (int i = 0; i<children.size(); i++){
             Node child = children.get(i);
-            int columnIndex = i%cn;
-            int rowIndex = (int) Math.floor(i/cn);
+            int columnIndex = i%columnNumber;
+            int rowIndex = (int) Math.floor(i/columnNumber);
             GridPane.setColumnIndex(child, columnIndex);
             GridPane.setRowIndex(child, rowIndex);
         }
-        this.inResponsiveMode = !this.inResponsiveMode;
+        this.currentColumnNumber = columnNumber;
     }
 
     private void addColumnsConstraints(int columnsNumber){
@@ -59,10 +71,6 @@ public class CustomGridPane extends GridPane {
             column.setPercentWidth(width);
             this.getColumnConstraints().add(column);
         }
-    }
-
-    public void setFinalColumnsNumber(int columnsNumber){
-        this.finalColumnsNumber = columnsNumber;
     }
 
     public void add(Node node){
