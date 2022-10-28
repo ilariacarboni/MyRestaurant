@@ -19,6 +19,8 @@ public class BaseView {
     protected final String EMPLOYEE_LIST_PANE_PATH = "/view/scene/EmployeesList.fxml";
     protected final String CATEGORY_PANE_PATH = "/view/scene/categoryPane.fxml";
     protected final String UTILITIES_PANE_PATH = "/view/scene/UtilitiesPanel.fxml";
+    protected final String ADD_UTILITIES_PANE_PATH ="/view/scene/AddUtility.fxml";
+    protected final String UTILITY_ITEM_PATH ="/view/scene/utilityItem.fxml";
     protected final String ORDER_PANE_PATH = "/view/scene/orderPane.fxml";
     protected final String ADD_CATEGORY_PANE_PATH = "/view/scene/addCategory.fxml";
     protected final String PRODUCT_PANE_PATH ="/view/scene/productsPane.fxml";

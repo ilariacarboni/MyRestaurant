@@ -15,6 +15,7 @@ public final class CommunicationController {
     private MenuListController menuListController = null;
     private EmployeesListController employeesListController = null;
     private UtilitiesPaneController utilitiesPaneController = null;
+    private UtilityItemController utilityitemController = null;
     private DashboardController dashboardController = null;
     private DishInfoController dishinfoController = null;
     private OrderPaneController orderPaneController = null;
@@ -58,6 +59,15 @@ public final class CommunicationController {
     }
     public UtilitiesPaneController getUtilitiesPaneController(){
         return this.utilitiesPaneController;
+    }
+    
+    public void setUtilityItemController(UtilityItemController utilityitemController){
+        if(this.utilityitemController == null){
+            this.utilityitemController = utilityitemController;
+        }
+    }
+    public UtilityItemController getUtilityItemController(){
+        return this.utilityitemController;
     }
     
     
