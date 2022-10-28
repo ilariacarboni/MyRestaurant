@@ -26,7 +26,7 @@ public class UserInfoPaneController extends BaseView implements Initializable {
     }
 
     public void setUserInfo(HashMap<String, Object> info){
-
+        //fare mapping codice livello utente e nome del livello da mostrare
     }
 
     public void editUser(MouseEvent mouseEvent) {

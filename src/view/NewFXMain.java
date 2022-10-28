@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import view.sceneControllers.CommunicationController;
 
 /**
  *
@@ -20,15 +21,11 @@ public class NewFXMain extends Application {
     
     @Override
     public void start(Stage primaryStage) throws IOException {
-        //Parent root = FXMLLoader.load(getClass().getResource("CreateProduct.fxml"));
-
+        CommunicationController.getInstance().setStage(primaryStage);
         Parent root = FXMLLoader.load(getClass().getResource("/view/scene/dashboard.fxml"));
         
         Scene scene = new Scene(root);
-        //scene.getStylesheets().add(getClass().getResource("/style/createProduct.css").toExternalForm());
         scene.getStylesheets().add(getClass().getResource("/view/style/css/dashboard.css").toExternalForm());
-
-        //primaryStage.setTitle("Add Product");
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
         primaryStage.show();

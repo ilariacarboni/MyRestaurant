@@ -3,6 +3,7 @@ package view.sceneControllers;
 import business.CourseManager;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import business.MenuManager;
@@ -12,13 +13,12 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 
-import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import view.utils.CustomDialog;
+import view.utils.LocatedImage;
 
 /**
  * FXML Controller class
@@ -109,14 +109,17 @@ public class AddMenuDishController extends BaseView implements Initializable {
                     courseEntity = courses.get(0);
                 }
                 if(!res){
-                    Alert a = new Alert(AlertType.WARNING);
-                    a.setContentText("Il piatto non è stato inserito!");
-                    a.show();
+                    String text = "Il piatto non è stato inserito";
+                    CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_WARNING);
+                    dialog.setButtons(ButtonType.OK);
+                    dialog.showAndWait("Attenzione !");
+
                     resetTextFields();
                 }else{
-                    Alert a = new Alert(AlertType.INFORMATION);
-                    a.setContentText("Il piatto è stato inserito correttamente!");
-                    a.show();
+                    String text = "Il piatto è stato inserito correttamente";
+                    CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_SUCCESS);
+                    dialog.setButtons(ButtonType.OK);
+                    dialog.showAndWait("Inserimento Piatto");
                     resetTextFields();
                     MenuListController menulistContr = commController.getMenuListController();
                     menulistContr.addMenu( menu, courseEntity );

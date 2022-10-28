@@ -13,16 +13,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import view.utils.BackButton;
+import view.utils.CustomDialog;
 import view.utils.LocatedImage;
 
 /**
@@ -165,9 +164,10 @@ public class ProductsPaneController extends BaseView implements Initializable {
             String name = (String) productInfo.get("name");
             commController.getDashboardController().newOrderFor(name);
         }else{
-            Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setContentText("Selezionare il prodotto per cui si vuole effettuare l'ordine");
-            a.show();
+            String text = "Selezionare il prodotto per cui si vuole effettuare l'ordine";
+            CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_INFO);
+            dialog.setButtons(ButtonType.OK);
+            dialog.showAndWait("Attenzione !");
         }
     }
 }

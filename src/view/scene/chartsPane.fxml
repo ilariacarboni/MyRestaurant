@@ -15,12 +15,12 @@
          <content>
             <GridPane fx:id="chartsGridPane" hgap="10.0" vgap="10.0">
               <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
-                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                <ColumnConstraints percentWidth="50" />
+                <ColumnConstraints percentWidth="50" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints vgrow="ALWAYS" />
-                <RowConstraints vgrow="ALWAYS" />
+                  <RowConstraints vgrow="ALWAYS" />
+                  <RowConstraints vgrow="ALWAYS" />
                   <RowConstraints vgrow="ALWAYS" />
               </rowConstraints>
                <children>

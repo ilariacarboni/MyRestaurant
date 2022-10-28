@@ -8,6 +8,7 @@ package view.sceneControllers;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import business.CategoryManager;
@@ -17,13 +18,13 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import view.utils.CustomDialog;
+import view.utils.LocatedImage;
 
 /**
  * FXML Controller class
@@ -62,10 +63,11 @@ public class AddProductPaneController extends BaseView implements Initializable 
         //controllo che siano stati inseriti tutti i campi
         if(barcodeTextField.getText().isEmpty() || qtyTextField.getText().isEmpty() || 
            nameTextField.getText().isEmpty() || priceTextField.getText().isEmpty()){
-            
-            Alert a = new Alert(AlertType.WARNING);
-            a.setContentText("Non ci possono essere campi vuoti");
-            a.show();
+
+            String text = "Non ci possono essere campi vuoti";
+            CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_WARNING);
+            dialog.setButtons(ButtonType.OK);
+            Optional<ButtonType> res = dialog.showAndWait("Attenzione !");
                 
         }else{
             int barcode = Integer.parseInt(barcodeTextField.getText());
@@ -89,13 +91,16 @@ public class AddProductPaneController extends BaseView implements Initializable 
                 categoryEntity = categories.get(0);
             }
             if(!res){
-                Alert a = new Alert(AlertType.WARNING);
-                a.setContentText("Il prodotto non è stato inserito!");
-                a.show();
+                String text = "Il prodotto non è stato inserito!";
+                CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_ERROR);
+                dialog.setButtons(ButtonType.OK);
+                dialog.showAndWait("Errore !");
             }else{
-                Alert a = new Alert(AlertType.INFORMATION);
-                a.setContentText("Il prodotto è stato inserito correttamente!");
-                a.show();
+                String text = "Il prodotto è stato inserito correttamente!";
+                CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_SUCCESS);
+                dialog.setButtons(ButtonType.OK);
+                dialog.showAndWait("Inserimento Prodotto");
+
                 resetTextFields();
                 resetTextFields();
                 ProductsPaneController productsPaneController = commController.getProductsPaneController();

@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import view.utils.CustomAreaChart;
 import view.utils.CustomLineChart;
 

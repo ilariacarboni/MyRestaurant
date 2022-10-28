@@ -6,15 +6,15 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import business.IManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -23,6 +23,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import view.utils.BackButton;
+import view.utils.CustomDialog;
 import view.utils.LocatedImage;
 
 
@@ -85,7 +86,7 @@ public class DashboardController extends BaseView implements Initializable {
         storeBtnIcon.setImage(new LocatedImage(this.STORE_BTN_ICON_PATH));
         utilityBtnIcon.setImage(new LocatedImage(this.UTILITY_BTN_ICON_PATH));
         loginBtnIcon.setImage(new LocatedImage(this.LOGIN_BTN_ICON_PATH));
-        dashboardBtn.fire();
+        loginBtn.fire();
         this.commController.setDashboardController(this);
     } 
 
@@ -165,17 +166,22 @@ public class DashboardController extends BaseView implements Initializable {
                 categoryPaneController.animate();
                 borderPane.setRight(null);
             }else{
-                Alert a = new Alert(Alert.AlertType.WARNING);
-                a.setContentText("Non si hanno i permessi necessari per visualizzare questa sezione");
-                a.show();
+                String text = "Non possiedi i permessi per visualizzare questa sezione.";
+                CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_FORBIDDEN);
+                dialog.setButtons(ButtonType.OK);
+                Optional<ButtonType> res = dialog.showAndWait("Attenzione !");
+                dashboardBtn.fire();
             }
         }else{
-            Alert a = new Alert(Alert.AlertType.WARNING);
-            a.setContentText("Devi essere loggato per visualizzare questa sezione");
-            Optional<ButtonType> result = a.showAndWait();
-            if(!result.isPresent() || result.get() == ButtonType.OK ){
+            String text = "Per accedere a questa sezione devi effettuare il Login.";
+            CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_LOCK);
+            dialog.setButtons(ButtonType.OK, ButtonType.CANCEL);
+            Optional<ButtonType> res = dialog.showAndWait("Attenzione !");
+            if(res.get() == ButtonType.OK){
                 loginBtn.fire();
                 commController.getLoginPaneController().setSource(storeBtn);
+            }else{
+                dashboardBtn.fire();
             }
         }
     }
@@ -258,8 +264,7 @@ public class DashboardController extends BaseView implements Initializable {
         }
         borderPane.setCenter(this.loginPane);
         borderPane.setRight(null);
-        //se servisse il controller:
-        //LoginPaneController loginPaneController = commController.getLoginPaneController();
+        LoginPaneController loginPaneController = commController.getLoginPaneController();
     }
 
 
@@ -292,4 +297,6 @@ public class DashboardController extends BaseView implements Initializable {
     public void setUsername(String username){
         usernameTextField.setText(username);
     }
+
+
 }

@@ -5,6 +5,7 @@
  */
 package view.sceneControllers;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
@@ -22,11 +23,21 @@ import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import view.utils.BackButton;
+import view.utils.CustomGridPane;
+import view.utils.LocatedImage;
+
+import static javafx.scene.layout.BackgroundPosition.CENTER;
+import static javafx.scene.layout.BackgroundRepeat.NO_REPEAT;
+import static javafx.scene.layout.BackgroundRepeat.REPEAT;
+import static javafx.scene.layout.BackgroundSize.DEFAULT;
 
 /**
  * FXML Controller class
@@ -35,19 +46,31 @@ import view.utils.BackButton;
  */
 public class CategoryPaneController extends BaseView implements Initializable {
 
+
+    public BorderPane categoryContainer;
+    public VBox mainPane;
     private CategoryManager categoryManager = new CategoryManager();
-    final int GRIDPANE_COLUMNS_NUMBER = 3;
+    public int permissionLevel = AdminManager.ROOT_PERMISSION_LEVEL;
+    final int GRIDPANE_COLUMNS_NUMBER = 4;
     final int ANIMATION_DURATION = 275;
     final int ANIMATION_DISTANCE = 700;
-    public BorderPane storeMainPane;
-    public GridPane categoryContainer;
-    public int permissionLevel = AdminManager.ROOT_PERMISSION_LEVEL;
     private Node productsPane = null;
+    private CustomGridPane gridPane;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         commController.setCategoryPaneController(this);
-        
+        //storeMainPane.setBackground(new Background(new BackgroundImage(new LocatedImage(BACKGROUND_PATH), REPEAT, NO_REPEAT, CENTER, DEFAULT)));
+        mainPane.setStyle("-fx-background-image: url(\"/view/style/img/background/grey.jpeg\");-fx-background-repeat: no-repeat;");
+        gridPane = new CustomGridPane(this.GRIDPANE_COLUMNS_NUMBER);
+        gridPane.setBreakPoint(0, 1200, 2);
+        gridPane.setBreakPoint(1200, 1400, 3);
+        gridPane.setBreakPoint(1400, Double.MAX_VALUE, 4);
+        gridPane.startToListenForAdjustments(commController.getStage());
+        gridPane.setHgap(20);
+        gridPane.setVgap(20);
+        gridPane.setPadding(new Insets(5, 20, 20, 20));
+
         ArrayList<HashMap<String,Object>> categories =  this.categoryManager.getAll();
         HashMap<String, HashMap<String, Object>> categoriesInfo = this.categoryManager.getCategoriesBasicInfo();
         categories.forEach((category) -> {
@@ -59,7 +82,10 @@ public class CategoryPaneController extends BaseView implements Initializable {
                 Logger.getLogger(CategoryPaneController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-    }    
+
+
+        categoryContainer.setCenter(gridPane);
+    }
     
 
     public void addCategory(HashMap<String,Object> category) throws IOException{
@@ -67,16 +93,13 @@ public class CategoryPaneController extends BaseView implements Initializable {
         Node categoryNode = loader.load();
         CategoryController categoryContr = loader.getController();
         categoryContr.setCategoryInfo(category);
-        int index = categoryContainer.getChildren().size();
-        int columnIndex = index%this.GRIDPANE_COLUMNS_NUMBER;
-        int rowIndex = (int) Math.floor(index/this.GRIDPANE_COLUMNS_NUMBER);
-        categoryContainer.add(categoryNode, columnIndex, rowIndex);
+        gridPane.add(categoryNode);
         this.animate();
     }
 
     @FXML
     private void addCategoryButtonClicked(ActionEvent event) throws IOException {
-        BorderPane dashboardBorderPane = (BorderPane) storeMainPane.getParent();
+        BorderPane dashboardBorderPane = (BorderPane) mainPane.getParent();
         dashboardBorderPane.setRight(FXMLLoader.load(getClass().getResource(this.ADD_CATEGORY_PANE_PATH)));
     }
     
@@ -107,7 +130,7 @@ public class CategoryPaneController extends BaseView implements Initializable {
     }
 
     public void animate(){
-        List<Node> categories = categoryContainer.getChildren();
+        List<Node> categories = gridPane.getChildren();
         for(Node category: categories){
             TranslateTransition t = new TranslateTransition(Duration.millis(this.ANIMATION_DURATION), category);
             t.setFromX(this.ANIMATION_DISTANCE);

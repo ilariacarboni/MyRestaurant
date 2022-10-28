@@ -7,8 +7,11 @@ import impl.org.controlsfx.autocompletion.SuggestionProvider;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import view.utils.CustomDialog;
+import view.utils.LocatedImage;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -43,7 +46,6 @@ public class AddOrderPaneController extends BaseView implements Initializable {
     }
 
     public void insertOrderBtnClicked(MouseEvent event) {
-        Alert a = new Alert(Alert.AlertType.WARNING);
         LocalDate d = dateField.getValue();
         String date = "";
         if(d != null){
@@ -52,19 +54,23 @@ public class AddOrderPaneController extends BaseView implements Initializable {
         String productName = productField.getText();
         int qty = qtyField.getValue();
         if(date.isEmpty() || productName.isEmpty()){
-            String alertText = "Tutti i campi devono essere riempiti";
-
-            a.setContentText(alertText);
-            a.show();
+            String text = "Tutti i campi devono essere riempiti";
+            CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_WARNING);
+            dialog.setButtons(ButtonType.OK);
+            dialog.showAndWait("Attenzione !");
         }else{
             boolean res = this.orderManager.insertOrder(date, productName, qty);
             if(!res){
-                a.setContentText("Ordine non creato");
-                a.show();
+                String text = "Ordine non creato";
+                CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_ERROR);
+                dialog.setButtons(ButtonType.OK);
+                dialog.showAndWait("Errore !");
             }else{
-                a.setAlertType(Alert.AlertType.CONFIRMATION);
-                a.setContentText("Ordine aggiunto con successo");
-                a.show();
+                String text = "Ordine aggiunto con successo";
+                CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_SUCCESS);
+                dialog.setButtons(ButtonType.OK);
+                dialog.showAndWait("Aggiunta Ordine");
+
                 commController.getOrderPaneController().updateOrders();
                 this.refresh();
             }

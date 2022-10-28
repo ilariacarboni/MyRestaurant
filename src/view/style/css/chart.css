@@ -17,8 +17,9 @@
 
 /* ====== AXIS ============================================================================ */
 .axis {
-    -fx-tick-label-font-size: 0.833333em;  /* 10 pix */
-    -fx-tick-label-fill: -fx-text-background-color;
+    -fx-font-size: 1.4em;
+    -fx-tick-length: 10;
+    -fx-minor-tick-length: 10;
 }
 .axis:top {
     -fx-border-color: transparent transparent #666666 transparent;

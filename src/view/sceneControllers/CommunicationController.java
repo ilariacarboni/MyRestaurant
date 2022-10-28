@@ -1,6 +1,16 @@
 package view.sceneControllers;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
+import view.utils.LocatedImage;
+
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.Optional;
 
 /**
  *
@@ -9,6 +19,8 @@ import java.util.HashMap;
 public final class CommunicationController {
     
     private static final CommunicationController commController = new CommunicationController();
+
+    private Stage stage = null;
     private ProductsPaneController productsPaneController = null;
     private CategoryPaneController categoryPaneController = null;
     private MenuPaneController menuPaneController = null;
@@ -32,6 +44,13 @@ public final class CommunicationController {
 
     public static CommunicationController getInstance(){
         return commController;
+    }
+
+    public void setStage(Stage stage){
+        this.stage = stage;
+    }
+    public Stage getStage() {
+        return stage;
     }
 
     public void setCategoryPaneController(CategoryPaneController catController){
@@ -183,5 +202,4 @@ public final class CommunicationController {
         this.loggedUser = user;
     }
     public HashMap<String, Object> getLoggedUser(){ return this.loggedUser; }
-
 }
