@@ -95,7 +95,7 @@ public class OrderTable implements Table<Order>{
             String key = entry.getKey();
             String value = entry.getValue();
             if(!value.isEmpty()){
-                wheres += key+" LIKE '"+value+"%' AND ";
+                wheres += key+" LIKE '%"+value+"%' AND ";
             }
         }
         //eliminazione ultimo AND

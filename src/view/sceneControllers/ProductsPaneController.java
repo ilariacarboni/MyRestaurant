@@ -43,24 +43,16 @@ public class ProductsPaneController extends BaseView implements Initializable {
     private final String PRODUCT_INFO_DEFAULT_TITLE = "Seleziona un prodotto per visualizzarne i dettagli";
 
     public AnchorPane addProductBtn;
-    @FXML
-    private ImageView categoryName;
-    @FXML
-    private TextField searchBar;
-
-    @FXML
-    private GridPane productsContainer;
-    @FXML
-    private BorderPane mainContainer;
-    @FXML
+    public ImageView categoryName;
+    public TextField searchBar;
+    public GridPane productsContainer;
+    public BorderPane mainContainer;
     public BorderPane productInfoMainContainer;
-    @FXML
     public Label productInfoMainContainerTitle;
-    @FXML
-    private AnchorPane backButtonContainer;
-
+    public AnchorPane backButtonContainer;
     public boolean productInfoIsDirty;
     private ArrayList shownProducts ;
+    private String productsCategory;
     /**
      * Initializes the controller class.
      */
@@ -88,6 +80,7 @@ public class ProductsPaneController extends BaseView implements Initializable {
     public void loadProductsByCategory(HashMap<String, Object> category){
         refresh();
         String categoryName = category.get("name").toString();
+        this.productsCategory = categoryName;
         if(category.get("nameImg") != null){
             this.categoryName.setImage(new LocatedImage(category.get("nameImg").toString()));
         }
@@ -106,22 +99,24 @@ public class ProductsPaneController extends BaseView implements Initializable {
     }
     
     public void addProduct(HashMap<String, Object> productInfo, HashMap<String, Object> category){
-        int index = this.shownProducts.size() ;
-        this.shownProducts.add(index, productInfo);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(this.PRODUCT_FXML));
-        Node productNode = null;
-        try {
-            productNode = loader.load();
-            ProductController productContr = loader.getController();
-            productContr.setProductInfo(productInfo, category);
-            int columnIndex = index%this.gridpaneColumnsNumber;
-            int rowIndex = (int) Math.floor(index/this.gridpaneColumnsNumber);
-            productsContainer.add(productNode, columnIndex, rowIndex);
-            if(index == 0){
-                productContr.select();
+        if(category.get("name").toString().equals(this.productsCategory)){
+            int index = this.shownProducts.size() ;
+            this.shownProducts.add(index, productInfo);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(this.PRODUCT_FXML));
+            Node productNode = null;
+            try {
+                productNode = loader.load();
+                ProductController productContr = loader.getController();
+                productContr.setProductInfo(productInfo, category);
+                int columnIndex = index%this.gridpaneColumnsNumber;
+                int rowIndex = (int) Math.floor(index/this.gridpaneColumnsNumber);
+                productsContainer.add(productNode, columnIndex, rowIndex);
+                if(index == 0){
+                    productContr.select();
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
     

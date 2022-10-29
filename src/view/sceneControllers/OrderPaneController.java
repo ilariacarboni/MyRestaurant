@@ -149,7 +149,6 @@ public class OrderPaneController extends BaseView implements Initializable {
             int ratio = (int)Math.ceil(nextPageLength/(double)currentPageLength);
             pageNumber = (int)Math.ceil(pageNumber/ratio);
         }else if(nextPageLength < currentPageLength){
-
         }
         this.orderManager.setOrdersPageLength(nextPageLength);
         currentPageLength = nextPageLength;
