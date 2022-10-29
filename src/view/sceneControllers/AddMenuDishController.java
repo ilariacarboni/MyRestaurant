@@ -1,11 +1,14 @@
 package view.sceneControllers;
 
+import business.CourseManager;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 import business.MenuManager;
+import java.util.ArrayList;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -50,11 +53,12 @@ public class AddMenuDishController extends BaseView implements Initializable {
     @FXML
     private Label titoloLbl;
     private MenuManager menuManager = new MenuManager();
+    private CourseManager courseManager = new CourseManager();
    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       /* nomeTxt.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+        /*nomeTxt.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             if (!newValue.matches("\\d*")) {
                 nomeTxt.setText(newValue.replaceAll("[^\\d]", ""));
             }
@@ -89,16 +93,21 @@ public class AddMenuDishController extends BaseView implements Initializable {
             
         }else{
 		String nameDish = nomeTxt.getText();
-            	int price = Integer.parseInt(prezzoTxt.getText());
-                String category = categorieChoicebox.getValue(); //param fisso per categoria selezionata
+            	double price = Double.parseDouble(prezzoTxt.getText());
+                String course = categorieChoicebox.getValue(); //param fisso per portata selezionata
                 
 
                 HashMap<String, Object> menu = new HashMap<String, Object>();
                 menu.put("nameDish", nameDish);
                 menu.put("price", price);
-                menu.put("category", category);
+                menu.put("course", course);
                 
                 boolean res = this.menuManager.saveDish(menu);
+                HashMap<String, Object> courseEntity = null;
+                ArrayList<HashMap> courses = courseManager.getFrom(course, "name");
+                if(!courses.isEmpty()){
+                    courseEntity = courses.get(0);
+                }
                 if(!res){
                     String text = "Il piatto non è stato inserito";
                     CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_WARNING);
@@ -112,6 +121,8 @@ public class AddMenuDishController extends BaseView implements Initializable {
                     dialog.setButtons(ButtonType.OK);
                     dialog.showAndWait("Inserimento Piatto");
                     resetTextFields();
+                    MenuListController menulistContr = commController.getMenuListController();
+                    menulistContr.addMenu( menu, courseEntity );
                 }
         }
         

@@ -48,7 +48,7 @@
                               <Insets left="10.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField fx:id="nomeTxt" prefHeight="27.0" prefWidth="137.0">
+                        <TextField fx:id="nomeTxt" prefHeight="27.0" prefWidth="137.0" styleClass="searchBarTextField" stylesheets="@../style/css/store.css">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>
@@ -65,7 +65,7 @@
                               <Insets left="10.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField fx:id="prezzoTxt" prefHeight="27.0" prefWidth="116.0">
+                        <TextField fx:id="prezzoTxt" prefHeight="27.0" prefWidth="116.0" styleClass="searchBarTextField" stylesheets="@../style/css/store.css">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>
@@ -85,7 +85,7 @@
                               <Insets left="10.0" />
                            </HBox.margin>
                         </Label>
-                        <ChoiceBox fx:id="categorieChoicebox" prefHeight="27.0" prefWidth="153.0">
+                        <ChoiceBox fx:id="categorieChoicebox" prefHeight="27.0" prefWidth="153.0" styleClass="searchBarTextField" stylesheets="@../style/css/store.css">
                            <HBox.margin>
                               <Insets right="10.0" />
                            </HBox.margin>

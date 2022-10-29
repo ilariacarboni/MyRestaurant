@@ -1,22 +1,125 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="anchorpaneAddUtility" minWidth="-Infinity" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.AddUtilityController">
+
+<VBox fx:id="anchorpaneAddUtility" prefHeight="625.0" prefWidth="428.0" styleClass="right-bar" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.AddUtilityController">
    <children>
-      <TextField fx:id="nfatturaTxt" layoutX="102.0" layoutY="62.0" />
-      <TextField fx:id="datautenzaTxt" layoutX="101.0" layoutY="111.0" />
-      <TextField fx:id="importoutenzaTxt" layoutX="102.0" layoutY="159.0" />
-      <Label fx:id="nfatturaLbl" layoutX="23.0" layoutY="66.0" text="N.Fattura" />
-      <Label fx:id="dataLbl" layoutX="23.0" layoutY="115.0" text="Data" />
-      <Label fx:id="importoLbl" layoutX="23.0" layoutY="163.0" text="Importo" />
-      <Label fx:id="categoriaLbl" layoutX="23.0" layoutY="206.0" text="Categoria" />
-      <Button fx:id="insertUtilityBtn" layoutX="192.0" layoutY="266.0" mnemonicParsing="false" onAction="#AddUtilityBtnClicked" text="Inserisci" />
-      <Label fx:id="titoloLbl" layoutX="21.0" layoutY="14.0" text="Aggiungi utenza" />
-      <ChoiceBox fx:id="utenzeChoiceBox" layoutX="105.0" layoutY="202.0" prefWidth="150.0" />
+      <HBox alignment="CENTER">
+         <children>
+            <Label fx:id="titoloLbl1" text="Aggiungi utenza" textFill="#878787">
+               <font>
+                  <Font name="Cambria Bold" size="28.0" />
+               </font>
+               <HBox.margin>
+                  <Insets top="10.0" />
+               </HBox.margin>
+               <padding>
+                  <Insets right="20.0" />
+               </padding>
+            </Label>
+         </children>
+      </HBox>
+      <VBox fx:id="chosenDishCard" alignment="CENTER" prefHeight="458.0" prefWidth="328.0" stylesheets="@../style/css/menupane.css">
+         <VBox.margin>
+            <Insets left="50.0" right="50.0" top="10.0" />
+         </VBox.margin>
+         <children>
+            <HBox prefHeight="30.0" prefWidth="329.0">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+               <children>
+                  <Label fx:id="nomeLbl" prefHeight="30.0" prefWidth="200.0" text="Codice bolletta" textFill="WHITE">
+                     <font>
+                        <Font name="Cambria" size="24.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="nfatturaTxt" styleClass="search-field">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER">
+               <children>
+                  <Label fx:id="prezzoLbl1" prefHeight="30.0" prefWidth="263.0" text="Totale" textFill="WHITE">
+                     <font>
+                        <Font name="Cambria" size="24.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="importoutenzaTxt" prefHeight="27.0" prefWidth="210.0">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER">
+               <children>
+                  <Label fx:id="prezzoLbl" prefHeight="30.0" prefWidth="263.0" text="Data" textFill="WHITE">
+                     <font>
+                        <Font name="Cambria" size="24.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="datautenzaTxt" prefHeight="27.0" prefWidth="210.0">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="42.0" prefWidth="356.0">
+               <children>
+                  <Label prefHeight="30.0" prefWidth="203.0" text="Categoria" textFill="WHITE">
+                     <font>
+                        <Font name="Cambria" size="24.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <ChoiceBox fx:id="utenzeChoiceBox" prefHeight="27.0" prefWidth="153.0">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </ChoiceBox>
+               </children>
+            </HBox>
+            <Button fx:id="insertUtilityBtn" mnemonicParsing="false" onAction="#AddUtilityBtnClicked" prefHeight="42.0" prefWidth="116.0" text="inserisci" textFill="#828282">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+         <styleClass>
+            <String fx:value="chosen-dish-card" />
+            <String fx:value="shadow" />
+         </styleClass>
+      </VBox>
    </children>
-</AnchorPane>
+</VBox>

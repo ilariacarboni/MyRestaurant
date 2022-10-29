@@ -7,22 +7,24 @@ import java.util.HashMap;
 public class Utility implements Entity{
     private final String TABLE_NAME = "utility";
     private int numberId;
-    private int total;
+    private double total;
     private String type;
-    private LocalDate date;
+    private String date;
+    private String state;
     
-    public Utility (int numberId, int total, String type, LocalDate date){    
+    public Utility (int numberId, double total, String type, String date,String state ){    
 	this.numberId=numberId;
     	this.total=total;
     	this.type=type;
         this.date=date;
+        this.state=state;
     }
     
     public int getNumberId(){
         return this.numberId;
     }
     
-    public int getTotal(){
+    public double getTotal(){
         return this.total;
     }
     
@@ -30,9 +32,12 @@ public class Utility implements Entity{
         return this.type;
     }
     
-    public Date getDate(){
-	Date sql_date = Date.valueOf(this.date);
-	return sql_date;
+    public String getDate(){
+	return this.date;
+    }
+    
+    public String getState(){
+	return this.state;
     }
 
     @Override
@@ -47,6 +52,7 @@ public class Utility implements Entity{
         res.put("total", this.total);
         res.put("type", this.type);
         res.put("date", this.date);
+        res.put("state", this.state);
         return res;
     }
     

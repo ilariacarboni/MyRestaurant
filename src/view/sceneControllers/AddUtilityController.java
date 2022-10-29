@@ -15,6 +15,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+
 import view.utils.CustomDialog;
 import view.utils.LocatedImage;
 
@@ -26,17 +28,9 @@ import view.utils.LocatedImage;
 public class AddUtilityController  extends BaseView implements Initializable {
 
     private UtilityManager utilityManager = new UtilityManager();
-    @FXML
-    private Label categoriaLbl;
-
-    @FXML
-    private Label dataLbl;
 
     @FXML
     private TextField datautenzaTxt;
-
-    @FXML
-    private Label importoLbl;
 
     @FXML
     private TextField importoutenzaTxt;
@@ -45,22 +39,16 @@ public class AddUtilityController  extends BaseView implements Initializable {
     private Button insertUtilityBtn;
 
     @FXML
-    private Label nfatturaLbl;
-
-    @FXML
     private TextField nfatturaTxt;
     
     @FXML
-    private Label titoloLbl;
-    
-    @FXML
-    public AnchorPane anchorpaneAddUtility;
+    public VBox anchorpaneAddUtility;
     
     private CommunicationController commController = CommunicationController.getInstance();
 
     @FXML
     private ChoiceBox<String> utenzeChoiceBox;
-    private String[] tipo_utenza = {"Energia elettrica", "Acqua", "Gas"};
+    private String[] tipo_utenza = {"elettricità", "acqua", "gas"};
    
 
     @FXML
