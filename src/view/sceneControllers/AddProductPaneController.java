@@ -14,17 +14,15 @@ import java.util.ResourceBundle;
 import business.CategoryManager;
 import business.ProductManager;
 import business.SupplierManager;
+
+import view.utils.CustomDialog;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import view.utils.CustomDialog;
-import view.utils.LocatedImage;
 
 /**
  * FXML Controller class
@@ -59,17 +57,11 @@ public class AddProductPaneController extends BaseView implements Initializable 
 
     @FXML
     private void addProductBtnClicked(MouseEvent event){
-        
-        //controllo che siano stati inseriti tutti i campi
-        if(barcodeTextField.getText().isEmpty() || qtyTextField.getText().isEmpty() || 
-           nameTextField.getText().isEmpty() || priceTextField.getText().isEmpty()){
-
-            String text = "Non ci possono essere campi vuoti";
-            CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_WARNING);
-            dialog.setButtons(ButtonType.OK);
-            Optional<ButtonType> res = dialog.showAndWait("Attenzione !");
-                
-        }else{
+        boolean canProceed = this.checkMandatoryFields();
+        if(canProceed){
+            canProceed = !(this.checkAlreadyExistingProduct());
+        }
+        if(canProceed){
             int barcode = Integer.parseInt(barcodeTextField.getText());
             String name = nameTextField.getText();
             int qty = Integer.parseInt(qtyTextField.getText());
@@ -106,7 +98,31 @@ public class AddProductPaneController extends BaseView implements Initializable 
                 ProductsPaneController productsPaneController = commController.getProductsPaneController();
                 productsPaneController.addProduct(product, categoryEntity);
             }
-        }  
+        }
+    }
+
+    private boolean checkMandatoryFields(){
+        boolean allFilled = !(barcodeTextField.getText().isEmpty() || qtyTextField.getText().isEmpty() || nameTextField.getText().isEmpty() || priceTextField.getText().isEmpty());
+        if(!allFilled){
+            String text = "Non ci possono essere campi vuoti";
+            CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_WARNING);
+            dialog.setButtons(ButtonType.OK);
+            Optional<ButtonType> res = dialog.showAndWait("Attenzione !");
+        }
+        return allFilled;
+    }
+
+    private boolean checkAlreadyExistingProduct(){
+        int barcode = Integer.parseInt(barcodeTextField.getText());
+        HashMap<String, Object> prod = productManager.getProduct(barcode);
+        boolean alreadyExisting = (prod != null);
+        if(alreadyExisting){
+            String text = "Prodotto esistente!";
+            CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_WARNING);
+            dialog.setButtons(ButtonType.OK);
+            Optional<ButtonType> res = dialog.showAndWait("Attenzione !");
+        }
+        return alreadyExisting;
     }
     
     private void addListenersToTextFields(){

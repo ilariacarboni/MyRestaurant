@@ -12,18 +12,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class OrderSearchController extends BaseView implements Initializable {
-    @FXML
-    private AnchorPane numberLabelContainer;
-    @FXML
+
+    public AnchorPane numberLabelContainer;
     public TextField numberSearchBar;
-    @FXML
     public TextField dateSearchBar;
-    @FXML
     public TextField supplierSearchBar;
-    @FXML
-    private AnchorPane dateLabelContainer;
-    @FXML
-    private AnchorPane supplierLabelContainer;
+    public AnchorPane dateLabelContainer;
+    public AnchorPane supplierLabelContainer;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
