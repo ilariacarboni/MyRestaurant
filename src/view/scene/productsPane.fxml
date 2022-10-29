@@ -21,9 +21,11 @@
             <AnchorPane fx:id="backButtonContainer" HBox.hgrow="NEVER" />
             <AnchorPane>
                <children>
-                  <ImageView fx:id="categoryName" fitHeight="255.0" fitWidth="407.0">
-                  </ImageView>
+                  <ImageView fx:id="categoryName" fitHeight="160.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" />
                </children>
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
             </AnchorPane>
             <AnchorPane prefWidth="359.0" HBox.hgrow="ALWAYS">
                <children>

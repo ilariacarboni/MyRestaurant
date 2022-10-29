@@ -17,12 +17,15 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
 import view.utils.BackButton;
 import view.utils.CustomDialog;
 import view.utils.LocatedImage;
+
+import static javafx.scene.layout.BackgroundPosition.CENTER;
+import static javafx.scene.layout.BackgroundRepeat.NO_REPEAT;
+import static javafx.scene.layout.BackgroundRepeat.REPEAT;
+import static javafx.scene.layout.BackgroundSize.DEFAULT;
 
 /**
  * FXML Controller class
@@ -64,6 +67,7 @@ public class ProductsPaneController extends BaseView implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         commController.setProductPaneController(this);
+        mainContainer.setBackground(new Background(new BackgroundImage(new LocatedImage(BACKGROUND_PATH), REPEAT, NO_REPEAT, CENTER, DEFAULT)));
         this.shownProducts = new ArrayList<>();
         searchBar.textProperty().addListener((observable, oldValue, newValue) ->{
             ObservableList<Node> products = productsContainer.getChildren();
