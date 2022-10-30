@@ -20,14 +20,10 @@ import javafx.scene.layout.AnchorPane;
 import view.utils.LocatedImage;
 
 public class MenuItemController extends BaseView implements Initializable {
-    @FXML
-    private AnchorPane dishAnchorPane;
-    @FXML
-    private ImageView imgDish;
-    @FXML
-    private Label itemNameLbl;
-    @FXML
-    private Label itemPriceLbl;
+    public AnchorPane dishAnchorPane;
+    public ImageView imgDish;
+    public Label itemNameLbl;
+    public Label itemPriceLbl;
     
     private HashMap<String, Object> dishInfo;
     

@@ -29,21 +29,16 @@ import javafx.scene.input.MouseEvent;
  */
 public class AddProductPaneController extends BaseView implements Initializable {
 
+    public TextField barcodeTextField;
+    public TextField nameTextField;
+    public TextField qtyTextField;
+    public TextField priceTextField;
+    public ComboBox<String> categoryComboBox;
+    public ComboBox<String> supplierComboBox;
+
     private ProductManager productManager = new ProductManager();
     private CategoryManager categoryManager = new CategoryManager();
     private SupplierManager supplierManager = new SupplierManager();
-    @FXML
-    private TextField barcodeTextField;
-    @FXML
-    private TextField nameTextField;
-    @FXML
-    private TextField qtyTextField;
-    @FXML
-    private TextField priceTextField;
-    @FXML
-    private ComboBox<String> categoryComboBox;
-    @FXML
-    private ComboBox<String> supplierComboBox;
 
     /**
      * Initializes the controller class.

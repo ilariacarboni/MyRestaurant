@@ -5,18 +5,14 @@
 package view.sceneControllers;
 
 import business.EmployeeManager;
-import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import view.utils.LocatedImage;
 
 /**
  * FXML Controller class
@@ -24,39 +20,19 @@ import view.utils.LocatedImage;
  * @author milar
  */
 public class EmployeeInfoPaneController extends BaseView implements Initializable {
-     @FXML
-    private Label beginLbl;
+    public Label beginLbl;
+    public Label cfLbl;
+    public VBox chosenEmployee;
+    public Button deleteBtn;
+    public Label empNameLbl;
+    public Label empSurnameLbl;
+    public ImageView employeeImg;
+    public Label endLbl;
+    public Button modifyBtn;
+    public Label wageLbl;
 
-    @FXML
-    private Label cfLbl;
-
-    @FXML
-    private VBox chosenEmployee;
-
-    @FXML
-    private Button deleteBtn;
-
-    @FXML
-    private Label empNameLbl;
-
-    @FXML
-    private Label empSurnameLbl;
-
-    @FXML
-    private ImageView employeeImg;
-
-    @FXML
-    private Label endLbl;
-
-    @FXML
-    private Button modifyBtn;
-
-    @FXML
-    private Label wageLbl;
     private EmployeeManager employeeManager;
     private HashMap<String, Object> empInfo;
-    private final String DEFAULT_IMAGE_PATH = "src/view/style/img/employee-icons/employee-of-the-month.png";
-
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -73,9 +49,9 @@ public class EmployeeInfoPaneController extends BaseView implements Initializabl
        this.beginLbl.setText(String.valueOf(employeeInfo.get("begin_date")));
        this.endLbl.setText(String.valueOf(employeeInfo.get("end_date")));
        if (employeeInfo.get("image") != null){
-             this.employeeImg.setImage(new LocatedImage((String) employeeInfo.get("image"))); 
+             this.employeeImg.setImage(imagesProvider.getEmployeeImage(employeeInfo.get("codice_fiscale").toString()));
         }else{
-            this.employeeImg.setImage(new Image(new File(this.DEFAULT_IMAGE_PATH).toURI().toString()));
+            this.employeeImg.setImage(imagesProvider.getDefaultEmployeeImage());
         }
     }
     

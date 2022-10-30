@@ -8,24 +8,15 @@ import java.util.ResourceBundle;
 
 import business.ProductManager;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import view.utils.BackButton;
 import view.utils.CustomDialog;
-import view.utils.LocatedImage;
-
-import static javafx.scene.layout.BackgroundPosition.CENTER;
-import static javafx.scene.layout.BackgroundRepeat.NO_REPEAT;
-import static javafx.scene.layout.BackgroundRepeat.REPEAT;
-import static javafx.scene.layout.BackgroundSize.DEFAULT;
 
 /**
  * FXML Controller class
@@ -34,13 +25,6 @@ import static javafx.scene.layout.BackgroundSize.DEFAULT;
  */
 public class ProductsPaneController extends BaseView implements Initializable {
 
-    private ProductManager productManager = new ProductManager();
-    private final String PRODUCT_LABEL_ID = "#productNameLabel";
-    private final String PRODUCT_FXML = this.PRODUCT_COMPONENT_PATH;
-    private final String ADD_PRODUCT_PANE_FXML = this.ADD_PRODUCT_PANE_PATH;
-    //gridpane's columns number, can be set externally to make it responsive
-    private int gridpaneColumnsNumber = 1;
-    private final String PRODUCT_INFO_DEFAULT_TITLE = "Seleziona un prodotto per visualizzarne i dettagli";
 
     public AnchorPane addProductBtn;
     public ImageView categoryName;
@@ -51,15 +35,25 @@ public class ProductsPaneController extends BaseView implements Initializable {
     public Label productInfoMainContainerTitle;
     public AnchorPane backButtonContainer;
     public boolean productInfoIsDirty;
+
+    private final String PRODUCT_LABEL_ID = "#productNameLabel";
+    private final String PRODUCT_FXML = this.PRODUCT_COMPONENT_PATH;
+    private final String ADD_PRODUCT_PANE_FXML = this.ADD_PRODUCT_PANE_PATH;
+    //gridpane's columns number, can be set externally to make it responsive
+    private final String PRODUCT_INFO_DEFAULT_TITLE = "Seleziona un prodotto per visualizzarne i dettagli";
+
+    private int gridpaneColumnsNumber = 1;
     private ArrayList shownProducts ;
     private String productsCategory;
+    private ProductManager productManager = new ProductManager();
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         commController.setProductPaneController(this);
-        mainContainer.setBackground(new Background(new BackgroundImage(new LocatedImage(BACKGROUND_PATH), REPEAT, NO_REPEAT, CENTER, DEFAULT)));
+        mainContainer.setBackground(imagesProvider.getBackground());
         this.shownProducts = new ArrayList<>();
         searchBar.textProperty().addListener((observable, oldValue, newValue) ->{
             ObservableList<Node> products = productsContainer.getChildren();
@@ -82,7 +76,7 @@ public class ProductsPaneController extends BaseView implements Initializable {
         String categoryName = category.get("name").toString();
         this.productsCategory = categoryName;
         if(category.get("nameImg") != null){
-            this.categoryName.setImage(new LocatedImage(category.get("nameImg").toString()));
+            this.categoryName.setImage(imagesProvider.getCategoryNameImg(category.get("name").toString()));
         }
         productsContainer.getChildren().clear();
         ArrayList<HashMap<String, Object>> products = this.productManager.getFrom(categoryName, "category");

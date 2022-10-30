@@ -31,23 +31,12 @@ import javafx.util.Duration;
  * @author milar
  */
 public class EmployeesListController extends BaseView implements Initializable {
-    @FXML
-    private Button addEmployeeBtn;
-
-    @FXML
-    private ScrollPane employeeListScrollPane;
-
-    @FXML
-    private GridPane employeesGridPane;
-
-    @FXML
-    private BorderPane employeesPane;
-
-    @FXML
-    private TextField searchBar;
-
-    @FXML
-    private Label titoloLbl;
+    public Button addEmployeeBtn;
+    public ScrollPane employeeListScrollPane;
+    public GridPane employeesGridPane;
+    public BorderPane employeesPane;
+    public TextField searchBar;
+    public Label titoloLbl;
     
     final int ANIMATION_DURATION = 275;
     final int ANIMATION_DISTANCE = 700;
@@ -58,9 +47,8 @@ public class EmployeesListController extends BaseView implements Initializable {
 
     @FXML
     void insertEmployeeBtnClicked(ActionEvent event) throws IOException {
-      BorderPane borderPane = (BorderPane) employeesPane.getParent();
-      borderPane.setRight(FXMLLoader.load(getClass().getResource("/view/scene/AddEmployee.fxml")));  
-
+        BorderPane borderPane = (BorderPane) employeesPane.getParent();
+        borderPane.setRight(FXMLLoader.load(getClass().getResource("/view/scene/AddEmployee.fxml")));
     }
     
     public void initialize(URL location, ResourceBundle resources) {
@@ -69,6 +57,7 @@ public class EmployeesListController extends BaseView implements Initializable {
         this.employees = new ArrayList<>();
         
         ArrayList<HashMap<String, Object>> employeeslist = this.employeeManager.getAll();
+        imagesProvider.initializeEmployeesImages(employeeslist);
         for(int i = 0; i<employeeslist.size(); i++){
             HashMap<String, Object> employee = employeeslist.get(i);
             this.addEmployee(employee);
@@ -82,14 +71,14 @@ public class EmployeesListController extends BaseView implements Initializable {
         
         Node empNode = null;
         try {
-                empNode = loader.load();
-                EmployeeItemController empitemContr = loader.getController();
-                empitemContr.setEmployeeInfo(employee); //definire metodo
-                int column = index%this.GRIDPANE_COLUMNS_NUMBER;
-                int row = (int) Math.floor(index/this.GRIDPANE_COLUMNS_NUMBER);
-               
-                employeesGridPane.add(empNode,column ,row ); 
-                this.animate();
+            empNode = loader.load();
+            EmployeeItemController empitemContr = loader.getController();
+            empitemContr.setEmployeeInfo(employee); //definire metodo
+            int column = index%this.GRIDPANE_COLUMNS_NUMBER;
+            int row = (int) Math.floor(index/this.GRIDPANE_COLUMNS_NUMBER);
+
+            employeesGridPane.add(empNode,column ,row );
+            this.animate();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -9,35 +9,22 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import view.utils.CustomDialog;
-import view.utils.LocatedImage;
 
 import java.io.File;
 import java.net.URL;
-import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.Optional;
 import java.util.ResourceBundle;
-
-import static javafx.scene.layout.BackgroundPosition.CENTER;
-import static javafx.scene.layout.BackgroundRepeat.NO_REPEAT;
-import static javafx.scene.layout.BackgroundRepeat.REPEAT;
-import static javafx.scene.layout.BackgroundSize.DEFAULT;
 
 public class LoginPaneController extends BaseView implements Initializable {
 
     private final String WRONG_USERNAME_WARNING = "Username errato";
     private final String WRONG_PASSWORD_WARNING = "Password errata";
-    private final String BACKGROUND_PATH  = "view/style/img/background/grey.jpeg";
     private AdminManager adminManager = new AdminManager();
     private HashMap<String, Object> currentUser = null;
     private boolean userWarnedForUsername = false;
@@ -60,11 +47,15 @@ public class LoginPaneController extends BaseView implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.commController.setLoginPaneController(this);
+
         setUsernameTextFieldListeners();
         setPasswordTextFieldListeners();
-        pane.setBackground(new Background(new BackgroundImage(new LocatedImage(BACKGROUND_PATH), REPEAT, NO_REPEAT, CENTER, DEFAULT)));
+
+        pane.setBackground(imagesProvider.getBackground());
         pane.setMaxWidth(Double.MAX_VALUE);
         pane.setMaxHeight(Double.MAX_VALUE);
+
+        this.sourceBtn = (commController.getDashboardController()).getDashboardBtn();
     }
 
     public void setSource(Button menuBtn){
@@ -141,24 +132,14 @@ public class LoginPaneController extends BaseView implements Initializable {
     public void doLogin(MouseEvent mouseEvent) {
         String unencryptedPsw = passwordField.getText();
         String encrypted = adminManager.cryptPassword(unencryptedPsw);
+        DashboardController dashboardController = commController.getDashboardController();
         if(currentUser != null){
             String currentUserPassword = currentUser.get("password").toString();
             if(encrypted.equals(currentUserPassword)){
                 this.commController.setLoggedUser(currentUser);
-
-                String text = "Login effettuato correttamente";
-                CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_SUCCESS);
-                dialog.setButtons(ButtonType.OK);
-                Optional<ButtonType> result = dialog.showAndWait("Login");
-
-                if((!result.isPresent() || result.get() == ButtonType.OK)){
-                    commController.getDashboardController().setUsername(currentUser.get("username").toString());
-                    if(sourceBtn != null){
-                        sourceBtn.fire();
-                    }else{
-
-                    }
-                }
+                dashboardController.setUsername(currentUser.get("username").toString());
+                sourceBtn.fire();
+                dashboardController.removeLoginButton();
             }else{
                 this.wrongLoginAnimation();
             }

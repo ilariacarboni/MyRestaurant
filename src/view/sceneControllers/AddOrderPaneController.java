@@ -19,15 +19,12 @@ import java.util.*;
 
 public class AddOrderPaneController extends BaseView implements Initializable {
 
-    private OrderManager orderManager = new OrderManager();
-    private ProductManager productManager = new ProductManager();
     public AnchorPane addOrderPane;
-    @FXML
-    private DatePicker dateField;
-    @FXML
-    private TextField productField;
-    @FXML
-    private Spinner<Integer> qtyField;
+    public DatePicker dateField;
+    public TextField productField;
+    public Spinner<Integer> qtyField;
+    private ProductManager productManager = new ProductManager();
+    private OrderManager orderManager = new OrderManager();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         commController.setAddOrderPaneController(this);

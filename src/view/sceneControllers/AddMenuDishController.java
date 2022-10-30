@@ -27,35 +27,19 @@ import view.utils.LocatedImage;
  */
 
 public class AddMenuDishController extends BaseView implements Initializable {
-    
-    @FXML
-    private Label categoriaLbl;
-
-    @FXML
-    private ChoiceBox<String> categorieChoicebox;
-    private String[] categorie = {"Antipasti", "Primi", "Secondi", "Contorni", "Dolci", "Bevande"};
-
-    @FXML
-    private Button insertdishBtn;
-
-    @FXML
-    private Label nomeLbl;
-
-    @FXML
-    private TextField nomeTxt;
-
-    @FXML
-    private Label prezzoLbl;
-
-    @FXML
-    private TextField prezzoTxt;
-    
-    @FXML
-    private Label titoloLbl;
+    public Label categoriaLbl;
+    public ChoiceBox<String> categorieChoicebox;
+    public Button insertdishBtn;
+    public Label nomeLbl;
+    public TextField nomeTxt;
+    public Label prezzoLbl;
+    public TextField prezzoTxt;
+    public Label titoloLbl;
     private MenuManager menuManager = new MenuManager();
     private CourseManager courseManager = new CourseManager();
-   
-    
+    private String[] categorie = {"Antipasti", "Primi", "Secondi", "Contorni", "Dolci", "Bevande"};
+
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         /*nomeTxt.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {

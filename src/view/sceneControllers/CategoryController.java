@@ -36,25 +36,16 @@ public class CategoryController extends BaseView implements Initializable {
     final String LAST_ORDER_LABEL = "Ultimo ordine:";
     final String MONTHLY_EXPENSE_LABEL = "Spesa media mensile:";
 
-    private HashMap<String, Object> category;
-    @FXML
     public Label categoryLabel;
-    @FXML
     public ImageView categoryIcon;
-    @FXML
     public Label totalProductsInCategoryLabel;
-    @FXML
     public Label lastOrderLabel;
-    @FXML
     public Label monthlyExpenseLabel;
-    @FXML
     public Label lastOrderValue;
-    @FXML
     public Label monthlyExpenseValue;
-    @FXML
     public Label totalProductsInCategoryValue;
-    @FXML
-    private AnchorPane categoryContainer;
+    public AnchorPane categoryContainer;
+    private HashMap<String, Object> category;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
@@ -64,7 +55,7 @@ public class CategoryController extends BaseView implements Initializable {
         String name = (String)category.get("name");
         this.categoryLabel.setText(name.substring(0, 1).toUpperCase() + name.substring(1));
         if (category.get("img") != null){
-            this.categoryIcon.setImage(new LocatedImage((String) category.get("img")));
+            this.categoryIcon.setImage(imagesProvider.getCategoryImage(category.get("name").toString()));
         }
         HashMap<String, Object> categoryInfo = (HashMap<String, Object>) category.get("info");
         this.initializeLabels();

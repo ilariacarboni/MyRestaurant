@@ -5,21 +5,15 @@
 package view.sceneControllers;
 
 import business.MenuManager;
-import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
-import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import model.entity.Menu;
-import view.utils.LocatedImage;
 /**
  * FXML Controller class
  *
@@ -27,33 +21,18 @@ import view.utils.LocatedImage;
  * 
  */
 
-    public class DishInfoController extends BaseView implements Initializable {
+public class DishInfoController extends BaseView implements Initializable {
+    public VBox chosenDishCard;
+    public Button deleteBtn;
+    public ImageView dishImg;
+    public Label dishNameLbl;
+    /* public Label dishPriceLbl;*/
+    public Button modifyBtn;
+    public TextField priceTxtfield;
 
-    private final String DEFAULT_IMAGE_PATH = "src/view/style/img/others/default-dish.png";
-    private MenuManager menuManager;    
-    @FXML
-    private VBox chosenDishCard;
-
-    @FXML
-    private Button deleteBtn;
-
-    @FXML
-    private ImageView dishImg;
-
-    @FXML
-    private Label dishNameLbl;
-
-    /*@FXML
-    private Label dishPriceLbl;*/
-
-    @FXML
-    private Button modifyBtn;
-
-    @FXML
-    private TextField priceTxtfield;
-    
     private HashMap<String, Object> dishInfo;
-    
+    private MenuManager menuManager;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
          commController.setDishInfoController(this);
@@ -62,14 +41,14 @@ import view.utils.LocatedImage;
     
     public void setChosenDish(HashMap<String, Object> menu){
         this.dishInfo = menu;
-        this.dishNameLbl.setText(String.valueOf(menu.get("nameDish")));
+        String nameDish = menu.get("nameDish").toString();
+        this.dishNameLbl.setText(nameDish);
        // this.dishPriceLbl.setText(String.valueOf(menu.get("price")));
        if (menu.get("image") != null){
-             this.dishImg.setImage(new LocatedImage((String) menu.get("image"))); 
+             this.dishImg.setImage(imagesProvider.getMenuImage(nameDish));
         }else{
-            this.dishImg.setImage(new Image(new File(this.DEFAULT_IMAGE_PATH).toURI().toString()));
+            this.dishImg.setImage(imagesProvider.getDefaultDishImage());
         }
-        
     }
     
     

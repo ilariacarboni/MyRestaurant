@@ -16,25 +16,13 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import view.utils.BackButton;
-import view.utils.LocatedImage;
 
 public class EmployeeItemController extends BaseView implements Initializable {
-
-    @FXML
-    private AnchorPane employeeAnchorPane;
-
-    @FXML
-    private ImageView iconEmployee;
-
-    @FXML
-    private Label nameLbl;
-
-    @FXML
-    private Label roleLbl;
-
-    @FXML
-    private Label surnameLbl;
+    public AnchorPane employeeAnchorPane;
+    public ImageView iconEmployee;
+    public Label nameLbl;
+    public Label roleLbl;
+    public Label surnameLbl;
     
     private HashMap<String, Object> employeeInfo;
     private Node employeeInfoPane = null;
@@ -47,10 +35,10 @@ public class EmployeeItemController extends BaseView implements Initializable {
         String role = (String)empInfo.get("role");
         this.roleLbl.setText((String)empInfo.get("role"));
         if(role.equals("cuoco")) {
-            this.iconEmployee.setImage(new LocatedImage("view/style/img/employee-icons/chef.png"));
+            this.iconEmployee.setImage(imagesProvider.getEmployeeImage(imagesProvider.EMPLOYEE_CHEF_IMAGE_TYPE));
         }
         else{
-          this.iconEmployee.setImage(new LocatedImage("view/style/img/employee-icons/waiter.png"));   
+          this.iconEmployee.setImage(imagesProvider.getEmployeeImage(imagesProvider.EMPLOYEE_WAITER_IMAGE_TYPE));
         }
         
        
