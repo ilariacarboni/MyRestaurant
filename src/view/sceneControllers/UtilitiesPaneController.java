@@ -35,33 +35,21 @@ import javafx.util.Duration;
  */
 public class UtilitiesPaneController extends BaseView implements Initializable  {
 
+    public MenuButton filterMenu;
+    public Button insertUtilitiesBtn;
+    public TextField searchBar;
+    public BorderPane utilitiesBorderPane;
+    public GridPane utilitiesGridPane;
+    public ScrollPane utilitiesScrollPane;
     
-    @FXML
-    private MenuButton filterMenu;
 
-    @FXML
-    private Button insertUtilitiesBtn;
+    private final int GRIDPANE_COLUMNS_NUMBER = 1;
+    private final int ANIMATION_DURATION = 275;
+    private final int ANIMATION_DISTANCE = 700;
 
-    @FXML
-    private TextField searchBar;
-
-    @FXML
-    private BorderPane utilitiesBorderPane;
-
-    @FXML
-    private GridPane utilitiesGridPane;
-
-    @FXML
-    private ScrollPane utilitiesScrollPane;
-    
-    private ArrayList utilities ;
-    
-    final int GRIDPANE_COLUMNS_NUMBER = 1;
-    final int ANIMATION_DURATION = 275;
-    final int ANIMATION_DISTANCE = 700;
-    
     private UtilityManager utilityManager = new UtilityManager();
-    
+    private ArrayList utilities ;
+
 
     @FXML
     void insertUtilityBtnClicked(ActionEvent event) throws IOException {

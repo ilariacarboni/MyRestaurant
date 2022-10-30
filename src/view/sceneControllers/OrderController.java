@@ -12,16 +12,14 @@ import javafx.scene.layout.AnchorPane;
 import java.util.HashMap;
 
 public class OrderController extends BaseView{
+
     public static String numberLabelId = "#numberLabel";
-    private HashMap<String, Object> info;
-    @FXML
+
     public Label supplierLabel;
-    @FXML
-    private Label numberLabel;
-    @FXML
-    private Label dateLabel;
-    @FXML
+    public Label numberLabel;
+    public Label dateLabel;
     public AnchorPane deliveredBtn;
+    private HashMap<String, Object> info;
 
     public void setOrderInfo(HashMap<String, Object> info){
         this.info = info;

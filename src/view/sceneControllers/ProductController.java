@@ -18,7 +18,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import view.utils.LocatedImage;
 
 /**
  * FXML Controller class
@@ -27,39 +26,20 @@ import view.utils.LocatedImage;
  */
 public class ProductController extends BaseView implements Initializable {
 
-    private final String PRODUCT_SCENE = this.PRODUCT_INFO_PANE_PATH;
 
-    //breakpoints for responsive adjustment of product image
-    private final int BREAKPOINT_0 = 300;
-    private final int IMAGE_WIDTH_FOR_BREAKPOINT_0 = 64;
-    private final int PRODUCT_HEIGHT_FOR_BREAKPOINT_0 = 200;
-    private final int BREAKPOINT_1 = 400;
-    private final int IMAGE_WIDTH_FOR_BREAKPOINT_1 = 128;
-    private final int PRODUCT_HEIGHT_FOR_BREAKPOINT_1 = 300;
-
-    @FXML
     public Label productPriceLabel;
-    @FXML
     public Label productQtyLabel;
-    @FXML
     public ImageView productImage;
-    @FXML
     public Label productNameLabel;
-    @FXML
     public ImageView productIcon;
-    @FXML
     public ImageView productPriceIcon;
-    @FXML
     public ImageView productQtyIcon;
-    @FXML
     public AnchorPane productContainer;
-    @FXML
     public Label productPriceValue;
-    @FXML
     public Label productQtyValue;
-    @FXML
-    private AnchorPane product;
+    public AnchorPane product;
 
+    private final String PRODUCT_SCENE = this.PRODUCT_INFO_PANE_PATH;
     private HashMap<String, Object> productInfo;
 
     @Override
@@ -72,7 +52,7 @@ public class ProductController extends BaseView implements Initializable {
         this.productPriceValue.setText(productInfo.get("price").toString());
         this.productQtyValue.setText(productInfo.get("qty").toString());
         if (category != null && category.get("img") != null){
-            this.productIcon.setImage(new LocatedImage((String) category.get("icon")));
+            this.productIcon.setImage(imagesProvider.getCategoryProductIcon(category.get("name").toString()));
         }
     }
     

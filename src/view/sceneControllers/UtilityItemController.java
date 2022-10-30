@@ -15,7 +15,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import view.utils.LocatedImage;
 
 /**
  * FXML Controller class
@@ -24,23 +23,13 @@ import view.utils.LocatedImage;
  */
 public class UtilityItemController extends BaseView implements Initializable {
 
-    @FXML
-    private Label dateLbl;
+    public Label dateLbl;
+    public ImageView iconUtility;
+    public AnchorPane itemAnchorPane;
+    public Label numberidLbl;
+    public Button stateBtn;
+    public Label totalLbl;
 
-    @FXML
-    private ImageView iconUtility;
-
-    @FXML
-    private AnchorPane itemAnchorPane;
-
-    @FXML
-    private Label numberidLbl;
-
-    @FXML
-    private Button stateBtn;
-
-    @FXML
-    private Label totalLbl;
     private HashMap<String, Object> utilityInfo;
 
     @FXML
@@ -73,13 +62,13 @@ public class UtilityItemController extends BaseView implements Initializable {
         this.totalLbl.setText(utility.get("total").toString());
         String type = (String)utility.get("type");
         if(type.equals("gas")) {
-            this.iconUtility.setImage(new LocatedImage("view/style/img/utility-icons/flame.png"));
+            this.iconUtility.setImage(imagesProvider.getGasImage());
         }
         else if (type.equals("elettricità")){
-          this.iconUtility.setImage(new LocatedImage("view/style/img/utility-icons/idea.png"));   
+          this.iconUtility.setImage(imagesProvider.getBulbImage());
         }
         else if(type.equals("acqua")){
-            this.iconUtility.setImage(new LocatedImage("view/style/img/utility-icons/water-drop.png"));
+            this.iconUtility.setImage(imagesProvider.getWaterDropImage());
         }
         
     }

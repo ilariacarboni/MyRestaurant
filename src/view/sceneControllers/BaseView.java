@@ -7,6 +7,7 @@ package view.sceneControllers;
 
 import controller.ControllerForView;
 import controller.IControllerForView;
+import view.utils.ImagesProvider;
 
 /**
  *
@@ -14,7 +15,6 @@ import controller.IControllerForView;
  */
 public class BaseView {
     //costanti per i percorsi relativi dei file fxml delle scene
-    protected final String BACKGROUND_PATH = "/view/style/img/background/grey.jpeg";
     protected final String CHART_PANE_PATH = "/view/scene/chartsPane.fxml";
     protected final String MENU_PANE_PATH = "/view/scene/MenuPanel.fxml";
     protected final String EMPLOYEE_LIST_PANE_PATH = "/view/scene/EmployeesList.fxml";
@@ -38,4 +38,5 @@ public class BaseView {
     public int permissionLevel;
 
     protected CommunicationController commController = CommunicationController.getInstance();
+    protected ImagesProvider imagesProvider = ImagesProvider.getInstance();
 }

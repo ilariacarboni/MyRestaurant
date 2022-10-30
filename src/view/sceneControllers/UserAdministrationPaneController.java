@@ -15,11 +15,12 @@ import java.util.ResourceBundle;
 
 public class UserAdministrationPaneController extends BaseView implements Initializable {
 
-    private AdminManager adminManager = new AdminManager();
-    public TextField searchBar;
+
     public GridPane usersContainer;
     private int gridpaneColumnsNumber = 1;
     private ArrayList shownUsers;
+    public TextField searchBar;
+    private AdminManager adminManager = new AdminManager();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

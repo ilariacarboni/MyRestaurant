@@ -26,34 +26,22 @@ import java.util.ResourceBundle;
 
 public class ChartPaneController extends BaseView implements Initializable {
 
+    public ScrollPane container;
+    public BorderPane chartBorderPane;
+    public GridPane chartsGridPane;
+    public HBox revenueTrendChart;
+    public HBox warehouseCompositionChart;
+    public HBox utilityCostsChart;
+    public HBox moreOrderedDishesChartContainer;
+    public Button leftBtn;
+    public Button rightBtn;
+    public AnchorPane moreOrderedDishesChart;
+    public HBox revenueOrdersComparisonChart;
+    public HBox revenueUtilitiesComparisonChart;
+
     private ChartsManager chartsManager = new ChartsManager();
     private int index = 0;
     private HashMap<Integer, BarChart> monthCharts = new HashMap<>();
-    @FXML
-    private ScrollPane container;
-    @FXML
-    private BorderPane chartBorderPane;
-    @FXML
-    private GridPane chartsGridPane;
-
-    @FXML
-    private HBox revenueTrendChart;
-    @FXML
-    private HBox warehouseCompositionChart;
-    @FXML
-    private HBox utilityCostsChart;
-    @FXML
-    private HBox moreOrderedDishesChartContainer;
-    @FXML
-    private Button leftBtn;
-    @FXML
-    private Button rightBtn;
-    @FXML
-    private AnchorPane moreOrderedDishesChart;
-    @FXML
-    private HBox revenueOrdersComparisonChart;
-    @FXML
-    private HBox revenueUtilitiesComparisonChart;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -66,6 +54,7 @@ public class ChartPaneController extends BaseView implements Initializable {
         this.makeRevenueOrdersComparisonChart();
         this.makeRevenueUtilitiesComparisonChart();
 
+        //chartBorderPane.setBackground(imagesProvider.getBackground());
     }
 
     private void makeRevenueTrendChart(){

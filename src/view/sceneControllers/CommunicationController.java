@@ -1,16 +1,7 @@
 package view.sceneControllers;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import view.utils.LocatedImage;
-
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.Optional;
 
 /**
  *

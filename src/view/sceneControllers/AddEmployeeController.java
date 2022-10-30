@@ -5,7 +5,6 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import business.EmployeeManager;
@@ -13,7 +12,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import view.utils.CustomDialog;
 
@@ -22,8 +20,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-
-import view.utils.LocatedImage;
 
 /**
  * FXML Controller class
@@ -35,63 +31,30 @@ public class AddEmployeeController extends BaseView implements  Initializable {
     /**
      * Initializes the controller class.
      */
-    
-         @FXML
-    private Label categoriaLbl;
 
-    @FXML
-    private VBox chosenDishCard;
-
-    @FXML
-    private TextField codicefEmpTxt;
-
-    @FXML
-    private Label codicefLbl;
-
-    @FXML
-    private Label codicefLbl1;
-
-    @FXML
-    private Label codicefLbl11;
-
-    @FXML
-    private TextField cognomeEmpTxt;
-
-    @FXML
-    private TextField finecontrattoEmpTxt;
-
-    @FXML
-    private ImageView imgEmployee;
-
-    @FXML
-    private TextField iniziocontrattoEmpTxt;
-
-    @FXML
-    private Button insertEmployeeBtn;
-
-    @FXML
-    private TextField nomeEmpTxt;
-
-    @FXML
-    private Label prezzoLbl;
-
-    @FXML
-    private Label prezzoLbl1;
-
-    @FXML
-    private TextField ruoloEmpTxt;
-
-    @FXML
-    private TextField stipendioEmpTxt;
-
-    @FXML
-    private Label titoloLbl1;
+    public Label categoriaLbl;
+    public VBox chosenDishCard;
+    public TextField codicefEmpTxt;
+    public Label codicefLbl;
+    public Label codicefLbl1;
+    public Label codicefLbl11;
+    public TextField cognomeEmpTxt;
+    public TextField finecontrattoEmpTxt;
+    public ImageView imgEmployee;
+    public TextField iniziocontrattoEmpTxt;
+    public Button insertEmployeeBtn;
+    public TextField nomeEmpTxt;
+    public Label prezzoLbl;
+    public Label prezzoLbl1;
+    public TextField ruoloEmpTxt;
+    public TextField stipendioEmpTxt;
+    public Label titoloLbl1;
 
     private EmployeeManager employeeManager = new EmployeeManager();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        imgEmployee.setImage(new LocatedImage("view/style/img/employee-icons/employee-of-the-month.png"));
+        imgEmployee.setImage(imagesProvider.getEmployeeImage(imagesProvider.EMPLOYEE_DEFAULT_IMAGE_TYPE));
         
     }  
      @FXML

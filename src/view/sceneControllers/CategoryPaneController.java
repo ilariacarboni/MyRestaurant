@@ -5,7 +5,6 @@
  */
 package view.sceneControllers;
 
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
@@ -24,20 +23,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import view.utils.BackButton;
 import view.utils.CustomGridPane;
-import view.utils.LocatedImage;
-
-import static javafx.scene.layout.BackgroundPosition.CENTER;
-import static javafx.scene.layout.BackgroundRepeat.NO_REPEAT;
-import static javafx.scene.layout.BackgroundRepeat.REPEAT;
-import static javafx.scene.layout.BackgroundSize.DEFAULT;
 
 /**
  * FXML Controller class
@@ -72,6 +62,7 @@ public class CategoryPaneController extends BaseView implements Initializable {
         gridPane.setPadding(new Insets(5, 20, 20, 20));
 
         ArrayList<HashMap<String,Object>> categories =  this.categoryManager.getAll();
+        imagesProvider.initializeCategoriesImg(categories);
         HashMap<String, HashMap<String, Object>> categoriesInfo = this.categoryManager.getCategoriesBasicInfo();
         categories.forEach((category) -> {
             try{
@@ -82,11 +73,8 @@ public class CategoryPaneController extends BaseView implements Initializable {
                 Logger.getLogger(CategoryPaneController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-
-
         categoryContainer.setCenter(gridPane);
     }
-    
 
     public void addCategory(HashMap<String,Object> category) throws IOException{
         FXMLLoader loader = new FXMLLoader(getClass().getResource(this.CATEGORY_COMPONENT_PATH));
