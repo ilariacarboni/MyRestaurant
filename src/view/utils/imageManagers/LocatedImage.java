@@ -1,4 +1,4 @@
-package view.utils;
+package view.utils.imageManagers;
 
 import javafx.scene.image.Image;
 

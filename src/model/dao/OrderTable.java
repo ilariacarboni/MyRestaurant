@@ -34,6 +34,7 @@ public class OrderTable implements Table<Order>{
     private final String MONTHLY_ORDERS_EXPENSE_QUERY = "select  strftime('%m-%Y', o.date) as date,\n" +
             "sum(p.price*o.qty) as expense\n" +
             "from orders o join product p on o.product_barcode = p.barcode\n" +
+            "where o.date between datetime('now', '-1 year') and datetime('now')\n" +
             "group by strftime('%m-%Y', o.date)\n" +
             "order by strftime('%Y', o.date) asc , strftime('%m', o.date) asc;";
     private int pageLength = 0;

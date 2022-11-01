@@ -6,11 +6,12 @@ import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.chart.*;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import view.utils.CustomAreaChart;
+import view.utils.customCharts.CustomAreaChart;
 import view.utils.CustomGridPane;
 
 import java.net.URL;
@@ -159,18 +160,27 @@ public class ChartPaneController extends BaseView implements Initializable {
         this.moreOrderedDishesChart.getChildren().add(this.monthCharts.get(0));
 
         borderPane.setCenter(this.moreOrderedDishesChart);
-        Button previousChartButton = new Button();
-        previousChartButton.setText("<");
-        previousChartButton.setOnAction((e) -> {
+
+        ImageView previousChartButton = new ImageView(imagesProvider.getBackIcon());
+        previousChartButton.setFitHeight(32);
+        previousChartButton.setFitWidth(32);
+        previousChartButton.setCursor(Cursor.HAND);
+        previousChartButton.setOnMouseClicked((e) -> {
             this.previousMonth();
         });
-        Button followingChartButton = new Button();
-        followingChartButton.setText(">");
-        followingChartButton.setOnAction((e) -> {
+
+        ImageView followingChartButton = new ImageView(imagesProvider.getNextIcon());
+        followingChartButton.setFitHeight(32);
+        followingChartButton.setFitWidth(32);
+        followingChartButton.setCursor(Cursor.HAND);
+        followingChartButton.setOnMouseClicked((e) -> {
             this.followingMonth();
         });
+
         borderPane.setLeft(previousChartButton);
+        BorderPane.setAlignment(previousChartButton, Pos.CENTER);
         borderPane.setRight(followingChartButton);
+        BorderPane.setAlignment(followingChartButton, Pos.CENTER);
 
         index = 0;
         res.getChildren().add(borderPane);
@@ -187,7 +197,10 @@ public class ChartPaneController extends BaseView implements Initializable {
 
     void previousMonth() {
         this.moreOrderedDishesChart.getChildren().clear();
-        index = (index - 1) % this.monthCharts.size();
+        index = index - 1;
+        if(index < 0){
+            index = this.monthCharts.size() - 1;
+        }
         this.moreOrderedDishesChart.getChildren().add(this.monthCharts.get(index));
     }
 
@@ -214,6 +227,8 @@ public class ChartPaneController extends BaseView implements Initializable {
             Double value = utility.getValue();
             series2.getData().add(new XYChart.Data(month, value));
         }
+
+        chart.setTitle("confronto incassi/spesa utenze");
 
         series1.setName("incassi");
         series2.setName("spese utenze");
@@ -250,6 +265,8 @@ public class ChartPaneController extends BaseView implements Initializable {
             Double value = order.getValue();
             series2.getData().add(new XYChart.Data(month, value));
         }
+
+        chart.setTitle("confronto incassi/spesa ordini");
 
         series1.setName("incassi");
         series2.setName("spese ordini");
