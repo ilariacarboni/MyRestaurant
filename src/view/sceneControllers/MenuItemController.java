@@ -11,13 +11,13 @@ import javafx.scene.input.MouseEvent;
 import java.util.ResourceBundle;
 import java.net.URL;
 import java.util.HashMap;
-import javafx.scene.layout.VBox;
+
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
-import view.utils.LocatedImage;
+import view.utils.imageManagers.LocatedImage;
 
 public class MenuItemController extends BaseView implements Initializable {
     public AnchorPane dishAnchorPane;

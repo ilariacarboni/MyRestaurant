@@ -1,4 +1,4 @@
-package view.utils;
+package view.utils.imageManagers;
 
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -60,6 +60,12 @@ public class ImagesProvider {
     private final String BULB_IMAGE_PATH = "/view/style/img/utility-icons/idea.png";
     private LocatedImage waterDropImage;
     private final String WATER_DROP_IMAGE_PATH = "/view/style/img/utility-icons/water-drop.png";
+
+    //----------------------BUTTON ICONS----------------------//
+    private final String BACK_ICON = "/view/style/img/others/back.png";
+    private LocatedImage backIcon;
+    private final String NEXT_ICON = "/view/style/img/others/close.png";
+    private LocatedImage nextIcon;
 
     public static ImagesProvider getInstance(){
         return imagesProvider;
@@ -236,5 +242,20 @@ public class ImagesProvider {
             this.productsImages.put(productBarcode,res);
         }
         return res;
+    }
+
+    //----------------------BUTTON ICONS----------------------//
+    public LocatedImage getBackIcon(){
+        if(this.backIcon == null){
+            this.backIcon = new LocatedImage(this.BACK_ICON);
+        }
+        return this.backIcon;
+    }
+
+    public LocatedImage getNextIcon(){
+        if(this.nextIcon == null){
+            this.nextIcon = new LocatedImage(this.NEXT_ICON);
+        }
+        return this.nextIcon;
     }
 }

@@ -4,14 +4,11 @@ import business.OrderManager;
 import business.ProductManager;
 import impl.org.controlsfx.autocompletion.AutoCompletionTextFieldBinding;
 import impl.org.controlsfx.autocompletion.SuggestionProvider;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import view.utils.CustomDialog;
-import view.utils.LocatedImage;
 
 import java.net.URL;
 import java.time.LocalDate;

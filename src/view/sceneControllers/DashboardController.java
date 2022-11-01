@@ -22,7 +22,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import view.utils.BackButton;
 import view.utils.CustomDialog;
-import view.utils.LocatedImage;
+import view.utils.imageManagers.LocatedImage;
 
 
 /**

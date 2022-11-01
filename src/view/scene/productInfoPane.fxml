@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -10,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="infoPane" hbarPolicy="NEVER" styleClass="scrollPaneProductInfo" stylesheets="@../style/css/store.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.ProductInfoPaneController">
+<ScrollPane fx:id="infoPane" hbarPolicy="NEVER" styleClass="scrollPaneProductInfo" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.ProductInfoPaneController">
    <content>
       <VBox fx:id="mainContainer" alignment="CENTER" fillWidth="false" spacing="20.0" styleClass="scrollPaneProductInfo">
          <children>
@@ -192,4 +193,8 @@
          </padding>
       </VBox>
    </content>
+   <stylesheets>
+      <URL value="@../style/css/store.css" />
+      <URL value="@../style/css/chart.css" />
+   </stylesheets>
 </ScrollPane>

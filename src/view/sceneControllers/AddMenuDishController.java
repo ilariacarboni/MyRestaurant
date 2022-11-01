@@ -3,22 +3,18 @@ package view.sceneControllers;
 import business.CourseManager;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import business.MenuManager;
 import java.util.ArrayList;
-import javafx.beans.value.ChangeListener;
+
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
 
-import javafx.scene.image.Image;
 import view.utils.CustomDialog;
-import view.utils.LocatedImage;
 
 /**
  * FXML Controller class

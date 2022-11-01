@@ -5,9 +5,7 @@
  */
 package view.sceneControllers;
 
-import controller.ControllerForView;
-import controller.IControllerForView;
-import view.utils.ImagesProvider;
+import view.utils.imageManagers.ImagesProvider;
 
 /**
  *

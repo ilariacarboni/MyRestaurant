@@ -8,17 +8,13 @@ import java.util.ResourceBundle;
 
 import business.UtilityManager;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import view.sceneControllers.CommunicationController;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 import view.utils.CustomDialog;
-import view.utils.LocatedImage;
 
 /**
  * FXML Controller class
