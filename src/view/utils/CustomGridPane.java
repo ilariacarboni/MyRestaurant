@@ -1,5 +1,6 @@
 package view.utils;
 
+import javafx.beans.NamedArg;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.ColumnConstraints;

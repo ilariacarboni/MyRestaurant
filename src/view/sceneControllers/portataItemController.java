@@ -5,7 +5,6 @@
 package view.sceneControllers;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -14,41 +13,31 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import model.entity.Course;
-import view.utils.LocatedImage;
 
 /**
  *
  * @author milar
  */
 public class portataItemController extends BaseView implements Initializable {
-     @FXML
-    private ImageView portataIcon;
 
-    @FXML
-    private AnchorPane portataItem;
-
-    @FXML
-    private Label portataLabel;
-
-    @FXML
-    private Label totaldishesLbl;
-
-    @FXML
-    private Label totaldishesValue;
+    public ImageView portataIcon;
+    public AnchorPane portataItem;
+    public Label portataLabel;
+    public Label totaldishesLbl;
+    public Label totaldishesValue;
     
     private HashMap<String, Object> portata;
 
     public void setCourseInfo(HashMap<String, Object> portata){
         this.portata = portata;
-        this.portataLabel.setText((String)portata.get("name"));
+        String name = portata.get("name").toString();
+        this.portataLabel.setText(name);
          if (portata.get("img") != null){
-             this.portataIcon.setImage(new LocatedImage((String) portata.get("img")));
-         } 
+             this.portataIcon.setImage(imagesProvider.getCourseImage(name));
+         }
         HashMap<String, Object> infoPortata = (HashMap<String, Object>) portata.get("info");
         if(infoPortata.get("totalDishes") != null){
             this.totaldishesValue.setText(infoPortata.get("totalDishes").toString());
@@ -62,7 +51,6 @@ public class portataItemController extends BaseView implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(portataItemController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
     
     @FXML
@@ -75,7 +63,6 @@ public class portataItemController extends BaseView implements Initializable {
          if( portataItem.getStyleClass().contains("category-hover")){
             portataItem.getStyleClass().remove("category-hover");
         }
-
     }
 
     @Override

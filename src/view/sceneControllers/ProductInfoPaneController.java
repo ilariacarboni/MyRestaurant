@@ -11,18 +11,15 @@ import javafx.scene.Node;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.stage.FileChooser;
-import view.utils.CustomLineChart;
+import view.utils.customCharts.CustomLineChart;
 
 /**
  * FXML Controller class
@@ -31,28 +28,19 @@ import view.utils.CustomLineChart;
  */
 public class ProductInfoPaneController extends BaseView implements Initializable {
 
-    private final String DEFAULT_IMAGE_PATH = "src/view/style/img/others/no-results.png";
+    public ScrollPane infoPane;
+    public Label priceLabel;
+    public Label qtyLabel;
+    public Label lastOrderLabel;
+    public Label supplierLabel;
+    public Label barcodeLabel;
+    public ImageView productImage;
+    public VBox mainContainer;
+    public HashMap<String,Object> shownProduct = null;
+    public AnchorPane chartContainer;
     private ProductManager prodManager;
     private ArrayList productCharts = new ArrayList();
     private int index = 0;
-    public ScrollPane infoPane;
-    @FXML
-    public Label priceLabel;
-    @FXML
-    public Label qtyLabel;
-    @FXML
-    public Label lastOrderLabel;
-    @FXML
-    public Label supplierLabel;
-    @FXML
-    public Label barcodeLabel;
-    @FXML
-    public ImageView productImage;
-    @FXML
-    public VBox mainContainer;
-    public HashMap<String,Object> shownProduct = null;
-    @FXML
-    public AnchorPane chartContainer;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -95,13 +83,12 @@ public class ProductInfoPaneController extends BaseView implements Initializable
         String imagePath = (String)product.get("image");
         if(imagePath != null && !imagePath.equals("")){
             try{
-                Image productImage = new Image(new File(imagePath).toURI().toString());
-                this.productImage.setImage(productImage);
+                this.productImage.setImage(imagesProvider.getProductImage((int)product.get("barcode"), imagePath));
             }catch(Exception e){
-                this.productImage.setImage(new Image(new File(this.DEFAULT_IMAGE_PATH).toURI().toString()));
+                this.productImage.setImage(imagesProvider.getDefaultProductImage());
             }
         }else{
-            this.productImage.setImage(new Image(new File(this.DEFAULT_IMAGE_PATH).toURI().toString()));
+            this.productImage.setImage(imagesProvider.getDefaultProductImage());
         }
     }
 

@@ -3,22 +3,18 @@ package view.sceneControllers;
 import business.CourseManager;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import business.MenuManager;
 import java.util.ArrayList;
-import javafx.beans.value.ChangeListener;
+
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
 
-import javafx.scene.image.Image;
 import view.utils.CustomDialog;
-import view.utils.LocatedImage;
 
 /**
  * FXML Controller class
@@ -27,35 +23,19 @@ import view.utils.LocatedImage;
  */
 
 public class AddMenuDishController extends BaseView implements Initializable {
-    
-    @FXML
-    private Label categoriaLbl;
-
-    @FXML
-    private ChoiceBox<String> categorieChoicebox;
-    private String[] categorie = {"Antipasti", "Primi", "Secondi", "Contorni", "Dolci", "Bevande"};
-
-    @FXML
-    private Button insertdishBtn;
-
-    @FXML
-    private Label nomeLbl;
-
-    @FXML
-    private TextField nomeTxt;
-
-    @FXML
-    private Label prezzoLbl;
-
-    @FXML
-    private TextField prezzoTxt;
-    
-    @FXML
-    private Label titoloLbl;
+    public Label categoriaLbl;
+    public ChoiceBox<String> categorieChoicebox;
+    public Button insertdishBtn;
+    public Label nomeLbl;
+    public TextField nomeTxt;
+    public Label prezzoLbl;
+    public TextField prezzoTxt;
+    public Label titoloLbl;
     private MenuManager menuManager = new MenuManager();
     private CourseManager courseManager = new CourseManager();
-   
-    
+    private String[] categorie = {"Antipasti", "Primi", "Secondi", "Contorni", "Dolci", "Bevande"};
+
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         /*nomeTxt.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {

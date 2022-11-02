@@ -4,14 +4,11 @@ import business.OrderManager;
 import business.ProductManager;
 import impl.org.controlsfx.autocompletion.AutoCompletionTextFieldBinding;
 import impl.org.controlsfx.autocompletion.SuggestionProvider;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import view.utils.CustomDialog;
-import view.utils.LocatedImage;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -19,15 +16,12 @@ import java.util.*;
 
 public class AddOrderPaneController extends BaseView implements Initializable {
 
-    private OrderManager orderManager = new OrderManager();
-    private ProductManager productManager = new ProductManager();
     public AnchorPane addOrderPane;
-    @FXML
-    private DatePicker dateField;
-    @FXML
-    private TextField productField;
-    @FXML
-    private Spinner<Integer> qtyField;
+    public DatePicker dateField;
+    public TextField productField;
+    public Spinner<Integer> qtyField;
+    private ProductManager productManager = new ProductManager();
+    private OrderManager orderManager = new OrderManager();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         commController.setAddOrderPaneController(this);

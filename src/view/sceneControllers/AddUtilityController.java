@@ -8,17 +8,13 @@ import java.util.ResourceBundle;
 
 import business.UtilityManager;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import view.sceneControllers.CommunicationController;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 import view.utils.CustomDialog;
-import view.utils.LocatedImage;
 
 /**
  * FXML Controller class
@@ -27,27 +23,15 @@ import view.utils.LocatedImage;
  */
 public class AddUtilityController  extends BaseView implements Initializable {
 
-    private UtilityManager utilityManager = new UtilityManager();
-
-    @FXML
-    private TextField datautenzaTxt;
-
-    @FXML
-    private TextField importoutenzaTxt;
-
-    @FXML
-    private Button insertUtilityBtn;
-
-    @FXML
-    private TextField nfatturaTxt;
-    
-    @FXML
+    public TextField datautenzaTxt;
+    public TextField importoutenzaTxt;
+    public Button insertUtilityBtn;
+    public TextField nfatturaTxt;
+    public ChoiceBox<String> utenzeChoiceBox;
     public VBox anchorpaneAddUtility;
-    
-    private CommunicationController commController = CommunicationController.getInstance();
 
-    @FXML
-    private ChoiceBox<String> utenzeChoiceBox;
+    private CommunicationController commController = CommunicationController.getInstance();
+    private UtilityManager utilityManager = new UtilityManager();
     private String[] tipo_utenza = {"elettricità", "acqua", "gas"};
    
 

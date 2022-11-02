@@ -27,22 +27,14 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 
 public class MenuListController extends BaseView implements Initializable {
+    public GridPane menuListGridPane;
+    public ScrollPane menuListScrollPane;
+    public BorderPane menuListPane;
+    public Button insertDishBtn;
 
-    private MenuManager menuManager = new MenuManager();
-    @FXML
-    private GridPane menuListGridPane;
-
-    @FXML
-    private ScrollPane menuListScrollPane;
-
-    @FXML
-    private BorderPane menuListPane;
-
-    @FXML
-    private Button insertDishBtn;
-
-    private ArrayList dishes;
     final int GRIDPANE_COLUMNS_NUMBER = 3;
+    private ArrayList dishes;
+    private MenuManager menuManager = new MenuManager();
 
 
     public void initialize(URL location, ResourceBundle resources) {
@@ -75,6 +67,7 @@ public class MenuListController extends BaseView implements Initializable {
         String course = portata.get("name").toString();
         menuListGridPane.getChildren().clear();
         ArrayList<HashMap<String, Object>> menulist = this.menuManager.getFrom(course, "course");
+        imagesProvider.initializeMenuImg(menulist);
         for(int i = 0; i<menulist.size(); i++){
             HashMap<String, Object> menuDish = menulist.get(i);
             this.addMenu(menuDish, portata);

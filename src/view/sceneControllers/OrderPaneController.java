@@ -8,9 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import view.utils.LocatedImage;
+import javafx.scene.layout.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,14 +18,10 @@ import java.util.ResourceBundle;
 
 public class OrderPaneController extends BaseView implements Initializable {
 
-    private OrderManager orderManager = new OrderManager();
     public static final String ORDERS_ON_DELIVERY_MODE = "DELIVERING";
     public static final String ORDERS_HISTORY_MODE     = "HISTORY";
-    private final String TO_HISTORY_TEXT = "Storico Ordini";
-    private final String HISTORY_ICON_PATH = "view/style/img/buttons-icon/historical.png";
-    private final String TO_CURRENT_TEXT = "Ordini in consegna";
-    private final String DELIVERING_ICON_PATH = "view/style/img/buttons-icon/delivery.png";
-    private String renderingMode;
+
+    public BorderPane mainContainer;
     public ImageView renderingModeIcon;
     public AnchorPane newOrderBtn;
     public Label statusLabel;
@@ -36,11 +30,9 @@ public class OrderPaneController extends BaseView implements Initializable {
     public GridPane ordersContainer;
     public AnchorPane searchComponentContainer;
     public AnchorPane pageSelectionContainer;
-    public Button previousPageBtn;
     public ComboBox<Integer> pageLengthSelector;
-    public Button nextPageButton;
-    public AnchorPane newOrderContainer;
     public ScrollPane ordersOuterContainer;
+
     private int index = 0;
     private int pageNumber = 1;
     private int lastPage;
@@ -48,10 +40,15 @@ public class OrderPaneController extends BaseView implements Initializable {
     private int  currentPageLength = pageLengthValues[0];
     private int totalOrders;
     private OrderSearchController orderSearchController;
+    private OrderManager orderManager = new OrderManager();
+    private final String TO_HISTORY_TEXT = "Storico Ordini";
+    private final String TO_CURRENT_TEXT = "Ordini in consegna";
+    private String renderingMode;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         commController.setOrderPaneController(this);
+        mainContainer.setBackground(imagesProvider.getBackground());
         ordersContainer.getChildren().clear();
         totalOrders = orderManager.getTotalOrders();
         try {
@@ -160,15 +157,14 @@ public class OrderPaneController extends BaseView implements Initializable {
         if(renderingMode == this.ORDERS_ON_DELIVERY_MODE){
             renderingMode = this.ORDERS_HISTORY_MODE;
             renderingModeLabel.setText(this.TO_CURRENT_TEXT);
-            renderingModeIcon.setImage(new LocatedImage(this.DELIVERING_ICON_PATH));
+            renderingModeIcon.setImage(imagesProvider.getDeliveringImage());
             statusLabel.setText(this.TO_HISTORY_TEXT);
         }else if(renderingMode == this.ORDERS_HISTORY_MODE){
             renderingMode = this.ORDERS_ON_DELIVERY_MODE;
             renderingModeLabel.setText(this.TO_HISTORY_TEXT);
-            renderingModeIcon.setImage(new LocatedImage(this.HISTORY_ICON_PATH));
+            renderingModeIcon.setImage(imagesProvider.getHistoryImage());
             statusLabel.setText(this.TO_CURRENT_TEXT);
         }
-        //inserire un loader o una cosa del genere
         this.insertOrders(pageNumber);
     }
 
