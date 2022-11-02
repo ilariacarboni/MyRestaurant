@@ -118,95 +118,95 @@ public class DashboardController extends BaseView implements Initializable {
     @FXML
     private void dashboardBtnClicked(ActionEvent event) throws IOException {
         select(dashboardBtn);
-        borderPane.setCenter(FXMLLoader.load(getClass().getResource(this.CHART_PANE_PATH)));
+        boolean isLogged = this.checkLogin();
+        if(isLogged){
+            borderPane.setCenter(FXMLLoader.load(getClass().getResource(this.CHART_PANE_PATH)));
+        }
     }
 
     @FXML
     private void menuBtnClicked(ActionEvent event) throws IOException {
         select(menuBtn);
-        
-        if(this.menuPane == null){
-           this.menuPane = FXMLLoader.load(getClass().getResource(this.MENU_PANE_PATH));
+        boolean logged = this.checkLogin();
+        if(logged){
+            if(this.menuPane == null){
+                this.menuPane = FXMLLoader.load(getClass().getResource(this.MENU_PANE_PATH));
+            }
+            borderPane.setCenter(this.menuPane);
+            MenuPaneController menuPaneController = commController.getMenuPaneController();
+            menuPaneController.animate();
+            borderPane.setRight(null);
         }
-        borderPane.setCenter(this.menuPane);
-        MenuPaneController menuPaneController = commController.getMenuPaneController();
-        menuPaneController.animate();
-        borderPane.setRight(null);
-
     }
 
     @FXML
     private void employeesBtnClicked(ActionEvent event) throws IOException {
         select(employeesBtn);
-        
-        if(this.employeesPane == null){
-            this.employeesPane = FXMLLoader.load(getClass().getResource(EMPLOYEE_LIST_PANE_PATH));
+        boolean logged = this.checkLogin();
+        if(logged){
+            if(this.employeesPane == null){
+                this.employeesPane = FXMLLoader.load(getClass().getResource(EMPLOYEE_LIST_PANE_PATH));
+            }
+            borderPane.setCenter(this.employeesPane);
+            EmployeesListController empListController = commController.getEmployeePaneController();
+            empListController.animate();
+            borderPane.setRight(null);
         }
-        borderPane.setCenter(this.employeesPane);
-        EmployeesListController empListController = commController.getEmployeePaneController();
-        empListController.animate();
-        borderPane.setRight(null);
     }
 
     @FXML
     private void storeBtnClicked(ActionEvent event) throws IOException {
         select(storeBtn);
-
-        boolean isLogged = isLoggedUser();
+        boolean isLogged = checkLogin();
         if(isLogged){
             if(this.categoryPane == null){
                 this.categoryPane = FXMLLoader.load(getClass().getResource(this.CATEGORY_PANE_PATH));
             }
             CategoryPaneController categoryPaneController = commController.getCategoryPaneController();
-            boolean hasPermission = checkPermission(categoryPaneController);
-            if(hasPermission){
-                borderPane.setCenter(this.categoryPane);
-                categoryPaneController.animate();
-                borderPane.setRight(null);
-            }else{
-                String text = "Non possiedi i permessi per visualizzare questa sezione.";
-                CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_FORBIDDEN);
-                dialog.setButtons(ButtonType.OK);
-                Optional<ButtonType> res = dialog.showAndWait("Attenzione !");
-                dashboardBtn.fire();
-            }
-        }else{
-            String text = "Per accedere a questa sezione devi effettuare il Login.";
-            CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_LOCK);
-            dialog.setButtons(ButtonType.OK, ButtonType.CANCEL);
-            Optional<ButtonType> res = dialog.showAndWait("Attenzione !");
-            if(res.get() == ButtonType.OK){
-                loginBtn.fire();
-                commController.getLoginPaneController().setSource(storeBtn);
-            }else{
-                dashboardBtn.fire();
-            }
+            borderPane.setCenter(this.categoryPane);
+            categoryPaneController.animate();
+            borderPane.setRight(null);
         }
     }
 
     @FXML
     private void utilityBtnClicked(ActionEvent event) throws IOException {
         select(utilityBtn);
-        
-        if(this.utilitiesPane == null){
-            this.utilitiesPane = FXMLLoader.load(getClass().getResource(this.UTILITIES_PANE_PATH));
+        boolean isLogged = this.checkLogin();
+        if(isLogged){
+            if(this.utilitiesPane == null){
+                this.utilitiesPane = FXMLLoader.load(getClass().getResource(this.UTILITIES_PANE_PATH));
+            }
+            borderPane.setCenter(this.utilitiesPane);
+            borderPane.setRight(null);
         }
-        borderPane.setCenter(this.utilitiesPane);
-        borderPane.setRight(null);
     }
 
     @FXML
     private void ordersBtnClicked(ActionEvent event) throws IOException {
         select(ordersBtn);
-
-        if(this.ordersPane == null){
-            this.ordersPane =  FXMLLoader.load(getClass().getResource(this.ORDER_PANE_PATH));
+        boolean isLogged = this.checkLogin();
+        if(isLogged){
+            if(this.ordersPane == null){
+                this.ordersPane =  FXMLLoader.load(getClass().getResource(this.ORDER_PANE_PATH));
+            }
+            borderPane.setCenter(this.ordersPane);
+            borderPane.setRight(null);
+            OrderPaneController orderPaneController = commController.getOrderPaneController();
+            orderPaneController.refresh();
+            orderPaneController.setMode(orderPaneController.ORDERS_ON_DELIVERY_MODE);
         }
-        borderPane.setCenter(this.ordersPane);
+    }
+
+    public void loginBtnClicked(ActionEvent actionEvent) throws IOException {
+        select(loginBtn);
+
+        if(this.loginPane == null){
+            this.loginPane =  FXMLLoader.load(getClass().getResource(this.LOGIN_PANE_PATH));
+        }
+        borderPane.setCenter(this.loginPane);
         borderPane.setRight(null);
-        OrderPaneController orderPaneController = commController.getOrderPaneController();
-        orderPaneController.refresh();
-        orderPaneController.setMode(orderPaneController.ORDERS_ON_DELIVERY_MODE);
+        LoginPaneController loginPaneController = commController.getLoginPaneController();
     }
     
     public void setCenterPane(Node node, BackButton backButton){
@@ -235,7 +235,6 @@ public class DashboardController extends BaseView implements Initializable {
         }
     }
 
-
     public void menuBtnNotHovered(MouseEvent mouseEvent) {
         Button btn = (Button)mouseEvent.getSource();
         if(btn.getStyleClass().contains(this.BTN_HOVER_STYLE_CLASS)){
@@ -251,17 +250,6 @@ public class DashboardController extends BaseView implements Initializable {
         }
     }
 
-    public void loginBtnClicked(ActionEvent actionEvent) throws IOException {
-        select(loginBtn);
-
-        if(this.loginPane == null){
-            this.loginPane =  FXMLLoader.load(getClass().getResource(this.LOGIN_PANE_PATH));
-        }
-        borderPane.setCenter(this.loginPane);
-        borderPane.setRight(null);
-        LoginPaneController loginPaneController = commController.getLoginPaneController();
-    }
-
     public void newOrderFor(String productName){
         ordersBtn.fire();
         OrderPaneController orderPaneController = commController.getOrderPaneController();
@@ -270,19 +258,20 @@ public class DashboardController extends BaseView implements Initializable {
         orderPaneController.showNewOrderPane(info);
     }
 
-    private boolean isLoggedUser(){
+    private boolean checkLogin(){
         boolean res = false;
         HashMap<String, Object> loggedUser = commController.getLoggedUser();
         if(loggedUser != null){
             res = true;
         }
-        return res;
-    }
-    private boolean checkPermission(BaseView sceneController){
-        boolean res = false;
-        HashMap<String, Object> loggedUser = commController.getLoggedUser();
-        if(loggedUser != null && (int)loggedUser.get("level") <= sceneController.permissionLevel){
-            res = true;
+        if(!res){
+            String text = "Per accedere a questa sezione devi effettuare il Login.";
+            dialog.setInfo(text, CustomDialog.TYPE_LOCK);
+            dialog.setButtons(ButtonType.OK);
+            Optional<ButtonType> dialogRes = dialog.showAndWait("Attenzione !");
+            if(dialogRes.get() == ButtonType.OK){
+                loginBtn.fire();
+            }
         }
         return res;
     }

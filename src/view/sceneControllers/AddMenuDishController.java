@@ -90,14 +90,14 @@ public class AddMenuDishController extends BaseView implements Initializable {
                 }
                 if(!res){
                     String text = "Il piatto non è stato inserito";
-                    CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_WARNING);
+                    dialog.setInfo(text, CustomDialog.TYPE_WARNING);
                     dialog.setButtons(ButtonType.OK);
                     dialog.showAndWait("Attenzione !");
 
                     resetTextFields();
                 }else{
                     String text = "Il piatto è stato inserito correttamente";
-                    CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_SUCCESS);
+                    dialog.setInfo(text, CustomDialog.TYPE_SUCCESS);
                     dialog.setButtons(ButtonType.OK);
                     dialog.showAndWait("Inserimento Piatto");
                     resetTextFields();

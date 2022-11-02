@@ -47,7 +47,7 @@
                               </AnchorPane>
                               <Label fx:id="wrongUsernameLabel" layoutX="31.0" layoutY="55.0" prefHeight="17.0" prefWidth="149.0" textFill="RED" />
                               <Label fx:id="wrongPasswordLabel" layoutX="29.0" layoutY="116.0" prefHeight="17.0" prefWidth="149.0" textFill="RED" />
-                              <AnchorPane fx:id="loginBtn" layoutX="77.0" layoutY="158.0" onMouseClicked="#doLogin" prefHeight="40.0" styleClass="custom-button" stylesheets="@../style/css/customButton.css">
+                              <AnchorPane fx:id="loginBtn" layoutX="77.0" layoutY="158.0" prefHeight="40.0" styleClass="custom-button" stylesheets="@../style/css/customButton.css">
                                  <children>
                                     <AnchorPane layoutX="-3.0" layoutY="3.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: ea613f;" styleClass="custom-button" AnchorPane.topAnchor="0.0">
                                        <children>

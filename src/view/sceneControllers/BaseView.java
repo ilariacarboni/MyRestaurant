@@ -5,6 +5,7 @@
  */
 package view.sceneControllers;
 
+import view.utils.CustomDialog;
 import view.utils.imageManagers.ImagesProvider;
 
 /**
@@ -33,8 +34,7 @@ public class BaseView {
     protected final String LOGIN_PANE_PATH = "/view/scene/loginPane.fxml";
     protected final String USER_COMPONENT_PATH = "view/scene/userInfoPane.fxml";
 
-    public int permissionLevel;
-
     protected CommunicationController commController = CommunicationController.getInstance();
     protected ImagesProvider imagesProvider = ImagesProvider.getInstance();
+    protected CustomDialog dialog = CustomDialog.getInstance();
 }
