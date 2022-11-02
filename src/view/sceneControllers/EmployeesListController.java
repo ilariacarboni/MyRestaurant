@@ -66,6 +66,8 @@ public class EmployeesListController extends BaseView implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
        
         commController.setEmployeePaneController(this);
+        employeesPane.setStyle("-fx-background-image: url(\"/view/style/img/background/grey.jpeg\");-fx-background-repeat: no-repeat;");
+        employeeListScrollPane.setStyle("-fx-background: url(\"/view/style/img/background/grey.jpeg\");-fx-background-repeat: no-repeat;");
         this.employees = new ArrayList<>();
         
         ArrayList<HashMap<String, Object>> employeeslist = this.employeeManager.getAll();

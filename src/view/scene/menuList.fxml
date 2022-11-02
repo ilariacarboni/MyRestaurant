@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 
-<BorderPane fx:id="menuListPane" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.MenuListController">
+<BorderPane fx:id="menuListPane" stylesheets="@../style/css/common.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.MenuListController">
    <center>
       <ScrollPane fx:id="menuListScrollPane" BorderPane.alignment="CENTER">
         <content>

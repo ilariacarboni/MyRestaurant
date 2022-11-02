@@ -49,6 +49,7 @@ public class MenuListController extends BaseView implements Initializable {
 
         commController.setMenuListController(this);
         this.dishes = new ArrayList<>();
+        menuListPane.setStyle("-fx-background-image: url(\"/view/style/img/background/grey.jpeg\");-fx-background-repeat: no-repeat;");
         
         
         //definire metodo search

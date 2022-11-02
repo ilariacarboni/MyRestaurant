@@ -76,6 +76,7 @@ public class MenuPaneController extends BaseView implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         commController.setMenuPaneController(this);
+        anchorPaneMenu.setStyle("-fx-background-image: url(\"/view/style/img/background/grey.jpeg\");-fx-background-repeat: no-repeat;");
         ArrayList<HashMap<String,Object>> portate =  this.courseManager.getAll(); //lista portate
         HashMap<String, HashMap<String, Object>> coursesInfo = this.courseManager.getTotalDishes();
         portate.forEach((portata) -> {
