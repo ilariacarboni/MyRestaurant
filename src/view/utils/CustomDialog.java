@@ -1,22 +1,16 @@
 package view.utils;
 
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import view.utils.imageManagers.ImagesProvider;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Optional;
 
-public class CustomDialog{
-
-    private AnchorPane content;
-    private ImageView dialogIcon;
-    private Text dialogTextContent;
-    private ArrayList<ButtonType> buttons = new ArrayList<>();
+public class CustomDialog extends Dialog{
 
     public static final String TYPE_INFO      = "INFO";
     public static final String TYPE_WARNING   = "WARNING";
@@ -25,52 +19,26 @@ public class CustomDialog{
     public static final String TYPE_FORBIDDEN = "FORBIDDEN";
     public static final String TYPE_LOCK      = "LOCK";
 
-    private final String TYPE_INFO_ICON      = "/view/style/img/dialog-icons/info.png";
-    private final String TYPE_WARNING_ICON   = "/view/style/img/dialog-icons/warning.png";
-    private final String TYPE_ERROR_ICON     = "/view/style/img/dialog-icons/error.png";
-    private final String TYPE_SUCCESS_ICON   = "/view/style/img/dialog-icons/check.png";
-    private final String TYPE_FORBIDDEN_ICON = "/view/style/img/dialog-icons/forbidden.png";
-    private final String TYPE_LOCK_ICON      = "/view/style/img/dialog-icons/lock.png";
+    private static final CustomDialog customDialog = new CustomDialog();
+    private AnchorPane content;
+    private ImageView dialogIcon;
+    private Text dialogTextContent;
+    private ArrayList<ButtonType> buttons = new ArrayList<>();
 
-    private HashMap<String, String> typeIconMapping;
+    private ImagesProvider imagesProvider = ImagesProvider.getInstance();
 
-    public CustomDialog(String text, String type){
-        createTypeIconMapping();
+    public static CustomDialog getInstance(){ return customDialog;};
+
+    public void setInfo(String text, String type){
         this.content = new AnchorPane();
         this.dialogTextContent = new Text(text);
-        String icon = this.TYPE_INFO_ICON;
-        if(this.typeIconMapping.containsKey(type)){
-            icon = this.typeIconMapping.get(type);
-        }
-        this.dialogIcon = new ImageView(icon);
+        String iconType = (type != null) ? type : this.TYPE_INFO;
+        this.dialogIcon = new ImageView(imagesProvider.getDialogIcon(iconType));
         this.content.getChildren().add(dialogIcon);
         this.setIconLayout();
 
         this.content.getChildren().add(dialogTextContent);
         this.setTextLayout();
-    }
-    public CustomDialog(String text, Image img){
-        createTypeIconMapping();
-        this.content = new AnchorPane();
-        this.dialogTextContent = new Text(text);
-        if(img != null){
-            this.dialogIcon = new ImageView(img);
-            this.content.getChildren().add(dialogIcon);
-            this.setIconLayout();
-        }
-
-        this.content.getChildren().add(dialogTextContent);
-        this.setTextLayout();
-    }
-
-    private void createTypeIconMapping(){
-        this.typeIconMapping = new HashMap<>();
-        typeIconMapping.put(this.TYPE_INFO, this.TYPE_INFO_ICON);
-        typeIconMapping.put(this.TYPE_WARNING, this.TYPE_WARNING_ICON);
-        typeIconMapping.put(this.TYPE_ERROR, this.TYPE_ERROR_ICON);
-        typeIconMapping.put(this.TYPE_SUCCESS, this.TYPE_SUCCESS_ICON);
-        typeIconMapping.put(this.TYPE_FORBIDDEN, this.TYPE_FORBIDDEN_ICON);
-        typeIconMapping.put(this.TYPE_LOCK, this.TYPE_LOCK_ICON);
     }
 
     private void setTextLayout(){
@@ -88,19 +56,22 @@ public class CustomDialog{
     }
 
     public void setButtons(ButtonType... types){
+        this.buttons.clear();
         for (ButtonType type:types){
             this.buttons.add(type);
         }
     }
 
     public Optional<ButtonType> showAndWait(String title){
-        Dialog dialog = new Dialog();
-        dialog.setTitle(title);
-        DialogPane dialogPane = dialog.getDialogPane();
-
-        dialog.getDialogPane().getButtonTypes().addAll(this.buttons);
+        this.setTitle(title);
+        DialogPane dialogPane = this.getDialogPane();
+        this.getDialogPane().getButtonTypes().clear();
+        this.getDialogPane().getButtonTypes().addAll(this.buttons);
+        if(dialogPane.getContent() != null){
+            dialogPane.setContent(null);
+        }
         dialogPane.setContent(this.content);
-        dialog.setResizable(false);
-        return dialog.showAndWait();
+        this.setResizable(false);
+        return this.showAndWait();
     }
 }

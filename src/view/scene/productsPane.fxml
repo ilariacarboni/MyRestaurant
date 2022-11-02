@@ -90,7 +90,7 @@
    <center>
       <HBox spacing="20.0">
          <children>
-            <ScrollPane hbarPolicy="NEVER" prefHeight="400.0" prefWidth="560.0" styleClass="scrollPane">
+            <ScrollPane hbarPolicy="NEVER" prefHeight="400.0" styleClass="scrollPane">
                <content>
                   <GridPane fx:id="productsContainer">
                      <columnConstraints>

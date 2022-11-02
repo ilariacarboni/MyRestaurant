@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -8,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane stylesheets="@../style/css/common.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.OrderSearchController">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.OrderSearchController">
    <children>
       <VBox layoutX="8.0" layoutY="8.0">
          <children>
@@ -49,17 +51,29 @@
                   <AnchorPane prefHeight="40.0" prefWidth="40.0" />
                   <AnchorPane fx:id="numberLabelContainer">
                      <children>
-                        <TextField fx:id="numberSearchBar" styleClass="search-field" />
+                        <TextField fx:id="numberSearchBar">
+                           <styleClass>
+                              <String fx:value="search-field" />
+                              <String fx:value="searchBarTextField" />
+                           </styleClass></TextField>
                      </children>
                   </AnchorPane>
                   <AnchorPane fx:id="dateLabelContainer">
                      <children>
-                        <TextField fx:id="dateSearchBar" styleClass="search-field" />
+                        <TextField fx:id="dateSearchBar">
+                           <styleClass>
+                              <String fx:value="search-field" />
+                              <String fx:value="searchBarTextField" />
+                           </styleClass></TextField>
                      </children>
                   </AnchorPane>
                   <AnchorPane fx:id="supplierLabelContainer">
                      <children>
-                        <TextField fx:id="supplierSearchBar" styleClass="search-field" />
+                        <TextField fx:id="supplierSearchBar">
+                           <styleClass>
+                              <String fx:value="search-field" />
+                              <String fx:value="searchBarTextField" />
+                           </styleClass></TextField>
                      </children>
                   </AnchorPane>
                </children>
@@ -73,4 +87,8 @@
    <padding>
       <Insets left="10.0" right="10.0" top="10.0" />
    </padding>
+   <stylesheets>
+      <URL value="@../style/css/common.css" />
+      <URL value="@../style/css/store.css" />
+   </stylesheets>
 </AnchorPane>

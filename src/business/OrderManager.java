@@ -44,6 +44,14 @@ public class OrderManager {
     public int getTotalOrders(){
         return orderTable.getTotal();
     }
+
+    public int getTotalDelivered(){
+        return orderTable.getTotal(Order.DELIVERED_STATE);
+    }
+
+    public int getTotalDelivering(){
+        return orderTable.getTotal(Order.CREATED_STATE);
+    }
     public boolean setDelivered(HashMap<String, Object> order) {
         order.put("state", Order.DELIVERED_STATE);
         Order orderEntity = orderTable.constructEntityFromMap(order);

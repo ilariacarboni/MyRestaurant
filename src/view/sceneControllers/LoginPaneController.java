@@ -5,10 +5,9 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -55,6 +54,10 @@ public class LoginPaneController extends BaseView implements Initializable {
         pane.setMaxWidth(Double.MAX_VALUE);
         pane.setMaxHeight(Double.MAX_VALUE);
 
+        loginBtn.setOnMouseClicked((e) -> {
+            this.doLogin();
+        });
+
         this.sourceBtn = (commController.getDashboardController()).getDashboardBtn();
     }
 
@@ -62,74 +65,65 @@ public class LoginPaneController extends BaseView implements Initializable {
         sourceBtn = menuBtn;
     }
     private void setUsernameTextFieldListeners(){
-        usernameTextField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+        usernameTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(userWarnedForUsername){
+                userWarnedForUsername = false;
+                wrongUsernameLabel.setText(null);
+            }
+            if(usernameContainer.getStyleClass().contains("error")){
+                usernameContainer.getStyleClass().remove("error");
+            }
+        });
+        usernameTextField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (!newPropertyValue){
+                String username = usernameTextField.getText();
+                if(!username.isEmpty()){
+                    HashMap<String, Object> admin = adminManager.getFromUsername(username);
+                    if(admin != null){
+                        wrongUsernameLabel.setText(null);
+                        currentUser = admin;
+                    }else{
+                        wrongUsernameLabel.setText(WRONG_USERNAME_WARNING);
+                        userWarnedForUsername = true;
+                    }
+                }else if(usernameLabelMoved){
+                    moveInLabel(usernameLabel);
+                    usernameLabelMoved = false;
+                }
+            }else{
                 if(userWarnedForUsername){
                     userWarnedForUsername = false;
                     wrongUsernameLabel.setText(null);
-                }
-                if(usernameContainer.getStyleClass().contains("error")){
-                    usernameContainer.getStyleClass().remove("error");
-                }
-            }
-        });
-        usernameTextField.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue){
-                if (!newPropertyValue){
-                    //quando il campo username non è selezionato controllo che lo username inserito sia valido
-                    String username = usernameTextField.getText();
-                    if(!username.isEmpty()){
-                        HashMap<String, Object> admin = adminManager.getFromUsername(username);
-                        if(admin != null){
-                            wrongUsernameLabel.setText(null);
-                            currentUser = admin;
-                        }else{
-                            wrongUsernameLabel.setText(WRONG_USERNAME_WARNING);
-                            userWarnedForUsername = true;
-                        }
-                    }else if(usernameLabelMoved){
-                        moveInLabel(usernameLabel);
-                        usernameLabelMoved = false;
-                    }
-                }else{
-                    if(userWarnedForUsername){
-                        userWarnedForUsername = false;
-                        wrongUsernameLabel.setText(null);
-                    }
                 }
             }
         });
     }
     private void setPasswordTextFieldListeners(){
-        passwordField.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue){
-                String password = passwordField.getText();
-                if (!newPropertyValue){
-                    //quando il campo username non è selezionato controllo che lo username inserito sia valido
-                    if(password.isEmpty() && passwordLabelMoved){
-                        moveInLabel(passwordLabel);
-                        passwordLabelMoved = false;
-                    }
-                }else{
-                    if(!passwordLabelMoved){
-                        moveOutLabel(passwordLabel, passwordField);
-                    }
+        passwordField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            String password = passwordField.getText();
+            if (!newPropertyValue){
+                if(password.isEmpty() && passwordLabelMoved){
+                    moveInLabel(passwordLabel);
+                    passwordLabelMoved = false;
+                }
+            }else{
+                if(!passwordLabelMoved){
+                    moveOutLabel(passwordLabel, passwordField);
                 }
             }
         });
-        passwordField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if(passwordContainer.getStyleClass().contains("error")){
-                    passwordContainer.getStyleClass().remove("error");
-                }
+        passwordField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(passwordContainer.getStyleClass().contains("error")){
+                passwordContainer.getStyleClass().remove("error");
+            }
+        });
+        passwordField.setOnKeyPressed((e) -> {
+            if(e.getCode() == KeyCode.ENTER){
+                this.doLogin();
             }
         });
     }
-    public void doLogin(MouseEvent mouseEvent) {
+    public void doLogin() {
         String unencryptedPsw = passwordField.getText();
         String encrypted = adminManager.cryptPassword(unencryptedPsw);
         DashboardController dashboardController = commController.getDashboardController();
@@ -138,7 +132,9 @@ public class LoginPaneController extends BaseView implements Initializable {
             if(encrypted.equals(currentUserPassword)){
                 this.commController.setLoggedUser(currentUser);
                 dashboardController.setUsername(currentUser.get("username").toString());
-                sourceBtn.fire();
+                if(sourceBtn != null){
+                    sourceBtn.fire();
+                }
                 dashboardController.removeLoginButton();
             }else{
                 this.wrongLoginAnimation();
@@ -201,10 +197,9 @@ public class LoginPaneController extends BaseView implements Initializable {
             moveInLabel(usernameLabel);
             usernameLabelMoved = false;
         }
-        if(passwordField.getText().isEmpty()){
+        if(!passwordField.isFocused()){
             moveInLabel(passwordLabel);
             passwordLabelMoved = false;
         }
     }
-
 }

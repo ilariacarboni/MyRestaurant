@@ -51,8 +51,8 @@ public class ChartPaneController extends BaseView implements Initializable {
         gridPane.add(revenueOrdersComparisonChart, 0, 2);
         gridPane.add(revenueUtilitiesComparisonChart, 1, 2);
 
-        gridPane.setBreakPoint(0, 1250, 1);
-        gridPane.setBreakPoint(1250, Double.MAX_VALUE, 2);
+        gridPane.setBreakPoint(0, 1300, 1);
+        gridPane.setBreakPoint(1300, Double.MAX_VALUE, 2);
         gridPane.startToListenForAdjustments(commController.getStage());
         gridPane.setHgap(20);
         gridPane.setVgap(20);
