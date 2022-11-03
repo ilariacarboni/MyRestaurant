@@ -2,6 +2,7 @@ package view.utils.imageManagers;
 
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
+import view.utils.CustomDialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,6 +67,20 @@ public class ImagesProvider {
     private LocatedImage backIcon;
     private final String NEXT_ICON = "/view/style/img/others/close.png";
     private LocatedImage nextIcon;
+
+    //----------------------DIALOG ICONS----------------------//
+    private final String DIALOG_INFO_ICON      = "/view/style/img/dialog-icons/info.png";
+    private LocatedImage dialogInfoIcon;
+    private final String DIALOG_WARNING_ICON   = "/view/style/img/dialog-icons/warning.png";
+    private LocatedImage dialogWarningIcon;
+    private final String DIALOG_ERROR_ICON     = "/view/style/img/dialog-icons/error.png";
+    private LocatedImage dialogErrorIcon;
+    private final String DIALOG_SUCCESS_ICON   = "/view/style/img/dialog-icons/check.png";
+    private LocatedImage dialogSuccessIcon;
+    private final String DIALOG_FORBIDDEN_ICON = "/view/style/img/dialog-icons/forbidden.png";
+    private LocatedImage dialogForbiddenIcon;
+    private final String DIALOG_LOCK_ICON      = "/view/style/img/dialog-icons/lock.png";
+    private LocatedImage dialogLockIcon;
 
     public static ImagesProvider getInstance(){
         return imagesProvider;
@@ -257,5 +272,73 @@ public class ImagesProvider {
             this.nextIcon = new LocatedImage(this.NEXT_ICON);
         }
         return this.nextIcon;
+    }
+
+    //----------------------DIALOG ICONS----------------------//
+    public LocatedImage getDialogIcon(String iconType){
+        LocatedImage res;
+        switch (iconType){
+            case CustomDialog.TYPE_ERROR:
+                res = this.getDialogErrorIcon();
+                break;
+            case CustomDialog.TYPE_FORBIDDEN:
+                res = this.getDialogForbiddenIcon();
+                break;
+            case CustomDialog.TYPE_INFO:
+                res = this.getDialogInfoIcon();
+                break;
+            case CustomDialog.TYPE_SUCCESS:
+                res = this.getDialogSuccessIcon();
+                break;
+            case CustomDialog.TYPE_WARNING:
+                res = this.getDialogWarningIcon();
+                break;
+            case CustomDialog.TYPE_LOCK:
+                res = this.getDialogLockIcon();
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + iconType);
+        }
+        return res;
+    }
+    public LocatedImage getDialogInfoIcon(){
+        if(this.dialogInfoIcon == null){
+            this.dialogInfoIcon = new LocatedImage(this.DIALOG_INFO_ICON);
+        }
+        return dialogInfoIcon;
+    }
+
+    public LocatedImage getDialogWarningIcon(){
+        if(this.dialogWarningIcon == null){
+            this.dialogWarningIcon = new LocatedImage(this.DIALOG_WARNING_ICON);
+        }
+        return dialogWarningIcon;
+    }
+    public LocatedImage getDialogErrorIcon(){
+        if(this.dialogErrorIcon == null){
+            this.dialogErrorIcon = new LocatedImage(this.DIALOG_ERROR_ICON);
+        }
+        return dialogErrorIcon;
+    }
+
+    public LocatedImage getDialogSuccessIcon(){
+        if(this.dialogSuccessIcon == null){
+            this.dialogSuccessIcon = new LocatedImage(this.DIALOG_SUCCESS_ICON);
+        }
+        return dialogSuccessIcon;
+    }
+
+    public LocatedImage getDialogForbiddenIcon(){
+        if(this.dialogForbiddenIcon == null){
+            this.dialogForbiddenIcon = new LocatedImage(this.DIALOG_FORBIDDEN_ICON);
+        }
+        return dialogForbiddenIcon;
+    }
+
+    public LocatedImage getDialogLockIcon(){
+        if(this.dialogLockIcon == null){
+            this.dialogLockIcon = new LocatedImage(this.DIALOG_LOCK_ICON);
+        }
+        return dialogLockIcon;
     }
 }

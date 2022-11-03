@@ -48,9 +48,10 @@ public class OrderPaneController extends BaseView implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         commController.setOrderPaneController(this);
+        ordersOuterContainer.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         mainContainer.setBackground(imagesProvider.getBackground());
         ordersContainer.getChildren().clear();
-        totalOrders = orderManager.getTotalOrders();
+        totalOrders = orderManager.getTotalDelivering();
         try {
             this.insertSearchComponent();
         } catch (IOException e) {
@@ -144,7 +145,7 @@ public class OrderPaneController extends BaseView implements Initializable {
         int nextPageLength = pageLengthSelector.getValue();
         if(nextPageLength > currentPageLength){
             int ratio = (int)Math.ceil(nextPageLength/(double)currentPageLength);
-            pageNumber = (int)Math.ceil(pageNumber/ratio);
+            pageNumber = (int)Math.ceil((double)pageNumber/ratio);
         }else if(nextPageLength < currentPageLength){
         }
         this.orderManager.setOrdersPageLength(nextPageLength);
@@ -156,11 +157,13 @@ public class OrderPaneController extends BaseView implements Initializable {
     public void changeRenderingMode(MouseEvent mouseEvent) {
         if(renderingMode == this.ORDERS_ON_DELIVERY_MODE){
             renderingMode = this.ORDERS_HISTORY_MODE;
+            totalOrders = orderManager.getTotalDelivered();
             renderingModeLabel.setText(this.TO_CURRENT_TEXT);
             renderingModeIcon.setImage(imagesProvider.getDeliveringImage());
             statusLabel.setText(this.TO_HISTORY_TEXT);
         }else if(renderingMode == this.ORDERS_HISTORY_MODE){
             renderingMode = this.ORDERS_ON_DELIVERY_MODE;
+            totalOrders = orderManager.getTotalDelivered();
             renderingModeLabel.setText(this.TO_HISTORY_TEXT);
             renderingModeIcon.setImage(imagesProvider.getHistoryImage());
             statusLabel.setText(this.TO_CURRENT_TEXT);
@@ -213,5 +216,4 @@ public class OrderPaneController extends BaseView implements Initializable {
         newOrderBtn.setVisible(false);
         newOrderBtn.setManaged(false);
     }
-
 }

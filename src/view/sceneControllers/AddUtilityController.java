@@ -61,14 +61,14 @@ public class AddUtilityController  extends BaseView implements Initializable {
                 boolean res = this.utilityManager.save(utility);
                 if(!res){
                     String text = "Il piatto non è stato inserito!";
-                    CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_ERROR);
+                    dialog.setInfo(text, CustomDialog.TYPE_ERROR);
                     dialog.setButtons(ButtonType.OK);
                     dialog.showAndWait("Errore !");
 
                     resetTextFields();
                 }else{
                     String text = "Il piatto è stato inserito correttamente!";
-                    CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_SUCCESS);
+                    dialog.setInfo(text, CustomDialog.TYPE_SUCCESS);
                     dialog.setButtons(ButtonType.OK);
                     dialog.showAndWait("Inserimento Piatto");
 

@@ -79,12 +79,12 @@ public class AddProductPaneController extends BaseView implements Initializable 
             }
             if(!res){
                 String text = "Il prodotto non è stato inserito!";
-                CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_ERROR);
+                dialog.setInfo(text, CustomDialog.TYPE_ERROR);
                 dialog.setButtons(ButtonType.OK);
                 dialog.showAndWait("Errore !");
             }else{
                 String text = "Il prodotto è stato inserito correttamente!";
-                CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_SUCCESS);
+                dialog.setInfo(text, CustomDialog.TYPE_SUCCESS);
                 dialog.setButtons(ButtonType.OK);
                 dialog.showAndWait("Inserimento Prodotto");
 
@@ -100,7 +100,7 @@ public class AddProductPaneController extends BaseView implements Initializable 
         boolean allFilled = !(barcodeTextField.getText().isEmpty() || qtyTextField.getText().isEmpty() || nameTextField.getText().isEmpty() || priceTextField.getText().isEmpty());
         if(!allFilled){
             String text = "Non ci possono essere campi vuoti";
-            CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_WARNING);
+            dialog.setInfo(text, CustomDialog.TYPE_WARNING);
             dialog.setButtons(ButtonType.OK);
             Optional<ButtonType> res = dialog.showAndWait("Attenzione !");
         }
@@ -113,7 +113,7 @@ public class AddProductPaneController extends BaseView implements Initializable 
         boolean alreadyExisting = (prod != null);
         if(alreadyExisting){
             String text = "Prodotto esistente!";
-            CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_WARNING);
+            dialog.setInfo(text, CustomDialog.TYPE_WARNING);
             dialog.setButtons(ButtonType.OK);
             Optional<ButtonType> res = dialog.showAndWait("Attenzione !");
         }

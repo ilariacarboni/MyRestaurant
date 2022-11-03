@@ -98,7 +98,7 @@ public class AddEmployeeController extends BaseView implements  Initializable {
             }else{
                 text = "Il dipendente è stato inserito correttamente!";
             }
-            CustomDialog dialog = new CustomDialog(text, CustomDialog.TYPE_SUCCESS);
+            dialog.setInfo(text, CustomDialog.TYPE_SUCCESS);
             dialog.setButtons(ButtonType.OK);
             dialog.showAndWait(title);
             resetTextFields();

@@ -323,6 +323,27 @@ public class OrderTable implements Table<Order>{
         return res;
     }
 
+    public int getTotal(String state){
+        int res = 0;
+        String sql= "SELECT count(*) as tot FROM orders WHERE state = ?";
+        PreparedStatement ps = null;
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, state);
+            ResultSet resultSet = ps.executeQuery();
+            res = resultSet.getInt("tot");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return res;
+    }
+
     @Override
     public Order constructEntityFromMap(HashMap<String, Object> map) {
         Order res = null;
