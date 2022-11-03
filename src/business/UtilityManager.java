@@ -27,6 +27,18 @@ public class UtilityManager {
         }
         return res;
     }
+     public ArrayList getAllbyPage(int page, HashMap<String, String> filters){
+        ArrayList<Utility> utilities = this.utilityTable.getPageWithStatus(page, filters);
+        return this.parseRes(utilities);
+    }
+     
+     private ArrayList parseRes(ArrayList<Utility> list){
+        ArrayList<HashMap<String,Object>> res  = new ArrayList<HashMap<String,Object>>();
+        for(Utility utility : list){
+            res.add(utility.map());
+        }
+        return res;
+    }
     
      public int getTotalUtilities(){
         return utilityTable.getTotal();

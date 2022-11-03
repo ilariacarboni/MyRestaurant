@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 
 public class UtilityTable implements Table<Utility>{
@@ -45,6 +46,46 @@ public class UtilityTable implements Table<Utility>{
                 System.out.println(ex.toString());
             }
             return resList;
+    }
+    
+    public ArrayList<Utility> getPageWithStatus(int page, HashMap<String, String> filters){
+        ArrayList <Utility> resList = new ArrayList<Utility>();
+        int offset =  (page-1) * this.pageLength;
+        String sql = "SELECT * FROM utility";
+        String limit = " LIMIT "+ offset +"," +this.pageLength;
+        String wheres = " WHERE ";
+        for (Map.Entry<String, String> entry : filters.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            if(!value.isEmpty()){
+                wheres += key+" LIKE '%"+value+"%' AND ";
+            }
+        }
+       
+        
+        //eliminazione ultimo AND
+        wheres = wheres.substring(0, wheres.length() - 4);
+        sql += wheres + limit;
+        PreparedStatement ps = null;
+        try {
+           ps = conn.prepareStatement(sql);
+            ResultSet resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                    Utility u= new Utility(resultSet.getInt("numberId"),resultSet.getDouble("total"), resultSet.getString("type"),
+                            resultSet.getString("date"), resultSet.getString("state"));
+                    resList.add(u);
+                }
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+        }finally {
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return resList;
     }
 
     @Override

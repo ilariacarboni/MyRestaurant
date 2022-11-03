@@ -31,34 +31,34 @@ public class MenuListController extends BaseView implements Initializable {
     public ScrollPane menuListScrollPane;
     public BorderPane menuListPane;
     public Button insertDishBtn;
+    public TextField dishSearchBar;
 
     final int GRIDPANE_COLUMNS_NUMBER = 3;
     private ArrayList dishes;
     private MenuManager menuManager = new MenuManager();
+    private final String DISH_NAME = "#itemNameLbl";
 
 
     public void initialize(URL location, ResourceBundle resources) {
 
         commController.setMenuListController(this);
         this.dishes = new ArrayList<>();
-        menuListPane.setStyle("-fx-background-image: url(\"/view/style/img/background/grey.jpeg\");-fx-background-repeat: no-repeat;");
+        menuListPane.setBackground(imagesProvider.getBackground());
         
-        
-        //definire metodo search
-       /* searchBar.textProperty().addListener((observable, oldValue, newValue) ->{
-            ObservableList<Node> products = productsContainer.getChildren();
-            for(Node product : products){
-                Label productNameLabel = (Label)((AnchorPane) product).lookup(this.PRODUCT_LABEL_ID);
-                String productName = productNameLabel.getText();
-                if(!productName.contains(newValue)){
-                    product.setVisible(false);
-                    product.setManaged(false);
+         dishSearchBar.textProperty().addListener((observable, oldValue, newValue) ->{
+            ObservableList<Node> dishsearch = menuListGridPane.getChildren();
+            for(Node dish : dishsearch){
+                Label dishNameLabel = (Label)((AnchorPane) dish ).lookup(this.DISH_NAME);
+                String dishName = dishNameLabel.getText();
+                if(!dishName.contains(newValue)){
+                    dish.setVisible(false);
+                    dish.setManaged(false);
                 }else{
-                    product.setVisible(true);
-                    product.setManaged(true);
+                    dish.setVisible(true);
+                    dish.setManaged(true);
                 }
             }
-        });*/
+        });
     }
 
 
@@ -78,7 +78,7 @@ public class MenuListController extends BaseView implements Initializable {
     public void addMenu(HashMap<String, Object> dishInfo,  HashMap<String, Object> course){
         int index = this.dishes.size() ;
         this.dishes.add(index, dishInfo);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/scene/menuItem.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(this.MENU_ITEM_PATH));
 
         Node menuNode = null;
         try {
@@ -99,7 +99,7 @@ public class MenuListController extends BaseView implements Initializable {
     void insertDishBtnClicked(ActionEvent event) throws IOException {
 
         BorderPane borderPane = (BorderPane) menuListPane.getParent();
-        borderPane.setRight(FXMLLoader.load(getClass().getResource("/view/scene/AddMenuDish.fxml")));
+        borderPane.setRight(FXMLLoader.load(getClass().getResource(this.ADD_MENU_PATH)));
 
     }
 

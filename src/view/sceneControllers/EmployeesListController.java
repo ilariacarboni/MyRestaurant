@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.animation.TranslateTransition;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +22,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
@@ -44,18 +46,19 @@ public class EmployeesListController extends BaseView implements Initializable {
     
     private ArrayList employees;
     private EmployeeManager employeeManager = new EmployeeManager();
+    private final String EMPLOYEE_NAME = "#nameLbl";
+    private final String EMPLOYEE_SURNAME = "#surnameLbl";
 
     @FXML
     void insertEmployeeBtnClicked(ActionEvent event) throws IOException {
         BorderPane borderPane = (BorderPane) employeesPane.getParent();
-        borderPane.setRight(FXMLLoader.load(getClass().getResource("/view/scene/AddEmployee.fxml")));
+        borderPane.setRight(FXMLLoader.load(getClass().getResource(this.ADD_EMPLOYEE_PATH)));
     }
     
     public void initialize(URL location, ResourceBundle resources) {
        
         commController.setEmployeePaneController(this);
-        employeesPane.setStyle("-fx-background-image: url(\"/view/style/img/background/grey.jpeg\");-fx-background-repeat: no-repeat;");
-        employeeListScrollPane.setStyle("-fx-background: url(\"/view/style/img/background/grey.jpeg\");-fx-background-repeat: no-repeat;");
+        employeesPane.setBackground(imagesProvider.getBackground());
         this.employees = new ArrayList<>();
         
         ArrayList<HashMap<String, Object>> employeeslist = this.employeeManager.getAll();
@@ -64,18 +67,35 @@ public class EmployeesListController extends BaseView implements Initializable {
             HashMap<String, Object> employee = employeeslist.get(i);
             this.addEmployee(employee);
         }
+        
+        searchBar.textProperty().addListener((observable, oldValue, newValue) ->{
+            ObservableList<Node> employeesearch = employeesGridPane.getChildren();
+            for(Node employee : employeesearch){
+                Label employeeNameLabel = (Label)((AnchorPane) employee).lookup(this.EMPLOYEE_NAME);
+                String employeeName = employeeNameLabel.getText();
+                Label employeeSurnameLabel = (Label)((AnchorPane) employee).lookup(this.EMPLOYEE_SURNAME);
+                String employeeSurname = employeeSurnameLabel.getText();
+                if(!employeeName.contains(newValue) && !employeeSurname.contains(newValue) ){
+                    employee.setVisible(false);
+                    employee.setManaged(false);
+                }else{
+                    employee.setVisible(true);
+                    employee.setManaged(true);
+                }
+            }
+        });
     }
 
     private void addEmployee(HashMap<String, Object> employee) {
         int index = this.employees.size() ;
         this.employees.add(index,employee);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/scene/employeeItem.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(this.EMPLOYEE_ITEM_PATH));
         
         Node empNode = null;
         try {
             empNode = loader.load();
             EmployeeItemController empitemContr = loader.getController();
-            empitemContr.setEmployeeInfo(employee); //definire metodo
+            empitemContr.setEmployeeInfo(employee); 
             int column = index%this.GRIDPANE_COLUMNS_NUMBER;
             int row = (int) Math.floor(index/this.GRIDPANE_COLUMNS_NUMBER);
 

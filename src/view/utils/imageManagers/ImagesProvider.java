@@ -123,9 +123,9 @@ public class ImagesProvider {
     //----------------------MENU----------------------//
     public void initializeMenuImg(ArrayList<HashMap<String, Object>> menu){
         this.menuImages = new HashMap<>();
-        for(HashMap<String, Object> item: menu){
-            String imagePath = item.get("image").toString();
-            if(!imagePath.isEmpty()){
+        for(HashMap<String, Object> item : menu){
+            if(item.get("image")!=null){
+                String imagePath = item.get("image").toString();
                 this.menuImages.put(item.get("nameDish").toString(), new LocatedImage(imagePath));
             }
         }
@@ -167,8 +167,8 @@ public class ImagesProvider {
     public void initializeEmployeesImages(ArrayList<HashMap<String, Object>> employees){
         this.employeesImages = new HashMap<>();
         for(HashMap<String, Object> employee : employees){
-            String imagePath = employee.get("image").toString();
-            if(!imagePath.isEmpty()){
+            if(employee.get("image")!= null){
+                String imagePath = employee.get("image").toString();
                 this.employeesImages.put(employee.get("codice_fiscale").toString(), new LocatedImage(imagePath));
             }
         }
