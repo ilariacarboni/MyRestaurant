@@ -8,12 +8,16 @@ import business.MenuManager;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import view.utils.CustomDialog;
 /**
  * FXML Controller class
  *
@@ -51,11 +55,36 @@ public class DishInfoController extends BaseView implements Initializable {
         }
     }
     
+    /*@FXML
+    void deleteBtnClicked(ActionEvent event) {
+        boolean res = this.menuManager.deleteDish(dishInfo);
+        
+        if(!res){
+                    String text = "Il piatto non è stato cancellato";
+                    dialog.setInfo(text, CustomDialog.TYPE_WARNING);
+                    dialog.setButtons(ButtonType.OK);
+                    dialog.showAndWait("Attenzione !");
+                    resetTextFields();
+                }else{
+                    String text = "Il piatto è stato cancellato correttamente";
+                    dialog.setInfo(text, CustomDialog.TYPE_SUCCESS);
+                    dialog.setButtons(ButtonType.OK);
+                    dialog.showAndWait("Inserimento Piatto");
+                    resetTextFields();
+                }
+        
+    }
+
+    @FXML
+    void modifyBtnClicked(ActionEvent event) {
+
+    }*/
     
-    //scelta immagine
-    
-    //modifica prezzo con rif a update 
-    
-    //cancellazione menu delete
+    private void resetTextFields() {
+        priceTxtfield.setText("");
+        dishNameLbl.setText("Seleziona piatto");
+        dishImg.setImage(imagesProvider.getDefaultDishImage());
+        
+    }
     
 }

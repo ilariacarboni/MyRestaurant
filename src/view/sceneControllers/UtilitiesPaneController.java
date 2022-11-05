@@ -14,15 +14,20 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.TranslateTransition;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
@@ -37,10 +42,12 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
 
     public MenuButton filterMenu;
     public Button insertUtilitiesBtn;
-    public TextField searchBar;
+    public TextField idsearchBar;
+    public TextField datesearchBar;
     public BorderPane utilitiesBorderPane;
     public GridPane utilitiesGridPane;
     public ScrollPane utilitiesScrollPane;
+    public AnchorPane selectpageContainer;
     
 
     private final int GRIDPANE_COLUMNS_NUMBER = 1;
@@ -49,8 +56,35 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
 
     private UtilityManager utilityManager = new UtilityManager();
     private ArrayList utilities ;
-
-
+    private int pageNumber = 1;
+    private int lastPage;
+    private int index = 0;
+    private int totalUtilities;
+    
+    private final String UTILITY_ID = "#numberidLbl";
+    private final String UTILITY_TOTAL = "#totalLbl";
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        commController.setUtilitiesPaneController(this);
+        
+        utilitiesBorderPane.setBackground(imagesProvider.getBackground());
+        utilitiesGridPane.getChildren().clear();
+        
+        totalUtilities = utilityManager.getTotalUtilities();
+        utilityManager.setUtilitiesPageLength(7);
+        lastPage = (int)(Math.ceil(totalUtilities/7));
+        this.insertUtilitiesInPage(1);
+        //ricerca per codice 
+        idsearchBar.textProperty().addListener((observable, oldValue, newValue) ->{
+            insertUtilitiesInPage(pageNumber);
+        });
+        datesearchBar.textProperty().addListener((observable, oldValue, newValue) ->{
+            insertUtilitiesInPage(pageNumber);
+        });
+        
+    } 
+    
     @FXML
     void insertUtilityBtnClicked(ActionEvent event) throws IOException {
       BorderPane borderPane = (BorderPane) utilitiesBorderPane.getParent();
@@ -58,34 +92,61 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
       
     }
     
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        commController.setUtilitiesPaneController(this);
-        this.utilities = new ArrayList<>();
-        //ricerca utilities
-        ArrayList<HashMap<String, Object>> utilitieslist = this.utilityManager.getAll();
-        for(int i = 0; i<utilitieslist.size(); i++){
-            HashMap<String, Object> utility = utilitieslist.get(i);
-            try {
-                this.addUtility(utility,i);
-            } catch (IOException ex) {
-                Logger.getLogger(UtilitiesPaneController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+    @FXML
+    void goToNextPage(MouseEvent event) {
+        if(this.pageNumber < lastPage){
+            pageNumber++;
+            this.insertUtilitiesInPage(pageNumber);
         }
-    } 
+    }
+
+    @FXML
+    void goToPreviousPage(MouseEvent event) {
+         if(this.pageNumber != 1){
+            pageNumber --;
+            this.insertUtilitiesInPage(pageNumber);
+        }
+    }
     
-    private void addUtility(HashMap<String, Object> utility, int i ) throws IOException {
-        /*int index = this.utilities.size() ;
-        this.utilities.add(index, utility);*/
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(UTILITY_ITEM_PATH));
+    private void insertUtilitiesInPage(int pageNumber){
+        HashMap<String, String> filters = this.getSearch();
+        this.utilitiesGridPane.getChildren().clear();
+        index = 0;
+        ArrayList<HashMap<String, Object>> utilitieslist = this.utilityManager.getAllbyPage(pageNumber,filters);
+        utilitieslist.forEach((utility)->{
+            try {
+                this.addUtility(utility, index);
+                index ++;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+    
+    private HashMap<String, String> getSearch(){
+        String utilityNumberFilter = this.idsearchBar.getText();
+        String dateFilter = this.datesearchBar.getText();
+        HashMap<String, String> res = new HashMap<>();
+        res.put("numberId", utilityNumberFilter);
+        res.put("date", dateFilter);
+        return res;
+    }
+    
+    public void addUtility(HashMap<String, Object> utility, int i ) throws IOException {
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(this.UTILITY_ITEM_PATH));
         Node utilityNode = loader.load();
         UtilityItemController utilityitemContr = loader.getController();
         utilityitemContr.setUtilityInfo(utility); 
-        //int row = (int) Math.floor(index/this.GRIDPANE_COLUMNS_NUMBER);
 
         utilitiesGridPane.add(utilityNode, 0 , i); 
         this.animate();
         
+    }
+    
+    public void updateUtilities(){
+        pageNumber = 1;
+        this.insertUtilitiesInPage(1);
     }
     
     public void animate(){

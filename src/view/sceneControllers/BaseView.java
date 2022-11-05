@@ -16,7 +16,15 @@ public class BaseView {
     //costanti per i percorsi relativi dei file fxml delle scene
     protected final String CHART_PANE_PATH = "/view/scene/chartsPane.fxml";
     protected final String MENU_PANE_PATH = "/view/scene/MenuPanel.fxml";
+    protected final String COURSE_ITEM_PATH = "/view/scene/PortataItem.fxml";
+    protected final String MENU_ITEM_PATH = "/view/scene/menuItem.fxml";
+    protected final String MENU_LIST_PATH = "/view/scene/menuList.fxml";
+    protected final String ADD_MENU_PATH = "/view/scene/AddMenuDish.fxml";
+    protected final String DISHINFO_PANE_PATH = "/view/scene/dishInfo.fxml";
     protected final String EMPLOYEE_LIST_PANE_PATH = "/view/scene/EmployeesList.fxml";
+    protected final String EMPLOYEE_ITEM_PATH = "/view/scene/employeeItem.fxml";
+    protected final String EMPLOYEE_INFO_PATH = "/view/scene/employeeInfoPane.fxml";
+    protected final String ADD_EMPLOYEE_PATH = "/view/scene/AddEmployee.fxml";
     protected final String CATEGORY_PANE_PATH = "/view/scene/categoryPane.fxml";
     protected final String UTILITIES_PANE_PATH = "/view/scene/UtilitiesPanel.fxml";
     protected final String ADD_UTILITIES_PANE_PATH ="/view/scene/AddUtility.fxml";

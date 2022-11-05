@@ -35,7 +35,6 @@ public class MenuPaneController extends BaseView implements Initializable{
 
     public BorderPane anchorPaneMenu;
     public Button insertDishBtn;
-    public TextField dishSearchBar;
     public GridPane menuGridPane;
     public Label titoloLbl;
     
@@ -43,20 +42,20 @@ public class MenuPaneController extends BaseView implements Initializable{
     final int ANIMATION_DURATION = 275;
     final int ANIMATION_DISTANCE = 700;
     private CourseManager courseManager = new CourseManager();
-    final String MENU_PANE_LOCATION = "/view/scene/menuList.fxml";
     private Node menuListPane = null;
     
     @FXML
     void insertDishBtnClicked(ActionEvent event) throws IOException {
      
       BorderPane borderPane = (BorderPane) anchorPaneMenu.getParent();
-      borderPane.setRight(FXMLLoader.load(getClass().getResource("/view/scene/AddMenuDish.fxml")));  
+      borderPane.setRight(FXMLLoader.load(getClass().getResource(this.ADD_MENU_PATH)));  
 
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         commController.setMenuPaneController(this);
+        anchorPaneMenu.setBackground(imagesProvider.getBackground());
         ArrayList<HashMap<String,Object>> portate =  this.courseManager.getAll(); //lista portate
         imagesProvider.initializeCoursesImages(portate);
         HashMap<String, HashMap<String, Object>> coursesInfo = this.courseManager.getTotalDishes();
@@ -73,7 +72,7 @@ public class MenuPaneController extends BaseView implements Initializable{
     }
     
     public void addCourse(HashMap<String,Object> course ) throws IOException{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/scene/PortataItem.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(this.COURSE_ITEM_PATH));
         Node courseNode = loader.load();
         portataItemController portataContr = loader.getController();
         portataContr.setCourseInfo(course);
@@ -88,7 +87,7 @@ public class MenuPaneController extends BaseView implements Initializable{
     void showDishesForPortata(HashMap<String, Object> course) throws IOException {
         
         if(this.menuListPane == null){
-            this.menuListPane = FXMLLoader.load(getClass().getResource("/view/scene/menuList.fxml"));
+            this.menuListPane = FXMLLoader.load(getClass().getResource(this.MENU_LIST_PATH));
         }
         MenuListController menuListContr = commController.getMenuListController();
         menuListContr.loadDishesByCourses(course);
@@ -96,7 +95,6 @@ public class MenuPaneController extends BaseView implements Initializable{
         DashboardController dashboardController = commController.getDashboardController();
         BackButton backButton = this.makeBackButton(dashboardController);
         dashboardController.setCenterPane(menuListPane, backButton);
-        //dashboardController.setRightPane(null);
         
     }
      private BackButton makeBackButton(DashboardController dc){

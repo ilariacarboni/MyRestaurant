@@ -3,13 +3,15 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 
-<BorderPane fx:id="menuListPane" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.MenuListController">
+<BorderPane fx:id="menuListPane" stylesheets="@../style/css/common.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.MenuListController">
    <center>
       <ScrollPane fx:id="menuListScrollPane" BorderPane.alignment="CENTER">
         <content>
@@ -43,4 +45,16 @@
          </BorderPane.margin>
       </Button>
    </bottom>
+   <top>
+      <HBox BorderPane.alignment="CENTER">
+         <children>
+            <TextField fx:id="dishSearchBar" styleClass="searchBarTextField" stylesheets="@../style/css/store.css" />
+            <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" styleClass="searchBarIcon">
+               <image>
+                  <Image url="@../style/img/others/search.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+   </top>
 </BorderPane>
