@@ -1,3 +1,4 @@
+
 package view.sceneControllers;
 
 import business.CourseManager;
@@ -6,13 +7,18 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import business.MenuManager;
+import java.io.File;
 import java.util.ArrayList;
 
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import view.utils.CustomDialog;
 
@@ -31,43 +37,26 @@ public class AddMenuDishController extends BaseView implements Initializable {
     public Label prezzoLbl;
     public TextField prezzoTxt;
     public Label titoloLbl;
+    public Button photoBtn;
+    
     private MenuManager menuManager = new MenuManager();
     private CourseManager courseManager = new CourseManager();
     private String[] categorie = {"Antipasti", "Primi", "Secondi", "Contorni", "Dolci", "Bevande"};
+    HashMap<String, Object> menu = new HashMap<String, Object>();
 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        /*nomeTxt.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                nomeTxt.setText(newValue.replaceAll("[^\\d]", ""));
-            }
-        });
-        
-        
-        prezzoTxt.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                prezzoTxt.setText(newValue.replaceAll("[^\\d]", ""));
-            }
-        });*/
-        
-        categorieChoicebox.valueProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                categorieChoicebox.setValue(newValue.replaceAll("[^\\d]", ""));
-            }
-        });
-        
+       
         categorieChoicebox.getItems().addAll(categorie);
         categorieChoicebox.setOnAction(this::getSelectedCategory);
 
-        
     }    
 
     @FXML
     private void addMenuDishBtnClicked(ActionEvent event) {
         
-        //controllo che siano stati inseriti tutti i campi
-       if(nomeTxt.getText().isEmpty() || prezzoTxt.getText().isEmpty() || categorieChoicebox.getValue().isEmpty() ){
+       if( nomeTxt.getText().isEmpty() || prezzoTxt.getText().isEmpty() || categorieChoicebox.getValue().isEmpty() ){
             
             System.out.println("campo vuoto");
             
@@ -77,10 +66,16 @@ public class AddMenuDishController extends BaseView implements Initializable {
                 String course = categorieChoicebox.getValue(); //param fisso per portata selezionata
                 
 
-                HashMap<String, Object> menu = new HashMap<String, Object>();
-                menu.put("nameDish", nameDish);
-                menu.put("price", price);
-                menu.put("course", course);
+                //HashMap<String, Object> menu = new HashMap<String, Object>();
+                this.menu.put("nameDish", nameDish);
+                this.menu.put("price", price);
+                this.menu.put("course", course);
+                
+                if(menu.get("image")!=null){
+                    String imagePath = (String)menu.get("image");
+                    menu.put("image", imagePath);
+                }
+                    
                 
                 boolean res = this.menuManager.saveDish(menu);
                 HashMap<String, Object> courseEntity = null;
@@ -93,7 +88,6 @@ public class AddMenuDishController extends BaseView implements Initializable {
                     dialog.setInfo(text, CustomDialog.TYPE_WARNING);
                     dialog.setButtons(ButtonType.OK);
                     dialog.showAndWait("Attenzione !");
-
                     resetTextFields();
                 }else{
                     String text = "Il piatto è stato inserito correttamente";
@@ -116,6 +110,19 @@ public class AddMenuDishController extends BaseView implements Initializable {
         nomeTxt.setText("");
         prezzoTxt.setText("");
         categorieChoicebox.valueProperty().set(null);
+    }
+    
+    @FXML
+    void addPhotoBtnClicked(MouseEvent event) {
+        final FileChooser fc = new FileChooser();
+        File returnVal = null;
+        returnVal = fc.showOpenDialog((Stage)((Node) event.getSource()).getScene().getWindow());
+        if(returnVal != null && this.menu != null){
+            String customImagePath = returnVal.toURI().getRawPath();
+            this.menu.put("image", customImagePath);
+            this.menuManager.updateMenu(this.menu);
+        }
+
     }
 
 }

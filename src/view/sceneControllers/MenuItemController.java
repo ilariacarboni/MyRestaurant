@@ -46,7 +46,7 @@ public class MenuItemController extends BaseView implements Initializable {
     
     @FXML
     public void itemSelected( MouseEvent event) throws IOException {
-         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/scene/dishInfo.fxml"));
+         FXMLLoader loader = new FXMLLoader(getClass().getResource(this.DISHINFO_PANE_PATH));
          Node dishInfoPane = loader.load();
          commController.getDashboardController().setRightPane(dishInfoPane);
          DishInfoController dishInfoContr = loader.getController();

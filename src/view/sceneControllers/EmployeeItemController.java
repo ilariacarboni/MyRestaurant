@@ -35,10 +35,10 @@ public class EmployeeItemController extends BaseView implements Initializable {
         String role = (String)empInfo.get("role");
         this.roleLbl.setText((String)empInfo.get("role"));
         if(role.equals("cuoco")) {
-            this.iconEmployee.setImage(imagesProvider.getEmployeeImage(imagesProvider.EMPLOYEE_CHEF_IMAGE_TYPE));
+            this.iconEmployee.setImage(imagesProvider.getEmployeeBasicImage(imagesProvider.EMPLOYEE_CHEF_IMAGE_TYPE));
         }
         else{
-          this.iconEmployee.setImage(imagesProvider.getEmployeeImage(imagesProvider.EMPLOYEE_WAITER_IMAGE_TYPE));
+          this.iconEmployee.setImage(imagesProvider.getEmployeeBasicImage(imagesProvider.EMPLOYEE_WAITER_IMAGE_TYPE));
         }
         
        
@@ -61,7 +61,7 @@ public class EmployeeItemController extends BaseView implements Initializable {
 
     @FXML
     void itemSelected(MouseEvent event) throws IOException {
-         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/scene/employeeInfoPane.fxml"));
+         FXMLLoader loader = new FXMLLoader(getClass().getResource(this.EMPLOYEE_INFO_PATH));
          Node employeeInfoPane = loader.load();
          commController.getDashboardController().setRightPane(employeeInfoPane);
          EmployeeInfoPaneController empInfoContr = loader.getController();

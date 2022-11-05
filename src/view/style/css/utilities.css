@@ -1,0 +1,17 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 3 nov 2022, 22:43:13
+    Author     : milar
+*/
+.utilities-banner{
+    -fx-border-color: #FFFFFF;
+    -fx-background-radius: 50;
+    -fx-border-radius: 50;
+    -fx-effect: dropShadow(three-pass-box,rgba(0,0,0,0.1), 10.0 , 0.0 , 0.0 ,10.0);
+}
+
+
+
