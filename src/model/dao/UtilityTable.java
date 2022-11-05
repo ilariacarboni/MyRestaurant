@@ -62,7 +62,6 @@ public class UtilityTable implements Table<Utility>{
             }
         }
        
-        
         //eliminazione ultimo AND
         wheres = wheres.substring(0, wheres.length() - 4);
         sql += wheres + limit;
@@ -91,7 +90,6 @@ public class UtilityTable implements Table<Utility>{
     @Override
     public boolean save(Utility u) {
         //lo inserisce nella lista e nel db
-        //se il dipendente è nella lista significa che è stato già inserito nel db
         
         boolean res = false;
             
@@ -285,7 +283,7 @@ public class UtilityTable implements Table<Utility>{
         int numberId =(int) map.get("numberId");
         double total =(double) map.get("total");
         String type =(String) map.get("type");
-        String date =(String) map.get("date");
+        String date =(String) map.get("date").toString();
         String state =(String) map.get("state");
         
         return new Utility(numberId, total, type, date,state);

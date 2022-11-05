@@ -86,7 +86,7 @@ public class EmployeesListController extends BaseView implements Initializable {
         });
     }
 
-    private void addEmployee(HashMap<String, Object> employee) {
+    public void addEmployee(HashMap<String, Object> employee) {
         int index = this.employees.size() ;
         this.employees.add(index,employee);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(this.EMPLOYEE_ITEM_PATH));

@@ -23,6 +23,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -69,8 +70,8 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
         
         utilitiesBorderPane.setBackground(imagesProvider.getBackground());
         utilitiesGridPane.getChildren().clear();
-        totalUtilities = utilityManager.getTotalUtilities();
         
+        totalUtilities = utilityManager.getTotalUtilities();
         utilityManager.setUtilitiesPageLength(7);
         lastPage = (int)(Math.ceil(totalUtilities/7));
         this.insertUtilitiesInPage(1);
@@ -108,7 +109,7 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
     }
     
     private void insertUtilitiesInPage(int pageNumber){
-        HashMap<String, String> filters = this.getFilters();
+        HashMap<String, String> filters = this.getSearch();
         this.utilitiesGridPane.getChildren().clear();
         index = 0;
         ArrayList<HashMap<String, Object>> utilitieslist = this.utilityManager.getAllbyPage(pageNumber,filters);
@@ -122,7 +123,7 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
         });
     }
     
-    private HashMap<String, String> getFilters(){
+    private HashMap<String, String> getSearch(){
         String utilityNumberFilter = this.idsearchBar.getText();
         String dateFilter = this.datesearchBar.getText();
         HashMap<String, String> res = new HashMap<>();
@@ -131,7 +132,7 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
         return res;
     }
     
-    private void addUtility(HashMap<String, Object> utility, int i ) throws IOException {
+    public void addUtility(HashMap<String, Object> utility, int i ) throws IOException {
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource(this.UTILITY_ITEM_PATH));
         Node utilityNode = loader.load();
