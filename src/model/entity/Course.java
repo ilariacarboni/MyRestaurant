@@ -15,11 +15,13 @@ public class Course implements Entity {
     private String name;
     private String img;
     private String dish_icon;
+    private String title_image;
     
-public Course(String name,String img,String dish_icon){
+public Course(String name,String img,String dish_icon,String title_image){
         this.name = name;
         this.img = img;
         this.dish_icon = dish_icon;
+        this.title_image = title_image;
     }
     
     public String getName(){
@@ -32,6 +34,10 @@ public Course(String name,String img,String dish_icon){
     public String getIcon(){
         return this.dish_icon;
     }
+    
+    public String getTitleImage(){
+        return this.title_image;
+    }
     @Override
     public String getTableName() {
         return this.TABLE_NAME;
@@ -43,6 +49,7 @@ public Course(String name,String img,String dish_icon){
         res.put("name", this.name);
         res.put("img", this.img);
         res.put("dish-icon", this.dish_icon);
+        res.put("title-image", this.title_image);
         return res;
     }
     

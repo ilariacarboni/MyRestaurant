@@ -17,8 +17,13 @@ import java.util.HashMap;
 
 public class MenuTable implements Table<Menu>{
     
+    
     Connection conn = dbConnection.establishConnection();
     private final String DISHES_PER_COURSE = "select m.course, count(*) as menu_number from menu m group by m.course;";
+    private final String MOST_REQUESTED_PER_COURSE = "SELECT m.course, ri.dish \n" +
+    "FROM receipt_item ri JOIN menu m ON ri.dish = m.nameDish\n" +
+    "WHERE ( SELECT MAX(qty) as qty_dish FROM receipt_item GROUP BY dish ) \n" +
+    "GROUP BY m.course; ";
    
     @Override
     public ArrayList<Menu> getAll() {
@@ -68,18 +73,16 @@ public class MenuTable implements Table<Menu>{
         //lo inserisce nella lista e nel db
         //se il menu è nella lista significa che è stato già inserito nel db
         boolean res = false;      
-        String sql= "UPDATE menu SET nameDish=? , price=? , course=? WHERE nameDish=?";
+        String sql= "UPDATE menu SET price = ? image = ? WHERE nameDish = ?";
+        PreparedStatement ps = null;
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, m.getNameDish());
-            ps.setDouble(2, m.getPrice());
-            ps.setString(3, m.getCourse());
-            ps.setString(4, m.getImage());
+            ps = conn.prepareStatement(sql);
+            ps.setDouble(1, m.getPrice());
+            ps.setString(2, m.getNameDish());
             ps.execute();
 
             res = true;
         } catch (SQLException ex) {
-
             ex.printStackTrace();
         } 
         return res;
@@ -91,15 +94,21 @@ public class MenuTable implements Table<Menu>{
         boolean res = false;
             
         String sql= "DELETE FROM menu WHERE nameDish = ?";
+        PreparedStatement ps = null;
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
+            ps = conn.prepareStatement(sql);
             ps.setString(1, m.getNameDish());
+            ps.execute();
             res = true;
         } catch (SQLException ex) {
-
             ex.printStackTrace();
+        }finally {
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
-
         return res;
     }
     
@@ -154,6 +163,23 @@ public class MenuTable implements Table<Menu>{
         }
         return res;
      }
+    
+    public HashMap<String, String> getMostRequestedPerCourse(){
+        HashMap<String, String> res = null;
+        try{
+            Statement stm = conn.createStatement();
+            ResultSet resultSet = stm.executeQuery(this.MOST_REQUESTED_PER_COURSE);
+            res = new HashMap<String, String>();
+            while (resultSet.next()) {
+                String course = resultSet.getString("course");
+                String dishName = resultSet.getString("dish");
+                res.put(course, dishName);
+            }
+        }catch (SQLException ex){
+            System.out.println(ex.toString());
+        }
+        return res;
+     }
      
     public Menu constructEntityFromMap(HashMap<String, Object> map) {
         
@@ -161,7 +187,7 @@ public class MenuTable implements Table<Menu>{
         double price =(double) map.get("price");
         String course =(String) map.get("course");
         String image =(String) map.get("image");
-        return new Menu(nameDish, price, course,image);
+        return new Menu(nameDish, price, course, image);
     }
 
 

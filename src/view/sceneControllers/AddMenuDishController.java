@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -31,12 +32,11 @@ import view.utils.CustomDialog;
 public class AddMenuDishController extends BaseView implements Initializable {
     public Label categoriaLbl;
     public ChoiceBox<String> categorieChoicebox;
-    public Button insertdishBtn;
+    public AnchorPane insertdishBtn;
     public Label nomeLbl;
     public TextField nomeTxt;
     public Label prezzoLbl;
     public TextField prezzoTxt;
-    public Label titoloLbl;
     public Button photoBtn;
     
     private MenuManager menuManager = new MenuManager();
@@ -54,7 +54,7 @@ public class AddMenuDishController extends BaseView implements Initializable {
     }    
 
     @FXML
-    private void addMenuDishBtnClicked(ActionEvent event) {
+    private void addMenuDishBtnClicked(MouseEvent event) {
         
        if( nomeTxt.getText().isEmpty() || prezzoTxt.getText().isEmpty() || categorieChoicebox.getValue().isEmpty() ){
             
@@ -65,7 +65,6 @@ public class AddMenuDishController extends BaseView implements Initializable {
             	double price = Double.parseDouble(prezzoTxt.getText());
                 String course = categorieChoicebox.getValue(); //param fisso per portata selezionata
                 
-
                 //HashMap<String, Object> menu = new HashMap<String, Object>();
                 this.menu.put("nameDish", nameDish);
                 this.menu.put("price", price);
@@ -76,7 +75,6 @@ public class AddMenuDishController extends BaseView implements Initializable {
                     menu.put("image", imagePath);
                 }
                     
-                
                 boolean res = this.menuManager.saveDish(menu);
                 HashMap<String, Object> courseEntity = null;
                 ArrayList<HashMap> courses = courseManager.getFrom(course, "name");
@@ -122,7 +120,11 @@ public class AddMenuDishController extends BaseView implements Initializable {
             this.menu.put("image", customImagePath);
             this.menuManager.updateMenu(this.menu);
         }
-
+    }
+    
+    public void hideAddDishPane(MouseEvent mouseEvent) {
+        commController.getDashboardController().setRightPane(null);
+        commController.getMenuPaneController().showAddDishBtn();
     }
 
 }

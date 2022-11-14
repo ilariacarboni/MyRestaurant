@@ -25,19 +25,24 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
+import view.utils.CustomGridPane;
+import view.utils.imageManagers.LocatedImage;
 
 public class MenuListController extends BaseView implements Initializable {
-    public GridPane menuListGridPane;
+    
+    public CustomGridPane menuListGridPane;
     public ScrollPane menuListScrollPane;
     public BorderPane menuListPane;
     public Button insertDishBtn;
     public TextField dishSearchBar;
+    public ImageView titleImg;
 
     final int GRIDPANE_COLUMNS_NUMBER = 3;
     private ArrayList dishes;
     private MenuManager menuManager = new MenuManager();
     private final String DISH_NAME = "#itemNameLbl";
-
+    
+    private HashMap<String, Object> course;
 
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -45,27 +50,30 @@ public class MenuListController extends BaseView implements Initializable {
         this.dishes = new ArrayList<>();
         menuListPane.setBackground(imagesProvider.getBackground());
         
-         dishSearchBar.textProperty().addListener((observable, oldValue, newValue) ->{
-            ObservableList<Node> dishsearch = menuListGridPane.getChildren();
-            for(Node dish : dishsearch){
-                Label dishNameLabel = (Label)((AnchorPane) dish ).lookup(this.DISH_NAME);
-                String dishName = dishNameLabel.getText();
-                if(!dishName.contains(newValue)){
-                    dish.setVisible(false);
-                    dish.setManaged(false);
-                }else{
-                    dish.setVisible(true);
-                    dish.setManaged(true);
-                }
-            }
-        });
+        menuListGridPane = new CustomGridPane(this.GRIDPANE_COLUMNS_NUMBER);
+        menuListGridPane.setBreakPoint(0, 800, 1);
+        menuListGridPane.setBreakPoint(800, 1100, 2);
+        menuListGridPane.setBreakPoint(1100, Double.MAX_VALUE, 3);
+        menuListGridPane.startToListenForAdjustments(commController.getStage());
+        menuListGridPane.setHgap(20);
+        menuListGridPane.setVgap(20);
+        menuListGridPane.setPadding(new Insets(5, 20, 20, 20));
+        
+        menuListScrollPane.setContent(menuListGridPane);
+        
+        this.initializeSearchBar();
     }
 
-
     public void loadDishesByCourses(HashMap<String, Object> portata){
-
+        
+        String name = portata.get("name").toString();
+        if (portata.get("title-image") != null){
+            titleImg.setImage(imagesProvider.getCourseTitleImage(name));
+        }
+        
         String course = portata.get("name").toString();
         menuListGridPane.getChildren().clear();
+        dishes.clear();
         ArrayList<HashMap<String, Object>> menulist = this.menuManager.getFrom(course, "course");
         imagesProvider.initializeMenuImg(menulist);
         for(int i = 0; i<menulist.size(); i++){
@@ -73,7 +81,6 @@ public class MenuListController extends BaseView implements Initializable {
             this.addMenu(menuDish, portata);
         }
     }
-
 
     public void addMenu(HashMap<String, Object> dishInfo,  HashMap<String, Object> course){
         int index = this.dishes.size() ;
@@ -101,6 +108,23 @@ public class MenuListController extends BaseView implements Initializable {
         BorderPane borderPane = (BorderPane) menuListPane.getParent();
         borderPane.setRight(FXMLLoader.load(getClass().getResource(this.ADD_MENU_PATH)));
 
+    }
+
+    private void initializeSearchBar() {
+        dishSearchBar.textProperty().addListener((observable, oldValue, newValue) ->{
+                   ObservableList<Node> dishsearch = menuListGridPane.getChildren();
+                   for(Node dish : dishsearch){
+                       Label dishNameLabel = (Label)((AnchorPane) dish ).lookup(this.DISH_NAME);
+                       String dishName = dishNameLabel.getText();
+                       if(!dishName.contains(newValue)){
+                           dish.setVisible(false);
+                           dish.setManaged(false);
+                       }else{
+                           dish.setVisible(true);
+                           dish.setManaged(true);
+                       }
+                   }
+               });
     }
 
 }

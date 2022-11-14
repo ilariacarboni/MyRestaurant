@@ -30,7 +30,7 @@ public ArrayList<Course> getAll() {
             ResultSet resultSet = stm.executeQuery(sql);
 
             while (resultSet.next()) {
-                Course c = new Course( resultSet.getString("name"),resultSet.getString("img"),resultSet.getString("dish-icon"));
+                Course c = new Course( resultSet.getString("name"),resultSet.getString("img"),resultSet.getString("dish-icon"),resultSet.getString("title-image"));
                 resList.add(c);
             }
         } catch (SQLException ex) {
@@ -55,7 +55,7 @@ public ArrayList<Course> getAll() {
 
     public boolean update(Course c) {
         boolean res = false;
-        String sql= "UPDATE course SET name = ?  WHERE name=?";
+        String sql= "UPDATE course SET name = ?  WHERE name = ?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, c.getName());
@@ -84,14 +84,14 @@ public ArrayList<Course> getAll() {
         //ricerca per nome
         ArrayList<Course> resList = new ArrayList<Course>();
         if(searchParam instanceof String){
-            String sql = "SELECT * FROM course WHERE id = ?";
+            String sql = "SELECT * FROM course WHERE name = ?";
             try {
                 PreparedStatement ps = conn.prepareStatement(sql);
                 ps.setString(1, (String)searchParam);
                 ResultSet resultSet = ps.executeQuery();
                 
                 while(resultSet.next()){
-                    Course c = new Course(resultSet.getString("name"),resultSet.getString("img"),resultSet.getString("dish-icon"));
+                    Course c = new Course(resultSet.getString("name"),resultSet.getString("img"),resultSet.getString("dish-icon"),resultSet.getString("title-image"));
                     resList.add(c);
                 }
             } catch (Exception e) {
@@ -105,7 +105,8 @@ public ArrayList<Course> getAll() {
         String name = (String) map.get("name");
         String img = (String) map.get("img");
         String dish_icon = (String) map.get("dish-icon");
-        return new Course(name,img,dish_icon);
+        String title_image = (String) map.get("title-image");
+        return new Course(name,img,dish_icon,title_image);
     }
     
 }

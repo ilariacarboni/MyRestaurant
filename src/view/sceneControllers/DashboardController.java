@@ -128,7 +128,7 @@ public class DashboardController extends BaseView implements Initializable {
     private void menuBtnClicked(ActionEvent event) throws IOException {
         select(menuBtn);
         boolean logged = this.checkLogin();
-        if(logged){
+       if(logged){
             if(this.menuPane == null){
                 this.menuPane = FXMLLoader.load(getClass().getResource(this.MENU_PANE_PATH));
             }
@@ -179,7 +179,7 @@ public class DashboardController extends BaseView implements Initializable {
             }
             borderPane.setCenter(this.utilitiesPane);
             borderPane.setRight(null);
-        }
+       }
     }
 
     @FXML

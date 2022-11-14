@@ -4,8 +4,10 @@
  */
 package view.sceneControllers;
 
+import business.CourseManager;
 import business.MenuManager;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -36,28 +38,30 @@ public class DishInfoController extends BaseView implements Initializable {
 
     private HashMap<String, Object> dishInfo;
     private MenuManager menuManager;
+    private CourseManager courseManager;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
          commController.setDishInfoController(this);
          this.menuManager = new MenuManager();
+         this.courseManager = new CourseManager();
     }  
     
     public void setChosenDish(HashMap<String, Object> menu){
         this.dishInfo = menu;
         String nameDish = menu.get("nameDish").toString();
         this.dishNameLbl.setText(nameDish);
-       // this.dishPriceLbl.setText(String.valueOf(menu.get("price")));
-       if (menu.get("image") != null){
-             this.dishImg.setImage(imagesProvider.getMenuImage(nameDish));
+       String imagePath = (String)menu.get("image");
+       if(imagePath != null){
+             this.dishImg.setImage(imagesProvider.getMenuImage(menu.get("nameDish").toString(), imagePath ));
         }else{
             this.dishImg.setImage(imagesProvider.getDefaultDishImage());
         }
     }
     
-    /*@FXML
+    @FXML
     void deleteBtnClicked(ActionEvent event) {
-        boolean res = this.menuManager.deleteDish(dishInfo);
+       boolean res = this.menuManager.deleteMenu(dishInfo);
         
         if(!res){
                     String text = "Il piatto non è stato cancellato";
@@ -69,22 +73,52 @@ public class DishInfoController extends BaseView implements Initializable {
                     String text = "Il piatto è stato cancellato correttamente";
                     dialog.setInfo(text, CustomDialog.TYPE_SUCCESS);
                     dialog.setButtons(ButtonType.OK);
-                    dialog.showAndWait("Inserimento Piatto");
+                    dialog.showAndWait("Cancellazione Piatto");
                     resetTextFields();
+                    refreshCourse();
+                      
                 }
         
     }
 
     @FXML
     void modifyBtnClicked(ActionEvent event) {
-
-    }*/
+        double price = Double.parseDouble(priceTxtfield.getText());
+        dishInfo.put("price", price);
+        
+        boolean res = this.menuManager.updateMenu(dishInfo);
+                if(!res){
+                    String text = "I dati non sono stati modificati!";
+                    dialog.setInfo(text, CustomDialog.TYPE_ERROR);
+                    dialog.setButtons(ButtonType.OK);
+                    dialog.showAndWait("Errore !");
+                    priceTxtfield.setText("");
+                }else{
+                    String text = "I dati sono stati modificati!";
+                    dialog.setInfo(text, CustomDialog.TYPE_SUCCESS);
+                    dialog.setButtons(ButtonType.OK);
+                    dialog.showAndWait("Inserimento bolletta");
+                    resetTextFields();
+                    refreshCourse();
+                   
+                }
+    }
     
     private void resetTextFields() {
         priceTxtfield.setText("");
         dishNameLbl.setText("Seleziona piatto");
         dishImg.setImage(imagesProvider.getDefaultDishImage());
         
+    }
+
+    private void refreshCourse() {
+        String courseName = dishInfo.get("course").toString();
+        ArrayList<HashMap<String, Object>> courselist = this.courseManager.getFrom(courseName, "name");
+        MenuListController menulistContr = commController.getMenuListController();
+        for(int i = 0; i<courselist.size(); i++){
+            HashMap<String, Object> course = courselist.get(i);
+            menulistContr.loadDishesByCourses(course);
+        }
     }
     
 }

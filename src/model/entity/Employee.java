@@ -26,7 +26,7 @@ public class Employee implements Entity{
         this.surname=surname;
         this.role=role;
         this.begin_date=begin_date;
-	this.end_date=end_date; // nel metodo conversione da localdate di java a date sql
+	this.end_date=end_date; //conversione da localdate di java a date sql
         this.wage=wage;
         this.image=image;
     }
@@ -52,7 +52,7 @@ public class Employee implements Entity{
     }
     public String getEndDate(){
 	//Date sql_end_date = Date.valueOf(this.end_date);
-	return this.begin_date;
+	return this.end_date;
     }
     
     public int getWage(){
