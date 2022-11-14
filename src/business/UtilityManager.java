@@ -1,5 +1,6 @@
 package business;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import model.dao.UtilityTable;
 import model.entity.Utility;
@@ -27,8 +28,8 @@ public class UtilityManager {
         }
         return res;
     }
-     public ArrayList getAllbyPage(int page, HashMap<String, String> filters){
-        ArrayList<Utility> utilities = this.utilityTable.getPageWithStatus(page, filters);
+     public ArrayList getAllbyPage(int page, HashMap<String, String> filters, String utilityType) throws SQLException{
+        ArrayList<Utility> utilities = this.utilityTable.getPageWithStatus(page, filters, utilityType);
         return this.parseRes(utilities);
     }
      
@@ -48,6 +49,10 @@ public class UtilityManager {
         this.utilityTable.setPageLength(l);
     }
      
+      public boolean updateUtility(HashMap<String, Object> utilityInfo ){
+        Utility utility = this.utilityTable.constructEntityFromMap(utilityInfo);
+        return this.utilityTable.update(utility);
+    }
     
     public ArrayList getFrom(Object searchParam, String paramName ){
         ArrayList<Utility> utilities = this.utilityTable.getFrom(searchParam, paramName);

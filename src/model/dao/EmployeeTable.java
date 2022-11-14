@@ -27,8 +27,9 @@ public class EmployeeTable implements Table<Employee>{
     public ArrayList<Employee> getAll() {
         ArrayList <Employee> resList = new ArrayList<Employee>();
         String sql = "SELECT * FROM employee";
+        Statement stm = null;
         try {
-            Statement stm = conn.createStatement();
+            stm = conn.createStatement();
             ResultSet resultSet = stm.executeQuery(sql);
 
             while (resultSet.next()) {
@@ -38,8 +39,13 @@ public class EmployeeTable implements Table<Employee>{
             }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
+        }finally {
+            try {
+                stm.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
-        //this.employeesList = resList;
         return resList;
     }
 
@@ -47,7 +53,7 @@ public class EmployeeTable implements Table<Employee>{
     public boolean save(Employee em) {
         boolean res = false;
             
-            String sql= "INSERT INTO Employee (codice_fiscale, name, surname, role, begin_date, end_date, wage,image) VALUES (?,?,?,?,?,?,?,?)";
+            String sql= "INSERT INTO employee (codice_fiscale, name, surname, role, begin_date, end_date, wage,image) VALUES (?,?,?,?,?,?,?,?)";
             try {
                 PreparedStatement ps = conn.prepareStatement(sql);
                 ps.setString(1, em.getCodiceF());
@@ -72,30 +78,26 @@ public class EmployeeTable implements Table<Employee>{
 
     @Override
     public boolean update(Employee em) {
-        //t deve essere un istanza di Product con lo stesso identificativo 
-        //dell'istanza che si vuole modificare
         boolean res = false;
-		
-	String sql= "UPDATE Employee  SET codice_fiscale=?, name=?, surname=?, role=?, begin_date=?, end_date=?, wage=?, image=? WHERE codice_fiscale = ?";
-           	try {
-                PreparedStatement ps = conn.prepareStatement(sql);
-                ps.setString(1, em.getCodiceF());
-                ps.setString(2, em.getName());
-                ps.setString(3, em.getSurname());
-		ps.setString(4, em.getRole());
-                ps.setString(5, em.getBeginDate());
-		ps.setString(6, em.getEndDate());
-                ps.setInt(7, em.getWage());
-                ps.setString(8, em.getImage());
+	PreparedStatement ps = null;
+	String sql= "UPDATE employee SET end_date = ? WHERE codice_fiscale = ?";
+        try {
+                ps = conn.prepareStatement(sql);
+		ps.setString(1, em.getEndDate());
+                ps.setString(2, em.getCodiceF());
                 ps.execute();
                 
                 res = true;
-            }
-            
-           catch (SQLException ex) {
-                
-                ex.printStackTrace();
-            }
+        }
+        catch (SQLException ex) {
+             ex.printStackTrace();
+        } finally {
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+             }
+        }
         return res;
          
     }
@@ -104,17 +106,23 @@ public class EmployeeTable implements Table<Employee>{
     public boolean delete (Employee em) {
         boolean res = false;
         
-            
-            String sql= "DELETE FROM Employee WHERE codiceF = ?";
+            String sql= "DELETE FROM employee WHERE codice_fiscale = ?";
+            PreparedStatement ps = null;
             try {
-                PreparedStatement ps = conn.prepareStatement(sql);
+                ps = conn.prepareStatement(sql);
                 ps.setString(1, em.getCodiceF());
-                //ps.execute();
+                ps.execute();
                 res = true;
             } catch (SQLException ex) {
                 
                 ex.printStackTrace();
+            }finally {
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
+        }
         return res;
     
   }
@@ -158,6 +166,6 @@ public class EmployeeTable implements Table<Employee>{
         int wage =(int) map.get("wage");
         String image = (String) map.get("image");
       
-        return new Employee(codice_fiscale, name, surname, role, begin_date, end_date,wage,image);
+        return new Employee(codice_fiscale, name, surname, role, begin_date, end_date, wage,image);
     }
 }

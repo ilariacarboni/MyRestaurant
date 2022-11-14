@@ -22,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -67,7 +68,7 @@ public class AddEmployeeController extends BaseView implements  Initializable {
         
     }  
      @FXML
-    private void addEmpolyeeBtnClicked(ActionEvent event) {
+    private void AddEmployeeBtnClicked(ActionEvent event) {
         
         //controllo che siano stati inseriti tutti i campi
         if(nomeEmpTxt.getText().isEmpty() || stipendioEmpTxt.getText().isEmpty() || cognomeEmpTxt.getText().isEmpty() || codicefEmpTxt.getText().isEmpty() ||
@@ -123,8 +124,8 @@ public class AddEmployeeController extends BaseView implements  Initializable {
         stipendioEmpTxt.setText("");
         cognomeEmpTxt.setText("");
         ruoloChoicebox.valueProperty().set(null);
-        iniziocontrattoEmpTxt.setText("");  //reset delle date
-        finecontrattoEmpTxt.setText("");
+        iniziocontrattoEmpTxt.setText("yyyy-mm-dd"); 
+        finecontrattoEmpTxt.setText("yyyy-mm-dd");
     }
     
     @FXML
@@ -135,13 +136,16 @@ public class AddEmployeeController extends BaseView implements  Initializable {
         if(returnVal != null && this.employee != null){
             String customImagePath = returnVal.toURI().getRawPath();
             this.employee.put("image", customImagePath);
-            this.employeeManager.updateEmployee(this.employee);
         }
     }
         
         private void getSelectedRole(ActionEvent event) {
         String role = ruoloChoicebox.getValue();
     }
-    
+        
+        public void closePaneBtnClicked(MouseEvent mouseEvent){
+        commController.getDashboardController().setRightPane(null);
+        commController.getEmployeePaneController().showAddEmployeeBtn();
+    }
     
 }

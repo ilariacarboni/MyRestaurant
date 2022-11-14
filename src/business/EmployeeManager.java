@@ -24,6 +24,10 @@ public class EmployeeManager {
         return this.employeeTable.update(employee);
     }
     
+    public boolean deleteEmployee(HashMap<String, Object> empinfo ){
+        Employee employee = this.employeeTable.constructEntityFromMap(empinfo);
+        return this.employeeTable.delete(employee);
+    }
     public ArrayList getAll(){
         ArrayList<Employee> employees = this.employeeTable.getAll();
         ArrayList<HashMap<String,Object>> res  = new ArrayList<HashMap<String,Object>>();

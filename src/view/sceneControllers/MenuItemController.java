@@ -33,10 +33,11 @@ public class MenuItemController extends BaseView implements Initializable {
     
     public void setDishInfo( HashMap<String, Object> dishInfo, HashMap<String, Object> course) {
         this.dishInfo = dishInfo;
+        String name = course.get("name").toString();
         this.itemNameLbl.setText((String)dishInfo.get("nameDish"));
         this.itemPriceLbl.setText("€" + dishInfo.get("price").toString());
         if (course.get("img") != null){
-            this.imgDish.setImage(new LocatedImage((String) course.get("dish-icon")));
+            this.imgDish.setImage(imagesProvider.getCourseIcon(name));
         }
     }
     

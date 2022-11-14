@@ -18,6 +18,11 @@ public class MenuManager {
         Menu menu = this.menuTable.constructEntityFromMap(dishinfo);
         return this.menuTable.update(menu);
     }
+    
+    public boolean deleteMenu(HashMap<String, Object> dishinfo ){
+        Menu menu = this.menuTable.constructEntityFromMap(dishinfo);
+        return this.menuTable.delete(menu);
+    }
 
     public HashMap<String, Object> getMenu(String nameDish){
         HashMap<String, Object> res = null;

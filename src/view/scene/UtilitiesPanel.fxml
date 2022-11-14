@@ -25,10 +25,12 @@
          <children>
             <HBox fillHeight="false">
                <children>
-                  <MenuButton fx:id="filterMenu" mnemonicParsing="false" style="-fx-background-color: ea613f;" styleClass="button" text="MenuButton">
+                  <MenuButton fx:id="filterMenu" mnemonicParsing="false" prefHeight="38.0" prefWidth="193.0" style="-fx-background-color: ea613f;" styleClass="button" text="Tutte le utenze">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="Action 1" />
-                      <MenuItem mnemonicParsing="false" text="Action 2" />
+                        <MenuItem fx:id="allUtilitiesItem" mnemonicParsing="false" onAction="#loadAllUtilities" text="Tutte" />
+                        <MenuItem fx:id="filterElectricity" mnemonicParsing="false" onAction="#loadElectricityUtilities" text="elettricità" />
+                      <MenuItem fx:id="filterWater" mnemonicParsing="false" onAction="#loadWaterUtilities" text="acqua" />
+                      <MenuItem fx:id="filterGas" mnemonicParsing="false" onAction="#loadGasUtilities" text="gas" />
                     </items>
                      <HBox.margin>
                         <Insets right="30.0" />
@@ -39,14 +41,7 @@
                   <Insets left="20.0" right="30.0" top="30.0" />
                </HBox.margin>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="451.0">
-               <children>
-                  <TextField fx:id="idsearchBar" prefHeight="32.0" prefWidth="214.0" styleClass="searchBarTextField">
-                     <HBox.margin>
-                        <Insets right="30.0" />
-                     </HBox.margin></TextField>
-                  <TextField fx:id="datesearchBar" prefHeight="32.0" prefWidth="214.0" styleClass="searchBarTextField" />
-               </children>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="636.0">
                <HBox.margin>
                   <Insets right="20.0" />
                </HBox.margin>
@@ -83,9 +78,9 @@
    <center>
       <VBox BorderPane.alignment="CENTER">
          <children>
-            <HBox minHeight="120.0" prefWidth="1000.0">
+            <HBox minHeight="120.0">
                <children>
-                  <VBox alignment="CENTER" prefWidth="178.0">
+                  <VBox alignment="CENTER" prefWidth="220.0">
                      <children>
                         <Label text="Tipo">
                            <font>
@@ -104,23 +99,52 @@
                         <Insets left="20.0" />
                      </HBox.margin>
                   </VBox>
-                  <VBox alignment="CENTER" prefWidth="244.0">
+                  <VBox alignment="CENTER" prefWidth="260.0">
                      <children>
-                        <Label text="Codice identificativo">
-                           <font>
-                              <Font name="Cambria Bold" size="18.0" />
-                           </font></Label>
+                        <HBox minHeight="40.0" prefWidth="200.0" />
+                        <HBox alignment="CENTER" minHeight="40.0" prefWidth="200.0">
+                           <children>
+                              <Label text="Codice identificativo">
+                                 <font>
+                                    <Font name="Cambria Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" minHeight="40.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="idsearchBar" prefHeight="32.0" prefWidth="208.0" styleClass="searchBarTextField">
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER" prefWidth="197.0">
+                  <VBox alignment="CENTER" prefWidth="230.0">
                      <children>
-                        <Label text="Scadenza">
-                           <font>
-                              <Font name="Cambria Bold" size="18.0" />
-                           </font></Label>
+                        <HBox minHeight="40.0" prefWidth="200.0" />
+                        <HBox alignment="CENTER" minHeight="40.0" prefWidth="200.0">
+                           <children>
+                              <Label text="Scadenza">
+                                 <font>
+                                    <Font name="Cambria Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" minHeight="40.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="datesearchBar" prefHeight="32.0" prefWidth="214.0" styleClass="searchBarTextField">
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </HBox.margin></TextField>
+                           </children>
+                        </HBox>
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER" prefWidth="180.0">
+                  <VBox alignment="CENTER" prefWidth="200.0">
                      <children>
                         <Label text="Totale €">
                            <font>
@@ -128,7 +152,7 @@
                            </font></Label>
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER" prefWidth="100.0">
+                  <VBox alignment="CENTER" prefWidth="200.0">
                      <HBox.margin>
                         <Insets right="20.0" />
                      </HBox.margin></VBox>
@@ -146,9 +170,9 @@
                   <String fx:value="utilities-banner" />
                </styleClass>
             </HBox>
-            <ScrollPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+            <ScrollPane maxWidth="1.7976931348623157E308">
                <content>
-                  <GridPane fx:id="utilitiesGridPane" alignment="CENTER" prefWidth="914.0">
+                  <GridPane fx:id="utilitiesGridPane" alignment="CENTER">
                     <columnConstraints>
                       <ColumnConstraints percentWidth="100" /> 
                     </columnConstraints>
