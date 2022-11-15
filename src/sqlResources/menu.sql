@@ -22,16 +22,3 @@ INSERT INTO menu (
                      '1.5',
                      'Bevande'
                  );
-
-AGGIORNAMENTO PER LABEL PIATTO PIù RICHIESTO 
-UPDATE menu
-   SET nameDish = 'Acqua',
-       price = '1',
-       image = NULL
- WHERE nameDish = 'Birra';
-
-UPDATE menu
-   SET nameDish = 'Birra',
-       price = '4',
-       image = 'view/style/img/menu-dishes/birra.png'
- WHERE nameDish = 'Acqua';

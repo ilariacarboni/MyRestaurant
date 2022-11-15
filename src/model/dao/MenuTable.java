@@ -20,9 +20,9 @@ public class MenuTable implements Table<Menu>{
     
     Connection conn = dbConnection.establishConnection();
     private final String DISHES_PER_COURSE = "select m.course, count(*) as menu_number from menu m group by m.course;";
-    private final String MOST_REQUESTED_PER_COURSE = "SELECT m.course, ri.dish \n" +
-    "FROM receipt_item ri JOIN menu m ON ri.dish = m.nameDish\n" +
-    "WHERE ( SELECT MAX(qty) as qty_dish FROM receipt_item GROUP BY dish ) \n" +
+    private final String MOST_REQUESTED_PER_COURSE = "SELECT m.course, r.dish, MAX(qty) \n" +
+    "FROM receipt_item r JOIN menu m ON r.dish = m.nameDish\n" +
+    "WHERE qty = ( SELECT MAX(qty) as qty_dish FROM receipt_item ri WHERE ri.dish=r.dish GROUP BY dish ) \n" +
     "GROUP BY m.course; ";
    
     @Override
