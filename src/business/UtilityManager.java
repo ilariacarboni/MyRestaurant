@@ -45,6 +45,10 @@ public class UtilityManager {
         return utilityTable.getTotal();
     }
      
+    public void setOrdersPageLength(int l){
+        this.utilityTable.setPageLength(l);
+    }
+     
       public void setUtilitiesPageLength(int l){
         this.utilityTable.setPageLength(l);
     }

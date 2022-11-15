@@ -22,6 +22,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuButton;
@@ -54,6 +55,7 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
     private MenuItem filterElectricity;
     private MenuItem filterWater;
     private MenuItem allUtilitiesItem;
+    public ComboBox<Integer> pageLengthSelector;
 
     
 
@@ -69,6 +71,8 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
     private int index = 0;
     private int totalUtilities;
     private String typeSelected = null;
+    private Integer[] pageLengthValues = {7,15,30};
+    private int  currentPageLength = pageLengthValues[0];
     
     private final String UTILITY_ID = "#numberidLbl";
     private final String UTILITY_TOTAL = "#totalLbl";
@@ -81,8 +85,10 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
         utilitiesGridPane.getChildren().clear();
         
         totalUtilities = utilityManager.getTotalUtilities();
-        utilityManager.setUtilitiesPageLength(7);
-        lastPage = (int)(Math.ceil(totalUtilities/7));
+        pageLengthSelector.setValue(pageLengthValues[0]);
+        utilityManager.setUtilitiesPageLength(pageLengthValues[0]);
+        pageLengthSelector.getItems().addAll(pageLengthValues);
+        lastPage = (int)(Math.ceil(totalUtilities/currentPageLength));
         this.insertUtilitiesInPage(1);
         
         this.initializeSearchBar();
@@ -112,6 +118,18 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
             this.insertUtilitiesInPage(pageNumber);
         }
     }
+    public void changePageLength(ActionEvent actionEvent) {
+        int nextPageLength = pageLengthSelector.getValue();
+        if(nextPageLength > currentPageLength){
+            int ratio = (int)Math.ceil(nextPageLength/(double)currentPageLength);
+            pageNumber = (int)Math.ceil((double)pageNumber/ratio);
+        }else if(nextPageLength < currentPageLength){
+        }
+        this.utilityManager.setOrdersPageLength(nextPageLength);
+        currentPageLength = nextPageLength;
+        lastPage = (int)(Math.ceil(totalUtilities/(double)currentPageLength));
+        this.insertUtilitiesInPage(pageNumber);
+    }
     
     public void insertUtilitiesInPage(int pageNumber){
         try {
@@ -128,7 +146,7 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
                     throw new RuntimeException(e);
                 }
             });
-            this.typeSelected=null;
+            //this.typeSelected=null;
         } catch (SQLException ex) {
             Logger.getLogger(UtilitiesPaneController.class.getName()).log(Level.SEVERE, null, ex);
         }
