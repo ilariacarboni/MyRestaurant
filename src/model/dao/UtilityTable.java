@@ -48,12 +48,19 @@ public class UtilityTable implements Table<Utility>{
             return resList;
     }
     
-    public ArrayList<Utility> getPageWithStatus(int page, HashMap<String, String> filters){
+    public ArrayList<Utility> getPageWithStatus(int page, HashMap<String, String> filters, String utilityType) throws SQLException {
         ArrayList <Utility> resList = new ArrayList<Utility>();
         int offset =  (page-1) * this.pageLength;
         String sql = "SELECT * FROM utility";
-        String limit = " LIMIT "+ offset +"," +this.pageLength;
+        String limit = " ORDER BY date DESC LIMIT "+ offset +"," +this.pageLength;
         String wheres = " WHERE ";
+        if (utilityType!=null){
+            wheres += " type = '" + utilityType +"' AND ";
+           /* PreparedStatement ps = conn.prepareStatement(wheres);
+            ps.setString(1, utilityType);*/
+            
+        }
+
         for (Map.Entry<String, String> entry : filters.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
@@ -61,14 +68,13 @@ public class UtilityTable implements Table<Utility>{
                 wheres += key+" LIKE '%"+value+"%' AND ";
             }
         }
-       
-        //eliminazione ultimo AND
-        wheres = wheres.substring(0, wheres.length() - 4);
+        
+        wheres = wheres.substring(0, wheres.length() - 4 );
         sql += wheres + limit;
         PreparedStatement ps = null;
         try {
            ps = conn.prepareStatement(sql);
-            ResultSet resultSet = ps.executeQuery();
+           ResultSet resultSet = ps.executeQuery();
 
             while (resultSet.next()) {
                     Utility u= new Utility(resultSet.getInt("numberId"),resultSet.getDouble("total"), resultSet.getString("type"),
@@ -89,19 +95,17 @@ public class UtilityTable implements Table<Utility>{
 
     @Override
     public boolean save(Utility u) {
-        //lo inserisce nella lista e nel db
-        
         boolean res = false;
             
-            String sql= "INSERT INTO Utility (numberId, total, type, date, state) VALUES (?,?,?,?,?)";
+            String sql= "INSERT INTO utility (numberId, total, type, date, state) VALUES (?,?,?,?,?)";
             PreparedStatement ps = null;
             try {
                 ps = conn.prepareStatement(sql);
                 ps.setInt(1, u.getNumberId());
-                ps.setDouble(2, (double)u.getTotal());
+                ps.setDouble(2, u.getTotal());
                 ps.setString(3, u.getType());
                 ps.setString(4, u.getDate());
-                ps.setString(3, u.getState());
+                ps.setString(5, u.getState());
                 ps.execute();
                 
                 res = true;
@@ -109,31 +113,25 @@ public class UtilityTable implements Table<Utility>{
                 ex.printStackTrace();
             }
             finally {
-                
-            try {
-                ps.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
-        }
          return res;
     }
 
     @Override
-    public boolean update (Utility u) {
-        //t deve essere un istanza di Product con lo stesso identificativo 
-        //dell'istanza che si vuole modificare
+    public boolean update(Utility u) {
         boolean res = false;
             
-            String sql= "UPDATE Utility  SET numberId = ?, total = ? , type =? , date = ? , state = ? WHERE numberId = ?";
+            String sql= "UPDATE Utility  SET state = ? WHERE numberId = ?";
             PreparedStatement ps = null;
             try {
                 ps = conn.prepareStatement(sql);
-                ps.setInt(1, u.getNumberId());
-                ps.setDouble(2, (double)u.getTotal());
-                ps.setString(3, u.getType());
-                ps.setString(4, u.getDate());
-                ps.setString(5, u.getState());
+                ps.setString(1, u.getState());
+                ps.setInt(2, u.getNumberId());
                 ps.execute();
                 
                 res = true;
@@ -286,7 +284,7 @@ public class UtilityTable implements Table<Utility>{
         String date =(String) map.get("date").toString();
         String state =(String) map.get("state");
         
-        return new Utility(numberId, total, type, date,state);
+        return new Utility(numberId, total, type, date, state);
     }
     
 }

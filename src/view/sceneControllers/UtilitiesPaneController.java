@@ -7,6 +7,7 @@ package view.sceneControllers;
 import business.UtilityManager;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +25,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -48,11 +50,17 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
     public GridPane utilitiesGridPane;
     public ScrollPane utilitiesScrollPane;
     public AnchorPane selectpageContainer;
+    private MenuItem filterGas;
+    private MenuItem filterElectricity;
+    private MenuItem filterWater;
+    private MenuItem allUtilitiesItem;
+
     
 
     private final int GRIDPANE_COLUMNS_NUMBER = 1;
     private final int ANIMATION_DURATION = 275;
     private final int ANIMATION_DISTANCE = 700;
+    public static final String ELECTRICITY_SELECTED  = "elettricità";
 
     private UtilityManager utilityManager = new UtilityManager();
     private ArrayList utilities ;
@@ -60,6 +68,7 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
     private int lastPage;
     private int index = 0;
     private int totalUtilities;
+    private String typeSelected = null;
     
     private final String UTILITY_ID = "#numberidLbl";
     private final String UTILITY_TOTAL = "#totalLbl";
@@ -75,13 +84,8 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
         utilityManager.setUtilitiesPageLength(7);
         lastPage = (int)(Math.ceil(totalUtilities/7));
         this.insertUtilitiesInPage(1);
-        //ricerca per codice 
-        idsearchBar.textProperty().addListener((observable, oldValue, newValue) ->{
-            insertUtilitiesInPage(pageNumber);
-        });
-        datesearchBar.textProperty().addListener((observable, oldValue, newValue) ->{
-            insertUtilitiesInPage(pageNumber);
-        });
+        
+        this.initializeSearchBar();
         
     } 
     
@@ -89,7 +93,8 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
     void insertUtilityBtnClicked(ActionEvent event) throws IOException {
       BorderPane borderPane = (BorderPane) utilitiesBorderPane.getParent();
       borderPane.setRight(FXMLLoader.load(getClass().getResource(this.ADD_UTILITIES_PANE_PATH))); 
-      
+       this.insertUtilitiesBtn.setVisible(false);
+        this.insertUtilitiesBtn.setManaged(false);
     }
     
     @FXML
@@ -108,22 +113,28 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
         }
     }
     
-    private void insertUtilitiesInPage(int pageNumber){
-        HashMap<String, String> filters = this.getSearch();
-        this.utilitiesGridPane.getChildren().clear();
-        index = 0;
-        ArrayList<HashMap<String, Object>> utilitieslist = this.utilityManager.getAllbyPage(pageNumber,filters);
-        utilitieslist.forEach((utility)->{
-            try {
-                this.addUtility(utility, index);
-                index ++;
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
+    public void insertUtilitiesInPage(int pageNumber){
+        try {
+            HashMap<String, String> filters = this.getSearchInput();
+            this.utilitiesGridPane.getChildren().clear();
+            index = 0;
+            ArrayList<HashMap<String, Object>> utilitieslist = this.utilityManager.getAllbyPage(pageNumber,filters,typeSelected);
+            
+            utilitieslist.forEach((utility)->{
+                try {
+                    this.addUtility(utility, index);
+                    index ++;
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            this.typeSelected=null;
+        } catch (SQLException ex) {
+            Logger.getLogger(UtilitiesPaneController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
-    private HashMap<String, String> getSearch(){
+    private HashMap<String, String> getSearchInput(){
         String utilityNumberFilter = this.idsearchBar.getText();
         String dateFilter = this.datesearchBar.getText();
         HashMap<String, String> res = new HashMap<>();
@@ -149,6 +160,11 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
         this.insertUtilitiesInPage(1);
     }
     
+    public void showAddUtilityBtn(){
+        insertUtilitiesBtn.setVisible(true);
+        insertUtilitiesBtn.setManaged(true);
+    }
+    
     public void animate(){
         List<Node> utilities = utilitiesGridPane.getChildren();
         for(Node utility: utilities){
@@ -157,6 +173,46 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
             t.setToX(0);
             t.play();
         }
+    }
+
+    private void initializeSearchBar() {
+    //ricerca per codice 
+        idsearchBar.textProperty().addListener((observable, oldValue, newValue) ->{
+            insertUtilitiesInPage(pageNumber);
+        });
+        datesearchBar.textProperty().addListener((observable, oldValue, newValue) ->{
+            insertUtilitiesInPage(pageNumber);
+        });    
+    }
+    
+    @FXML
+    void loadElectricityUtilities(ActionEvent event) {
+            this.typeSelected = "elettricità";
+            filterMenu.setText("elettricità");
+            this.insertUtilitiesInPage(1);
+    }
+
+    @FXML
+    void loadGasUtilities(ActionEvent event) {
+            this.typeSelected = "gas";
+            filterMenu.setText("gas");
+            this.insertUtilitiesInPage(1);
+    }
+
+    @FXML
+    void loadWaterUtilities(ActionEvent event) {
+            this.typeSelected = "acqua";
+            filterMenu.setText("acqua");
+            this.insertUtilitiesInPage(1);
+
+    }
+    
+    @FXML
+    void loadAllUtilities(ActionEvent event) {
+            this.typeSelected = null;
+            filterMenu.setText("Tutte le utenze");
+            this.insertUtilitiesInPage(1);
+
     }
     
 }

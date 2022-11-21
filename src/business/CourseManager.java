@@ -41,14 +41,17 @@ public class CourseManager {
         }
         return res;
     }
-    public HashMap<String, HashMap<String, Object>> getTotalDishes() {
+    
+    public HashMap<String, HashMap<String, Object>> getCoursesInfo(){
         HashMap<String, Integer> dishesPerCourse = this.menuTable.getTotalDishesPerCourse();
+        HashMap<String, String> mostOrderedPerCourse = this.menuTable.getMostRequestedPerCourse();
 
         Set<String> courses = dishesPerCourse.keySet();
         HashMap<String, HashMap<String, Object>> res = new HashMap<>();
-        for (String course : courses){
+        for (String course :courses){
             HashMap<String, Object> courseInfo = new HashMap<>();
             courseInfo.put("totalDishes", dishesPerCourse.get(course));
+            courseInfo.put("most-ordered", mostOrderedPerCourse.get(course));
             res.put(course, courseInfo);
         }
         return res;

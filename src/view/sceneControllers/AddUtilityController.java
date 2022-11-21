@@ -13,6 +13,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 import view.utils.CustomDialog;
@@ -24,7 +25,7 @@ import view.utils.CustomDialog;
  */
 public class AddUtilityController  extends BaseView implements Initializable {
 
-    public TextField datautenzaTxt;
+    public DatePicker utilityDate;
     public TextField importoutenzaTxt;
     public Button insertUtilityBtn;
     public TextField nfatturaTxt;
@@ -34,9 +35,11 @@ public class AddUtilityController  extends BaseView implements Initializable {
     private CommunicationController commController = CommunicationController.getInstance();
     private UtilityManager utilityManager = new UtilityManager();
     private String[] tipo_utenza = {"elettricità", "acqua", "gas"};
+    HashMap<String, Object> utility = new HashMap<String, Object>();
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         utenzeChoiceBox.getItems().addAll(tipo_utenza);
         utenzeChoiceBox.setOnAction(this::getUtilityType);
 
@@ -44,7 +47,12 @@ public class AddUtilityController  extends BaseView implements Initializable {
         
     @FXML
     void AddUtilityBtnClicked(ActionEvent event) throws IOException {
-        if(nfatturaTxt.getText().isEmpty() || importoutenzaTxt.getText().isEmpty() || datautenzaTxt.getText().isEmpty() ||utenzeChoiceBox.getValue().isEmpty() ){
+        LocalDate d = utilityDate.getValue();
+                String date = "";
+                if(d != null){
+                  date = d.toString();
+                }
+        if(nfatturaTxt.getText().isEmpty() || importoutenzaTxt.getText().isEmpty() || date.isEmpty() || utenzeChoiceBox.getValue().isEmpty() ){
             
             System.out.println("campo vuoto");
             
@@ -53,11 +61,6 @@ public class AddUtilityController  extends BaseView implements Initializable {
             	double  total= Double.parseDouble(importoutenzaTxt.getText());
                 String type = utenzeChoiceBox.getValue();
                 
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                String utility_date_string = datautenzaTxt.getText();
-                LocalDate date = LocalDate.parse(utility_date_string, formatter);
-                
-                HashMap<String, Object> utility = new HashMap<String, Object>();
                 utility.put("numberId", numberId);
                 utility.put("total", total);
                 utility.put("type", type);
@@ -90,8 +93,13 @@ public class AddUtilityController  extends BaseView implements Initializable {
         private void resetTextFields() {
         nfatturaTxt.setText("");
         importoutenzaTxt.setText("");
-        datautenzaTxt.setText("");
+        utilityDate.setValue(null);
         utenzeChoiceBox.valueProperty().set(null);
+    }
+        
+        public void closePaneBtnClicked(MouseEvent mouseEvent){
+        commController.getDashboardController().setRightPane(null);
+        commController.getUtilitiesPaneController().showAddUtilityBtn();
     }
     
 }

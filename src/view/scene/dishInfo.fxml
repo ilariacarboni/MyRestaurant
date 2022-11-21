@@ -20,7 +20,7 @@
          <children>
             <HBox alignment="CENTER">
                <children>
-                  <Label text="Prodotto" textFill="#878787">
+                  <Label text="Piatto" textFill="#878787">
                      <font>
                         <Font name="Cambria Bold" size="28.0" />
                      </font>
@@ -44,7 +44,7 @@
                   <Insets top="20.0" />
                </VBox.margin>
             </HBox>
-            <VBox fx:id="chosenDishCard" alignment="CENTER" prefHeight="500.0" prefWidth="300.0" stylesheets="@../style/css/menupane.css">
+            <VBox fx:id="chosenDishCard" alignment="CENTER" prefHeight="500.0" prefWidth="300.0" style="-fx-background-color: ea613f;" stylesheets="@../style/css/menupane.css">
                <VBox.margin>
                   <Insets left="50.0" right="50.0" top="10.0" />
                </VBox.margin>

@@ -18,14 +18,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 import view.utils.BackButton;
+import view.utils.CustomGridPane;
 
 /**
  *
@@ -35,30 +38,44 @@ public class MenuPaneController extends BaseView implements Initializable{
 
     public BorderPane anchorPaneMenu;
     public Button insertDishBtn;
-    public GridPane menuGridPane;
     public Label titoloLbl;
+    public ScrollPane menuPaneScrollPane;
     
     //public List<Course> portate = new ArrayList<>();
     final int ANIMATION_DURATION = 275;
     final int ANIMATION_DISTANCE = 700;
     private CourseManager courseManager = new CourseManager();
     private Node menuListPane = null;
+    private CustomGridPane menuGridPane;
+    final int GRIDPANE_COLUMNS_NUMBER = 3;
     
     @FXML
     void insertDishBtnClicked(ActionEvent event) throws IOException {
-     
       BorderPane borderPane = (BorderPane) anchorPaneMenu.getParent();
       borderPane.setRight(FXMLLoader.load(getClass().getResource(this.ADD_MENU_PATH)));  
-
+        this.insertDishBtn.setVisible(false);
+        this.insertDishBtn.setManaged(false);
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         commController.setMenuPaneController(this);
         anchorPaneMenu.setBackground(imagesProvider.getBackground());
+        
+        menuGridPane = new CustomGridPane(this.GRIDPANE_COLUMNS_NUMBER);
+        menuGridPane.setBreakPoint(0, 1100, 1);
+        menuGridPane.setBreakPoint(1100, 1400, 2);
+        menuGridPane.setBreakPoint(1400, Double.MAX_VALUE, 3);
+        menuGridPane.startToListenForAdjustments(commController.getStage());
+        menuGridPane.setHgap(20);
+        menuGridPane.setVgap(20);
+        menuGridPane.setPadding(new Insets(5, 20, 20, 20));
+        
+        menuPaneScrollPane.setContent(menuGridPane);
+        
         ArrayList<HashMap<String,Object>> portate =  this.courseManager.getAll(); //lista portate
         imagesProvider.initializeCoursesImages(portate);
-        HashMap<String, HashMap<String, Object>> coursesInfo = this.courseManager.getTotalDishes();
+        HashMap<String, HashMap<String, Object>> coursesInfo = this.courseManager.getCoursesInfo();
         portate.forEach((portata) -> {
             try{
                 HashMap<String, Object> courseInfo = coursesInfo.get(portata.get("name"));
@@ -68,7 +85,6 @@ public class MenuPaneController extends BaseView implements Initializable{
                 Logger.getLogger(MenuPaneController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-      
     }
     
     public void addCourse(HashMap<String,Object> course ) throws IOException{
@@ -77,8 +93,8 @@ public class MenuPaneController extends BaseView implements Initializable{
         portataItemController portataContr = loader.getController();
         portataContr.setCourseInfo(course);
         int index = menuGridPane.getChildren().size();
-        int columnIndex = index%3;
-        int rowIndex = (int) Math.floor(index/3);
+        int columnIndex = index%GRIDPANE_COLUMNS_NUMBER;
+        int rowIndex = (int) Math.floor(index/GRIDPANE_COLUMNS_NUMBER);
         menuGridPane.add(courseNode, columnIndex, rowIndex);
         this.animate();
     }
@@ -103,6 +119,10 @@ public class MenuPaneController extends BaseView implements Initializable{
         backButton.setRightScene(dc.getRightPane());
         backButton.setDashboardController(dc);
         return backButton;
+    }
+     public void showAddDishBtn(){
+        insertDishBtn.setVisible(true);
+        insertDishBtn.setManaged(true);
     }
      
      public void animate(){

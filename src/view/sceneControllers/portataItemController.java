@@ -28,6 +28,8 @@ public class portataItemController extends BaseView implements Initializable {
     public Label portataLabel;
     public Label totaldishesLbl;
     public Label totaldishesValue;
+    public Label mostRequestedLbl;
+    public Label mostrequestedValue;
     
     private HashMap<String, Object> portata;
 
@@ -39,9 +41,15 @@ public class portataItemController extends BaseView implements Initializable {
              this.portataIcon.setImage(imagesProvider.getCourseImage(name));
          }
         HashMap<String, Object> infoPortata = (HashMap<String, Object>) portata.get("info");
-        if(infoPortata.get("totalDishes") != null){
+        if(infoPortata!=null){
+            if(infoPortata.get("totalDishes") != null){
             this.totaldishesValue.setText(infoPortata.get("totalDishes").toString());
+            }
+            if(infoPortata.get("most-ordered") != null){
+                this.mostrequestedValue.setText(infoPortata.get("most-ordered").toString());
+            }
         }
+        
     }
 
     @FXML
@@ -67,7 +75,6 @@ public class portataItemController extends BaseView implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }

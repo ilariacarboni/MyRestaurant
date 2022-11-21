@@ -31,6 +31,8 @@ public class ImagesProvider {
     private HashMap<String, LocatedImage> menuImages;
     private final String DEFAULT_DISH_IMAGE_PATH = "/view/style/img/others/default-dish.png";
     private HashMap<String, LocatedImage> coursesImages;
+    private HashMap<String, LocatedImage> coursesTitleImages;
+    private HashMap<String, LocatedImage> coursesIcons;
 
     //----------------------EMPLOYEES----------------------//
     private LocatedImage defaultEmployeeImage;
@@ -146,8 +148,14 @@ public class ImagesProvider {
         }
     }
 
-    public LocatedImage getMenuImage(String nameDish){
-        return this.menuImages.get(nameDish);
+    public LocatedImage getMenuImage(String nameDish, String path){
+        LocatedImage res = this.menuImages.get(nameDish);
+        if(res == null){
+            path = "file:" +path;
+            res = new LocatedImage(path);
+            this.menuImages.put(nameDish,res);
+        }
+        return res;
     }
 
     public LocatedImage getDefaultDishImage(){
@@ -159,10 +167,20 @@ public class ImagesProvider {
 
     public void initializeCoursesImages(ArrayList<HashMap<String, Object>> courses){
         this.coursesImages = new HashMap<>();
+        this.coursesTitleImages = new HashMap<>();
+        this.coursesIcons = new HashMap<>();
         for(HashMap<String, Object> course : courses){
             String imagePath = course.get("img").toString();
             if(!imagePath.isEmpty()){
                 this.coursesImages.put(course.get("name").toString(), new LocatedImage(imagePath));
+            }
+            String titleimagePath = course.get("title-image").toString();
+            if(!titleimagePath.isEmpty()){
+                this.coursesTitleImages.put(course.get("name").toString(), new LocatedImage(titleimagePath));
+            }
+            String iconPath = course.get("dish-icon").toString();
+            if(!iconPath.isEmpty()){
+                this.coursesIcons.put(course.get("name").toString(), new LocatedImage(iconPath));
             }
         }
     }
@@ -170,6 +188,13 @@ public class ImagesProvider {
     public LocatedImage getCourseImage(String courseName){
         return this.coursesImages.get(courseName);
     }
+    public LocatedImage getCourseTitleImage(String courseName){
+        return this.coursesTitleImages.get(courseName);
+    }
+    public LocatedImage getCourseIcon(String courseName){
+        return this.coursesIcons.get(courseName);
+    }
+    
 
     //----------------------EMPLOYEES----------------------//
     private void initializeEmployeesBasicImages(){
@@ -189,8 +214,14 @@ public class ImagesProvider {
         }
     }
 
-    public LocatedImage getEmployeeImage(String fiscalCode){
-        return this.employeesImages.get(fiscalCode);
+    public LocatedImage getEmployeeImage(String fiscalCode, String path){
+        LocatedImage res = this.employeesImages.get(fiscalCode);
+        if(res == null){
+            path = "file:" +path;
+            res = new LocatedImage(path);
+            this.employeesImages.put(fiscalCode,res);
+        }
+        return res;
     }
 
     public LocatedImage getDefaultEmployeeImage(){
@@ -252,7 +283,7 @@ public class ImagesProvider {
     public LocatedImage getProductImage(int productBarcode, String path){
         LocatedImage res = this.productsImages.get(productBarcode);
         if(res == null){
-            path = "file:"+path;
+            path = "file:" +path;
             res = new LocatedImage(path);
             this.productsImages.put(productBarcode,res);
         }

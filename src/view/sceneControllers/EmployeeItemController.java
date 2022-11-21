@@ -23,6 +23,8 @@ public class EmployeeItemController extends BaseView implements Initializable {
     public Label nameLbl;
     public Label roleLbl;
     public Label surnameLbl;
+    public Label begindateLbl;
+    public Label enddateLbl;
     
     private HashMap<String, Object> employeeInfo;
     private Node employeeInfoPane = null;
@@ -32,13 +34,25 @@ public class EmployeeItemController extends BaseView implements Initializable {
         this.employeeInfo = empInfo;
         this.nameLbl.setText((String)empInfo.get("name"));
         this.surnameLbl.setText((String)empInfo.get("surname"));
+        this.begindateLbl.setText((String)empInfo.get("begin_date"));
+        
+        String end_date = (String)empInfo.get("end_date");
+        if(end_date!=null){
+            this.enddateLbl.setText((String)empInfo.get("end_date"));
+        }
+        else{
+            this.enddateLbl.setText("indeterminato");
+        }
+        
         String role = (String)empInfo.get("role");
         this.roleLbl.setText((String)empInfo.get("role"));
         if(role.equals("cuoco")) {
             this.iconEmployee.setImage(imagesProvider.getEmployeeBasicImage(imagesProvider.EMPLOYEE_CHEF_IMAGE_TYPE));
+            roleLbl.setStyle("-fx-text-fill:#9f23ba");
         }
         else{
           this.iconEmployee.setImage(imagesProvider.getEmployeeBasicImage(imagesProvider.EMPLOYEE_WAITER_IMAGE_TYPE));
+          roleLbl.setStyle("-fx-text-fill:#1a9140");
         }
         
        
