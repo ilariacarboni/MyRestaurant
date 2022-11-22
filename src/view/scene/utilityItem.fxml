@@ -14,7 +14,7 @@
 
 <AnchorPane id="AnchorPane" fx:id="itemAnchorPane" prefHeight="100.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.UtilityItemController">
    <children>
-      <HBox layoutX="8.0" layoutY="14.0" prefHeight="80.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="20.0">
+      <HBox layoutX="8.0" layoutY="14.0" prefHeight="80.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
          <stylesheets>
             <URL value="@../style/css/menupane.css" />
             <URL value="@../style/css/store.css" />

@@ -18,6 +18,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import view.utils.CustomDialog;
 /**
@@ -32,9 +33,9 @@ public class DishInfoController extends BaseView implements Initializable {
     public Button deleteBtn;
     public ImageView dishImg;
     public Label dishNameLbl;
-    /* public Label dishPriceLbl;*/
     public Button modifyBtn;
     public TextField priceTxtfield;
+    public ImageView closePaneBtn;
 
     private HashMap<String, Object> dishInfo;
     private MenuManager menuManager;
@@ -119,6 +120,9 @@ public class DishInfoController extends BaseView implements Initializable {
             HashMap<String, Object> course = courselist.get(i);
             menulistContr.loadDishesByCourses(course);
         }
+    }
+    public void closePaneBtnClicked(MouseEvent mouseEvent){
+        commController.getDashboardController().setRightPane(null);
     }
     
 }

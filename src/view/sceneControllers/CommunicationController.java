@@ -19,6 +19,7 @@ public final class CommunicationController {
     private EmployeesListController employeesListController = null;
     private UtilitiesPaneController utilitiesPaneController = null;
     private UtilityItemController utilityitemController = null;
+    private AddUtilityController addUtilityPaneController = null;
     private DashboardController dashboardController = null;
     private DishInfoController dishinfoController = null;
     private OrderPaneController orderPaneController = null;
@@ -80,7 +81,7 @@ public final class CommunicationController {
         return this.utilityitemController;
     }
     
-    
+
     public void setMenuPaneController(MenuPaneController menuPaneController){
         if(this.menuPaneController == null){
             this.menuPaneController = menuPaneController;

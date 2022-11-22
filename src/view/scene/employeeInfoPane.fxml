@@ -154,5 +154,10 @@
             </VBox>
          </children>
       </VBox>
+      <ImageView fx:id="closePaneBtn" fitHeight="32.0" fitWidth="32.0" onMouseClicked="#closePaneBtnClicked" pickOnBounds="true" preserveRatio="true" styleClass="back-button" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="30.0">
+         <image>
+            <Image url="@../style/img/others/close.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

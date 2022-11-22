@@ -90,17 +90,17 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
         pageLengthSelector.getItems().addAll(pageLengthValues);
         lastPage = (int)(Math.ceil(totalUtilities/currentPageLength));
         this.insertUtilitiesInPage(1);
-        
         this.initializeSearchBar();
         
     } 
     
     @FXML
     void insertUtilityBtnClicked(ActionEvent event) throws IOException {
-      BorderPane borderPane = (BorderPane) utilitiesBorderPane.getParent();
+     BorderPane borderPane = (BorderPane) utilitiesBorderPane.getParent();
       borderPane.setRight(FXMLLoader.load(getClass().getResource(this.ADD_UTILITIES_PANE_PATH))); 
-       this.insertUtilitiesBtn.setVisible(false);
-        this.insertUtilitiesBtn.setManaged(false);
+   
+       insertUtilitiesBtn.setVisible(false);
+       insertUtilitiesBtn.setManaged(false);
     }
     
     @FXML
@@ -146,7 +146,6 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
                     throw new RuntimeException(e);
                 }
             });
-            //this.typeSelected=null;
         } catch (SQLException ex) {
             Logger.getLogger(UtilitiesPaneController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -170,7 +169,6 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
 
         utilitiesGridPane.add(utilityNode, 0 , i); 
         this.animate();
-        
     }
     
     public void updateUtilities(){
@@ -198,6 +196,7 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
         idsearchBar.textProperty().addListener((observable, oldValue, newValue) ->{
             insertUtilitiesInPage(pageNumber);
         });
+    //ricerca oer data
         datesearchBar.textProperty().addListener((observable, oldValue, newValue) ->{
             insertUtilitiesInPage(pageNumber);
         });    

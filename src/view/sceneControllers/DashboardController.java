@@ -151,6 +151,7 @@ public class DashboardController extends BaseView implements Initializable {
             EmployeesListController empListController = commController.getEmployeePaneController();
             empListController.animate();
             borderPane.setRight(null);
+            empListController.showAddEmployeeBtn();
         }
     }
 
@@ -179,6 +180,8 @@ public class DashboardController extends BaseView implements Initializable {
             }
             borderPane.setCenter(this.utilitiesPane);
             borderPane.setRight(null);
+            UtilitiesPaneController utilitiesPaneController = commController.getUtilitiesPaneController();
+            utilitiesPaneController.showAddUtilityBtn();
        }
     }
 

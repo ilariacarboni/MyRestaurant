@@ -18,6 +18,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import view.utils.CustomDialog;
 
@@ -37,6 +38,7 @@ public class EmployeeInfoPaneController extends BaseView implements Initializabl
     public Button modifyBtn;
     public Label wageLbl;
     public DatePicker enddatePicker;
+    public ImageView closePaneBtn;
 
     private EmployeeManager employeeManager;
     private HashMap<String, Object> empInfo;
@@ -114,6 +116,8 @@ public class EmployeeInfoPaneController extends BaseView implements Initializabl
                     emplistContr.refresh();
                 }
     }
-
     
+    public void closePaneBtnClicked(MouseEvent mouseEvent){
+        commController.getDashboardController().setRightPane(null);
+    }
 }
