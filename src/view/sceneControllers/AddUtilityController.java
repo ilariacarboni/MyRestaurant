@@ -13,6 +13,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
@@ -31,6 +32,7 @@ public class AddUtilityController  extends BaseView implements Initializable {
     public TextField nfatturaTxt;
     public ChoiceBox<String> utenzeChoiceBox;
     public VBox anchorpaneAddUtility;
+    public ImageView closePaneBtn;
 
     private CommunicationController commController = CommunicationController.getInstance();
     private UtilityManager utilityManager = new UtilityManager();
@@ -39,10 +41,8 @@ public class AddUtilityController  extends BaseView implements Initializable {
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
         utenzeChoiceBox.getItems().addAll(tipo_utenza);
         utenzeChoiceBox.setOnAction(this::getUtilityType);
-
     }    
         
     @FXML
@@ -90,7 +90,7 @@ public class AddUtilityController  extends BaseView implements Initializable {
         String tipologia_utenza = utenzeChoiceBox.getValue();
     }
         
-        private void resetTextFields() {
+        public void resetTextFields() {
         nfatturaTxt.setText("");
         importoutenzaTxt.setText("");
         utilityDate.setValue(null);

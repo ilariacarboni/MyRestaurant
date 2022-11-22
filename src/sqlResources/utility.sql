@@ -1,8 +1,10 @@
 --
--- File generated with SQLiteStudio v3.3.3 on lun nov 14 22:35:14 2022
+-- File generated with SQLiteStudio v3.3.3 on mar nov 22 17:52:17 2022
 --
 -- Text encoding used: System
 --
+PRAGMA foreign_keys = off;
+BEGIN TRANSACTION;
 
 INSERT INTO utility (numberId, total, type, date, state) VALUES (1, 486.0, 'gas', '2021-09-10 00:00:00', 'Pagato');
 INSERT INTO utility (numberId, total, type, date, state) VALUES (2, 345.0, 'gas', '2021-09-11 00:00:00', 'Pagato');
