@@ -7,8 +7,6 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 
 <BorderPane fx:id="menuListPane" stylesheets="@../style/css/common.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.sceneControllers.MenuListController">
@@ -44,11 +42,11 @@
                   <Insets left="30.0" />
                </HBox.margin>
             </ImageView>
-            <TextField fx:id="dishSearchBar" styleClass="searchBarTextField" stylesheets="@../style/css/store.css">
+            <TextField fx:id="dishSearchBar" prefHeight="32.0" styleClass="searchBarTextField" stylesheets="@../style/css/store.css">
                <HBox.margin>
                   <Insets left="40.0" top="70.0" />
                </HBox.margin></TextField>
-            <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" styleClass="searchBarIcon">
+            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" styleClass="searchBarIcon" translateX="-30.0">
                <image>
                   <Image url="@../style/img/others/search.png" />
                </image>

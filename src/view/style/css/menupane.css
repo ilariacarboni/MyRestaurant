@@ -15,9 +15,11 @@
 }
 
 
-.menuDish-item{
-    -fx-background-color: #FFFFFF;
-        -fx-background-radius: 30;
+.menu-item{
+    -fx-background-radius: 30;
+    -fx-border-radius: 20;
+    -fx-background-color:  #ebe7e7;
+    -fx-cursor: hand;
 }
 
 .shadow{
@@ -32,4 +34,5 @@
 .delete-btn{
     -fx-background-color: #FFFFFF;
     -fx-background-radius: 100;
+    -fx-cursor: hand;
 }

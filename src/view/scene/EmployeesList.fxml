@@ -27,8 +27,8 @@
    <top>
       <HBox prefHeight="45.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="searchBar" styleClass="searchBarTextField" stylesheets="@../style/css/store.css" />
-            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+            <TextField fx:id="searchBar" prefHeight="30.0" styleClass="searchBarTextField" stylesheets="@../style/css/store.css" />
+            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" translateX="-30.0">
                <image>
                   <Image url="@../style/img/others/search.png" />
                </image>
