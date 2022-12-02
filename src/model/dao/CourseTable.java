@@ -25,8 +25,9 @@ public class CourseTable implements Table<Course> {
 public ArrayList<Course> getAll() {
         ArrayList <Course> resList = new ArrayList<Course>();
         String sql = "SELECT * FROM course ORDER BY name";
+        Statement stm = null;
         try {
-            Statement stm = conn.createStatement();
+            stm = conn.createStatement();
             ResultSet resultSet = stm.executeQuery(sql);
 
             while (resultSet.next()) {
@@ -35,6 +36,12 @@ public ArrayList<Course> getAll() {
             }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
+        }finally {
+            try {
+                stm.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return resList;
     }
@@ -42,13 +49,20 @@ public ArrayList<Course> getAll() {
     public boolean save(Course c){
         boolean res = false;
         String sql= "INSERT INTO course (name) VALUES (?)"; 
+        PreparedStatement ps = null;
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
+            ps = conn.prepareStatement(sql);
             ps.setString(1, c.getName());
             ps.execute();
             res = true;
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return res;
     }
@@ -56,13 +70,20 @@ public ArrayList<Course> getAll() {
     public boolean update(Course c) {
         boolean res = false;
         String sql= "UPDATE course SET name = ?  WHERE name = ?";
+        PreparedStatement ps = null;
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
+            ps = conn.prepareStatement(sql);
             ps.setString(1, c.getName());
             ps.execute();
             res = true;
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return res;
     }
@@ -70,12 +91,19 @@ public ArrayList<Course> getAll() {
     public boolean delete(Course c) {
         boolean res = false;
         String sql= "DELETE FROM course WHERE name = ?";
+        PreparedStatement ps = null;
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
+            ps = conn.prepareStatement(sql);
             ps.setString(1, c.getName());
             res = true;
         } catch (SQLException ex) {
             ex.printStackTrace();
+        }finally {
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return res;
     }
@@ -83,10 +111,11 @@ public ArrayList<Course> getAll() {
     public ArrayList<Course> getFrom(Object searchParam, String paramName) { 
         //ricerca per nome
         ArrayList<Course> resList = new ArrayList<Course>();
+        PreparedStatement ps = null;
         if(searchParam instanceof String){
             String sql = "SELECT * FROM course WHERE name = ?";
             try {
-                PreparedStatement ps = conn.prepareStatement(sql);
+                ps = conn.prepareStatement(sql);
                 ps.setString(1, (String)searchParam);
                 ResultSet resultSet = ps.executeQuery();
                 
@@ -96,7 +125,13 @@ public ArrayList<Course> getAll() {
                 }
             } catch (Exception e) {
                 System.out.println(e.toString());
+            } finally {
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
+        }
         }
         return resList;
     }

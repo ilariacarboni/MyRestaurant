@@ -42,8 +42,9 @@ public class ReceiptTable implements Table<Receipt>{
     public ArrayList<Receipt> getAll() {
         ArrayList <Receipt> resList = new ArrayList<Receipt>();
         String sql = "SELECT * FROM receipt";
+        Statement stm = null;
         try {
-            Statement stm = conn.createStatement();
+            stm = conn.createStatement();
             ResultSet resultSet = stm.executeQuery(sql);
 
             while (resultSet.next()) {
@@ -52,6 +53,12 @@ public class ReceiptTable implements Table<Receipt>{
             }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
+        } finally {
+            try {
+                stm.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return resList;
     }
@@ -70,7 +77,7 @@ public class ReceiptTable implements Table<Receipt>{
             res = true;
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }
+        } 
 
         return res;
     }
@@ -131,8 +138,9 @@ public class ReceiptTable implements Table<Receipt>{
             System.out.println("class Date");
             //uso Date perchè posso fare il cast da Object a Date
             String sql = "SELECT * FROM receipt WHERE date =?";
+            PreparedStatement ps = null;
             try {
-                PreparedStatement ps = conn.prepareStatement(sql);
+                ps = conn.prepareStatement(sql);
                 ps.setDate(1, (Date) searchParam);
                 ResultSet resultSet = ps.executeQuery();
                 
@@ -142,15 +150,22 @@ public class ReceiptTable implements Table<Receipt>{
                 }
             } catch (SQLException ex) {
             ex.printStackTrace();
+            } finally {
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
+        }
         }
         return resList;
     }
 
     public LinkedHashMap<String, Double> getRevenuePerMonth(){
         LinkedHashMap<String, Double> res = null;
+        Statement stm = null;
         try{
-            Statement stm = conn.createStatement();
+            stm = conn.createStatement();
             ResultSet resultSet = stm.executeQuery(this.REVENUE_PER_MONTH_QUERY);
             res = new LinkedHashMap<String, Double>();
             while (resultSet.next()) {
@@ -160,14 +175,21 @@ public class ReceiptTable implements Table<Receipt>{
             }
         }catch (SQLException ex){
             System.out.println(ex.toString());
+        } finally {
+            try {
+                stm.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return res;
     }
 
     public LinkedHashMap<String, LinkedHashMap<String, Integer>> getMoreOrderedDishes(){
         LinkedHashMap<String, LinkedHashMap<String, Integer>> res = null;
+        Statement stm = null;
         try{
-            Statement stm = conn.createStatement();
+            stm = conn.createStatement();
             ResultSet resultSet = stm.executeQuery(this.MORE_ORDERED_DISHES_QUERY);
             res = new LinkedHashMap<String, LinkedHashMap<String, Integer>>();
             while (resultSet.next()) {
@@ -185,6 +207,12 @@ public class ReceiptTable implements Table<Receipt>{
             }
         }catch (SQLException ex){
             System.out.println(ex.toString());
+        } finally {
+            try {
+                stm.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return res;
     }

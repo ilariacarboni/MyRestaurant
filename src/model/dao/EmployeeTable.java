@@ -134,8 +134,9 @@ public class EmployeeTable implements Table<Employee>{
         if(searchParam instanceof String){
             if(paramName.equals("name")||paramName.equals("surname")||paramName.equals("role")){
             String sql = "SELECT * FROM Employee WHERE codice_fiscale=? OR  name=? OR  surname =? OR  role=? ORDER BY name";
+            PreparedStatement ps = null;
             try {
-                PreparedStatement ps = conn.prepareStatement(sql);
+                ps = conn.prepareStatement(sql);
                 ps.setString(1, (String) searchParam);
                  ps.setString(2, (String) searchParam);
                  ps.setString(3, (String) searchParam);
@@ -149,9 +150,15 @@ public class EmployeeTable implements Table<Employee>{
                 }
             } catch (SQLException ex) {
                 System.out.println(ex.toString());
+            } finally {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+             }
             }
-        }
-   }
+        } 
         return resList;
  }
   

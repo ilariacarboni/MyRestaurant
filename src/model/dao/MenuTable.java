@@ -30,8 +30,9 @@ public class MenuTable implements Table<Menu>{
         
         ArrayList<Menu> resList = new ArrayList<Menu>();
         String sql = "SELECT * FROM menu";
+        Statement stm = null;
         try {
-            Statement stm = conn.createStatement();
+            stm = conn.createStatement();
             ResultSet resultSet = stm.executeQuery(sql);
             
             while (resultSet.next()) {
@@ -40,6 +41,12 @@ public class MenuTable implements Table<Menu>{
             }
         } catch (SQLException ex) {
             System.out.println(ex.toString());
+        } finally {
+            try {
+                stm.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return resList;
     }
@@ -49,10 +56,10 @@ public class MenuTable implements Table<Menu>{
         //lo inserisce nella lista e nel db
         //se il menu è nella lista significa che è stato già inserito nel db
         boolean res = false;
- 
         String sql= "INSERT INTO menu (nameDish, price, course, image) VALUES (?,?,?,?)";
+        PreparedStatement ps = null;
         try {
-            PreparedStatement ps = conn.prepareStatement(sql);
+            ps = conn.prepareStatement(sql);
             ps.setString(1, m.getNameDish());
             ps.setDouble(2, m.getPrice());
             ps.setString(3, m.getCourse());
@@ -63,8 +70,13 @@ public class MenuTable implements Table<Menu>{
         } catch (SQLException ex) {
 
             ex.printStackTrace();
+        } finally {
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
-
         return res;
     }
 
@@ -84,7 +96,13 @@ public class MenuTable implements Table<Menu>{
             res = true;
         } catch (SQLException ex) {
             ex.printStackTrace();
-        } 
+        } finally {
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
         return res;
     }
 
@@ -92,7 +110,6 @@ public class MenuTable implements Table<Menu>{
     public boolean delete(Menu m) {
         
         boolean res = false;
-            
         String sql= "DELETE FROM menu WHERE nameDish = ?";
         PreparedStatement ps = null;
         try {
@@ -108,7 +125,7 @@ public class MenuTable implements Table<Menu>{
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-        }
+        } 
         return res;
     }
     
@@ -118,7 +135,7 @@ public class MenuTable implements Table<Menu>{
         String baseSql = "SELECT m.nameDish, m.price, m.course, m.image, c.name as courseName FROM menu m JOIN course c ON m.course = c.name ";
         String sql = null;
         ArrayList<Menu> resList = new ArrayList<Menu>();
-        
+        PreparedStatement ps = null;
         if(searchParam instanceof String){   //passso un oggetto di ricerca textinput
           switch(paramName){
                 case "nameDish":
@@ -129,7 +146,7 @@ public class MenuTable implements Table<Menu>{
                     break;
             }
         try {
-                PreparedStatement ps = conn.prepareStatement(sql); 
+                ps = conn.prepareStatement(sql); 
                 ps.setString(1, (String) searchParam);
                // ps.execute();
                 ResultSet resultSet = ps.executeQuery();
@@ -142,15 +159,22 @@ public class MenuTable implements Table<Menu>{
             catch (SQLException ex) {
         
                 ex.printStackTrace();
-            }   
+            }  finally {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+               }
         }
-    return resList;
+     return resList;
     }
      
     public HashMap<String, Integer> getTotalDishesPerCourse(){
         HashMap<String, Integer> res = null;
+        Statement stm = null;
         try{
-            Statement stm = conn.createStatement();
+            stm = conn.createStatement();
             ResultSet resultSet = stm.executeQuery(this.DISHES_PER_COURSE);
             res = new HashMap<String, Integer>();
             while (resultSet.next()) {
@@ -160,14 +184,21 @@ public class MenuTable implements Table<Menu>{
             }
         }catch (SQLException ex){
             System.out.println(ex.toString());
+        } finally {
+            try {
+                stm.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return res;
      }
     
     public HashMap<String, String> getMostRequestedPerCourse(){
         HashMap<String, String> res = null;
+        Statement stm = null;
         try{
-            Statement stm = conn.createStatement();
+            stm = conn.createStatement();
             ResultSet resultSet = stm.executeQuery(this.MOST_REQUESTED_PER_COURSE);
             res = new HashMap<String, String>();
             while (resultSet.next()) {
@@ -177,10 +208,17 @@ public class MenuTable implements Table<Menu>{
             }
         }catch (SQLException ex){
             System.out.println(ex.toString());
+        } finally {
+            try {
+                stm.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return res;
      }
      
+    @Override
     public Menu constructEntityFromMap(HashMap<String, Object> map) {
         
         String nameDish =(String) map.get("nameDish");

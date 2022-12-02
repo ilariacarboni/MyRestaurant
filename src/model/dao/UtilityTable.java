@@ -159,7 +159,7 @@ public class UtilityTable implements Table<Utility>{
             try {
                 ps = conn.prepareStatement(sql);
                 ps.setInt(1, u.getNumberId());
-                //ps.execute();
+                ps.execute();
                 
                 res = true;
 
@@ -172,8 +172,6 @@ public class UtilityTable implements Table<Utility>{
                 throw new RuntimeException(e);
             }
         }
-        
-        this.utilitiesList.remove(u);
         return res;
     }
     
