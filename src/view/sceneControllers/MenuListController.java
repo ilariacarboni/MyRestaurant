@@ -60,7 +60,6 @@ public class MenuListController extends BaseView implements Initializable {
         menuListGridPane.setPadding(new Insets(5, 20, 20, 20));
         
         menuListScrollPane.setContent(menuListGridPane);
-        
         this.initializeSearchBar();
     }
 
