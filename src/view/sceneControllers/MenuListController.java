@@ -116,7 +116,7 @@ public class MenuListController extends BaseView implements Initializable {
                    for(Node dish : dishsearch){
                        Label dishNameLabel = (Label)((AnchorPane) dish ).lookup(this.DISH_NAME);
                        String dishName = dishNameLabel.getText();
-                       if(!dishName.contains(newValue)){
+                       if(!dishName.toLowerCase().contains(newValue.toLowerCase())){
                            dish.setVisible(false);
                            dish.setManaged(false);
                        }else{

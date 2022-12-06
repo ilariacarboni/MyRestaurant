@@ -118,7 +118,6 @@ public class AddMenuDishController extends BaseView implements Initializable {
         if(returnVal != null && this.menu != null){
             String customImagePath = returnVal.toURI().getRawPath();
             this.menu.put("image", customImagePath);
-            this.menuManager.updateMenu(this.menu);
         }
     }
     
