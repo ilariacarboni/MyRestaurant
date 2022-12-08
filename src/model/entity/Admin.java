@@ -1,7 +1,5 @@
 package model.entity;
 
-import business.AdminManager;
-
 import java.util.HashMap;
 
 public class Admin implements Entity{
