@@ -16,6 +16,7 @@ public class ImagesProvider {
 
     private static final ImagesProvider imagesProvider = new ImagesProvider();
 
+    private String imgBaseDirectory = "view/style/img";
     //----------------------BACKGROUND----------------------//
     private LocatedImage backgroundImage;
     private final String BACKGROUND_IMAGE_PATH = "/view/style/img/background/grey.jpeg";
@@ -283,7 +284,9 @@ public class ImagesProvider {
     public LocatedImage getProductImage(int productBarcode, String path){
         LocatedImage res = this.productsImages.get(productBarcode);
         if(res == null){
-            path = "file:" +path;
+            if(!path.contains(this.imgBaseDirectory)){
+                path = "file:" +path;
+            }
             res = new LocatedImage(path);
             this.productsImages.put(productBarcode,res);
         }
