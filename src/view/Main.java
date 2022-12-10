@@ -17,7 +17,7 @@ import view.sceneControllers.CommunicationController;
  *
  * @author Natalia
  */
-public class NewFXMain extends Application {
+public class Main extends Application {
     
     @Override
     public void start(Stage primaryStage) throws IOException {
