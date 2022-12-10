@@ -52,12 +52,13 @@ public class AddUtilityController  extends BaseView implements Initializable {
                 if(d != null){
                   date = d.toString();
                 }
-        if(nfatturaTxt.getText().isEmpty() || importoutenzaTxt.getText().isEmpty() || date.isEmpty() || utenzeChoiceBox.getValue().isEmpty() ){
-            
-            System.out.println("campo vuoto");
-            
+        if(nfatturaTxt.getText().isEmpty() || importoutenzaTxt.getText().isEmpty() || date.isEmpty() || utenzeChoiceBox.getValue() == null ){
+            String text = "Nessun campo può essere vuoto!";
+            dialog.setInfo(text, CustomDialog.TYPE_WARNING);
+            dialog.setButtons(ButtonType.OK);
+            dialog.showAndWait("Attenzione!");
         }else{
-		int numberId = Integer.parseInt(nfatturaTxt.getText());
+		    int numberId = Integer.parseInt(nfatturaTxt.getText());
             	double  total= Double.parseDouble(importoutenzaTxt.getText());
                 String type = utenzeChoiceBox.getValue();
                 

@@ -51,10 +51,10 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
     public GridPane utilitiesGridPane;
     public ScrollPane utilitiesScrollPane;
     public AnchorPane selectpageContainer;
-    private MenuItem filterGas;
-    private MenuItem filterElectricity;
-    private MenuItem filterWater;
-    private MenuItem allUtilitiesItem;
+    public MenuItem filterGas;
+    public MenuItem filterElectricity;
+    public MenuItem filterWater;
+    public MenuItem allUtilitiesItem;
     public ComboBox<Integer> pageLengthSelector;
 
     

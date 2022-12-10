@@ -56,10 +56,11 @@ public class AddMenuDishController extends BaseView implements Initializable {
     @FXML
     private void addMenuDishBtnClicked(MouseEvent event) {
         
-       if( nomeTxt.getText().isEmpty() || prezzoTxt.getText().isEmpty() || categorieChoicebox.getValue().isEmpty() ){
-            
-            System.out.println("campo vuoto");
-            
+       if( nomeTxt.getText().isEmpty() || prezzoTxt.getText().isEmpty() || categorieChoicebox.getValue() == null ){
+           String text = "Nessun campo può essere vuoto!";
+           dialog.setInfo(text, CustomDialog.TYPE_WARNING);
+           dialog.setButtons(ButtonType.OK);
+           dialog.showAndWait("Attenzione!");
         }else{
 		String nameDish = nomeTxt.getText();
             	double price = Double.parseDouble(prezzoTxt.getText());

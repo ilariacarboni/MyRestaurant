@@ -72,12 +72,13 @@ public class AddEmployeeController extends BaseView implements  Initializable {
         
         //controllo che siano stati inseriti tutti i campi
         if(nomeEmpTxt.getText().isEmpty() || stipendioEmpTxt.getText().isEmpty() || cognomeEmpTxt.getText().isEmpty() || codicefEmpTxt.getText().isEmpty() ||
-                ruoloChoicebox.getValue().isEmpty() || iniziocontrattoEmpTxt.getText().isEmpty() || finecontrattoEmpTxt.getText().isEmpty()){
-            
-            System.out.println("campo vuoto");
-            
+                ruoloChoicebox.getValue() == null || iniziocontrattoEmpTxt.getText().isEmpty() || finecontrattoEmpTxt.getText().isEmpty()){
+            String text = "Nessun campo può essere vuoto!";
+            dialog.setInfo(text, CustomDialog.TYPE_WARNING);
+            dialog.setButtons(ButtonType.OK);
+            dialog.showAndWait("Attenzione!");
         }else{
-	    String codice_fiscale = codicefEmpTxt.getText();
+	        String codice_fiscale = codicefEmpTxt.getText();
             String name = nomeEmpTxt.getText();
             String surname = cognomeEmpTxt.getText();
             String role = ruoloChoicebox.getValue(); 

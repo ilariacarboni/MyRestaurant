@@ -97,7 +97,14 @@ public class AddProductPaneController extends BaseView implements Initializable 
     }
 
     private boolean checkMandatoryFields(){
-        boolean allFilled = !(barcodeTextField.getText().isEmpty() || qtyTextField.getText().isEmpty() || nameTextField.getText().isEmpty() || priceTextField.getText().isEmpty());
+        boolean allFilled = !(
+                barcodeTextField.getText().isEmpty() ||
+                qtyTextField.getText().isEmpty() ||
+                nameTextField.getText().isEmpty() ||
+                priceTextField.getText().isEmpty() ||
+                categoryComboBox.getValue() == null ||
+                supplierComboBox.getValue() == null
+        );
         if(!allFilled){
             String text = "Non ci possono essere campi vuoti";
             dialog.setInfo(text, CustomDialog.TYPE_WARNING);
