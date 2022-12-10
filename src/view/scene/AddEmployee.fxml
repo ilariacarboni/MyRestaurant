@@ -4,6 +4,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -104,9 +105,9 @@
                   <Insets bottom="10.0" />
                </padding>
                <children>
-                  <TextField fx:id="iniziocontrattoEmpTxt" layoutX="25.0" layoutY="17.0" prefHeight="27.0" prefWidth="174.0" styleClass="searchBarTextField" text="yyyy-mm-dd" />
-                  <TextField fx:id="finecontrattoEmpTxt" layoutX="230.0" layoutY="17.0" prefHeight="27.0" prefWidth="174.0" styleClass="searchBarTextField" text="yyyy-mm-dd" />
-                  <Label layoutX="206.0" layoutY="21.0" text=" - " />
+                  <Label layoutX="210.0" layoutY="15.0" text=" - " />
+                  <DatePicker fx:id="beginDatePicker" layoutX="26.0" layoutY="12.0" prefHeight="27.0" prefWidth="154.0" />
+                  <DatePicker fx:id="endDatePicker" layoutX="248.0" layoutY="11.0" prefHeight="27.0" prefWidth="158.0" />
                </children>
             </AnchorPane>
             <AnchorPane prefWidth="400.0" styleClass="insertField" stylesheets="@../style/css/insertField.css">
