@@ -65,7 +65,7 @@ public class AddMenuDishController extends BaseView implements Initializable {
             	double price = Double.parseDouble(prezzoTxt.getText());
                 String course = categorieChoicebox.getValue(); //param fisso per portata selezionata
                 
-                //HashMap<String, Object> menu = new HashMap<String, Object>();
+                
                 this.menu.put("nameDish", nameDish);
                 this.menu.put("price", price);
                 this.menu.put("course", course);
@@ -118,7 +118,6 @@ public class AddMenuDishController extends BaseView implements Initializable {
         if(returnVal != null && this.menu != null){
             String customImagePath = returnVal.toURI().getRawPath();
             this.menu.put("image", customImagePath);
-            this.menuManager.updateMenu(this.menu);
         }
     }
     

@@ -85,7 +85,7 @@ public class MenuTable implements Table<Menu>{
         //lo inserisce nella lista e nel db
         //se il menu è nella lista significa che è stato già inserito nel db
         boolean res = false;      
-        String sql= "UPDATE menu SET price = ? image = ? WHERE nameDish = ?";
+        String sql= "UPDATE menu SET price = ? WHERE nameDish = ?";
         PreparedStatement ps = null;
         try {
             ps = conn.prepareStatement(sql);
@@ -96,13 +96,7 @@ public class MenuTable implements Table<Menu>{
             res = true;
         } catch (SQLException ex) {
             ex.printStackTrace();
-        } finally {
-            try {
-                ps.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
+        } 
         return res;
     }
 

@@ -75,7 +75,6 @@ public class EmployeesListController extends BaseView implements Initializable {
         
         this.refresh();
         
-        
         this.initializeSearchBar();
         
     }
@@ -102,6 +101,7 @@ public class EmployeesListController extends BaseView implements Initializable {
     
     public void refresh() {
       employeesGridPane.getChildren().clear();
+      employees.clear();
       ArrayList<HashMap<String, Object>> employeeslist = this.employeeManager.getAll();
         imagesProvider.initializeEmployeesImages(employeeslist);
         for(int i = 0; i<employeeslist.size(); i++){
@@ -120,7 +120,7 @@ public class EmployeesListController extends BaseView implements Initializable {
                 String employeeName = employeeNameLabel.getText();
                 Label employeeSurnameLabel = (Label)((AnchorPane) employee).lookup(this.EMPLOYEE_SURNAME);
                 String employeeSurname = employeeSurnameLabel.getText();
-                if(!employeeName.contains(newValue) && !employeeSurname.contains(newValue) ){
+                if(!employeeName.toLowerCase().contains(newValue.toLowerCase()) && !employeeSurname.toLowerCase().contains(newValue.toLowerCase()) ){
                     employee.setVisible(false);
                     employee.setManaged(false);
                 }else{
