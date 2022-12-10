@@ -7,6 +7,7 @@ package view.sceneControllers;
 import business.EmployeeManager;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -81,7 +82,7 @@ public class EmployeeInfoPaneController extends BaseView implements Initializabl
                     enddatePicker.setValue(null);
                     EmployeesListController emplistContr = commController.getEmployeePaneController();
                     emplistContr.refresh();
-                }
+        }
 
     }
 
@@ -119,5 +120,6 @@ public class EmployeeInfoPaneController extends BaseView implements Initializabl
     
     public void closePaneBtnClicked(MouseEvent mouseEvent){
         commController.getDashboardController().setRightPane(null);
+        commController.getEmployeePaneController().showAddEmployeeBtn();
     }
 }
