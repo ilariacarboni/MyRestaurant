@@ -50,10 +50,13 @@ public class AddEmployeeController extends BaseView implements  Initializable {
     public Button insertEmployeeBtn;
     public TextField nomeEmpTxt;
     public Label prezzoLbl;
-    public Label prezzoLbl1;
     public ChoiceBox<String> ruoloChoicebox;
     public TextField stipendioEmpTxt;
-    public Label titoloLbl1;
+    public DatePicker beginDatePicker;
+    public DatePicker endDatePicker;
+
+
+    
 
     private EmployeeManager employeeManager = new EmployeeManager();
     HashMap<String, Object> employee = new HashMap<String, Object>();
@@ -72,7 +75,7 @@ public class AddEmployeeController extends BaseView implements  Initializable {
         
         //controllo che siano stati inseriti tutti i campi
         if(nomeEmpTxt.getText().isEmpty() || stipendioEmpTxt.getText().isEmpty() || cognomeEmpTxt.getText().isEmpty() || codicefEmpTxt.getText().isEmpty() ||
-                ruoloChoicebox.getValue() == null || iniziocontrattoEmpTxt.getText().isEmpty() || finecontrattoEmpTxt.getText().isEmpty()){
+                ruoloChoicebox.getValue() == null || beginDatePicker.getValue()==null || endDatePicker.getValue()==null){
             String text = "Nessun campo può essere vuoto!";
             dialog.setInfo(text, CustomDialog.TYPE_WARNING);
             dialog.setButtons(ButtonType.OK);
@@ -85,9 +88,9 @@ public class AddEmployeeController extends BaseView implements  Initializable {
             int wage = Integer.parseInt(stipendioEmpTxt.getText());
 
             //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            String begin_date_string = iniziocontrattoEmpTxt.getText();
+            String begin_date_string = beginDatePicker.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             //LocalDate begin_date = LocalDate.parse(begin_date_string, formatter); // passo string a data
-            String end_date_string = finecontrattoEmpTxt.getText();
+            String end_date_string = endDatePicker.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
            // LocalDate end_date = LocalDate.parse(end_date_string, formatter); // passo stringa a data
             
             employee.put("codice_fiscale", codice_fiscale);
@@ -125,8 +128,8 @@ public class AddEmployeeController extends BaseView implements  Initializable {
         stipendioEmpTxt.setText("");
         cognomeEmpTxt.setText("");
         ruoloChoicebox.valueProperty().set(null);
-        iniziocontrattoEmpTxt.setText("yyyy-mm-dd"); 
-        finecontrattoEmpTxt.setText("yyyy-mm-dd");
+        beginDatePicker.setValue(null); 
+        endDatePicker.setValue(null);
     }
     
     @FXML
