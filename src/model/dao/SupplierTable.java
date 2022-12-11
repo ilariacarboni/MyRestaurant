@@ -36,7 +36,7 @@ public class SupplierTable implements Table<Supplier>{
                 resList.add(s);
             }
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            resList = null;
         }
         return resList;
     }
@@ -52,7 +52,6 @@ public class SupplierTable implements Table<Supplier>{
             ps.execute();
             res = true;
         } catch (SQLException ex) {
-            ex.printStackTrace();
         }
         return res;
     }
@@ -63,12 +62,11 @@ public class SupplierTable implements Table<Supplier>{
         String sql= "UPDATE supplier SET site = ? WHERE name=?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
-                ps.setString(1, s.getSite());
-                ps.setString(2, s.getName());
+            ps.setString(1, s.getSite());
+            ps.setString(2, s.getName());
             ps.execute();
             res = true;
         } catch (SQLException ex) {
-            ex.printStackTrace();
         }
         return res;
     }
@@ -82,7 +80,6 @@ public class SupplierTable implements Table<Supplier>{
             ps.setString(1, s.getName());
             res = true;
         } catch (SQLException ex) {
-            ex.printStackTrace();
         }
         return res;
     }
@@ -103,7 +100,7 @@ public class SupplierTable implements Table<Supplier>{
                     resList.add(s);
                 }
             } catch (SQLException ex) {
-                ex.printStackTrace();
+                resList = null;
             }
         }
         

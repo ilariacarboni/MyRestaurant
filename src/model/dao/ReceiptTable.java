@@ -52,7 +52,7 @@ public class ReceiptTable implements Table<Receipt>{
                 resList.add(r);
             }
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            resList = null;
         } finally {
             try {
                 stm.close();
@@ -76,8 +76,7 @@ public class ReceiptTable implements Table<Receipt>{
             ps.execute();
             res = true;
         } catch (SQLException ex) {
-            ex.printStackTrace();
-        } 
+        }
 
         return res;
     }
@@ -94,7 +93,6 @@ public class ReceiptTable implements Table<Receipt>{
             ps.execute();
             res = true;
         } catch (SQLException ex) {
-            ex.printStackTrace();
         }
         return res;
     }
@@ -109,7 +107,6 @@ public class ReceiptTable implements Table<Receipt>{
             ps.execute();
             res = true;
         } catch (SQLException ex) {
-            ex.printStackTrace();
         }
 
         return res;
@@ -132,10 +129,9 @@ public class ReceiptTable implements Table<Receipt>{
                     resList.add(r);
                 }
             } catch (SQLException ex) {
-                ex.printStackTrace();
+                resList = null;
             }
         }else if(searchParam instanceof Date && paramName.equals("date")){
-            System.out.println("class Date");
             //uso Date perchè posso fare il cast da Object a Date
             String sql = "SELECT * FROM receipt WHERE date =?";
             PreparedStatement ps = null;
@@ -149,14 +145,14 @@ public class ReceiptTable implements Table<Receipt>{
                     resList.add(r);
                 }
             } catch (SQLException ex) {
-            ex.printStackTrace();
+                resList = null;
             } finally {
-            try {
-                ps.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
-        }
         }
         return resList;
     }
@@ -174,7 +170,7 @@ public class ReceiptTable implements Table<Receipt>{
                 res.put(month, revenue);
             }
         }catch (SQLException ex){
-            System.out.println(ex.toString());
+            res = null;
         } finally {
             try {
                 stm.close();
@@ -206,7 +202,7 @@ public class ReceiptTable implements Table<Receipt>{
                 }
             }
         }catch (SQLException ex){
-            System.out.println(ex.toString());
+            res = null;
         } finally {
             try {
                 stm.close();

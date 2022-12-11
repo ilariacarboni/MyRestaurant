@@ -35,7 +35,7 @@ public ArrayList<Course> getAll() {
                 resList.add(c);
             }
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            resList = null;
         }finally {
             try {
                 stm.close();
@@ -56,7 +56,6 @@ public ArrayList<Course> getAll() {
             ps.execute();
             res = true;
         } catch (SQLException ex) {
-            ex.printStackTrace();
         } finally {
             try {
                 ps.close();
@@ -77,7 +76,6 @@ public ArrayList<Course> getAll() {
             ps.execute();
             res = true;
         } catch (SQLException ex) {
-            ex.printStackTrace();
         } finally {
             try {
                 ps.close();
@@ -97,7 +95,6 @@ public ArrayList<Course> getAll() {
             ps.setString(1, c.getName());
             res = true;
         } catch (SQLException ex) {
-            ex.printStackTrace();
         }finally {
             try {
                 ps.close();
@@ -124,7 +121,7 @@ public ArrayList<Course> getAll() {
                     resList.add(c);
                 }
             } catch (Exception e) {
-                System.out.println(e.toString());
+                resList = null;
             } finally {
             try {
                 ps.close();

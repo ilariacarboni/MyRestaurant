@@ -38,7 +38,7 @@ public class EmployeeTable implements Table<Employee>{
                 resList.add(em);
             }
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            resList = null;
         }finally {
             try {
                 stm.close();
@@ -53,44 +53,39 @@ public class EmployeeTable implements Table<Employee>{
     public boolean save(Employee em) {
         boolean res = false;
             
-            String sql= "INSERT INTO employee (codice_fiscale, name, surname, role, begin_date, end_date, wage,image) VALUES (?,?,?,?,?,?,?,?)";
-            try {
-                PreparedStatement ps = conn.prepareStatement(sql);
-                ps.setString(1, em.getCodiceF());
-                ps.setString(2, em.getName());
-                ps.setString(3, em.getSurname());
-		ps.setString(4, em.getRole());
-                ps.setString(5, em.getBeginDate());
-		ps.setString(6, em.getEndDate());
-                ps.setInt(7, em.getWage()); 
-                ps.setString(8, em.getImage());
-                ps.execute();
+        String sql= "INSERT INTO employee (codice_fiscale, name, surname, role, begin_date, end_date, wage,image) VALUES (?,?,?,?,?,?,?,?)";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, em.getCodiceF());
+            ps.setString(2, em.getName());
+            ps.setString(3, em.getSurname());
+    		ps.setString(4, em.getRole());
+            ps.setString(5, em.getBeginDate());
+	    	ps.setString(6, em.getEndDate());
+            ps.setInt(7, em.getWage());
+            ps.setString(8, em.getImage());
+            ps.execute();
                 
-                res = true;
-            } catch (SQLException ex) {
-                
-                ex.printStackTrace();
-            }
-        
+            res = true;
+        } catch (SQLException ex) {
+        }
         return res;
-        
     }
 
     @Override
     public boolean update(Employee em) {
         boolean res = false;
-	PreparedStatement ps = null;
-	String sql= "UPDATE employee SET end_date = ? WHERE codice_fiscale = ?";
+	    PreparedStatement ps = null;
+	    String sql= "UPDATE employee SET end_date = ? WHERE codice_fiscale = ?";
         try {
-                ps = conn.prepareStatement(sql);
-		ps.setString(1, em.getEndDate());
-                ps.setString(2, em.getCodiceF());
-                ps.execute();
+            ps = conn.prepareStatement(sql);
+		    ps.setString(1, em.getEndDate());
+            ps.setString(2, em.getCodiceF());
+            ps.execute();
                 
-                res = true;
+            res = true;
         }
         catch (SQLException ex) {
-             ex.printStackTrace();
         } finally {
             try {
                 ps.close();
@@ -99,7 +94,6 @@ public class EmployeeTable implements Table<Employee>{
              }
         }
         return res;
-         
     }
 
  
@@ -114,8 +108,6 @@ public class EmployeeTable implements Table<Employee>{
                 ps.execute();
                 res = true;
             } catch (SQLException ex) {
-                
-                ex.printStackTrace();
             }finally {
             try {
                 ps.close();
@@ -149,7 +141,7 @@ public class EmployeeTable implements Table<Employee>{
                     resList.add(em);
                 }
             } catch (SQLException ex) {
-                System.out.println(ex.toString());
+                resList = null;
             } finally {
                 try {
                     ps.close();

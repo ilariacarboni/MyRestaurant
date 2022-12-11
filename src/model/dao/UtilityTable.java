@@ -31,21 +31,21 @@ public class UtilityTable implements Table<Utility>{
     @Override
     public ArrayList<Utility> getAll() {
         
-            ArrayList<Utility> resList = new ArrayList<Utility>();
-            String sql = "SELECT * FROM utility";
-            try {
-                Statement stm = conn.createStatement();
-                ResultSet resultSet = stm.executeQuery(sql);
+        ArrayList<Utility> resList = new ArrayList<Utility>();
+        String sql = "SELECT * FROM utility";
+        try {
+            Statement stm = conn.createStatement();
+            ResultSet resultSet = stm.executeQuery(sql);
 
-                while (resultSet.next()) {
-                    Utility u= new Utility(resultSet.getInt("numberId"),resultSet.getDouble("total"), resultSet.getString("type"),
-                            resultSet.getString("date"), resultSet.getString("state"));
-                    resList.add(u);
-                }
-            } catch (SQLException ex) {
-                System.out.println(ex.toString());
+            while (resultSet.next()) {
+                Utility u= new Utility(resultSet.getInt("numberId"),resultSet.getDouble("total"), resultSet.getString("type"),
+                        resultSet.getString("date"), resultSet.getString("state"));
+                resList.add(u);
             }
-            return resList;
+        } catch (SQLException ex) {
+            resList = null;
+        }
+        return resList;
     }
     
     public ArrayList<Utility> getPageWithStatus(int page, HashMap<String, String> filters, String utilityType) throws SQLException {
@@ -56,9 +56,6 @@ public class UtilityTable implements Table<Utility>{
         String wheres = " WHERE ";
         if (utilityType!=null){
             wheres += " type = '" + utilityType +"' AND ";
-           /* PreparedStatement ps = conn.prepareStatement(wheres);
-            ps.setString(1, utilityType);*/
-            
         }
 
         for (Map.Entry<String, String> entry : filters.entrySet()) {
@@ -82,7 +79,7 @@ public class UtilityTable implements Table<Utility>{
                     resList.add(u);
                 }
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            resList = null;
         }finally {
             try {
                 ps.close();
@@ -97,55 +94,53 @@ public class UtilityTable implements Table<Utility>{
     public boolean save(Utility u) {
         boolean res = false;
             
-            String sql= "INSERT INTO utility (numberId, total, type, date, state) VALUES (?,?,?,?,?)";
-            PreparedStatement ps = null;
-            try {
-                ps = conn.prepareStatement(sql);
-                ps.setInt(1, u.getNumberId());
-                ps.setDouble(2, u.getTotal());
-                ps.setString(3, u.getType());
-                ps.setString(4, u.getDate());
-                ps.setString(5, u.getState());
-                ps.execute();
-                
-                res = true;
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            finally {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-         return res;
-    }
+        String sql= "INSERT INTO utility (numberId, total, type, date, state) VALUES (?,?,?,?,?)";
+        PreparedStatement ps = null;
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, u.getNumberId());
+            ps.setDouble(2, u.getTotal());
+            ps.setString(3, u.getType());
+            ps.setString(4, u.getDate());
+            ps.setString(5, u.getState());
+            ps.execute();
 
-    @Override
-    public boolean update(Utility u) {
-        boolean res = false;
-            
-            String sql= "UPDATE Utility  SET state = ? WHERE numberId = ?";
-            PreparedStatement ps = null;
-            try {
-                ps = conn.prepareStatement(sql);
-                ps.setString(1, u.getState());
-                ps.setInt(2, u.getNumberId());
-                ps.execute();
-                
-                res = true;
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            finally {
+            res = true;
+        } catch (SQLException ex) {
+        }
+        finally {
             try {
                 ps.close();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
-         return res;
+        return res;
+    }
+
+    @Override
+    public boolean update(Utility u) {
+        boolean res = false;
+            
+        String sql= "UPDATE Utility  SET state = ? WHERE numberId = ?";
+        PreparedStatement ps = null;
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, u.getState());
+            ps.setInt(2, u.getNumberId());
+            ps.execute();
+
+            res = true;
+        } catch (SQLException ex) {
+        }
+        finally {
+            try {
+                ps.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return res;
     }
   
 
@@ -153,19 +148,18 @@ public class UtilityTable implements Table<Utility>{
     public boolean delete(Utility u) {
         
         boolean res = false;
-            
-            String sql= "DELETE FROM Utility WHERE numberId = ?";
-            PreparedStatement ps = null;
-            try {
-                ps = conn.prepareStatement(sql);
-                ps.setInt(1, u.getNumberId());
-                ps.execute();
-                
-                res = true;
 
-            } catch (SQLException ex) { 
-                ex.printStackTrace();
-            }finally {
+        String sql= "DELETE FROM Utility WHERE numberId = ?";
+        PreparedStatement ps = null;
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, u.getNumberId());
+            ps.execute();
+
+            res = true;
+
+        } catch (SQLException ex) {
+        }finally {
             try {
                 ps.close();
             } catch (SQLException e) {
@@ -181,31 +175,23 @@ public class UtilityTable implements Table<Utility>{
         ArrayList<Utility> resList = new ArrayList<Utility>();
         PreparedStatement ps = null;
         if(searchParam instanceof String){   //passso un oggetto di ricerca textinput
-         
-        String sql= "SELECT * FROM Utility WHERE type =? ORDER BY date";
-        try {
-                ps = conn.prepareStatement(sql); 
+            String sql= "SELECT * FROM Utility WHERE type =? ORDER BY date";
+            try {
+                ps = conn.prepareStatement(sql);
                 ps.setString(1, (String) searchParam);
                 ps.execute();
                 ResultSet resultSet = ps.executeQuery();
-                
+
                 while (resultSet.next()) {
                     Utility u = new Utility(resultSet.getInt("numberId"), resultSet.getDouble("total"),resultSet.getString("type"),
                             resultSet.getString("date"),resultSet.getString("state"));
                     resList.add(u);
                 }
+            } catch (SQLException ex) {
+                resList = null;
             }
-            catch (SQLException ex) {
-        
-                ex.printStackTrace();
-            }   
-        } 
-        
-        else if (searchParam instanceof Integer) {
-            
-        String sql=  "SELECT * FROM Utility WHERE numberId=? ORDER BY date"; 
-       
-        
+        } else if (searchParam instanceof Integer) {
+            String sql=  "SELECT * FROM Utility WHERE numberId=? ORDER BY date";
             try {
                 ps = conn.prepareStatement(sql); 
                 ps.setInt(1, (int) searchParam);
@@ -217,12 +203,11 @@ public class UtilityTable implements Table<Utility>{
                              resultSet.getString("date"),resultSet.getString("state"));
                     resList.add(u);
                 }
-            }
-            catch (SQLException ex) {
-                ex.printStackTrace();
+            } catch (SQLException ex) {
+                resList = null;
             }  
         }     
-         return resList;
+        return resList;
     }
 
     public LinkedHashMap<String, Double> getUtilityCostPerMonth(){
@@ -237,10 +222,9 @@ public class UtilityTable implements Table<Utility>{
                 Double cost = resultSet.getDouble("sum_for_month");
                 res.put(month, cost);
             }
-        }catch (SQLException ex){
-            System.out.println(ex.toString());
-        }
-        finally {
+        } catch (SQLException ex){
+            res = null;
+        } finally {
             try {
                 stm.close();
             } catch (SQLException e) {
@@ -259,7 +243,6 @@ public class UtilityTable implements Table<Utility>{
             ResultSet resultSet = stm.executeQuery(sql);
             res = resultSet.getInt("total");
         } catch (SQLException ex) {
-            ex.printStackTrace();
         } finally {
             try {
                 stm.close();

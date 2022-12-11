@@ -72,7 +72,6 @@ public class ProductTable implements Table<Product>{
             ps.execute();
             res = true;
         } catch (SQLException ex) {
-            ex.printStackTrace();
         }
 
         return res;
@@ -94,7 +93,6 @@ public class ProductTable implements Table<Product>{
             int test = ps.executeUpdate();
             res = true;
         } catch (SQLException ex) {
-            ex.printStackTrace();
         }
         return res;
     }
@@ -109,7 +107,6 @@ public class ProductTable implements Table<Product>{
             ps.setInt(1, p.getId());
             res = true;
         } catch (SQLException ex) {
-            ex.printStackTrace();
         }
         
         return res;
@@ -139,7 +136,7 @@ public class ProductTable implements Table<Product>{
                     resList.add(p);
                 }
             } catch (SQLException ex) {
-                System.out.println(ex.toString());
+                resList = null;
             }
         }else if(searchParam instanceof Integer){
             switch(paramName){
@@ -157,7 +154,7 @@ public class ProductTable implements Table<Product>{
                     resList.add(p);
                 }
             } catch (SQLException ex) {
-                System.out.println(ex.toString());
+                resList = null;
             }
         }
         return resList;
@@ -181,7 +178,7 @@ public class ProductTable implements Table<Product>{
                 resList.add(p);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            resList = null;
         }
         return resList;
     }
@@ -204,7 +201,7 @@ public class ProductTable implements Table<Product>{
                 res.put(month, usage);
             }
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            res = null;
         }
         return res;
     }
@@ -222,7 +219,7 @@ public class ProductTable implements Table<Product>{
                 res.put(month, totOrders);
             }
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            res = null;
         }
         return res;
     }
@@ -239,7 +236,7 @@ public class ProductTable implements Table<Product>{
                 res.put(category, prodNumber);
             }
         }catch (SQLException ex){
-            System.out.println(ex.toString());
+            res = null;
         }
         return res;
     }
@@ -266,7 +263,7 @@ public class ProductTable implements Table<Product>{
                 categoryOccupation.put(entry.getKey(), entry.getValue()/totalProductsInWarehouse);
             }
         }catch (SQLException ex){
-            System.out.println(ex.toString());
+            categoryOccupation = null;
         }
         return categoryOccupation;
     }

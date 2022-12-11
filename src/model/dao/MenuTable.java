@@ -40,7 +40,7 @@ public class MenuTable implements Table<Menu>{
                 resList.add(m);
             }
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            resList = null;
         } finally {
             try {
                 stm.close();
@@ -68,8 +68,6 @@ public class MenuTable implements Table<Menu>{
 
             res = true;
         } catch (SQLException ex) {
-
-            ex.printStackTrace();
         } finally {
             try {
                 ps.close();
@@ -112,8 +110,7 @@ public class MenuTable implements Table<Menu>{
             ps.execute();
             res = true;
         } catch (SQLException ex) {
-            ex.printStackTrace();
-        }finally {
+        } finally {
             try {
                 ps.close();
             } catch (SQLException e) {
@@ -131,35 +128,33 @@ public class MenuTable implements Table<Menu>{
         ArrayList<Menu> resList = new ArrayList<Menu>();
         PreparedStatement ps = null;
         if(searchParam instanceof String){   //passso un oggetto di ricerca textinput
-          switch(paramName){
+              switch(paramName){
                 case "nameDish":
                     sql = baseSql + "WHERE m.nameDish =? ";
                     break;
                 case "course":
                     sql = baseSql + "WHERE c.name = ?";
                     break;
-            }
-        try {
-                ps = conn.prepareStatement(sql); 
+              }
+            try {
+                ps = conn.prepareStatement(sql);
                 ps.setString(1, (String) searchParam);
                // ps.execute();
                 ResultSet resultSet = ps.executeQuery();
-                
+
                 while (resultSet.next()) {
                     Menu m = new Menu(resultSet.getString("nameDish"),resultSet.getDouble("price"),resultSet.getString("course"),resultSet.getString("image"));
                     resList.add(m);
                 }
+            } catch (SQLException ex) {
+                resList = null;
+            } finally {
+                    try {
+                        ps.close();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
             }
-            catch (SQLException ex) {
-        
-                ex.printStackTrace();
-            }  finally {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-               }
         }
      return resList;
     }
@@ -177,7 +172,7 @@ public class MenuTable implements Table<Menu>{
                 res.put(course, dishNumber);
             }
         }catch (SQLException ex){
-            System.out.println(ex.toString());
+            res = null;
         } finally {
             try {
                 stm.close();
@@ -201,7 +196,7 @@ public class MenuTable implements Table<Menu>{
                 res.put(course, dishName);
             }
         }catch (SQLException ex){
-            System.out.println(ex.toString());
+            res = null;
         } finally {
             try {
                 stm.close();
@@ -221,7 +216,4 @@ public class MenuTable implements Table<Menu>{
         String image =(String) map.get("image");
         return new Menu(nameDish, price, course, image);
     }
-
-
-
 }
