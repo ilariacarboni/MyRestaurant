@@ -26,12 +26,12 @@ public class AdminsTable implements Table<Admin>{
                 resList.add(a);
             }
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            resList = null;
         } finally {
             try {
                 stm.close();
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                resList = null;
             }
         }
         return resList;
@@ -50,7 +50,6 @@ public class AdminsTable implements Table<Admin>{
             ps.execute();
             res = true;
         } catch (SQLException ex) {
-            ex.printStackTrace();
         } finally {
             try {
                 ps.close();
@@ -74,7 +73,6 @@ public class AdminsTable implements Table<Admin>{
             ps.execute();
             res = true;
         } catch (SQLException ex) {
-            ex.printStackTrace();
         } finally {
             try {
                 ps.close();
@@ -95,7 +93,6 @@ public class AdminsTable implements Table<Admin>{
             ps.setString(1, a.getUsername());
             res = true;
         } catch (SQLException ex) {
-            ex.printStackTrace();
         } finally {
             try {
                 ps.close();
@@ -123,7 +120,7 @@ public class AdminsTable implements Table<Admin>{
                     resList.add(a);
                 }
             } catch (Exception e) {
-                System.out.println(e.toString());
+                resList = null;
             } finally {
                 try {
                     ps.close();

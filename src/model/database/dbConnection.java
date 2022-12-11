@@ -7,6 +7,7 @@ package model.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 /**
  * class used to establish and close the connection to the db
@@ -27,5 +28,15 @@ public class dbConnection {
             }
         }
         return conn;
+    }
+
+    public static void close(){
+        if(conn != null){
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }

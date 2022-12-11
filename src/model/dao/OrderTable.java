@@ -56,7 +56,7 @@ public class OrderTable implements Table<Order>{
                 resList.add(o);
             }
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            resList = null;
         }
         return resList;
     }
@@ -75,7 +75,7 @@ public class OrderTable implements Table<Order>{
                 resList.add(o);
             }
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            resList = null;
         } finally {
             try {
                 ps.close();
@@ -104,21 +104,23 @@ public class OrderTable implements Table<Order>{
         sql += wheres + orderBy;
         PreparedStatement ps = null;
         try {
-           ps = conn.prepareStatement(sql);
+            ps = conn.prepareStatement(sql);
             ps.setString(1, status);
             ResultSet resultSet = ps.executeQuery();
 
             while (resultSet.next()) {
-                Order o = new Order( resultSet.getInt("number"),
+                Order o = new Order(
+                        resultSet.getInt("number"),
                         resultSet.getString("date"),
                         resultSet.getInt("product_barcode"),
                         resultSet.getInt("qty"),
                         resultSet.getString("state"),
-                        resultSet.getString("supplier"));
+                        resultSet.getString("supplier")
+                );
                 resList.add(o);
             }
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            resList = null;
         }finally {
             try {
                 ps.close();
@@ -144,7 +146,6 @@ public class OrderTable implements Table<Order>{
             ps.execute();
             res = true;
         } catch (SQLException ex) {
-            ex.printStackTrace();
         } finally {
             try {
                 ps.close();
@@ -162,15 +163,14 @@ public class OrderTable implements Table<Order>{
         PreparedStatement ps = null;
         try {
             ps = conn.prepareStatement(sql);
-                ps.setString(1, o.getDate());
-                ps.setInt(2, o.getProduct());
-                ps.setDouble(3, o.getQty());
-                ps.setString(4, o.getState());
-                ps.setInt(5, o.getNumber());
+            ps.setString(1, o.getDate());
+            ps.setInt(2, o.getProduct());
+            ps.setDouble(3, o.getQty());
+            ps.setString(4, o.getState());
+            ps.setInt(5, o.getNumber());
             ps.execute();
             res = true;
         } catch (SQLException ex) {
-            ex.printStackTrace();
         } finally {
             try {
                 ps.close();
@@ -191,7 +191,6 @@ public class OrderTable implements Table<Order>{
             ps.setInt(1, o.getNumber());
             res = true;
         } catch (SQLException ex) {
-            ex.printStackTrace();
         }finally {
             try {
                 ps.close();
@@ -219,7 +218,7 @@ public class OrderTable implements Table<Order>{
                     resList.add(o);
                 }
             } catch (SQLException ex) {
-                ex.printStackTrace();
+                resList = null;
             }finally {
                 try {
                     ps.close();
@@ -245,7 +244,7 @@ public class OrderTable implements Table<Order>{
                 res.put(category, lastOrderDate);
             }
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            res = null;
         }finally {
             try {
                 stm.close();
@@ -269,7 +268,7 @@ public class OrderTable implements Table<Order>{
                 res.put(category, averageExpense);
             }
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            res = null;
         } finally {
             try {
                 stm.close();
@@ -293,7 +292,7 @@ public class OrderTable implements Table<Order>{
                 res.put(month, expense);
             }
         }catch (SQLException ex){
-            System.out.println(ex.toString());
+            res = null;
         } finally {
             try {
                 stm.close();
@@ -312,7 +311,6 @@ public class OrderTable implements Table<Order>{
             ResultSet resultSet = stm.executeQuery(sql);
             res = resultSet.getInt("tot");
         } catch (SQLException ex) {
-            ex.printStackTrace();
         } finally {
             try {
                 stm.close();
@@ -333,7 +331,6 @@ public class OrderTable implements Table<Order>{
             ResultSet resultSet = ps.executeQuery();
             res = resultSet.getInt("tot");
         } catch (SQLException ex) {
-            ex.printStackTrace();
         } finally {
             try {
                 ps.close();

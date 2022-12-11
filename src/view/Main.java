@@ -6,12 +6,17 @@
 package view;
 
 import java.io.IOException;
+import java.util.Optional;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+import model.database.dbConnection;
 import view.sceneControllers.CommunicationController;
+import view.utils.CustomDialog;
 
 /**
  *
@@ -29,6 +34,10 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
         primaryStage.show();
+        primaryStage.setOnCloseRequest(e -> {
+            e.consume();
+            close(primaryStage);
+        });
     }
 
     /**
@@ -37,5 +46,16 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
+    private void close(Stage stage){
+        CustomDialog dialog = CustomDialog.getInstance();
+        String text = "Sei sicuro di voler chiudere l'applicazione?";
+        dialog.setInfo(text, CustomDialog.TYPE_INFO);
+        dialog.setButtons(ButtonType.YES, ButtonType.CANCEL);
+        Optional<ButtonType> dialogRes = dialog.showAndWait("Attenzione !");
+        if(dialogRes.get() == ButtonType.YES){
+            dbConnection.close();
+            stage.close();
+        }
+    }
 }

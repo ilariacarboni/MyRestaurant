@@ -31,7 +31,7 @@ public class CategoryTable implements Table<Category>{
                 resList.add(c);
             }
         } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            resList = null;
         }
         return resList;
     }
@@ -63,7 +63,6 @@ public class CategoryTable implements Table<Category>{
             ps.execute();
             res = true;
         } catch (SQLException ex) {
-            ex.printStackTrace();
         }
         return res;
     }
@@ -77,7 +76,6 @@ public class CategoryTable implements Table<Category>{
             ps.setString(1, c.getName());
             res = true;
         } catch (SQLException ex) {
-            ex.printStackTrace();
         }
         return res;
     }
@@ -98,7 +96,7 @@ public class CategoryTable implements Table<Category>{
                     resList.add(c);
                 }
             } catch (Exception e) {
-                System.out.println(e.toString());
+                resList = null;
             }
         }
         return resList;
