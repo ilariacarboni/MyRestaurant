@@ -28,9 +28,9 @@ public class AddOrderPaneController extends BaseView implements Initializable {
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100);
         valueFactory.setValue(1);
         qtyField.setValueFactory(valueFactory);
-        SuggestionProvider suggestionProvider = SuggestionProvider.create(new ArrayList());
+       /* SuggestionProvider suggestionProvider = SuggestionProvider.create(new ArrayList());
         new AutoCompletionTextFieldBinding<>(productField, suggestionProvider);
-        this.addListenerForAutocompletion(suggestionProvider);
+        this.addListenerForAutocompletion(suggestionProvider);*/
     }
 
     public void refresh(){
