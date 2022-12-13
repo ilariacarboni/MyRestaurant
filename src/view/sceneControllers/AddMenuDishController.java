@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import business.MenuManager;
 import java.io.File;
 import java.util.ArrayList;
+import javafx.beans.value.ChangeListener;
 
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -50,6 +51,7 @@ public class AddMenuDishController extends BaseView implements Initializable {
        
         categorieChoicebox.getItems().addAll(categorie);
         categorieChoicebox.setOnAction(this::getSelectedCategory);
+        addListenersToTextFields();
 
     }    
 
@@ -103,6 +105,20 @@ public class AddMenuDishController extends BaseView implements Initializable {
 
     private void getSelectedCategory(ActionEvent event) {
         String category = categorieChoicebox.getValue();
+    }
+    private void addListenersToTextFields(){
+        this.addListener(prezzoTxt, "\\d*\\.?\\d*");
+    }
+    private void addListener(TextField field, String regexToMatch){
+        field.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.matches(regexToMatch)) {
+                    String toReplace = "[^"+regexToMatch+"]";
+                    field.setText(newValue.replaceAll(toReplace, ""));
+                }
+            }
+        });
     }
 
     private void resetTextFields() {
