@@ -2,8 +2,8 @@ package view.sceneControllers;
 
 import business.OrderManager;
 import business.ProductManager;
-//import impl.org.controlsfx.autocompletion.AutoCompletionTextFieldBinding;
-//import impl.org.controlsfx.autocompletion.SuggestionProvider;
+import impl.org.controlsfx.autocompletion.AutoCompletionTextFieldBinding;
+import impl.org.controlsfx.autocompletion.SuggestionProvider;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -72,7 +72,7 @@ public class AddOrderPaneController extends BaseView implements Initializable {
     }
 
 
-    /*private void addListenerForAutocompletion(SuggestionProvider sp){
+    private void addListenerForAutocompletion(SuggestionProvider sp){
         productField.textProperty().addListener((observable, oldValue, newValue) -> {
             ArrayList<String> suggestions = new ArrayList<>();
             ArrayList<HashMap<String, Object>> products = this.productManager.getProductsWithNameLike(newValue);
@@ -83,7 +83,7 @@ public class AddOrderPaneController extends BaseView implements Initializable {
             sp.clearSuggestions();
             sp.addPossibleSuggestions(newSuggestions);
         });
-    }*/
+    }
 
     public void hideAddOrderPane(MouseEvent mouseEvent) {
         commController.getDashboardController().setRightPane(null);
