@@ -28,9 +28,9 @@ public class AddOrderPaneController extends BaseView implements Initializable {
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100);
         valueFactory.setValue(1);
         qtyField.setValueFactory(valueFactory);
-       /* SuggestionProvider suggestionProvider = SuggestionProvider.create(new ArrayList());
+        SuggestionProvider suggestionProvider = SuggestionProvider.create(new ArrayList());
         new AutoCompletionTextFieldBinding<>(productField, suggestionProvider);
-        this.addListenerForAutocompletion(suggestionProvider);*/
+        this.addListenerForAutocompletion(suggestionProvider);
     }
 
     public void refresh(){
@@ -72,7 +72,7 @@ public class AddOrderPaneController extends BaseView implements Initializable {
     }
 
 
-    /*private void addListenerForAutocompletion(SuggestionProvider sp){
+    private void addListenerForAutocompletion(SuggestionProvider sp){
         productField.textProperty().addListener((observable, oldValue, newValue) -> {
             ArrayList<String> suggestions = new ArrayList<>();
             ArrayList<HashMap<String, Object>> products = this.productManager.getProductsWithNameLike(newValue);
@@ -83,7 +83,7 @@ public class AddOrderPaneController extends BaseView implements Initializable {
             sp.clearSuggestions();
             sp.addPossibleSuggestions(newSuggestions);
         });
-    }*/
+    }
 
     public void hideAddOrderPane(MouseEvent mouseEvent) {
         commController.getDashboardController().setRightPane(null);
