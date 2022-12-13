@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import business.UtilityManager;
 import java.io.IOException;
+import javafx.beans.value.ChangeListener;
 import javafx.scene.control.*;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -43,6 +44,7 @@ public class AddUtilityController  extends BaseView implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         utenzeChoiceBox.getItems().addAll(tipo_utenza);
         utenzeChoiceBox.setOnAction(this::getUtilityType);
+        addListenersToTextFields();
     }    
         
     @FXML
@@ -89,6 +91,22 @@ public class AddUtilityController  extends BaseView implements Initializable {
    
         private void getUtilityType(ActionEvent event) {
         String tipologia_utenza = utenzeChoiceBox.getValue();
+    }
+        private void addListenersToTextFields(){
+        this.addListener(nfatturaTxt, "\\d*");
+        this.addListener(importoutenzaTxt, "\\d*\\.?\\d*");
+    }
+
+    private void addListener(TextField field, String regexToMatch){
+        field.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.matches(regexToMatch)) {
+                    String toReplace = "[^"+regexToMatch+"]";
+                    field.setText(newValue.replaceAll(toReplace, ""));
+                }
+            }
+        });
     }
         
         public void resetTextFields() {

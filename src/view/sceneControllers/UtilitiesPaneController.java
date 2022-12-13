@@ -84,11 +84,11 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
         utilitiesBorderPane.setBackground(imagesProvider.getBackground());
         utilitiesGridPane.getChildren().clear();
         
-        totalUtilities = utilityManager.getTotalUtilities();
         pageLengthSelector.setValue(pageLengthValues[0]);
         utilityManager.setUtilitiesPageLength(pageLengthValues[0]);
         pageLengthSelector.getItems().addAll(pageLengthValues);
-        lastPage = (int)(Math.ceil(totalUtilities/currentPageLength));
+        this.countUtilities();
+        
         this.insertUtilitiesInPage(1);
         this.initializeSearchBar();
         
@@ -206,6 +206,7 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
     void loadElectricityUtilities(ActionEvent event) {
             this.typeSelected = "elettricità";
             filterMenu.setText("elettricità");
+            countUtilities();
             this.insertUtilitiesInPage(1);
     }
 
@@ -213,6 +214,7 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
     void loadGasUtilities(ActionEvent event) {
             this.typeSelected = "gas";
             filterMenu.setText("gas");
+            countUtilities();
             this.insertUtilitiesInPage(1);
     }
 
@@ -220,16 +222,24 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
     void loadWaterUtilities(ActionEvent event) {
             this.typeSelected = "acqua";
             filterMenu.setText("acqua");
+            countUtilities();
             this.insertUtilitiesInPage(1);
-
     }
     
     @FXML
     void loadAllUtilities(ActionEvent event) {
             this.typeSelected = null;
             filterMenu.setText("Tutte le utenze");
+            countUtilities();
             this.insertUtilitiesInPage(1);
+    }
 
+    private void countUtilities() {
+        totalUtilities = utilityManager.getTotalUtilities();
+        if (typeSelected!=null){
+            totalUtilities = utilityManager.getFrom(typeSelected, "type").size();
+        }
+        lastPage = (int)(Math.ceil(this.totalUtilities/currentPageLength));
     }
     
 }

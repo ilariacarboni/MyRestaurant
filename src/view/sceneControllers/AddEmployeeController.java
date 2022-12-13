@@ -9,6 +9,8 @@ import java.util.ResourceBundle;
 
 import business.EmployeeManager;
 import java.io.File;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -67,7 +69,7 @@ public class AddEmployeeController extends BaseView implements  Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         ruoloChoicebox.getItems().addAll(ruoli);
         ruoloChoicebox.setOnAction(this::getSelectedRole);
-        
+        addListenersToTextFields();
         
     }  
      @FXML
@@ -75,7 +77,7 @@ public class AddEmployeeController extends BaseView implements  Initializable {
         
         //controllo che siano stati inseriti tutti i campi
         if(nomeEmpTxt.getText().isEmpty() || stipendioEmpTxt.getText().isEmpty() || cognomeEmpTxt.getText().isEmpty() || codicefEmpTxt.getText().isEmpty() ||
-                ruoloChoicebox.getValue() == null || beginDatePicker.getValue()==null || endDatePicker.getValue()==null){
+                ruoloChoicebox.getValue() == null || beginDatePicker.getValue()==null ){
             String text = "Nessun campo può essere vuoto!";
             dialog.setInfo(text, CustomDialog.TYPE_WARNING);
             dialog.setButtons(ButtonType.OK);
@@ -90,8 +92,10 @@ public class AddEmployeeController extends BaseView implements  Initializable {
             //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             String begin_date_string = beginDatePicker.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             //LocalDate begin_date = LocalDate.parse(begin_date_string, formatter); // passo string a data
-            String end_date_string = endDatePicker.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-           // LocalDate end_date = LocalDate.parse(end_date_string, formatter); // passo stringa a data
+            String end_date_string = null;
+            if(endDatePicker.getValue()!=null){
+                end_date_string = endDatePicker.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            }
             
             employee.put("codice_fiscale", codice_fiscale);
             employee.put("name", name);
@@ -120,6 +124,21 @@ public class AddEmployeeController extends BaseView implements  Initializable {
             }
         }
         
+    }
+    private void addListenersToTextFields(){
+        this.addListener(stipendioEmpTxt, "\\d*");
+    }
+
+    private void addListener(TextField field, String regexToMatch){
+        field.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.matches(regexToMatch)) {
+                    String toReplace = "[^"+regexToMatch+"]";
+                    field.setText(newValue.replaceAll(toReplace, ""));
+                }
+            }
+        });
     }
     
     private void resetTextFields(){
