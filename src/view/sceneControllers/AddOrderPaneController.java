@@ -2,8 +2,8 @@ package view.sceneControllers;
 
 import business.OrderManager;
 import business.ProductManager;
-//import impl.org.controlsfx.autocompletion.AutoCompletionTextFieldBinding;
-//import impl.org.controlsfx.autocompletion.SuggestionProvider;
+import impl.org.controlsfx.autocompletion.AutoCompletionTextFieldBinding;
+import impl.org.controlsfx.autocompletion.SuggestionProvider;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
