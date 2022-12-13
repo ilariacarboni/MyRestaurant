@@ -39,7 +39,6 @@ public class BackButton extends AnchorPane {
         });
     }
 
-
     public void setDashboardController(DashboardController d){
         this.dashboardController = d;
     }
