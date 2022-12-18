@@ -71,6 +71,7 @@ public class AddProductPaneController extends BaseView implements Initializable 
             product.put("price", price);
             product.put("supplier", supplier);
             product.put("category", category);
+            product.put("image", null);
             boolean res = this.productManager.saveProduct(product);
             HashMap<String, Object> categoryEntity = null;
             ArrayList<HashMap> categories = categoryManager.getFrom(category, "name");

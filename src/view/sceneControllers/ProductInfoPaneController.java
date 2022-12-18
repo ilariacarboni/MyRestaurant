@@ -67,7 +67,11 @@ public class ProductInfoPaneController extends BaseView implements Initializable
         }
         this.shownProduct = product;
         this.setLabels(product);
-        this.setImage(product.get("image").toString(), (int)product.get("barcode"));
+        String productImage = null;
+        if(product.get("image") != null){
+            productImage = product.get("image").toString();
+        }
+        this.setImage(productImage, (int)product.get("barcode"));
         if(this.productCharts != null && !this.productCharts.isEmpty()){
             this.chartContainer.getChildren().clear();
             this.chartContainer.getChildren().add((Node)this.productCharts.get(index));
