@@ -10,6 +10,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -46,6 +48,7 @@ public class DishInfoController extends BaseView implements Initializable {
          commController.setDishInfoController(this);
          this.menuManager = new MenuManager();
          this.courseManager = new CourseManager();
+         addListenersToTextFields();
     }  
     
     public void setChosenDish(HashMap<String, Object> menu){
@@ -110,6 +113,20 @@ public class DishInfoController extends BaseView implements Initializable {
         dishNameLbl.setText("Seleziona piatto");
         dishImg.setImage(imagesProvider.getDefaultDishImage());
         
+    }
+    private void addListenersToTextFields(){
+        this.addListener(priceTxtfield, "\\d*\\.?\\d*");
+    }
+    private void addListener(TextField field, String regexToMatch){
+        field.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.matches(regexToMatch)) {
+                    String toReplace = "[^"+regexToMatch+"]";
+                    field.setText(newValue.replaceAll(toReplace, ""));
+                }
+            }
+        });
     }
 
     private void refreshCourse() {

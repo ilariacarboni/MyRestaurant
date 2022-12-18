@@ -41,7 +41,6 @@ public class MenuPaneController extends BaseView implements Initializable{
     public Label titoloLbl;
     public ScrollPane menuPaneScrollPane;
     
-    //public List<Course> portate = new ArrayList<>();
     final int ANIMATION_DURATION = 275;
     final int ANIMATION_DISTANCE = 700;
     private CourseManager courseManager = new CourseManager();
@@ -72,7 +71,10 @@ public class MenuPaneController extends BaseView implements Initializable{
         menuGridPane.setPadding(new Insets(5, 20, 20, 20));
         
         menuPaneScrollPane.setContent(menuGridPane);
-        
+       
+    }
+    public void initializeCourses(){
+        menuGridPane.getChildren().clear();
         ArrayList<HashMap<String,Object>> portate =  this.courseManager.getAll(); //lista portate
         imagesProvider.initializeCoursesImages(portate);
         HashMap<String, HashMap<String, Object>> coursesInfo = this.courseManager.getCoursesInfo();
@@ -110,6 +112,9 @@ public class MenuPaneController extends BaseView implements Initializable{
         
         DashboardController dashboardController = commController.getDashboardController();
         BackButton backButton = this.makeBackButton(dashboardController);
+        backButton.setOnMouseClicked((e) -> {
+            this.initializeCourses();
+        });
         dashboardController.setCenterPane(menuListPane, backButton);
         
     }
