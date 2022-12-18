@@ -138,6 +138,9 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
             index = 0;
             ArrayList<HashMap<String, Object>> utilitieslist = this.utilityManager.getAllbyPage(pageNumber,filters,typeSelected);
             
+            totalUtilities = utilitieslist.size();
+            lastPage = (int)(Math.ceil(this.totalUtilities/currentPageLength));
+            
             utilitieslist.forEach((utility)->{
                 try {
                     this.addUtility(utility, index);
@@ -196,7 +199,7 @@ public class UtilitiesPaneController extends BaseView implements Initializable  
         idsearchBar.textProperty().addListener((observable, oldValue, newValue) ->{
             insertUtilitiesInPage(pageNumber);
         });
-    //ricerca oer data
+    //ricerca per data
         datesearchBar.textProperty().addListener((observable, oldValue, newValue) ->{
             insertUtilitiesInPage(pageNumber);
         });    

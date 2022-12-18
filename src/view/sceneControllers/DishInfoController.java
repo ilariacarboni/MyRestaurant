@@ -87,8 +87,16 @@ public class DishInfoController extends BaseView implements Initializable {
 
     @FXML
     void modifyBtnClicked(ActionEvent event) {
-        double price = Double.parseDouble(priceTxtfield.getText());
-        dishInfo.put("price", price);
+        
+        if(priceTxtfield.getText().isEmpty()){
+            String text = "Nessun campo può essere vuoto!";
+            dialog.setInfo(text, CustomDialog.TYPE_WARNING);
+            dialog.setButtons(ButtonType.OK);
+            dialog.showAndWait("Attenzione!");
+        }
+        else{
+            double price = Double.parseDouble(priceTxtfield.getText());
+            dishInfo.put("price", price);
         
         boolean res = this.menuManager.updateMenu(dishInfo);
                 if(!res){
@@ -106,6 +114,8 @@ public class DishInfoController extends BaseView implements Initializable {
                     refreshCourse();
                    
                 }
+        }
+        
     }
     
     private void resetTextFields() {
