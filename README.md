@@ -7,7 +7,7 @@
 - Manutentori
 
 ## Introduzione
-
+Applicazione in JavaFX per la gestione di un ristorante collegato ad un database.
 ## Configurazione
 Le credenziali per l'utilizzo dell'applicazione sono:
 - username : root
