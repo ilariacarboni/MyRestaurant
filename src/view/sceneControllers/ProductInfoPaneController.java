@@ -67,6 +67,11 @@ public class ProductInfoPaneController extends BaseView implements Initializable
         }
         this.shownProduct = product;
         this.setLabels(product);
+        String productImage = null;
+        if(product.get("image") != null){
+            productImage = product.get("image").toString();
+        }
+        this.setImage(productImage, (int)product.get("barcode"));
         if(this.productCharts != null && !this.productCharts.isEmpty()){
             this.chartContainer.getChildren().clear();
             this.chartContainer.getChildren().add((Node)this.productCharts.get(index));
@@ -80,10 +85,13 @@ public class ProductInfoPaneController extends BaseView implements Initializable
         this.supplierLabel.setText((String)product.get("supplier"));
         this.priceLabel.setText(String.valueOf(product.get("price")));
         this.barcodeLabel.setText(String.valueOf(product.get("barcode")));
-        String imagePath = (String)product.get("image");
+
+    }
+
+    private void setImage(String imagePath, int productBarcode){
         if(imagePath != null && !imagePath.equals("")){
             try{
-                this.productImage.setImage(imagesProvider.getProductImage((int)product.get("barcode"), imagePath));
+                this.productImage.setImage(imagesProvider.getProductImage(productBarcode, imagePath));
             }catch(Exception e){
                 this.productImage.setImage(imagesProvider.getDefaultProductImage());
             }
@@ -146,6 +154,7 @@ public class ProductInfoPaneController extends BaseView implements Initializable
             HashMap<String, Object> product = new HashMap<String, Object>();
             this.shownProduct.put("image", customImagePath);
             this.prodManager.updateProduct(this.shownProduct);
+            imagesProvider.setProductImage((int)this.shownProduct.get("barcode"), customImagePath);
         }
         //gestione aggiornamento
         int barcode = (int)this.shownProduct.get("barcode");

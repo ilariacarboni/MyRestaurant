@@ -89,19 +89,28 @@ public class OrderTable implements Table<Order>{
     public ArrayList<Order> getPageWithStatus(String status, int page, HashMap<String, String> filters){
         ArrayList <Order> resList = new ArrayList<Order>();
         int offset =  (page-1) * this.pageLength;
-        String sql = "SELECT o.*, p.supplier FROM orders o JOIN product p ON o.product_barcode = p.barcode ";
-        String orderBy = " ORDER BY o.date desc LIMIT "+ offset +","+this.pageLength;
-        String wheres = " WHERE  state = ? AND ";
+        String selectOrders = "SELECT o.*, p.supplier FROM orders o JOIN product p ON o.product_barcode = p.barcode ";
+        String orderBy = " ORDER BY o.date desc";
+        String where = " WHERE  state = ? ";
+        String limit = " LIMIT " + offset + "," + this.pageLength;
+        String sql = "SELECT * FROM (" + selectOrders + where + orderBy + limit + ")";
+
+        boolean filterEmpty = true;
+        String ordersPageWheres = " WHERE ";
         for (Map.Entry<String, String> entry : filters.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
             if(!value.isEmpty()){
-                wheres += key+" LIKE '%"+value+"%' AND ";
+                filterEmpty = false;
+                ordersPageWheres += key+" LIKE '%"+value+"%' AND ";
             }
         }
         //eliminazione ultimo AND
-        wheres = wheres.substring(0, wheres.length() - 4);
-        sql += wheres + orderBy;
+        if(!filterEmpty){
+            ordersPageWheres = ordersPageWheres.substring(0, ordersPageWheres.length() - 4);
+            sql += ordersPageWheres;
+        }
+
         PreparedStatement ps = null;
         try {
             ps = conn.prepareStatement(sql);

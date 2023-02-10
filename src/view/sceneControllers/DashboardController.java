@@ -134,6 +134,7 @@ public class DashboardController extends BaseView implements Initializable {
             }
             borderPane.setCenter(this.menuPane);
             MenuPaneController menuPaneController = commController.getMenuPaneController();
+            menuPaneController.initializeCourses();
             menuPaneController.animate();
             borderPane.setRight(null);
         }
@@ -164,6 +165,7 @@ public class DashboardController extends BaseView implements Initializable {
                 this.categoryPane = FXMLLoader.load(getClass().getResource(this.CATEGORY_PANE_PATH));
             }
             CategoryPaneController categoryPaneController = commController.getCategoryPaneController();
+            categoryPaneController.addData();
             borderPane.setCenter(this.categoryPane);
             categoryPaneController.animate();
             borderPane.setRight(null);

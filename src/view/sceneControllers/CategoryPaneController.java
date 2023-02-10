@@ -39,13 +39,15 @@ public class CategoryPaneController extends BaseView implements Initializable {
 
     public BorderPane categoryContainer;
     public VBox mainPane;
-    private CategoryManager categoryManager = new CategoryManager();
     public int permissionLevel = AdminManager.ROOT_PERMISSION_LEVEL;
+    private CategoryManager categoryManager = new CategoryManager();
+    private Node productsPane = null;
+    private CustomGridPane gridPane;
+    private boolean firstLoad = true;
     final int GRIDPANE_COLUMNS_NUMBER = 4;
     final int ANIMATION_DURATION = 275;
     final int ANIMATION_DISTANCE = 700;
-    private Node productsPane = null;
-    private CustomGridPane gridPane;
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -61,6 +63,11 @@ public class CategoryPaneController extends BaseView implements Initializable {
         gridPane.setVgap(20);
         gridPane.setPadding(new Insets(5, 20, 20, 20));
 
+        categoryContainer.setCenter(gridPane);
+    }
+
+    public void addData(){
+        gridPane.getChildren().clear();
         ArrayList<HashMap<String,Object>> categories =  this.categoryManager.getAll();
         imagesProvider.initializeCategoriesImg(categories);
         HashMap<String, HashMap<String, Object>> categoriesInfo = this.categoryManager.getCategoriesBasicInfo();
@@ -73,7 +80,6 @@ public class CategoryPaneController extends BaseView implements Initializable {
                 Logger.getLogger(CategoryPaneController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        categoryContainer.setCenter(gridPane);
     }
 
     public void addCategory(HashMap<String,Object> category) throws IOException{
@@ -100,6 +106,9 @@ public class CategoryPaneController extends BaseView implements Initializable {
         productsPaneContr.loadProductsByCategory(category);
         DashboardController dashboardController = commController.getDashboardController();
         BackButton backButton = this.makeBackButton(dashboardController);
+        backButton.setOnMouseClicked((e) -> {
+            this.addData();
+        });
         dashboardController.setCenterPane(productsPane, backButton);
         dashboardController.setRightPane(null);
     }
@@ -118,6 +127,7 @@ public class CategoryPaneController extends BaseView implements Initializable {
     }
 
     public void animate(){
+        this.refresh();
         List<Node> categories = gridPane.getChildren();
         for(Node category: categories){
             TranslateTransition t = new TranslateTransition(Duration.millis(this.ANIMATION_DURATION), category);
@@ -126,5 +136,13 @@ public class CategoryPaneController extends BaseView implements Initializable {
             t.play();
         }
     }
-    
+
+    private void refresh(){
+        if(!this.firstLoad){
+            List<Node> categories = gridPane.getChildren();
+            for(Node category: categories){
+
+            }
+        }
+    }
 }

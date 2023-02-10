@@ -144,6 +144,9 @@ public class ImagesProvider {
         for(HashMap<String, Object> item : menu){
             if(item.get("image")!=null){
                 String imagePath = item.get("image").toString();
+                if(!imagePath.contains(this.imgBaseDirectory)){
+                    imagePath = "file:"+imagePath;
+                }
                 this.menuImages.put(item.get("nameDish").toString(), new LocatedImage(imagePath));
             }
         }
@@ -291,6 +294,13 @@ public class ImagesProvider {
             this.productsImages.put(productBarcode,res);
         }
         return res;
+    }
+
+    public void setProductImage(int productBarcode, String path){
+        if(!path.contains(this.imgBaseDirectory)){
+            path = "file:" +path;
+        }
+        this.productsImages.put(productBarcode, new LocatedImage(path));
     }
 
     //----------------------BUTTON ICONS----------------------//

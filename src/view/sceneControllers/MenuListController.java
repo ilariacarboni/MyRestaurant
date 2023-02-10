@@ -65,12 +65,10 @@ public class MenuListController extends BaseView implements Initializable {
 
     public void loadDishesByCourses(HashMap<String, Object> portata){
         
-        String name = portata.get("name").toString();
-        if (portata.get("title-image") != null){
-            titleImg.setImage(imagesProvider.getCourseTitleImage(name));
-        }
-        
         String course = portata.get("name").toString();
+        if (portata.get("title-image") != null){
+            titleImg.setImage(imagesProvider.getCourseTitleImage(course));
+        }
         menuListGridPane.getChildren().clear();
         dishes.clear();
         ArrayList<HashMap<String, Object>> menulist = this.menuManager.getFrom(course, "course");

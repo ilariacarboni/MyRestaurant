@@ -12,10 +12,18 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
 import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -43,6 +51,8 @@ public class LoginPaneController extends BaseView implements Initializable {
     public Label wrongPasswordLabel;
     public AnchorPane loginBtn;
 
+    private MediaPlayer errorMediaPlayer;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.commController.setLoginPaneController(this);
@@ -59,6 +69,16 @@ public class LoginPaneController extends BaseView implements Initializable {
         });
 
         this.sourceBtn = (commController.getDashboardController()).getDashboardBtn();
+        this.initializeErrorMediaPlayer();
+    }
+
+    private void initializeErrorMediaPlayer(){
+        try {
+            Media hit = new Media(getClass().getResource("/view/audio/error.mp3").toURI().toString());
+            errorMediaPlayer = new MediaPlayer(hit);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void setSource(Button menuBtn){
@@ -186,8 +206,8 @@ public class LoginPaneController extends BaseView implements Initializable {
                 new KeyFrame(Duration.millis(500),new KeyValue(loginForm.translateXProperty(), -10))
         );
         t1.play();
-        AudioClip clip = new AudioClip(new File("src/view/audio/error.mp3").toURI().toString());
-        clip.play();
+        errorMediaPlayer.play();
+        errorMediaPlayer.seek(Duration.ZERO);
         passwordField.setText("");
         passwordContainer.getStyleClass().add("error");
         if(userWarnedForUsername || usernameTextField.getText().isEmpty()){
